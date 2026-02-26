@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Product View | Lubritec</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #030303;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .text-brand-500 {
+            color: #3b82f6;
+        }
+        
+        .bg-brand-600 {
+            background-color: #2563eb;
+        }
+        
+        .bg-whatsapp {
+            background-color: #25D366;
+        }
+        
+        .glass-nav {
+            background: rgba(3, 3, 3, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.2em 1.2em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        #cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        #cart-sidebar.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="catalog.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <span class="text-xs font-bold uppercase tracking-widest">Back</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleCart()" class="relative p-2 text-white bg-gray-900 rounded-full border border-gray-700 flex items-center gap-2">
+                    <span class="text-[10px] uppercase font-bold hidden sm:block px-2">Quote</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-brand-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center scale-0 transition-transform shadow-lg">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#050505] border-l border-gray-800 z-[70] flex flex-col h-full shadow-2xl">
+        <div class="p-5 border-b border-gray-800 flex justify-between items-center bg-black">
+            <div>
+                <h3 class="font-bold text-lg uppercase tracking-widest">Your Quote</h3>
+            </div>
+            <button onclick="toggleCart()" class="p-2 bg-gray-800 rounded-full text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3 pb-40">
+            <div id="empty-cart-msg" class="h-full flex flex-col items-center justify-center text-gray-500 opacity-50">
+                <p class="text-xs font-bold uppercase tracking-widest">Empty</p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-800 bg-black backdrop-blur-md">
+            <div class="space-y-2 mb-5 text-sm">
+                <div class="flex justify-between text-gray-400"><span>Subtotal</span><span id="cart-subtotal">R0.00</span></div>
+                <div class="flex justify-between text-gray-400"><span>VAT (15%)</span><span id="cart-vat">R0.00</span></div>
+                <div class="flex justify-between text-xl font-black pt-3 text-white border-t border-gray-800 mt-2"><span>Total</span><span id="cart-total" class="text-brand-500">R0.00</span></div>
+            </div>
+            <a id="wa-checkout-btn" href="#" class="w-full bg-whatsapp text-white font-bold uppercase tracking-widest py-4 rounded-xl flex justify-center items-center text-sm shadow-xl">Checkout</a>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity"></div>
+
+    <section class="pt-24 pb-20 px-4 min-h-screen flex items-center justify-center bg-[#070707]">
+        <div class="max-w-5xl w-full mx-auto bg-[#0a0a0a] rounded-3xl border border-gray-800 shadow-2xl overflow-hidden flex flex-col md:flex-row">
+
+            <div class="h-64 md:h-auto md:w-1/2 bg-gray-900 relative">
+                <img id="p-img" src="" alt="Product" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-full h-full object-cover opacity-90">
+                <div style="display:none;" class="w-full h-full flex items-center justify-center text-xs text-gray-500 font-bold uppercase tracking-widest text-center px-4">Image Missing</div>
+            </div>
+
+            <div class="p-8 md:p-12 md:w-1/2 flex flex-col">
+                <span id="p-cat" class="text-[10px] font-bold tracking-widest uppercase text-brand-500 mb-3 block">Category</span>
+                <h1 id="p-name" class="text-3xl font-black mb-4 leading-tight">Loading Product...</h1>
+                <p id="p-desc" class="text-gray-400 font-light mb-10 leading-relaxed"></p>
+
+                <div class="mt-auto">
+                    <label class="block text-xs uppercase tracking-widest text-gray-500 font-bold mb-2">Select Size</label>
+                    <select id="p-select" class="w-full bg-black border border-gray-700 text-white text-base font-bold rounded-xl px-4 py-4 outline-none focus:border-brand-500 mb-6"></select>
+
+                    <div class="flex items-end justify-between pt-6 border-t border-gray-800">
+                        <div>
+                            <span class="block text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1">Unit Price</span>
+                            <span id="p-price" class="text-4xl font-black text-white">R0.00</span>
+                        </div>
+                        <button id="add-btn" class="bg-brand-600 text-white font-bold text-sm uppercase px-8 py-4 rounded-xl hover:bg-brand-500 transition-all active:scale-95 shadow-lg">
+                            Add to Quote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="data.js"></script>
+    <script>
+        // Extract Product ID from the URL (e.g., product.html?id=sae40)
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        const product = products.find(p => p.id === productId);
+
+        if (!product) {
+            // If someone goes to product.html without an ID, send them back
+            window.location.href = 'catalog.html';
+        } else {
+            // Populate the Page
+            document.getElementById('p-img').src = product.img;
+            document.getElementById('p-cat').innerText = product.category;
+            document.getElementById('p-name').innerText = product.name;
+            document.getElementById('p-desc').innerText = product.desc;
+
+            const selectElem = document.getElementById('p-select');
+            product.variants.forEach((v, idx) => {
+                selectElem.innerHTML += `<option value="${v.size}" data-price="${v.price}" class="bg-gray-900">${v.size} - R${v.price.toFixed(2)}</option>`;
+            });
+
+            const priceDisplay = document.getElementById('p-price');
+
+            // Update price text when dropdown changes
+            selectElem.addEventListener('change', () => {
+                const opt = selectElem.options[selectElem.selectedIndex];
+                priceDisplay.innerText = `R${parseFloat(opt.dataset.price).toFixed(2)}`;
+            });
+
+            // Trigger it initially
+            selectElem.dispatchEvent(new Event('change'));
+
+            // Hook up the Add to Cart button
+            document.getElementById('add-btn').addEventListener('click', () => {
+                const opt = selectElem.options[selectElem.selectedIndex];
+                addToQuote(product.id, product.name, opt.value, opt.dataset.price);
+
+                // Give user feedback by opening the cart
+                if (!document.getElementById('cart-sidebar').classList.contains('open')) {
+                    toggleCart();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

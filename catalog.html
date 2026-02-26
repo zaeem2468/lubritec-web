@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Catalog | Lubritec</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #030303;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .text-brand-500 {
+            color: #3b82f6;
+        }
+        
+        .bg-brand-600 {
+            background-color: #2563eb;
+        }
+        
+        .bg-whatsapp {
+            background-color: #25D366;
+        }
+        
+        .glass-nav {
+            background: rgba(3, 3, 3, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-3px);
+        }
+        
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        #cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        #cart-sidebar.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="bg-brand-600 text-white font-black px-2 py-1 rounded text-[10px] tracking-widest shadow-lg">ROUTE 64</div>
+                <h1 class="text-xl font-bold uppercase italic tracking-tighter">Lubritec</h1>
+            </a>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleCart()" class="relative p-2 text-white bg-gray-900 rounded-full border border-gray-700 flex items-center gap-2">
+                    <span class="text-[10px] uppercase font-bold hidden sm:block px-2">Quote</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-brand-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center scale-0 transition-transform shadow-lg">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#050505] border-l border-gray-800 z-[70] flex flex-col h-full shadow-2xl">
+        <div class="p-5 border-b border-gray-800 flex justify-between items-center bg-black">
+            <div>
+                <h3 class="font-bold text-lg uppercase tracking-widest">Your Quote</h3>
+            </div>
+            <button onclick="toggleCart()" class="p-2 bg-gray-800 rounded-full text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3 pb-40">
+            <div id="empty-cart-msg" class="h-full flex flex-col items-center justify-center text-gray-500 opacity-50">
+                <p class="text-xs font-bold uppercase tracking-widest">Empty</p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-800 bg-black backdrop-blur-md">
+            <div class="space-y-2 mb-5 text-sm">
+                <div class="flex justify-between text-gray-400"><span>Subtotal</span><span id="cart-subtotal">R0.00</span></div>
+                <div class="flex justify-between text-gray-400"><span>VAT (15%)</span><span id="cart-vat">R0.00</span></div>
+                <div class="flex justify-between text-xl font-black pt-3 text-white border-t border-gray-800 mt-2"><span>Total</span><span id="cart-total" class="text-brand-500">R0.00</span></div>
+            </div>
+            <a id="wa-checkout-btn" href="#" class="w-full bg-whatsapp text-white font-bold uppercase tracking-widest py-4 rounded-xl flex justify-center items-center text-sm shadow-xl">Checkout</a>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity"></div>
+
+    <section class="pt-28 pb-20 px-4 bg-[#070707] min-h-screen">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-black mb-2 uppercase tracking-tighter">Master Catalog</h2>
+                <p class="text-gray-400 font-light">Select a product to view sizes and add to your quote.</p>
+            </div>
+
+            <div class="flex overflow-x-auto hide-scroll pb-4 mb-8 gap-3 border-b border-gray-800" id="filter-buttons">
+                <button class="filter-btn active shrink-0 bg-brand-600 text-white px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest" data-filter="all">All Items</button>
+                <button class="filter-btn shrink-0 glass-card text-gray-300 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest" data-filter="Engine Oils">Engine Oils</button>
+                <button class="filter-btn shrink-0 glass-card text-gray-300 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest" data-filter="Gear & Auto">Gear Fluids</button>
+                <button class="filter-btn shrink-0 glass-card text-gray-300 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest" data-filter="Industrial">Industrial</button>
+                <button class="filter-btn shrink-0 glass-card text-gray-300 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest" data-filter="Chemicals & Grease">Chemicals</button>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+    </section>
+
+    <script src="data.js"></script>
+    <script>
+        const grid = document.getElementById('product-grid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        function renderCatalog(filterCategory = 'all') {
+            grid.innerHTML = '';
+            const filtered = filterCategory === 'all' ? products : products.filter(p => p.category === filterCategory);
+
+            filtered.forEach(p => {
+                const startPrice = p.variants[0].price.toFixed(2);
+
+                // Clicking this card acts as a real link to the individual product page
+                const card = document.createElement('a');
+                card.href = `product.html?id=${p.id}`;
+                card.className = 'glass-card p-5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-gray-900 transition block';
+
+                card.innerHTML = `
+                    <div class="flex-1 pr-4">
+                        <span class="text-[9px] font-bold tracking-widest uppercase text-brand-500 mb-1 block">${p.category}</span>
+                        <h3 class="text-base font-bold text-white leading-tight">${p.name}</h3>
+                        <p class="text-[11px] text-gray-500 mt-1">Starting from <span class="font-bold text-gray-300">R${startPrice}</span></p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-brand-600 bg-opacity-20 flex items-center justify-center text-brand-500 flex-shrink-0 border border-brand-500 border-opacity-30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        renderCatalog();
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-brand-600', 'text-white');
+                    b.classList.add('glass-card', 'text-gray-300');
+                });
+                btn.classList.remove('glass-card', 'text-gray-300');
+                btn.classList.add('bg-brand-600', 'text-white');
+                renderCatalog(btn.dataset.filter);
+            });
+        });
+    </script>
+</body>
+
+</html>
