@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lubritec (Pty) Ltd | Route 64 Lubricants ERP</title>
+    <title>Route 64 Lubricants | Products</title>
 
     <!-- UI & Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,6 @@
 
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         tailwind.config = {
@@ -168,9 +167,9 @@
         <div class="relative w-24 h-24 mb-8">
             <div class="absolute inset-0 border-4 border-brand-red/20 rounded-full"></div>
             <div class="absolute inset-0 border-4 border-t-brand-red rounded-full animate-spin"></div>
-            <div class="absolute inset-0 flex items-center justify-center font-black text-xs tracking-tighter">LUBRITEC</div>
+            <div class="absolute inset-0 flex items-center justify-center font-black text-xs tracking-tighter">ROUTE 64</div>
         </div>
-        <p class="text-xs font-black tracking-[0.4em] uppercase opacity-50 animate-pulse">Loading Catalog & Prices</p>
+        <p class="text-xs font-black tracking-[0.4em] uppercase opacity-50 animate-pulse">Loading Product Catalog</p>
     </div>
 
     <div id="global-overlay" onclick="closeAllModals()" class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm z-[80] hidden opacity-0 transition-all duration-300"></div>
@@ -181,9 +180,9 @@
         <div class="flex flex-col items-center gap-8 text-white font-black uppercase tracking-widest text-xl">
             <button onclick="navigate('home')" class="hover:text-brand-blue transition">Home</button>
             <button onclick="navigate('about')" class="hover:text-brand-blue transition">About Us</button>
-            <button onclick="navigate('catalog')" class="hover:text-brand-red transition text-brand-red">Master Catalog</button>
+            <button onclick="navigate('catalog')" class="hover:text-brand-red transition text-brand-red">Our Products</button>
             <button onclick="navigate('contact')" class="hover:text-brand-blue transition">Contact Details</button>
-            <button onclick="navigate('customer')" class="hover:text-brand-blue transition">My Quotes</button>
+            <button onclick="navigate('customer')" class="hover:text-brand-blue transition">My Inquiries</button>
         </div>
     </div>
 
@@ -191,16 +190,16 @@
     <nav class="nav-sticky">
         <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-24 flex justify-between items-center">
             <div class="flex items-center gap-3 md:gap-4 cursor-pointer group" onclick="navigate('home')">
-                <div class="bg-brand-red text-white font-black px-2 md:px-3 py-1.5 rounded text-[10px] md:text-xs tracking-widest shadow-lg group-hover:bg-white group-hover:text-brand-red transition uppercase">Route 64</div>
-                <span class="font-black text-2xl md:text-3xl tracking-tighter italic uppercase text-white">LUBRITEC</span>
+                <div class="bg-brand-red text-white font-black px-2 md:px-3 py-1.5 rounded text-[10px] md:text-xs tracking-widest shadow-lg group-hover:bg-white group-hover:text-brand-red transition uppercase">PREMIUM</div>
+                <span class="font-black text-2xl md:text-3xl tracking-tighter italic uppercase text-white">ROUTE 64</span>
             </div>
 
             <div class="hidden xl:flex items-center gap-10 text-xs font-black uppercase tracking-[0.2em] text-slate-400">
                 <button onclick="navigate('home')" class="hover:text-white transition py-8 border-b-2 border-transparent hover:border-brand-blue">Home</button>
                 <button onclick="navigate('about')" class="hover:text-white transition py-8 border-b-2 border-transparent hover:border-brand-blue">About Us</button>
-                <button onclick="navigate('catalog')" class="hover:text-white transition py-8 border-b-2 border-transparent hover:border-brand-red">Master Catalog</button>
-                <button onclick="navigate('contact')" class="hover:text-white transition py-8 border-b-2 border-transparent hover:border-brand-blue">Contact Details</button>
-                <button onclick="navigate('customer')" class="hover:text-white transition py-8 border-b-2 border-transparent hover:border-brand-blue">My Quotes</button>
+                <button onclick="navigate('catalog')" class="hover:text-white transition py-8 border-b-2 border-transparent hover:border-brand-red">Our Products</button>
+                <button onclick="navigate('contact')" class="hover:text-white transition py-8 border-b-2 border-transparent hover:border-brand-blue">Contact</button>
+                <button onclick="navigate('customer')" class="hover:text-white transition py-8 border-b-2 border-transparent hover:border-brand-blue">My Inquiries</button>
             </div>
 
             <div class="flex items-center gap-2 md:gap-3">
@@ -210,7 +209,7 @@
                 </button>
 
                 <button onclick="toggleCart()" class="relative p-3 md:p-4 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-2xl transition border border-brand-blue/20 shadow-xl flex items-center gap-3 group">
-                    <span class="text-xs uppercase font-black px-2 md:px-3 text-brand-blue hidden sm:block">Build Quote</span>
+                    <span class="text-xs uppercase font-black px-2 md:px-3 text-brand-blue hidden sm:block">Quote Basket</span>
                     <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-110 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     <span id="cart-badge" class="absolute -top-2 -right-2 bg-brand-red text-white text-[10px] md:text-xs font-black h-6 w-6 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all border-2 border-brand-navy shadow-xl">0</span>
                 </button>
@@ -226,8 +225,8 @@
     <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[500px] bg-white dark:bg-slate-900 shadow-[0_0_100px_rgba(0,0,0,0.5)] z-[110] flex flex-col border-l border-gray-100 dark:border-slate-800">
         <div class="p-6 md:p-8 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950">
             <div>
-                <h3 class="font-black text-xl md:text-2xl text-brand-navy dark:text-white tracking-tighter uppercase">Commercial Quote</h3>
-                <p class="text-[10px] text-brand-blue font-black uppercase tracking-widest mt-1 flex items-center gap-2">Official 2025 Price List</p>
+                <h3 class="font-black text-xl md:text-2xl text-brand-navy dark:text-white tracking-tighter uppercase">Inquiry Basket</h3>
+                <p class="text-[10px] text-brand-blue font-black uppercase tracking-widest mt-1 flex items-center gap-2">Request a Formal Quote</p>
             </div>
             <button onclick="toggleCart()" class="p-3 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-2xl transition group"><svg class="w-6 h-6 text-gray-400 group-hover:text-brand-red transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         </div>
@@ -241,17 +240,14 @@
         </div>
 
         <div class="p-6 md:p-8 border-t border-gray-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-            <div class="space-y-3 mb-6 md:mb-8">
-                <div class="flex justify-between text-gray-500 font-bold text-xs md:text-sm"><span>Subtotal (Excl VAT)</span><span id="cart-subtotal" class="font-black">R0.00</span></div>
-                <div class="flex justify-between text-gray-500 font-bold text-xs md:text-sm"><span>Standard VAT (15%)</span><span id="cart-vat" class="font-black">R0.00</span></div>
-                <div class="flex justify-between text-2xl md:text-3xl font-black pt-4 md:pt-6 text-brand-navy dark:text-white border-t border-dashed border-gray-200 dark:border-slate-800 mt-4"><span>Estimate</span><span id="cart-total" class="text-brand-blue tracking-tighter">R0.00</span></div>
+            <div class="space-y-3 mb-6 md:mb-8 text-center">
+                <p class="text-gray-500 font-bold text-sm">Submit your basket to receive a formal pricing quote.</p>
             </div>
             <div class="grid grid-cols-2 gap-3 md:gap-4 mb-4">
-                <button onclick="generatePDF()" class="bg-brand-navy dark:bg-brand-blue hover:opacity-90 text-white font-black uppercase text-[9px] md:text-[10px] tracking-widest py-3 md:py-4 rounded-xl md:rounded-2xl shadow-xl transition flex justify-center items-center gap-2">Download PDF</button>
-                <button onclick="checkoutWhatsApp()" class="bg-[#25D366] hover:bg-[#128C7E] text-white font-black uppercase text-[9px] md:text-[10px] tracking-widest py-3 md:py-4 rounded-xl md:rounded-2xl shadow-xl shadow-green-500/20 transition flex justify-center items-center gap-2">WhatsApp Quote</button>
+                <button onclick="generatePDF()" class="bg-brand-navy dark:bg-brand-blue hover:opacity-90 text-white font-black uppercase text-[9px] md:text-[10px] tracking-widest py-3 md:py-4 rounded-xl md:rounded-2xl shadow-xl transition flex justify-center items-center gap-2">Download PDF RFQ</button>
+                <button onclick="checkoutWhatsApp()" class="bg-[#25D366] hover:bg-[#128C7E] text-white font-black uppercase text-[9px] md:text-[10px] tracking-widest py-3 md:py-4 rounded-xl md:rounded-2xl shadow-xl shadow-green-500/20 transition flex justify-center items-center gap-2">WhatsApp Inquiry</button>
             </div>
             <button onclick="clearCart()" class="w-full py-3 text-[10px] md:text-xs font-black uppercase text-gray-400 border border-gray-200 dark:border-slate-800 rounded-xl md:rounded-2xl hover:bg-red-50 hover:text-brand-red transition mb-4">Clear Basket</button>
-            <p class="text-[9px] md:text-[10px] text-gray-400 text-center font-bold uppercase tracking-widest">Formal PDF will generate instantly</p>
         </div>
     </div>
 
@@ -278,7 +274,7 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 md:gap-6 mb-16 md:mb-20">
-                    <button onclick="navigate('catalog')" class="bg-brand-blue hover:bg-blue-700 text-white font-black uppercase tracking-[0.2em] text-xs md:text-sm py-5 md:py-6 px-8 md:px-12 rounded-[2rem] transition-all shadow-2xl shadow-blue-500/30 transform hover:-translate-y-2">Master Inventory</button>
+                    <button onclick="navigate('catalog')" class="bg-brand-blue hover:bg-blue-700 text-white font-black uppercase tracking-[0.2em] text-xs md:text-sm py-5 md:py-6 px-8 md:px-12 rounded-[2rem] transition-all shadow-2xl shadow-blue-500/30 transform hover:-translate-y-2">Explore Products</button>
                     <button onclick="navigate('contact')" class="bg-white/5 hover:bg-white/10 border border-white/20 text-white font-black uppercase tracking-[0.2em] text-xs md:text-sm py-5 md:py-6 px-8 md:px-12 rounded-[2rem] transition-all backdrop-blur-xl group flex items-center justify-center gap-4">
                         Contact Sales
                     </button>
@@ -313,7 +309,7 @@
                     <div class="w-16 md:w-24 h-2 bg-brand-red mt-4 rounded-full"></div>
                 </div>
                 <button onclick="navigate('catalog')" class="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-brand-blue flex items-center gap-3 group">
-                    Enter Master Catalog
+                    Enter Products Catalog
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-blue rounded-full flex items-center justify-center text-white shadow-xl group-hover:translate-x-2 transition-transform"><svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></div>
                 </button>
             </div>
@@ -353,14 +349,13 @@
 
     <!-- VIEW: ABOUT -->
     <div id="view-about" class="view-section pt-32 md:pt-40 px-6 max-w-5xl mx-auto min-h-screen text-center">
-        <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6">About Lubritec</h1>
+        <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6">About Route 64</h1>
         <div class="w-16 md:w-24 h-2 bg-brand-red mx-auto mb-8 md:mb-10 rounded-full"></div>
         <h2 class="text-xl md:text-4xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-10 italic">Protect What Matters, Lubricate What Moves</h2>
         <div class="pro-card p-6 md:p-16 text-left shadow-2xl relative overflow-hidden">
             <div class="absolute -right-10 -top-10 md:-right-20 md:-top-20 opacity-5 dark:opacity-10"><svg class="w-64 h-64 md:w-96 md:h-96" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
             <p class="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6 md:mb-8 leading-relaxed relative z-10">
-                <strong>Lubritec (Pty) Ltd</strong> is the leading authorized distributor of <strong>Route 64</strong> lubrication products in the Gauteng region. Based out of Aureus, Randfontein, we supply high-performance, API-certified oils, greases,
-                and industrial chemicals to a wide array of demanding sectors.
+                <strong>Route 64 Lubricants</strong> is the leading provider of high-performance, API-certified oils, greases, and industrial chemicals in the Gauteng region. Based out of Aureus, Randfontein, we supply to a wide array of demanding sectors.
             </p>
             <p class="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6 md:mb-8 leading-relaxed relative z-10">
                 Whether you operate heavy commercial fleets, agricultural machinery, or industrial plant equipment, our catalog is precision-engineered to provide uncompromising protection against wear, heat, and friction.
@@ -427,8 +422,8 @@
                     <div class="w-12 h-12 md:w-16 md:h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-500 flex-shrink-0"><svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
                     <div class="w-full">
                         <h3 class="font-black text-lg md:text-xl text-brand-navy dark:text-white uppercase tracking-tight mb-2">Electronic Mail</h3>
-                        <a href="mailto:info@lubritec.co.za" class="block text-sm md:text-base font-bold text-gray-500 hover:text-brand-blue transition mb-1">info@lubritec.co.za</a>
-                        <a href="mailto:riaaz@lubritec.co.za" class="block text-sm md:text-base font-bold text-gray-500 hover:text-brand-blue transition">riaaz@lubritec.co.za</a>
+                        <a href="mailto:info@route64.co.za" class="block text-sm md:text-base font-bold text-gray-500 hover:text-brand-blue transition mb-1">info@route64.co.za</a>
+                        <a href="mailto:riaaz@route64.co.za" class="block text-sm md:text-base font-bold text-gray-500 hover:text-brand-blue transition">riaaz@route64.co.za</a>
                     </div>
                 </div>
             </div>
@@ -445,9 +440,9 @@
     <div id="view-catalog" class="view-section pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 md:mb-10 gap-6 md:gap-8 border-b border-gray-100 dark:border-slate-800 pb-8 md:pb-12">
             <div class="flex-1 w-full">
-                <h1 class="text-4xl sm:text-5xl md:text-7xl font-black text-brand-navy dark:text-white tracking-tighter uppercase leading-[0.9]">Master<br class="hidden sm:block" />Inventory</h1>
+                <h1 class="text-4xl sm:text-5xl md:text-7xl font-black text-brand-navy dark:text-white tracking-tighter uppercase leading-[0.9]">Product<br class="hidden sm:block" />Catalog</h1>
                 <p class="text-gray-500 dark:text-slate-400 text-xs md:text-sm mt-4 font-bold uppercase tracking-[0.2em] flex items-center gap-3">
-                    <span class="w-6 md:w-8 h-1 bg-brand-red rounded-full"></span> ERP Database Local Sync
+                    <span class="w-6 md:w-8 h-1 bg-brand-red rounded-full"></span> Explore Our Formulations
                 </p>
             </div>
 
@@ -486,13 +481,13 @@
     <!-- VIEW: CUSTOMER ORDERS -->
     <div id="view-customer" class="view-section pt-32 px-6 max-w-5xl mx-auto min-h-screen">
         <div class="mb-12 md:mb-16 text-center">
-            <h1 class="text-4xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">My Quote History</h1>
-            <p class="text-brand-blue font-black uppercase tracking-[0.3em] text-[10px] mt-2 md:mt-4">Localized Client Lead Tracking</p>
+            <h1 class="text-4xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">My Inquiries</h1>
+            <p class="text-brand-blue font-black uppercase tracking-[0.3em] text-[10px] mt-2 md:mt-4">Localized Request Tracking</p>
         </div>
         <div id="client-leads-list" class="space-y-4 md:space-y-6 mb-32">
             <!-- Populated by JS -->
             <div class="p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] border border-dashed">
-                <p class="text-xs md:text-sm font-black uppercase tracking-widest">No previous orders found on this device</p>
+                <p class="text-xs md:text-sm font-black uppercase tracking-widest">No previous inquiries found on this device</p>
             </div>
         </div>
     </div>
@@ -503,18 +498,18 @@
         <div class="max-w-[1400px] mx-auto px-6 relative z-10">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-16 md:mb-24">
                 <div class="sm:col-span-2">
-                    <h1 class="text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-white mb-6 md:mb-8">Lubritec <span class="text-brand-red">(Pty)</span> Ltd</h1>
+                    <h1 class="text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-white mb-6 md:mb-8">Route 64 <span class="text-brand-red">Lubricants</span></h1>
                     <p class="text-slate-400 max-w-xl text-base md:text-xl font-light leading-relaxed">
                         Setting the standard for lubrication logistics in Southern Africa. We supply the lifeblood of Gauteng's industry with certified, high-performance fluids.
                     </p>
                 </div>
                 <div>
-                    <h4 class="text-[10px] md:text-xs font-black uppercase text-white tracking-[0.3em] mb-6 md:mb-8">Intelligence</h4>
+                    <h4 class="text-[10px] md:text-xs font-black uppercase text-white tracking-[0.3em] mb-6 md:mb-8">Navigation</h4>
                     <div class="flex flex-col gap-3 md:gap-4 text-xs md:text-sm font-bold text-slate-500">
                         <button onclick="navigate('home')" class="text-left hover:text-white transition">Platform Home</button>
                         <button onclick="navigate('about')" class="text-left hover:text-white transition">About Route 64</button>
-                        <button onclick="navigate('catalog')" class="text-left hover:text-white transition">Master Catalog</button>
-                        <button onclick="navigate('customer')" class="text-left hover:text-white transition">My Quote History</button>
+                        <button onclick="navigate('catalog')" class="text-left hover:text-white transition">Our Products</button>
+                        <button onclick="navigate('customer')" class="text-left hover:text-white transition">My Inquiries</button>
                     </div>
                 </div>
                 <div>
@@ -530,7 +525,7 @@
 
             <div class="w-full h-px bg-white/5 mb-8 md:mb-12"></div>
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
-                <p class="text-[9px] md:text-[10px] text-slate-600 uppercase tracking-[0.3em] md:tracking-[0.5em] font-black text-center md:text-left">© 2026 Lubritec Industrial Systems. Gauteng Official Distributor.</p>
+                <p class="text-[9px] md:text-[10px] text-slate-600 uppercase tracking-[0.3em] md:tracking-[0.5em] font-black text-center md:text-left">© 2026 Route 64 Lubricants. Gauteng Official Distributor.</p>
                 <div class="flex gap-6 md:gap-10 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
                     <span>API Standard Certified</span>
                     <span>Route 64 Verified</span>
@@ -543,7 +538,10 @@
         // ==========================================
         // 1. SYSTEM INITIALIZATION & LOCAL DB ENGINE
         // ==========================================
-        // Using in-memory state mapped directly from the January 2025 Gauteng Price List Images
+        // HOW TO UPLOAD YOUR LOCAL IMAGES:
+        // Place your images in an "images" folder next to this index.html file.
+        // Then, replace the generic https://... links below with your image paths (e.g., "images/sae40.jpg")
+
         let cloudProducts = [
             // Engine Oils
             {
@@ -551,117 +549,92 @@
                 name: "Engine Oil (SAE 40)",
                 category: "Engine Oils",
                 desc: "Standard SAE 40 Engine Oil.",
-                img: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 20
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 150
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 610
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 7075
+                    size: "210L"
                 }]
             }, {
                 id: "P-E002",
                 name: "Multigrade (20W50)",
                 category: "Engine Oils",
                 desc: "Multigrade 20W50 Engine Oil.",
-                img: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 22
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 165
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 670
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 7570
+                    size: "210L"
                 }]
             }, {
                 id: "P-E003",
                 name: "Engine Oil (SAE 30)",
                 category: "Engine Oils",
                 desc: "Standard SAE 30 Engine Oil.",
-                img: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 21
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 170
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 690
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 7795
+                    size: "210L"
                 }]
             }, {
                 id: "P-E004",
                 name: "Diesel Oil (HD40)",
                 category: "Engine Oils",
                 desc: "Heavy Duty 40 Diesel Oil.",
-                img: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 22.50
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 175
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 710
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 8030
+                    size: "210L"
                 }]
             }, {
                 id: "P-E005",
                 name: "Turbo Diesel (15W40)",
                 category: "Engine Oils",
                 desc: "15W40 Turbo Diesel Oil.",
-                img: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 25
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 200
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 810
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 8590
+                    size: "210L"
                 }]
             }, {
                 id: "P-E006",
                 name: "2 Stroke Oil",
                 category: "Engine Oils",
                 desc: "Premium 2 Stroke Engine Oil.",
-                img: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "200ml",
-                    price: 15
+                    size: "200ml"
                 }, {
-                    size: "500ml",
-                    price: 25
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 200
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 810
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 8750
+                    size: "210L"
                 }]
             },
 
@@ -671,79 +644,62 @@
                 name: "Gear Oil (EP90)",
                 category: "Gear & Auto",
                 desc: "EP90 Gear Oil.",
-                img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 25
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 200
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 810
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 8490
+                    size: "210L"
                 }]
             }, {
                 id: "P-G002",
                 name: "Gear Oil (80W90)",
                 category: "Gear & Auto",
                 desc: "80W90 Gear Oil.",
-                img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 30
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 240
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 970
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 10170
+                    size: "210L"
                 }]
             }, {
                 id: "P-G003",
                 name: "Transmission (ATF DII)",
                 category: "Gear & Auto",
                 desc: "Automatic Transmission Fluid DII.",
-                img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 25
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 200
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 810
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 8490
+                    size: "210L"
                 }]
             }, {
                 id: "P-G004",
                 name: "Brake Fluid DOT4",
                 category: "Gear & Auto",
                 desc: "DOT4 Brake Fluid, NRCS Approved HEF NO: 16077.",
-                img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "200ml",
-                    price: 18
+                    size: "200ml"
                 }, {
-                    size: "500ml",
-                    price: 30
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 280
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 1130
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 10850
+                    size: "210L"
                 }]
             },
 
@@ -753,38 +709,30 @@
                 name: "Hydraulic Oil (ISO 68)",
                 category: "Industrial",
                 desc: "Premium ISO 68 Hydraulic Oil.",
-                img: "https://images.unsplash.com/photo-1585246231068-154942c4314c?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "1L",
-                    price: 45
+                    size: "1L"
                 }, {
-                    size: "5L",
-                    price: 200
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 810
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 8490
+                    size: "210L"
                 }]
             }, {
                 id: "P-I002",
                 name: "Hydraulic Oil (ISO 46)",
                 category: "Industrial",
                 desc: "Premium ISO 46 Hydraulic Oil.",
-                img: "https://images.unsplash.com/photo-1585246231068-154942c4314c?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "1L",
-                    price: 47.50
+                    size: "1L"
                 }, {
-                    size: "5L",
-                    price: 210
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 850
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 8915
+                    size: "210L"
                 }]
             },
 
@@ -794,226 +742,181 @@
                 name: "Engine Cleaner Water Base",
                 category: "Chemicals & Grease",
                 desc: "Water-based engine cleaner.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 15
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 70
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 290
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 2850
+                    size: "210L"
                 }]
             }, {
                 id: "P-C002",
                 name: "Engine Cleaner Solvent Base",
                 category: "Chemicals & Grease",
                 desc: "Solvent-based engine cleaner.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "5L",
-                    price: 185
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 750
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 7600
+                    size: "210L"
                 }]
             }, {
                 id: "P-C003",
                 name: "Degreaser Concentrate",
                 category: "Chemicals & Grease",
                 desc: "Concentrated Degreaser.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 20
+                    size: "500ml"
                 }, {
-                    size: "5L",
-                    price: 120
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 490
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 4750
+                    size: "210L"
                 }]
             }, {
                 id: "P-C004",
                 name: "Degreaser Concentrate (Spray)",
                 category: "Chemicals & Grease",
                 desc: "Degreaser Concentrate in a trigger spray bottle.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500ml",
-                    price: 30
+                    size: "500ml"
                 }]
             }, {
                 id: "P-C005",
                 name: "Anti-Freeze Summer Coolant",
                 category: "Chemicals & Grease",
                 desc: "Summer coolant anti-freeze.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "1L",
-                    price: 15
+                    size: "1L"
                 }, {
-                    size: "5L",
-                    price: 40
+                    size: "5L"
                 }]
             }, {
                 id: "P-C006",
                 name: "Anti-Freeze 30%",
                 category: "Chemicals & Grease",
                 desc: "30% Anti-freeze mix.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "1L",
-                    price: 20
+                    size: "1L"
                 }, {
-                    size: "5L",
-                    price: 70
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 290
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 2740
+                    size: "210L"
                 }]
             }, {
                 id: "P-C007",
                 name: "Anti-Freeze 50%",
                 category: "Chemicals & Grease",
                 desc: "50% Anti-freeze mix.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "1L",
-                    price: 25
+                    size: "1L"
                 }, {
-                    size: "5L",
-                    price: 90
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 370
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 3515
+                    size: "210L"
                 }]
             }, {
                 id: "P-C008",
                 name: "Anti-Freeze 96%",
                 category: "Chemicals & Grease",
                 desc: "96% Anti-freeze mix.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "1L",
-                    price: 35
+                    size: "1L"
                 }, {
-                    size: "5L",
-                    price: 130
+                    size: "5L"
                 }, {
-                    size: "20L",
-                    price: 530
+                    size: "20L"
                 }, {
-                    size: "210L",
-                    price: 5177
+                    size: "210L"
                 }]
             }, {
                 id: "P-C009",
                 name: "Grease - Wheel Bearing",
                 category: "Chemicals & Grease",
                 desc: "Wheel bearing grease.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500g",
-                    price: 40
+                    size: "500g"
                 }, {
-                    size: "5kg",
-                    price: 320
+                    size: "5kg"
                 }, {
-                    size: "15kg",
-                    price: 850
+                    size: "15kg"
                 }, {
-                    size: "180kg",
-                    price: 11320
+                    size: "180kg"
                 }]
             }, {
                 id: "P-C010",
                 name: "Grease - Multipurpose",
                 category: "Chemicals & Grease",
                 desc: "Multipurpose grease.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500g",
-                    price: 42
+                    size: "500g"
                 }, {
-                    size: "5kg",
-                    price: 330
+                    size: "5kg"
                 }, {
-                    size: "15kg",
-                    price: 875
+                    size: "15kg"
                 }, {
-                    size: "180kg",
-                    price: 11660
+                    size: "180kg"
                 }]
             }, {
                 id: "P-C011",
                 name: "Grease - CV Joint",
                 category: "Chemicals & Grease",
                 desc: "CV Joint grease.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "500g",
-                    price: 45
+                    size: "500g"
                 }, {
-                    size: "5kg",
-                    price: 340
+                    size: "5kg"
                 }, {
-                    size: "15kg",
-                    price: 901
+                    size: "15kg"
                 }, {
-                    size: "180kg",
-                    price: 12010
+                    size: "180kg"
                 }]
             }, {
                 id: "P-C012",
                 name: "Hand Cleaner with Grit (Citrus)",
                 category: "Chemicals & Grease",
                 desc: "Citrus hand cleaner with grit.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "800g",
-                    price: 35
+                    size: "800g"
                 }, {
-                    size: "5kg",
-                    price: 160
+                    size: "5kg"
                 }, {
-                    size: "15kg",
-                    price: 415
+                    size: "15kg"
                 }]
             }, {
                 id: "P-C013",
                 name: "Hand Sanitizer 70% Alcohol",
                 category: "Chemicals & Grease",
                 desc: "70% Alcohol Hand Sanitizer.",
-                img: "https://images.unsplash.com/photo-1590080816912-25039f86580d?w=400&h=400&fit=crop",
+                img: "images/your-image-here.jpg",
                 variants: [{
-                    size: "1L",
-                    price: 32
+                    size: "1L"
                 }, {
-                    size: "5L",
-                    price: 128.50
+                    size: "5L"
                 }, {
-                    size: "25L",
-                    price: 600
+                    size: "25L"
                 }, {
-                    size: "200L",
-                    price: 4900
+                    size: "200L"
                 }]
             }
         ];
@@ -1120,13 +1023,12 @@
             });
 
             filtered.forEach(p => {
-                const priceFrom = p.variants && p.variants.length > 0 ? p.variants[0].price : 0;
                 if (viewMode === 'grid') {
                     const card = document.createElement('div');
                     card.className = "pro-card flex flex-col h-full cursor-pointer group shadow-sm overflow-hidden p-6 md:p-8";
 
-                    let vHtml = `<select id="grid-sel-${p.id}" onchange="document.getElementById('grid-price-${p.id}').innerText = 'R' + parseFloat(this.options[this.selectedIndex].dataset.price).toFixed(2)" class="w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-4 mt-2 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition" onclick="event.stopPropagation()">`;
-                    p.variants.forEach(v => vHtml += `<option value="${v.size}" data-price="${v.price}">${v.size}</option>`);
+                    let vHtml = `<select id="grid-sel-${p.id}" class="w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-4 mt-2 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition" onclick="event.stopPropagation()">`;
+                    p.variants.forEach(v => vHtml += `<option value="${v.size}">${v.size}</option>`);
                     vHtml += `</select>`;
 
                     card.innerHTML = `
@@ -1137,8 +1039,7 @@
                             ${vHtml}
                             <div class="mt-auto pt-4 md:pt-6 border-t border-gray-50 dark:border-slate-800 flex justify-between items-center">
                                 <div>
-                                    <span class="block text-[8px] md:text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Unit Price</span>
-                                    <span id="grid-price-${p.id}" class="text-lg md:text-xl font-black text-brand-navy dark:text-white">R${priceFrom.toFixed(2)}</span>
+                                    <span class="block text-[8px] md:text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Select Size</span>
                                 </div>
                                 <button class="px-4 py-2 md:px-6 md:py-3 rounded-xl bg-brand-blue text-white font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-blue-700 transition shadow-xl" onclick="event.stopPropagation(); addFromGrid('${p.id}')">Add</button>
                             </div>
@@ -1150,7 +1051,7 @@
                     row.className = "bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 p-5 md:p-6 rounded-2xl md:rounded-[2rem] flex flex-col md:flex-row md:items-center gap-4 md:gap-10 shadow-sm hover:border-brand-blue transition group";
 
                     let vHtml = `<select id="list-sel-${p.id}" class="p-3 md:p-4 bg-slate-50 dark:bg-slate-800 border-none rounded-xl md:rounded-2xl text-xs font-black outline-none w-full md:w-64 dark:text-white shadow-inner cursor-pointer">`;
-                    p.variants.forEach(v => vHtml += `<option value="${v.size}" data-price="${v.price}">${v.size} - R${v.price.toFixed(2)}</option>`);
+                    p.variants.forEach(v => vHtml += `<option value="${v.size}">${v.size}</option>`);
                     vHtml += `</select>`;
 
                     row.innerHTML = `
@@ -1165,7 +1066,7 @@
                                 <div class="flex items-center bg-slate-50 dark:bg-slate-800 rounded-xl md:rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 shadow-inner flex-1 sm:flex-none">
                                     <input type="number" id="list-qty-${p.id}" value="1" min="1" class="w-full sm:w-16 bg-transparent text-center font-black text-sm dark:text-white py-3 md:py-4 outline-none">
                                 </div>
-                                <button onclick="addFromList('${p.id}')" class="bg-brand-navy dark:bg-brand-blue text-white font-black text-[9px] md:text-[10px] uppercase tracking-widest px-4 py-3 md:px-6 md:py-5 rounded-xl md:rounded-2xl shadow-xl transition active:scale-95 whitespace-nowrap flex-1 sm:flex-none text-center">Add to Quote</button>
+                                <button onclick="addFromList('${p.id}')" class="bg-brand-navy dark:bg-brand-blue text-white font-black text-[9px] md:text-[10px] uppercase tracking-widest px-4 py-3 md:px-6 md:py-5 rounded-xl md:rounded-2xl shadow-xl transition active:scale-95 whitespace-nowrap flex-1 sm:flex-none text-center">Add to Basket</button>
                             </div>
                         </div>
                     `;
@@ -1187,30 +1088,26 @@
             const select = document.getElementById(`grid-sel-${id}`);
             if (select) {
                 const opt = select.options[select.selectedIndex];
-                addToCartCore(p, opt.value, parseFloat(opt.dataset.price), 1);
+                addToCartCore(p, opt.value, 1);
             }
         }
 
         function addFromList(id) {
             const p = cloudProducts.find(x => x.id === id);
-
-            // Check if list mode inputs exist
             const select = document.getElementById(`list-sel-${id}`);
             const qtyInput = document.getElementById(`list-qty-${id}`);
 
             if (select && qtyInput) {
                 const opt = select.options[select.selectedIndex];
-                addToCartCore(p, opt.value, parseFloat(opt.dataset.price), parseInt(qtyInput.value) || 1);
+                addToCartCore(p, opt.value, parseInt(qtyInput.value) || 1);
                 qtyInput.value = 1;
             } else {
-                // Fallback for unexpected DOM states
                 const size = p.variants[0].size;
-                const price = p.variants[0].price;
-                addToCartCore(p, size, price, 1);
+                addToCartCore(p, size, 1);
             }
         }
 
-        function addToCartCore(product, size, price, qty) {
+        function addToCartCore(product, size, qty) {
             const cartId = `${product.id}-${size}`;
             const existing = activeCart.find(i => i.cartId === cartId);
             if (existing) existing.qty += qty;
@@ -1218,7 +1115,6 @@
                 cartId,
                 name: product.name,
                 size,
-                price,
                 qty
             });
 
@@ -1257,7 +1153,6 @@
                                 <h4 class="font-black text-xs md:text-sm text-brand-navy dark:text-white group-hover:text-brand-blue transition uppercase tracking-tighter">${item.name}</h4>
                                 <span class="text-[8px] md:text-[9px] font-black uppercase text-brand-blue bg-blue-50 dark:bg-slate-950 px-2 md:px-3 py-1 md:py-1.5 rounded-lg md:rounded-xl mt-1 md:mt-2 inline-block">${item.size}</span>
                             </div>
-                            <span class="font-black text-sm md:text-lg text-brand-navy dark:text-white">R${(item.price * item.qty).toFixed(2)}</span>
                         </div>
                         <div class="flex items-center justify-between border-t border-gray-50 dark:border-slate-700 pt-3 md:pt-4 mt-1">
                             <div class="flex items-center bg-slate-50 dark:bg-slate-950 rounded-xl md:rounded-2xl border dark:border-slate-700 p-1">
@@ -1271,11 +1166,6 @@
                     container.appendChild(el);
                 });
             }
-
-            const sub = activeCart.reduce((s, i) => s + (i.price * i.qty), 0);
-            document.getElementById('cart-subtotal').innerText = `R${sub.toFixed(2)}`;
-            document.getElementById('cart-vat').innerText = `R${(sub * 0.15).toFixed(2)}`;
-            document.getElementById('cart-total').innerText = `R${(sub * 1.15).toFixed(2)}`;
         }
 
         function toggleCart() {
@@ -1301,19 +1191,16 @@
         function processQuote(sendToWhatsApp = false) {
             if (activeCart.length === 0) return customAlert("System Warning: Basket is empty.");
 
-            const subtotal = activeCart.reduce((s, i) => s + (i.price * i.qty), 0);
-            const total = subtotal * 1.15;
-            const newQuoteId = "Q-" + Math.floor(Math.random() * 100000);
+            const newQuoteId = "REQ-" + Math.floor(Math.random() * 100000);
 
             // Save to LocalStorage History
-            let history = JSON.parse(localStorage.getItem('lubritec_quotes') || '[]');
+            let history = JSON.parse(localStorage.getItem('route64_quotes') || '[]');
             history.unshift({
                 id: newQuoteId,
                 date: new Date().toISOString(),
-                items: [...activeCart],
-                totalValue: total
+                items: [...activeCart]
             });
-            localStorage.setItem('lubritec_quotes', JSON.stringify(history));
+            localStorage.setItem('route64_quotes', JSON.stringify(history));
 
             // Generate Document using jsPDF
             const {
@@ -1326,14 +1213,14 @@
             doc.rect(0, 0, 210, 40, 'F');
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(22);
-            doc.text("LUBRITEC (PTY) LTD", 15, 20);
+            doc.text("ROUTE 64 LUBRICANTS", 15, 20);
             doc.setFontSize(10);
-            doc.text("Route 64 Official Gauteng Distributor", 15, 28);
+            doc.text("Official Gauteng Distributor", 15, 28);
 
             // Company Details
             doc.setTextColor(80);
             doc.setFontSize(10);
-            doc.text(`Quote Reference: ${newQuoteId}`, 15, 50);
+            doc.text(`Inquiry Reference: ${newQuoteId}`, 15, 50);
             doc.text(`Date Issued: ${new Date().toLocaleDateString()}`, 15, 55);
 
             doc.text("Company Details:", 120, 50);
@@ -1349,10 +1236,9 @@
             doc.setTextColor(0);
             doc.setFontSize(11);
             doc.setFont("helvetica", "bold");
-            doc.text("QTY", 15, y);
-            doc.text("DESCRIPTION", 35, y);
-            doc.text("SIZE", 130, y);
-            doc.text("LINE TOTAL", 160, y);
+            doc.text("QTY", 20, y);
+            doc.text("DESCRIPTION", 40, y);
+            doc.text("SIZE", 150, y);
 
             y += 5;
             doc.line(15, y, 195, y);
@@ -1361,10 +1247,9 @@
             // Table Items
             doc.setFont("helvetica", "normal");
             activeCart.forEach(it => {
-                doc.text(it.qty.toString(), 15, y);
-                doc.text(it.name.substring(0, 45), 35, y);
-                doc.text(it.size, 130, y);
-                doc.text(`R ${(it.price * it.qty).toFixed(2)}`, 160, y);
+                doc.text(it.qty.toString(), 20, y);
+                doc.text(it.name.substring(0, 50), 40, y);
+                doc.text(it.size, 150, y);
                 y += 10;
 
                 // Add page break if needed
@@ -1375,39 +1260,38 @@
             });
 
             y += 5;
-            doc.line(130, y, 195, y);
-            y += 10;
+            doc.line(15, y, 195, y);
+            y += 15;
 
-            // Totals
-            doc.setFont("helvetica", "bold");
+            // Footer Text
+            doc.setFont("helvetica", "italic");
             doc.setFontSize(10);
-            doc.text("SUBTOTAL:", 130, y);
-            doc.text(`R ${subtotal.toFixed(2)}`, 160, y);
-            y += 8;
-            doc.text("VAT (15%):", 130, y);
-            doc.text(`R ${(subtotal * 0.15).toFixed(2)}`, 160, y);
-            y += 8;
-            doc.setFontSize(12);
-            doc.text("TOTAL ESTIMATE:", 115, y);
-            doc.text(`R ${total.toFixed(2)}`, 160, y);
+            doc.setTextColor(100);
+            doc.text("This document serves as an official request for pricing.", 105, y, {
+                align: "center"
+            });
+            doc.text("Our sales team will contact you shortly with a formal quotation.", 105, y + 6, {
+                align: "center"
+            });
 
             // Download PDF
-            doc.save(`Lubritec_Quote_${newQuoteId}.pdf`);
+            doc.save(`Route64_Inquiry_${newQuoteId}.pdf`);
 
             if (sendToWhatsApp) {
                 // WhatsApp Message Generation targeting 068 087 1269
-                let msg = `*NEW QUOTE REQUEST: LUBRITEC ERP*\n\n`;
-                msg += `Quote Ref: ${newQuoteId}\n`;
+                let msg = `*NEW PRODUCT INQUIRY: ROUTE 64*\n\n`;
+                msg += `Inquiry Ref: ${newQuoteId}\n`;
                 msg += `Date: ${new Date().toLocaleString()}\n\n`;
+                msg += `*Requested Items:*\n`;
                 activeCart.forEach(i => msg += `▪ *${i.qty}x* ${i.name} (${i.size})\n`);
-                msg += `\n*Estimate Total (Incl VAT):* R ${total.toFixed(2)}\n\n*A quote PDF has been generated and I would like to proceed.*`;
+                msg += `\n*Please provide a formal quote for these items.*`;
 
                 setTimeout(() => {
                     window.open(`https://wa.me/27680871269?text=${encodeURIComponent(msg)}`, '_blank');
-                    finalizeCheckout("Quote PDF downloaded & WhatsApp opened!");
+                    finalizeCheckout("Inquiry PDF downloaded & WhatsApp opened!");
                 }, 500);
             } else {
-                finalizeCheckout("Quote PDF generated successfully!");
+                finalizeCheckout("Inquiry PDF generated successfully!");
             }
         }
 
@@ -1432,13 +1316,13 @@
         // ==========================================
         function loadClientLeads() {
             const list = document.getElementById('client-leads-list');
-            const history = JSON.parse(localStorage.getItem('lubritec_quotes') || '[]');
+            const history = JSON.parse(localStorage.getItem('route64_quotes') || localStorage.getItem('lubritec_quotes') || '[]');
 
             list.innerHTML = "";
             if (history.length === 0) {
                 list.innerHTML = `
                     <div class="p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] border border-dashed dark:border-slate-800">
-                        <p class="text-xs md:text-sm font-black uppercase tracking-widest">No previous quotes generated on this device</p>
+                        <p class="text-xs md:text-sm font-black uppercase tracking-widest">No previous inquiries found on this device</p>
                     </div>`;
                 return;
             }
@@ -1449,15 +1333,15 @@
                 el.innerHTML = `
                     <div>
                         <div class="flex flex-wrap items-center gap-3 md:gap-4 mb-3 md:mb-4">
-                            <span class="bg-blue-50 text-brand-blue dark:bg-blue-900/30 text-[9px] md:text-[10px] font-black px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl uppercase tracking-widest">Saved Locally</span>
+                            <span class="bg-blue-50 text-brand-blue dark:bg-blue-900/30 text-[9px] md:text-[10px] font-black px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl uppercase tracking-widest">Inquiry Sent</span>
                             <span class="text-[9px] md:text-[10px] font-bold text-gray-400">${new Date(q.date).toLocaleDateString()}</span>
                         </div>
-                        <h4 class="text-xl md:text-2xl font-black dark:text-white uppercase tracking-tighter">Quote Ref: #${q.id}</h4>
-                        <p class="text-xs md:text-sm text-gray-500 font-medium mt-1 md:mt-2">${q.items.length} Unique Asset(s) Included</p>
+                        <h4 class="text-xl md:text-2xl font-black dark:text-white uppercase tracking-tighter">Ref: #${q.id}</h4>
+                        <p class="text-xs md:text-sm text-gray-500 font-medium mt-1 md:mt-2">${q.items.length} Unique Asset(s) Requested</p>
                     </div>
                     <div class="text-left md:text-right w-full md:w-auto border-t md:border-t-0 border-gray-100 dark:border-slate-800 pt-4 md:pt-0">
-                        <span class="block text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Estimate Valuation</span>
-                        <h5 class="text-2xl md:text-4xl font-black text-brand-blue tracking-tighter">R${q.totalValue.toFixed(2)}</h5>
+                        <span class="block text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Status</span>
+                        <h5 class="text-2xl md:text-4xl font-black text-brand-blue tracking-tighter">Awaiting Pricing</h5>
                     </div>
                 `;
                 list.appendChild(el);
