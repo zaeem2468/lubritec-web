@@ -198,6 +198,11 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        
+        .tech-pattern {
+            background-image: radial-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 0);
+            background-size: 30px 30px;
+        }
     </style>
 </head>
 
@@ -211,21 +216,11 @@
 
     <!-- Screen Overlay / Loaders -->
     <div id="page-loader" class="fixed inset-0 bg-brand-navy z-[9999] flex flex-col items-center justify-center text-white transition-opacity duration-700">
-        <div class="relative w-32 h-32 mb-8">
+        <div class="relative w-40 h-40 mb-8">
             <div class="absolute inset-0 border-4 border-brand-red/20 rounded-full"></div>
             <div class="absolute inset-0 border-4 border-t-brand-red rounded-full animate-spin"></div>
             <div class="absolute inset-0 flex items-center justify-center">
-                <svg class="w-16 h-16 animate-pulse" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="#ffffff" />
-                            <stop offset="100%" stop-color="#cbd5e1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M10,20 Q50,5 90,20 Q95,60 50,95 Q5,60 10,20 Z" fill="url(#loaderGrad)" stroke="#64748b" stroke-width="3"/>
-                    <text x="50" y="42" font-family="Inter, sans-serif" font-weight="bold" font-size="20" fill="#0f172a" text-anchor="middle">Route</text>
-                    <text x="50" y="80" font-family="Inter, sans-serif" font-weight="900" font-size="44" fill="#0f172a" text-anchor="middle">64</text>
-                </svg>
+                <img src="image_7d531d.png" alt="Route 64 Logo" class="w-20 h-20 object-contain animate-pulse drop-shadow-2xl" onerror="this.style.display='none'">
             </div>
         </div>
         <p class="text-xs font-black uppercase tracking-[0.4em] opacity-50 animate-pulse text-white">Initializing Route 64 Lubricants</p>
@@ -302,18 +297,8 @@
     <nav class="nav-sticky">
         <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-24 flex justify-between items-center">
             <div class="flex items-center gap-4 cursor-pointer group" onclick="navigate('home')">
-                <div class="h-12 w-12 md:h-16 md:w-16 flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="navGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stop-color="#ffffff" />
-                                <stop offset="100%" stop-color="#cbd5e1" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M10,20 Q50,5 90,20 Q95,60 50,95 Q5,60 10,20 Z" fill="url(#navGrad)" stroke="#64748b" stroke-width="3"/>
-                        <text x="50" y="42" font-family="Inter, sans-serif" font-weight="bold" font-size="20" fill="#0f172a" text-anchor="middle">Route</text>
-                        <text x="50" y="80" font-family="Inter, sans-serif" font-weight="900" font-size="44" fill="#0f172a" text-anchor="middle">64</text>
-                    </svg>
+                <div class="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
                 <span class="font-black text-2xl md:text-3xl tracking-tighter italic uppercase text-white hidden sm:block">LUBRICANTS</span>
             </div>
@@ -412,18 +397,41 @@
                         </div>
                     </div>
 
-                    <!-- Right: Aesthetic Product Shot -->
+                    <!-- Right: Aesthetic Product Composition -->
                     <div class="relative group animate-viewIn" style="animation-delay: 0.3s;">
-                        <div class="absolute -inset-6 bg-gradient-to-tr from-brand-blue/30 to-brand-red/30 opacity-50 blur-3xl rounded-[3rem] animate-pulse-slow"></div>
+                        <!-- Ambient Glow behind the card -->
+                        <div class="absolute -inset-10 bg-brand-blue/20 blur-[80px] rounded-full animate-pulse-slow"></div>
 
-                        <div class="relative glass-panel rounded-[3rem] p-2 md:p-4 overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-700 shadow-2xl border border-white/10">
-                            <div class="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-50 z-10 pointer-events-none"></div>
-                            <img src="image_bdaa1b.jpg" alt="Route 64 Product Range" class="w-full h-auto object-contain rounded-[2.5rem] relative z-0" onerror="this.style.display='none'">
+                        <div class="relative glass-panel rounded-[3rem] overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-700 shadow-2xl border border-white/10 h-[450px] md:h-[550px] bg-slate-900/50 flex flex-col justify-center items-center">
 
-                            <div class="absolute bottom-8 left-8 z-20">
-                                <div class="bg-brand-navy/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl">
-                                    <span class="text-brand-red font-black uppercase tracking-widest text-[10px] block mb-1">Grade Level</span>
-                                    <span class="text-white font-black text-xl">Premium Synthetics</span>
+                            <!-- Background Layer 1: Tech Pattern -->
+                            <div class="absolute inset-0 tech-pattern opacity-30 z-0"></div>
+
+                            <!-- Background Layer 2: Massive Floating '64' -->
+                            <div class="absolute inset-0 flex items-center justify-center z-0 select-none">
+                                <span class="text-[250px] md:text-[350px] font-black text-white/[0.03] italic tracking-tighter transform -rotate-12 translate-y-10">64</span>
+                            </div>
+
+                            <!-- Background Layer 3: Vertical Watermark -->
+                            <div class="absolute right-6 inset-y-0 flex items-center z-0 opacity-10">
+                                <span class="text-3xl font-black uppercase tracking-[1em] [writing-mode:vertical-lr] text-white">LUBRICANTS</span>
+                            </div>
+
+                            <!-- Layer 4: Floating Products (Corrected Filename with hidden extension) -->
+                            <div class="relative z-10 w-[95%] flex justify-center">
+                                <img src="image_bdaa1b-removebg-preview.jpg.jpg.png" alt="Route 64 Product Range" class="w-full h-auto object-contain drop-shadow-[0_35px_50px_rgba(0,0,0,0.8)] transform group-hover:scale-110 group-hover:-translate-y-4 transition-all duration-1000 ease-out"
+                                    onerror="this.src='image_bdaa1b-removebg-preview.jpg.jpg'">
+                            </div>
+
+                            <!-- Layer 5: Dynamic Badge Overlap -->
+                            <div class="absolute bottom-10 left-10 z-20">
+                                <div class="bg-brand-navy/90 backdrop-blur-xl border border-white/10 p-5 rounded-3xl shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 max-w-[200px]">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <span class="w-2 h-2 rounded-full bg-brand-red animate-ping"></span>
+                                        <span class="text-brand-red font-black uppercase tracking-widest text-[9px]">Gauteng Certified</span>
+                                    </div>
+                                    <p class="text-white font-black text-sm leading-tight">PREMIUM FLUID SOLUTIONS</p>
+                                    <div class="h-1 w-full bg-brand-blue mt-3 rounded-full opacity-50"></div>
                                 </div>
                             </div>
                         </div>
@@ -770,18 +778,8 @@
         <div class="max-w-[1400px] mx-auto px-6 relative z-10">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
                 <div class="sm:col-span-2">
-                    <div class="h-16 w-16 md:h-20 md:w-20 mb-10 text-white">
-                        <svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="footerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#ffffff" />
-                                    <stop offset="100%" stop-color="#cbd5e1" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M10,20 Q50,5 90,20 Q95,60 50,95 Q5,60 10,20 Z" fill="url(#footerGrad)" stroke="#64748b" stroke-width="3"/>
-                            <text x="50" y="42" font-family="Inter, sans-serif" font-weight="bold" font-size="20" fill="#0f172a" text-anchor="middle">Route</text>
-                            <text x="50" y="80" font-family="Inter, sans-serif" font-weight="900" font-size="44" fill="#0f172a" text-anchor="middle">64</text>
-                        </svg>
+                    <div class="h-20 w-20 md:h-24 md:w-24 mb-8 text-white">
+                        <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-xl" onerror="this.style.display='none'">
                     </div>
                     <p class="text-slate-400 max-w-xl text-xl font-light leading-relaxed">
                         Setting the standard for lubrication logistics in Southern Africa. We supply the lifeblood of Gauteng's industry with certified, high-performance fluids.
@@ -1729,7 +1727,7 @@
         // ==========================================
         // 7. BOOTSTRAP
         // ==========================================
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (isDark) document.documentElement.classList.add('dark');
             updateThemeUI(isDark);
@@ -1742,8 +1740,8 @@
                     }, 700);
                 }
                 renderCatalog();
-            }, 600);
-        }
+            }, 100);
+        });
     </script>
 </body>
 
