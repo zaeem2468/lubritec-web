@@ -4,30 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Route 64 Lubricants | Products</title>
+    <title>Route 64 Lubricants | Professional ERP Platform</title>
 
     <!-- UI & Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <!-- Firebase Integration -->
+    <!-- Firebase Integration Logic -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"; import { getAuth, onAuthStateChanged, signInWithCustomToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; /* Your web app's Firebase configuration */ const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ",
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"; import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ",
         authDomain: "route64-web.firebaseapp.com", projectId: "route64-web", storageBucket: "route64-web.firebasestorage.app", messagingSenderId: "967223634070", appId: "1:967223634070:web:d7265bb36bbca0d0573ab7", measurementId: "G-6ZTYNL2KMN" }; const
-        app = initializeApp(firebaseConfig); const auth = getAuth(app); const db = getFirestore(app); const appId = "route64-web"; /* ADMIN EMAILS */ const ADMIN_EMAILS = ['info@route64.co.za', 'riaaz@route64.co.za', 'ziemie786@gmail.com']; window.isAdmin
-        = false; window.firebaseDb = db; window.firebaseAuth = auth; window.appId = appId; window.addDoc = addDoc; window.doc = doc; window.setDoc = setDoc; window.collection = collection; window.onSnapshot = onSnapshot; window.query = query; window.signInWithEmailAndPassword
-        = signInWithEmailAndPassword; window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; window.signOut = signOut; const initAuth = async () => { try { if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await
-        signInWithCustomToken(auth, __initial_auth_token); } } catch (error) { console.error("Auth failed:", error); } }; initAuth(); onAuthStateChanged(auth, (user) => { window.currentUser = user; const cloudStatus = document.getElementById('cloud-status');
-        const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const navAdminBtn = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn');
-        if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none';
-        if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid);
-        if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display =
-        'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText
-        = 'Client Login'; window.userPricing = {}; if(typeof window.renderCatalog === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
+        app = initializeApp(firebaseConfig); const auth = getAuth(app); const db = getFirestore(app); const appId = "route64-web"; window.firebaseDb = db; window.firebaseAuth = auth; window.appId = appId; window.addDoc = addDoc; window.doc = doc; window.setDoc
+        = setDoc; window.getDoc = getDoc; window.getDocs = getDocs; window.updateDoc = updateDoc; window.collection = collection; window.onSnapshot = onSnapshot; window.query = query; window.signOut = signOut; window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; const ADMIN_EMAILS = ['info@route64.co.za', 'riaaz@route64.co.za', 'ziemie786@gmail.com']; onAuthStateChanged(auth, (user) => { window.currentUser = user; const navAdminBtn
+        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const
+        cloudStatus = document.getElementById('cloud-status'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display
+        = window.isAdmin ? 'block' : 'none'; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out'; if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if(typeof window.loadUserPricing
+        === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false;
+        if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; if (cloudStatus)
+        cloudStatus.innerText = 'Not Connected (Login Required)'; window.userPricing = {}; if(typeof window.renderCatalog === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
 
     <script>
@@ -344,7 +341,6 @@
             <button onclick="window.handleNavLogin()" id="mobile-login-btn" class="hover:text-brand-blue transition">Client Login</button>
             <button onclick="window.navigate('contact')" class="hover:text-brand-blue transition">Contact Details</button>
             <button onclick="window.navigate('customer')" class="hover:text-brand-blue transition">My Inquiries</button>
-            <!-- Hidden by default, requires admin login -->
             <button onclick="window.navigate('admin')" id="mobile-admin-btn" style="display: none;" class="hover:text-brand-blue transition text-yellow-400">Admin Dashboard</button>
         </div>
     </div>
@@ -366,7 +362,6 @@
                 <button onclick="window.navigate('catalog')" class="hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-red">Products</button>
                 <button onclick="window.handleNavLogin()" id="nav-login-btn" class="hover:text-brand-blue transition text-brand-blue h-full border-b-2 border-transparent">Login</button>
                 <button onclick="window.navigate('customer')" class="hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Inquiries</button>
-                <!-- Hidden by default, requires admin login -->
                 <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500 h-full border-b-2 border-transparent hover:border-yellow-400">Admin</button>
             </div>
 
@@ -819,65 +814,65 @@
             </div>
         </div>
 
-        <div class="flex gap-2 md:gap-4 overflow-x-auto w-full pb-4 md:pb-8 mb-6 md:mb-8 snap-x" id="filter-buttons">
-            <button class="filter-btn active px-6 py-3 md:px-8 md:py-4 bg-brand-navy text-white rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-md md:shadow-2xl transition snap-start shrink-0" data-filter="all"
+        <div class="flex gap-2 md:gap-4 overflow-x-auto w-full pb-4 md:pb-8 mb-6 md:mb-8 hide-scroll" id="filter-buttons">
+            <button class="filter-btn active px-6 py-3 md:px-8 md:py-4 bg-brand-navy text-white rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-md md:shadow-2xl transition shrink-0" data-filter="all"
                 onclick="window.filterCatalog('all')">All Products</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition snap-start shrink-0"
+            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition shrink-0"
                 data-filter="Engine Oils" onclick="window.filterCatalog('Engine Oils')">Engine Oils</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition snap-start shrink-0"
-                data-filter="Gears & Transmission" onclick="window.filterCatalog('Gears & Transmission')">Gears & Transmission</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition snap-start shrink-0"
-                data-filter="Hydraulic Oils" onclick="window.filterCatalog('Hydraulic Oils')">Hydraulic Oils</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition snap-start shrink-0"
-                data-filter="Anti-Freeze" onclick="window.filterCatalog('Anti-Freeze')">Anti-Freeze</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition snap-start shrink-0"
-                data-filter="Grease" onclick="window.filterCatalog('Grease')">Grease</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition snap-start shrink-0"
-                data-filter="Chemicals" onclick="window.filterCatalog('Chemicals')">Chemicals</button>
+            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition shrink-0"
+                data-filter="Gear & Auto" onclick="window.filterCatalog('Gear & Auto')">Gear & Transmission</button>
+            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition shrink-0"
+                data-filter="Industrial" onclick="window.filterCatalog('Industrial')">Hydraulic Oils</button>
+            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition shrink-0"
+                data-filter="Chemicals & Grease" onclick="window.filterCatalog('Chemicals & Grease')">Chemicals & Grease</button>
         </div>
 
         <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 pb-24 md:pb-40"></div>
     </div>
 
-    <!-- VIEW: CUSTOMER ORDERS -->
-    <div id="view-customer" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-5xl mx-auto min-h-screen">
-        <div class="mb-10 md:mb-16 text-center">
-            <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">My Portal</h1>
-            <p id="cloud-status" class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Not Connected (Login Required)</p>
-        </div>
-        <div id="client-leads-list" class="space-y-4 md:space-y-6 mb-24 md:mb-32 text-center">
-            <div class="p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] border border-dashed mx-4 md:mx-0">
-                <p class="text-xs md:text-sm font-black uppercase tracking-widest mb-4">You are not logged in</p>
-                <button onclick="window.toggleAuthModal()" class="px-6 py-3 bg-brand-blue text-white rounded-xl font-black uppercase text-xs">Login Now</button>
-            </div>
+    <!-- VIEW: CUSTOMER PORTAL -->
+    <div id="view-customer" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-6xl mx-auto min-h-screen">
+        <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4 text-center">My Portal</h1>
+        <p id="cloud-status" class="text-brand-blue font-bold uppercase tracking-widest text-[10px] mb-12 text-center italic">Offline - Login Required</p>
+
+        <div class="bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-8 shadow-2xl border border-gray-100 dark:border-slate-800">
+            <h3 class="font-black text-xl uppercase tracking-widest mb-6 border-b dark:border-slate-800 pb-4 dark:text-white">Order History</h3>
+            <div id="client-leads-list" class="space-y-4 text-left"></div>
         </div>
     </div>
 
     <!-- VIEW: ADMIN DASHBOARD -->
-    <div id="view-admin" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-5xl mx-auto min-h-screen">
-        <div class="mb-10 md:mb-16 text-center">
-            <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">Admin Dashboard</h1>
-            <p class="text-yellow-500 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Manage Client Prices</p>
-        </div>
+    <div id="view-admin" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1200px] mx-auto min-h-screen">
+        <h1 class="text-4xl font-black text-center mb-10 uppercase tracking-tighter">Admin Control Center</h1>
 
-        <div class="bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 shadow-2xl border border-gray-100 dark:border-slate-800 mx-auto max-w-4xl">
-            <div class="mb-8">
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Select Client Profile</label>
-                <div class="relative">
-                    <select id="admin-client-select" onchange="window.loadAdminPricingForClient(this.value)" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 outline-none dark:text-white font-bold cursor-pointer text-sm appearance-none shadow-inner">
-                        <option value="">-- Choose a registered client --</option>
-                    </select>
-                    <div class="absolute right-4 top-4 pointer-events-none text-slate-400">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
+        <div class="bg-white dark:bg-slate-900 p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-gray-100 dark:border-slate-800 max-w-5xl mx-auto">
+            <!-- Tabs -->
+            <div class="flex gap-6 mb-8 border-b border-gray-200 dark:border-slate-800 pb-4">
+                <button onclick="window.switchAdminTab('pricing')" id="tab-pricing" class="font-black uppercase text-brand-blue border-b-2 border-brand-blue pb-2 text-xs tracking-widest transition">Manage Pricing</button>
+                <button onclick="window.switchAdminTab('orders')" id="tab-orders" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-xs tracking-widest transition">Manage Orders</button>
+            </div>
+
+            <!-- Tab 1: Pricing -->
+            <div id="admin-tab-pricing">
+                <label class="block text-[10px] font-black uppercase text-slate-400 mb-3 tracking-widest">Select Client Profile</label>
+                <select id="admin-client-select" onchange="window.loadAdminPricingForClient(this.value)" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-800 dark:text-white border border-gray-200 dark:border-slate-700 mb-8 font-bold outline-none shadow-inner cursor-pointer text-sm">
+                    <option value="">-- Choose Client Profile --</option>
+                </select>
+                <div id="admin-pricing-container" class="hidden">
+                    <div id="admin-pricing-grid" class="space-y-4 mb-8 max-h-[50vh] overflow-y-auto pr-2 hide-scroll"></div>
+                    <button onclick="window.saveAdminPricing()" class="w-full py-5 bg-yellow-500 text-white font-black uppercase rounded-xl shadow-xl hover:bg-yellow-600 transition-all tracking-widest">Update Price Profile</button>
                 </div>
             </div>
 
-            <div id="admin-pricing-container" class="hidden">
-                <div id="admin-pricing-grid" class="mb-8 max-h-[60vh] overflow-y-auto pr-2">
-                    <!-- Generated via JS -->
+            <!-- Tab 2: Orders -->
+            <div id="admin-tab-orders" class="hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-black text-xl dark:text-white uppercase tracking-tighter">Global Inquiries</h3>
+                    <button onclick="window.loadAdminOrders()" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg dark:text-white hover:bg-brand-blue hover:text-white transition">Refresh List</button>
                 </div>
-                <button onclick="window.saveAdminPricing()" class="w-full py-4 bg-yellow-500 hover:bg-yellow-600 text-white font-black uppercase tracking-widest rounded-xl transition shadow-xl text-[10px] md:text-xs">Save Prices</button>
+                <div id="admin-orders-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll">
+                    <p class="text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest">Loading Orders...</p>
+                </div>
             </div>
         </div>
     </div>
@@ -885,20 +880,18 @@
     <!-- Footer -->
     <footer class="bg-brand-navy pt-16 md:pt-24 pb-12 md:pb-20 border-t border-white/5 relative overflow-hidden px-4 md:px-6 mt-12">
         <div class="max-w-[1400px] mx-auto relative z-10 text-center text-slate-400 text-xs">
-            © 2026 Route 64 Lubricants.
+            © 2026 Route 64 Lubricants. Authorized Distribution. Built for Gauteng Industry.
         </div>
     </footer>
 
+    <!-- MAIN LOGIC SCRIPTS -->
     <script>
-        /* ========================================== */
-        /* 1. SYSTEM INITIALIZATION & DATA ENGINE */
-        /* ========================================== */
         window.userPricing = {};
-        window.isRegisterMode = false;
-        window.cartTotal = 0;
+        window.activeCart = [];
+        window.currentFilter = 'all';
         window.viewMode = 'grid';
+        window.isRegisterMode = false;
 
-        // Base price is 0. Products structured to explicitly include Case loads based on PDF
         const cloudProducts = [{
             id: "P-E001",
             name: "Engine Oil (SAE 40)",
@@ -997,15 +990,9 @@
             variants: [{
                 size: "200ml"
             }, {
-                size: "200ml (Case of 40)"
-            }, {
                 size: "500ml"
             }, {
-                size: "500ml (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1014,16 +1001,12 @@
         }, {
             id: "P-G001",
             name: "Gear Oil (EP90)",
-            category: "Gears & Transmission",
+            category: "Gear & Auto",
             desc: "EP90 Gear Oil.",
             variants: [{
                 size: "500ml"
             }, {
-                size: "500ml (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1032,16 +1015,12 @@
         }, {
             id: "P-G002",
             name: "Gear Oil (80W90)",
-            category: "Gears & Transmission",
+            category: "Gear & Auto",
             desc: "80W90 Gear Oil.",
             variants: [{
                 size: "500ml"
             }, {
-                size: "500ml (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1050,16 +1029,12 @@
         }, {
             id: "P-G003",
             name: "Transmission (ATF DII)",
-            category: "Gears & Transmission",
+            category: "Gear & Auto",
             desc: "Automatic Transmission Fluid DII.",
             variants: [{
                 size: "500ml"
             }, {
-                size: "500ml (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1068,20 +1043,14 @@
         }, {
             id: "P-G004",
             name: "Brake Fluid DOT4",
-            category: "Gears & Transmission",
-            desc: "DOT4 Brake Fluid.",
+            category: "Gear & Auto",
+            desc: "DOT4 Brake Fluid, NRCS Approved HEF NO: 16077.",
             variants: [{
                 size: "200ml"
             }, {
-                size: "200ml (Case of 40)"
-            }, {
                 size: "500ml"
             }, {
-                size: "500ml (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1090,16 +1059,12 @@
         }, {
             id: "P-I001",
             name: "Hydraulic Oil (ISO 68)",
-            category: "Hydraulic Oils",
+            category: "Industrial",
             desc: "Premium ISO 68 Hydraulic Oil.",
             variants: [{
                 size: "1L"
             }, {
-                size: "1L (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1108,16 +1073,12 @@
         }, {
             id: "P-I002",
             name: "Hydraulic Oil (ISO 46)",
-            category: "Hydraulic Oils",
+            category: "Industrial",
             desc: "Premium ISO 46 Hydraulic Oil.",
             variants: [{
                 size: "1L"
             }, {
-                size: "1L (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1126,16 +1087,12 @@
         }, {
             id: "P-C001",
             name: "Engine Cleaner Water Base",
-            category: "Chemicals",
+            category: "Chemicals & Grease",
             desc: "Water-based engine cleaner.",
             variants: [{
                 size: "500ml"
             }, {
-                size: "500ml (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1144,12 +1101,10 @@
         }, {
             id: "P-C002",
             name: "Engine Cleaner Solvent Base",
-            category: "Chemicals",
+            category: "Chemicals & Grease",
             desc: "Solvent-based engine cleaner.",
             variants: [{
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1158,16 +1113,12 @@
         }, {
             id: "P-C003",
             name: "Degreaser Concentrate",
-            category: "Chemicals",
+            category: "Chemicals & Grease",
             desc: "Concentrated Degreaser.",
             variants: [{
                 size: "500ml"
             }, {
-                size: "500ml (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1176,40 +1127,30 @@
         }, {
             id: "P-C004",
             name: "Degreaser Concentrate (Spray)",
-            category: "Chemicals",
-            desc: "Degreaser Concentrate spray.",
+            category: "Chemicals & Grease",
+            desc: "Degreaser Concentrate in a trigger spray bottle.",
             variants: [{
                 size: "500ml"
-            }, {
-                size: "500ml (Case of 20)"
             }]
         }, {
             id: "P-C005",
             name: "Anti-Freeze Summer Coolant",
-            category: "Anti-Freeze",
+            category: "Chemicals & Grease",
             desc: "Summer coolant anti-freeze.",
             variants: [{
                 size: "1L"
             }, {
-                size: "1L (Case of 20)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }]
         }, {
             id: "P-C006",
             name: "Anti-Freeze 30%",
-            category: "Anti-Freeze",
+            category: "Chemicals & Grease",
             desc: "30% Anti-freeze mix.",
             variants: [{
                 size: "1L"
             }, {
-                size: "1L (Case of 14)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1218,16 +1159,12 @@
         }, {
             id: "P-C007",
             name: "Anti-Freeze 50%",
-            category: "Anti-Freeze",
+            category: "Chemicals & Grease",
             desc: "50% Anti-freeze mix.",
             variants: [{
                 size: "1L"
             }, {
-                size: "1L (Case of 14)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1236,16 +1173,12 @@
         }, {
             id: "P-C008",
             name: "Anti-Freeze 96%",
-            category: "Anti-Freeze",
+            category: "Chemicals & Grease",
             desc: "96% Anti-freeze mix.",
             variants: [{
                 size: "1L"
             }, {
-                size: "1L (Case of 14)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "20L"
             }, {
@@ -1254,16 +1187,12 @@
         }, {
             id: "P-C009",
             name: "Grease - Wheel Bearing",
-            category: "Grease",
+            category: "Chemicals & Grease",
             desc: "Wheel bearing grease.",
             variants: [{
                 size: "500g"
             }, {
-                size: "500g (Case of 20)"
-            }, {
                 size: "5kg"
-            }, {
-                size: "5kg (Case of 4)"
             }, {
                 size: "15kg"
             }, {
@@ -1272,16 +1201,12 @@
         }, {
             id: "P-C010",
             name: "Grease - Multipurpose",
-            category: "Grease",
+            category: "Chemicals & Grease",
             desc: "Multipurpose grease.",
             variants: [{
                 size: "500g"
             }, {
-                size: "500g (Case of 20)"
-            }, {
                 size: "5kg"
-            }, {
-                size: "5kg (Case of 4)"
             }, {
                 size: "15kg"
             }, {
@@ -1290,16 +1215,12 @@
         }, {
             id: "P-C011",
             name: "Grease - CV Joint",
-            category: "Grease",
+            category: "Chemicals & Grease",
             desc: "CV Joint grease.",
             variants: [{
                 size: "500g"
             }, {
-                size: "500g (Case of 20)"
-            }, {
                 size: "5kg"
-            }, {
-                size: "5kg (Case of 4)"
             }, {
                 size: "15kg"
             }, {
@@ -1307,33 +1228,25 @@
             }]
         }, {
             id: "P-C012",
-            name: "Hand Cleaner with Grit",
-            category: "Chemicals",
+            name: "Hand Cleaner with Grit (Citrus)",
+            category: "Chemicals & Grease",
             desc: "Citrus hand cleaner with grit.",
             variants: [{
                 size: "800g"
             }, {
-                size: "800g (Case of 20)"
-            }, {
                 size: "5kg"
-            }, {
-                size: "5kg (Case of 4)"
             }, {
                 size: "15kg"
             }]
         }, {
             id: "P-C013",
-            name: "Hand Sanitizer",
-            category: "Chemicals",
+            name: "Hand Sanitizer 70% Alcohol",
+            category: "Chemicals & Grease",
             desc: "70% Alcohol Hand Sanitizer.",
             variants: [{
                 size: "1L"
             }, {
-                size: "1L (Case of 14)"
-            }, {
                 size: "5L"
-            }, {
-                size: "5L (Case of 4)"
             }, {
                 size: "25L"
             }, {
@@ -1341,32 +1254,27 @@
             }]
         }];
 
-        let activeCart = [];
-        let currentFilter = 'all';
-
-        /* ========================================== */
-        /* 2. AUTHENTICATION & PRICING ENGINE */
-        /* ========================================== */
+        /* ==========================================
+           Auth Logic
+           ========================================== */
         window.toggleAuthModal = function() {
             const modal = document.getElementById('auth-modal');
             const content = document.getElementById('auth-modal-content');
-            const isOpen = modal.classList.contains('open');
-
-            if (isOpen) {
+            if (modal.classList.contains('open')) {
                 content.classList.replace('scale-100', 'scale-95');
                 setTimeout(() => modal.classList.remove('open'), 300);
             } else {
                 modal.classList.add('open');
                 setTimeout(() => content.classList.replace('scale-95', 'scale-100'), 10);
             }
-        }
+        };
 
         window.toggleAuthMode = function() {
             window.isRegisterMode = !window.isRegisterMode;
             document.getElementById('auth-title').innerText = window.isRegisterMode ? 'Register Account' : 'Client Login';
             document.getElementById('auth-submit-btn').innerText = window.isRegisterMode ? 'Create Account' : 'Sign In';
             document.getElementById('auth-toggle-btn').innerText = window.isRegisterMode ? 'Already have an account? Login' : 'Need an account? Register here';
-        }
+        };
 
         window.handleNavLogin = function() {
             if (window.currentUser) {
@@ -1377,7 +1285,7 @@
             } else {
                 window.toggleAuthModal();
             }
-        }
+        };
 
         window.handleAuth = async function(e) {
             e.preventDefault();
@@ -1389,13 +1297,11 @@
             try {
                 if (window.isRegisterMode) {
                     const cred = await window.createUserWithEmailAndPassword(window.firebaseAuth, email, pass);
-                    /* SAVE TO GLOBAL CLIENT LIST FOR ADMIN VISIBILITY */
                     const userRef = window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/registeredUsers`, cred.user.uid);
                     await window.setDoc(userRef, {
                         email: email,
                         uid: cred.user.uid
                     });
-
                     window.customAlert("Registration successful! Account awaits pricing setup.");
                 } else {
                     await window.signInWithEmailAndPassword(window.firebaseAuth, email, pass);
@@ -1407,12 +1313,11 @@
                 window.customAlert("Error: " + err.message);
             }
             btn.innerText = window.isRegisterMode ? 'Create Account' : 'Sign In';
-        }
+        };
 
         window.loadUserPricing = function(uid) {
             const path = `artifacts/${window.appId}/users/${uid}/pricing`;
             const q = window.query(window.collection(window.firebaseDb, path));
-
             window.onSnapshot(q, (snapshot) => {
                 window.userPricing = {};
                 snapshot.forEach(doc => {
@@ -1421,24 +1326,42 @@
                 window.renderCatalog();
                 window.updateCartUI();
             }, (err) => console.error("Pricing sync error:", err));
-        }
+        };
 
-        /* ========================================== */
-        /* ADMIN ENGINE (VARIANT LEVEL PRICING) */
-        /* ========================================== */
+        /* ==========================================
+           Admin Engine
+           ========================================== */
+        window.switchAdminTab = function(tab) {
+            const tPricing = document.getElementById('admin-tab-pricing');
+            const tOrders = document.getElementById('admin-tab-orders');
+            const bPricing = document.getElementById('tab-pricing');
+            const bOrders = document.getElementById('tab-orders');
+
+            if (tab === 'pricing') {
+                tPricing.classList.remove('hidden');
+                tOrders.classList.add('hidden');
+                bPricing.className = "font-black uppercase text-brand-blue border-b-2 border-brand-blue pb-2 text-xs tracking-widest transition";
+                bOrders.className = "font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-xs tracking-widest transition";
+            } else {
+                tOrders.classList.remove('hidden');
+                tPricing.classList.add('hidden');
+                bOrders.className = "font-black uppercase text-brand-blue border-b-2 border-brand-blue pb-2 text-xs tracking-widest transition";
+                bPricing.className = "font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-xs tracking-widest transition";
+                window.loadAdminOrders();
+            }
+        };
+
         window.loadAdminUsers = function() {
             const select = document.getElementById('admin-client-select');
             if (!select || !window.firebaseDb) return;
-
             const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/registeredUsers`));
             window.onSnapshot(q, (snapshot) => {
                 const currentVal = select.value;
                 select.innerHTML = '<option value="">-- Choose a registered client --</option>';
                 snapshot.forEach(doc => {
-                    const data = doc.data();
                     const opt = document.createElement('option');
-                    opt.value = data.uid;
-                    opt.innerText = data.email;
+                    opt.value = doc.data().uid;
+                    opt.innerText = doc.data().email;
                     select.appendChild(opt);
                 });
                 if (currentVal) select.value = currentVal;
@@ -1457,17 +1380,15 @@
 
             const path = `artifacts/${window.appId}/users/${uid}/pricing`;
             const q = window.query(window.collection(window.firebaseDb, path));
-
             window.onSnapshot(q, (snapshot) => {
                 const clientPricing = {};
                 snapshot.forEach(doc => {
                     clientPricing[doc.id] = doc.data().variants || {};
                 });
-
                 grid.innerHTML = "";
+
                 cloudProducts.forEach(p => {
                     const clientPricingMap = clientPricing[p.id] || {};
-
                     let variantsHtml = p.variants.map((v, idx) => {
                         const currentPrice = clientPricingMap[v.size] || 0;
                         return `
@@ -1488,33 +1409,27 @@
                             <p class="text-[8px] text-brand-blue font-black uppercase tracking-widest">${p.category}</p>
                             <p class="text-sm md:text-base font-bold dark:text-white">${p.name}</p>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            ${variantsHtml}
-                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">${variantsHtml}</div>
                     `;
                     grid.appendChild(div);
                 });
-            }, (err) => console.error("Admin pricing error:", err));
+            });
         };
 
         window.saveAdminPricing = async function() {
             const uid = document.getElementById('admin-client-select').value;
             if (!uid) return window.customAlert("Select a client first.");
-
             window.customAlert("Saving prices...");
             try {
                 const inputs = document.querySelectorAll('.admin-price-input');
                 const dataToSave = {};
-
                 inputs.forEach(input => {
                     const pid = input.getAttribute('data-pid');
                     const size = input.getAttribute('data-size');
                     const val = parseFloat(input.value) || 0;
-
                     if (!dataToSave[pid]) dataToSave[pid] = {};
                     dataToSave[pid][size] = val;
                 });
-
                 for (const pid in dataToSave) {
                     const docPath = `artifacts/${window.appId}/users/${uid}/pricing`;
                     await window.setDoc(window.doc(window.firebaseDb, docPath, pid), {
@@ -1528,9 +1443,84 @@
             }
         };
 
-        /* ========================================== */
-        /* 3. CATALOG RENDER & LOGIC */
-        /* ========================================== */
+        window.loadAdminOrders = async function() {
+                const grid = document.getElementById('admin-orders-grid');
+                if (!window.firebaseDb) return;
+
+                grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest animate-pulse'>Fetching Global Data...</p>";
+
+                try {
+                    const usersRef = window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/registeredUsers`);
+                    const usersSnap = await window.getDocs(usersRef);
+
+                    let allOrders = [];
+                    for (let uDoc of usersSnap.docs) {
+                        const uid = uDoc.id;
+                        const email = uDoc.data().email;
+                        const ordersSnap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${uid}/inquiries`));
+                        ordersSnap.forEach(o => {
+                            allOrders.push({...o.data(),
+                                orderId: o.id,
+                                uid,
+                                email
+                            });
+                        });
+                    }
+
+                    allOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                    if (allOrders.length === 0) {
+                        grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest'>No orders in system</p>";
+                        return;
+                    }
+
+                    grid.innerHTML = allOrders.map(o => `
+                    <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border dark:border-white/5 shadow-sm">
+                        <div class="flex justify-between items-start mb-4 border-b dark:border-slate-700 pb-4">
+                            <div>
+                                <span class="text-[9px] font-black uppercase text-slate-400 block mb-1">${new Date(o.date).toLocaleString()}</span>
+                                <h4 class="font-black text-sm dark:text-white uppercase tracking-tighter">${o.ref}</h4>
+                                <p class="text-[10px] text-brand-blue font-bold uppercase mt-1">${o.email}</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-black uppercase ${o.status === 'Approved' ? 'text-green-500' : 'text-orange-500'} block mb-2">${o.status}</span>
+                                <select class="text-[9px] font-bold p-2 rounded bg-white dark:bg-brand-navy dark:text-white outline-none cursor-pointer border border-gray-200 dark:border-slate-700" onchange="window.updateOrderStatus('${o.uid}', '${o.orderId}', this.value)">
+                                    <option value="" disabled selected>Change Status...</option>
+                                    <option value="Pending Processing">Pending Processing</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Shipped">Shipped</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            ${o.items.map(i => `<span class="bg-white dark:bg-brand-navy border dark:border-slate-700 px-2 py-1 rounded text-[9px] font-bold dark:text-slate-300 uppercase">${i.qty}x ${i.name} (${i.size})</span>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            } catch(e) {
+                console.error(e);
+                grid.innerHTML = "<p class='text-red-500 text-center py-10 text-xs font-bold uppercase'>Error loading orders</p>";
+            }
+        };
+
+        window.updateOrderStatus = async function(uid, orderId, newStatus) {
+            if(!newStatus) return;
+            try {
+                await window.updateDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${uid}/inquiries`, orderId), {
+                    status: newStatus
+                });
+                window.customAlert(`Status updated to ${newStatus}`);
+                window.loadAdminOrders(); 
+            } catch(e) {
+                console.error(e);
+                window.customAlert("Failed to update status");
+            }
+        };
+
+        /* ==========================================
+           Catalog Engine
+           ========================================== */
         window.toggleViewMode = function(mode) {
             window.viewMode = mode;
             const btnGrid = document.getElementById('btn-grid-view');
@@ -1545,18 +1535,16 @@
                 }
             }
             window.renderCatalog();
-        }
+        };
 
         window.filterCatalog = function(category) {
-            currentFilter = category;
+            window.currentFilter = category;
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 const isActive = btn.dataset.filter === category;
-                btn.className = isActive ?
-                    "filter-btn px-6 py-3 md:px-8 md:py-4 bg-brand-navy text-white shadow-md md:shadow-2xl rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap transition active snap-start shrink-0" :
-                    "filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition snap-start shrink-0";
+                btn.className = `filter-btn px-6 py-3 md:px-8 md:py-4 ${isActive ? 'bg-brand-navy text-white shadow-md md:shadow-2xl' : 'bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800'} rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap transition active shrink-0`;
             });
             window.renderCatalog();
-        }
+        };
 
         window.renderCatalog = function() {
             const grid = document.getElementById('catalog-grid');
@@ -1566,16 +1554,15 @@
             grid.className = window.viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 pb-24 md:pb-40" : "block space-y-4 md:space-y-6 pb-24 md:pb-40";
 
             const filtered = cloudProducts.filter(p => {
-                return (currentFilter === 'all' || p.category === currentFilter) &&
-                    (p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term));
+                const matchCat = window.currentFilter === 'all' || p.category === window.currentFilter;
+                const matchSearch = p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term);
+                return matchCat && matchSearch;
             });
 
             filtered.forEach(p => {
-                // Generate Variant Dropdown with Prices included
-                let vHtml = `<select id='${window.viewMode}-sel-${p.id}' class='w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-lg md:rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-3 md:mb-4 mt-2 cursor-pointer'>`;
-
                 const pMap = window.currentUser && window.userPricing ? (window.userPricing[p.id] || {}) : {};
-
+                
+                let vHtml = `<select id="${window.viewMode}-sel-${p.id}" class="w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-lg md:rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-3 md:mb-4 mt-2 cursor-pointer transition hover:bg-slate-200 dark:hover:bg-slate-700" onclick="event.stopPropagation()">`;
                 p.variants.forEach(v => {
                     let priceLabel = "";
                     if (window.currentUser) {
@@ -1586,39 +1573,32 @@
                 });
                 vHtml += "</select>";
 
-                /* PRICING STATUS LOGIC */
                 let priceDisplay = `<div class="bg-red-50 dark:bg-red-900/20 text-brand-red p-2 rounded-lg mb-4 text-[9px] font-black uppercase tracking-widest text-center border border-red-100 dark:border-red-900/30">Login to view pricing</div>`;
-                if (window.currentUser) {
-                    priceDisplay = `<div class="mb-4 text-center"><span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest block mb-1">Status</span><span class="text-sm font-black text-brand-blue">Account Active</span></div>`;
-                }
+                if (window.currentUser) priceDisplay = `<div class="mb-4 text-center"><span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest block mb-1">Status</span><span class="text-sm font-black text-brand-blue">Account Active</span></div>`;
 
                 if (window.viewMode === 'grid') {
                     const card = document.createElement('div');
                     card.className = "pro-card flex flex-col h-full cursor-pointer group shadow-sm overflow-hidden p-6 md:p-8";
                     card.innerHTML = `
                         <div class='flex-1 flex flex-col text-center'>
-                            <span class='text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-brand-blue mb-1 md:mb-2 block font-bold'>${p.category}</span>
-                            <h3 class='text-lg md:text-2xl font-black text-brand-navy dark:text-white leading-tight mb-2 md:mb-4 group-hover:text-brand-blue transition'>${p.name}</h3>
-                            <p class='text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-4 md:mb-6 line-clamp-2'>${p.desc}</p>
+                            <span class='text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-brand-blue mb-1 block font-bold'>${p.category}</span>
+                            <h3 class='text-lg md:text-2xl font-black text-brand-navy dark:text-white leading-tight mb-2 group-hover:text-brand-blue transition'>${p.name}</h3>
+                            <p class='text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2'>${p.desc}</p>
                             ${priceDisplay}
                             ${vHtml}
                             <div class='mt-auto pt-4 md:pt-6 border-t border-gray-50 dark:border-slate-800 flex flex-col sm:flex-row items-center gap-3'>
                                 <div class='flex items-center bg-slate-50 dark:bg-slate-900 rounded-lg overflow-hidden border border-gray-100 dark:border-slate-700 shadow-inner w-full sm:w-auto'>
                                     <input type='number' id='grid-qty-${p.id}' value='1' min='1' class='w-full sm:w-16 bg-transparent text-center font-black text-sm dark:text-white py-3 outline-none'>
                                 </div>
-                                <button class='w-full py-3 rounded-lg bg-brand-navy dark:bg-brand-blue text-white font-black text-[10px] uppercase tracking-widest hover:bg-brand-blue transition shadow-md' onclick='event.stopPropagation(); window.addFromCatalog("${p.id}", "grid")'>Add To Cart</button>
+                                <button class='w-full py-3 rounded-lg bg-brand-navy dark:bg-brand-blue text-white font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition shadow-md' onclick='event.stopPropagation(); window.addFromGrid("${p.id}")'>Add To Cart</button>
                             </div>
                         </div>`;
                     grid.appendChild(card);
                 } else {
                     const row = document.createElement('div');
                     row.className = "bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex flex-col md:flex-row md:items-center gap-4 md:gap-6 shadow-sm hover:border-brand-blue transition group";
-
-                    let listPriceDisplay = `<div class="bg-red-50 dark:bg-red-900/20 text-brand-red px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border border-red-100 dark:border-red-900/30">Login for Price</div>`;
-                    if (window.currentUser) {
-                        listPriceDisplay = `<span class="text-[10px] font-black text-brand-blue uppercase tracking-widest">Active</span>`;
-                    }
-
+                    let listPriceDisplay = window.currentUser ? `<span class="text-[10px] font-black text-brand-blue uppercase tracking-widest">Active</span>` : `<div class="bg-red-50 dark:bg-red-900/20 text-brand-red px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border border-red-100 dark:border-red-900/30">Login for Price</div>`;
+                    
                     row.innerHTML = `
                         <div class='flex-1 min-w-[200px]'>
                             <span class='text-[9px] md:text-[10px] font-black text-brand-blue uppercase tracking-[0.2em] block mb-1 font-bold'>${p.category}</span>
@@ -1634,70 +1614,71 @@
                                 <div class='flex items-center bg-slate-50 dark:bg-slate-800 rounded-lg md:rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 shadow-inner flex-1 sm:flex-none'>
                                     <input type='number' id='list-qty-${p.id}' value='1' min='1' class='w-full sm:w-16 md:w-20 bg-transparent text-center font-black text-sm md:text-base dark:text-white py-2 md:py-3 outline-none'>
                                 </div>
-                                <button onclick='window.addFromCatalog("${p.id}", "list")' class='bg-brand-navy dark:bg-brand-blue text-white font-black text-[10px] md:text-xs uppercase tracking-widest px-6 py-3 md:px-8 md:py-3.5 rounded-lg md:rounded-xl shadow-md md:shadow-xl transition active:scale-95 whitespace-nowrap flex-1 sm:flex-none text-center'>Add</button>
+                                <button onclick='window.addFromList("${p.id}")' class='bg-brand-navy dark:bg-brand-blue text-white font-black text-[10px] md:text-xs uppercase tracking-widest px-6 py-3 md:px-8 md:py-3.5 rounded-lg md:rounded-xl shadow-md md:shadow-xl transition active:scale-95 whitespace-nowrap flex-1 sm:flex-none text-center'>Add</button>
                             </div>
                         </div>`;
                     grid.appendChild(row);
                 }
             });
-        }
+        };
 
-        /* ========================================== */
-        /* 4. CART & CHECKOUT ENGINE */
-        /* ========================================== */
-        window.addFromCatalog = function(id, mode) {
+        /* ==========================================
+           Cart Operations
+           ========================================== */
+        window.addFromGrid = function(id) {
             const p = cloudProducts.find(x => x.id === id);
-            const select = document.getElementById(`${mode}-sel-${id}`);
-            const qtyInput = document.getElementById(`${mode}-qty-${id}`);
+            const select = document.getElementById(`grid-sel-${id}`);
+            const qtyInput = document.getElementById(`grid-qty-${id}`);
             if (select && qtyInput) {
-                const qty = parseInt(qtyInput.value) || 1;
-                addToCartCore(p, select.value, qty);
+                const opt = select.options[select.selectedIndex];
+                window.addToCartCore(p, opt.value, parseInt(qtyInput.value) || 1);
                 qtyInput.value = 1;
             }
-        }
+        };
 
-        function addToCartCore(product, size, qty) {
+        window.addFromList = function(id) {
+            const p = cloudProducts.find(x => x.id === id);
+            const select = document.getElementById(`list-sel-${id}`);
+            const qtyInput = document.getElementById(`list-qty-${id}`);
+            if (select && qtyInput) {
+                const opt = select.options[select.selectedIndex];
+                window.addToCartCore(p, opt.value, parseInt(qtyInput.value) || 1);
+                qtyInput.value = 1;
+            }
+        };
+
+        window.addToCartCore = function(product, size, qty) {
             let price = 0;
             if (window.currentUser) {
                 const pMap = window.userPricing[product.id] || {};
                 price = pMap[size] || 0;
             }
-
             const cartId = `${product.id}-${size}`;
-            const existing = activeCart.find(i => i.cartId === cartId);
-
+            const existing = window.activeCart.find(i => i.cartId === cartId);
             if (existing) existing.qty += qty;
-            else activeCart.push({
-                cartId,
-                id: product.id,
-                name: product.name,
-                size,
-                qty,
-                price
-            });
+            else window.activeCart.push({ cartId, id: product.id, name: product.name, size, qty, price });
 
             window.updateCartUI();
-            window.showToast(product.name, size);
+            window.customAlert(`${product.name} (${size}) Added`);
             if (!document.getElementById('cart-sidebar').classList.contains('open')) window.toggleCart();
-        }
+        };
 
         window.updateQty = function(id, delta) {
-            const item = activeCart.find(i => i.cartId === id);
+            const item = window.activeCart.find(i => i.cartId === id);
             if (!item) return;
             item.qty += delta;
-            if (item.qty <= 0) activeCart = activeCart.filter(i => i.cartId !== id);
+            if (item.qty <= 0) window.activeCart = window.activeCart.filter(i => i.cartId !== id);
             window.updateCartUI();
-        }
+        };
 
         window.clearCart = function() {
-            activeCart = [];
+            window.activeCart = [];
             window.updateCartUI();
-
             if (document.getElementById('customer-business')) document.getElementById('customer-business').value = '';
             if (document.getElementById('customer-name')) document.getElementById('customer-name').value = '';
             if (document.getElementById('customer-phone')) document.getElementById('customer-phone').value = '';
             if (document.getElementById('customer-address')) document.getElementById('customer-address').value = '';
-        }
+        };
 
         window.updateCartUI = function() {
             const container = document.getElementById('cart-items');
@@ -1709,25 +1690,22 @@
             container.innerHTML = '';
             let total = 0;
 
-            if (activeCart.length === 0) {
+            if (window.activeCart.length === 0) {
                 empty.style.display = 'flex';
                 badge.classList.add('scale-0');
             } else {
                 empty.style.display = 'none';
                 badge.classList.remove('scale-0');
-                badge.innerText = activeCart.reduce((s, i) => s + i.qty, 0);
+                badge.innerText = window.activeCart.reduce((s, i) => s + i.qty, 0);
 
-                activeCart.forEach(item => {
+                window.activeCart.forEach(item => {
                     const itemTotal = item.qty * item.price;
                     total += itemTotal;
 
                     const el = document.createElement('div');
                     el.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 p-4 rounded-2xl shadow-sm flex flex-col gap-3";
-
-                    let priceText = `<span class="text-[9px] text-gray-400 uppercase font-black">Quote Only</span>`;
-                    if (window.currentUser) {
-                        priceText = item.price > 0 ? `<span class="text-sm font-black text-brand-blue">R${itemTotal.toFixed(2)}</span>` : `<span class="text-[9px] text-brand-red uppercase font-black">Pending Price</span>`;
-                    }
+                    
+                    let priceText = window.currentUser ? (item.price > 0 ? `<span class="text-sm font-black text-brand-blue">R${itemTotal.toFixed(2)}</span>` : `<span class="text-[9px] text-brand-red uppercase font-black">Pending Price</span>`) : `<span class="text-[9px] text-gray-400 uppercase font-black">Quote Only</span>`;
 
                     el.innerHTML = `
                         <div class='flex justify-between items-start gap-2'>
@@ -1735,9 +1713,7 @@
                                 <h4 class='font-black text-xs text-brand-navy dark:text-white uppercase tracking-tighter'>${item.name}</h4>
                                 <span class='text-[9px] font-black uppercase text-brand-blue bg-blue-50 dark:bg-slate-950 px-2 py-1 rounded-md mt-1 inline-block'>${item.size}</span>
                             </div>
-                            <div class="text-right shrink-0">
-                                ${priceText}
-                            </div>
+                            <div class="text-right shrink-0">${priceText}</div>
                         </div>
                         <div class='flex items-center justify-between border-t border-gray-50 dark:border-slate-700 pt-3 mt-1'>
                             <div class='flex items-center bg-slate-50 dark:bg-slate-950 rounded-lg border dark:border-slate-700 p-0.5'>
@@ -1759,70 +1735,44 @@
                 }
                 window.cartTotal = total;
             }
-        }
+        };
 
         window.processQuote = async function(sendToWhatsApp = false) {
-            if (activeCart.length === 0) return window.customAlert("Basket is empty.");
-
+            if (window.activeCart.length === 0) return window.customAlert("Basket is empty.");
             const bizName = document.getElementById('customer-business').value.trim();
             const contactName = document.getElementById('customer-name').value.trim();
             const phone = document.getElementById('customer-phone').value.trim();
             const address = document.getElementById('customer-address').value.trim();
-
             if (!bizName || !phone) return window.customAlert("Please enter Business Name and Phone.");
 
             const newQuoteId = "REQ-" + Math.floor(Math.random() * 100000);
-            const customerDetails = {
-                bizName,
-                contactName,
-                phone,
-                address
-            };
-
+            
             if (window.currentUser && window.firebaseDb) {
                 try {
                     const inquiry = {
                         date: new Date().toISOString(),
-                        customer: customerDetails,
-                        items: activeCart,
+                        customer: { bizName, contactName, phone, address },
+                        items: window.activeCart,
                         total: window.cartTotal || 0,
                         status: "Pending Processing",
                         ref: newQuoteId
                     };
                     await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/inquiries`), inquiry);
-                } catch (error) {
-                    console.error("Cloud error:", error);
-                }
+                } catch (error) { console.error("Cloud error:", error); }
             }
 
-            const {
-                jsPDF
-            } = window.jspdf;
-            const doc = new jsPDF();
-            doc.setFillColor(15, 23, 42);
-            doc.rect(0, 0, 210, 40, 'F');
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(20);
-            doc.text("ROUTE 64 LUBRICANTS", 15, 20);
-            doc.setFontSize(10);
-            doc.text("Official Quote / Inquiry", 15, 28);
-
-            doc.setTextColor(80);
-            doc.text("20 Fiat Street, Aureus, Randfontein, 1760", 120, 20);
+            const { jsPDF } = window.jspdf; const doc = new jsPDF();
+            doc.setFillColor(15, 23, 42); doc.rect(0, 0, 210, 40, 'F');
+            doc.setTextColor(255, 255, 255); doc.setFontSize(20); doc.text("ROUTE 64 LUBRICANTS", 15, 20);
+            doc.setFontSize(10); doc.text("Official Quote / Inquiry", 15, 28);
+            doc.setTextColor(80); doc.text("20 Fiat Street, Aureus, Randfontein, 1760", 120, 20);
             doc.text("Phone: +27 11 412 3529", 120, 25);
             doc.text("Email: info@route64.co.za", 120, 30);
-
-            doc.setTextColor(0);
-            doc.setFont("helvetica", "bold");
-            doc.text("QUOTE REQUEST", 15, 45);
-            doc.setFont("helvetica", "normal");
-            doc.text("Ref: " + newQuoteId, 15, 52);
-            doc.text("Date: " + new Date().toLocaleDateString(), 15, 57);
-
-            doc.setFont("helvetica", "bold");
-            doc.text("CUSTOMER DETAILS", 120, 45);
-            doc.setFont("helvetica", "normal");
-            doc.text("Business: " + bizName, 120, 52);
+            doc.setTextColor(0); doc.setFont("helvetica", "bold"); doc.text("QUOTE REQUEST", 15, 45);
+            doc.setFont("helvetica", "normal"); doc.text("Ref: " + newQuoteId, 15, 52); doc.text("Date: " + new Date().toLocaleDateString(), 15, 57);
+            
+            doc.setFont("helvetica", "bold"); doc.text("CUSTOMER DETAILS", 120, 45);
+            doc.setFont("helvetica", "normal"); doc.text("Business: " + bizName, 120, 52);
             if (contactName) doc.text("Contact: " + contactName, 120, 57);
             doc.text("Phone: " + phone, 120, 62);
             if (address) {
@@ -1830,70 +1780,45 @@
                 doc.text(splitAddress, 120, 67);
             }
 
-            doc.setDrawColor(200);
-            doc.line(15, 85, 195, 85);
+            doc.setDrawColor(200); doc.line(15, 85, 195, 85);
+            
             let y = 95;
-            doc.setTextColor(0);
-            doc.setFont("helvetica", "bold");
-            doc.text("QTY", 15, y);
-            doc.text("ITEM", 35, y);
-            doc.text("SIZE", 120, y);
+            doc.setTextColor(0); doc.setFont("helvetica", "bold");
+            doc.text("QTY", 15, y); doc.text("ITEM", 35, y); doc.text("SIZE", 120, y);
             if (window.currentUser) doc.text("TOTAL", 170, y);
-            y += 5;
-            doc.line(15, y, 195, y);
-            y += 10;
+            y += 5; doc.line(15, y, 195, y); y += 10;
 
             doc.setFont("helvetica", "normal");
-            activeCart.forEach(it => {
-                doc.text(it.qty.toString(), 15, y);
-                doc.text(it.name.substring(0, 40), 35, y);
-                doc.text(it.size, 120, y);
+            window.activeCart.forEach(it => {
+                doc.text(it.qty.toString(), 15, y); doc.text(it.name.substring(0, 40), 35, y); doc.text(it.size, 120, y);
                 if (window.currentUser) {
                     const lineTotal = it.price > 0 ? "R" + (it.qty * it.price).toFixed(2) : "TBD";
                     doc.text(lineTotal, 170, y);
                 }
-                y += 10;
-                if (y > 270) {
-                    doc.addPage();
-                    y = 20;
-                }
+                y += 10; if (y > 270) { doc.addPage(); y = 20; }
             });
 
             if (window.currentUser && window.cartTotal > 0) {
-                y += 5;
-                doc.setFont("helvetica", "bold");
-                doc.text("GRAND TOTAL: R" + window.cartTotal.toFixed(2), 140, y);
+                y += 5; doc.setFont("helvetica", "bold"); doc.text("GRAND TOTAL: R" + window.cartTotal.toFixed(2), 140, y);
             } else if (window.currentUser) {
-                y += 5;
-                doc.setFont("helvetica", "bold");
-                doc.text("GRAND TOTAL: Pending Quote", 130, y);
+                y += 5; doc.setFont("helvetica", "bold"); doc.text("GRAND TOTAL: Pending Quote", 130, y);
             }
 
             doc.save(`Route64_${newQuoteId}.pdf`);
 
             if (sendToWhatsApp) {
                 let msg = `*ROUTE 64 ORDER: ${newQuoteId}*\n🏢 ${bizName} | 📞 ${phone}\n\n*Items:*\n`;
-                activeCart.forEach(i => msg += `▪ *${i.qty}x* ${i.name} (${i.size})\n`);
-                if (window.currentUser && window.cartTotal > 0) {
-                    msg += `\n*Total: R${window.cartTotal.toFixed(2)}*`;
-                } else {
-                    msg += `\n*Please provide pricing.*`;
-                }
+                window.activeCart.forEach(i => msg += `▪ *${i.qty}x* ${i.name} (${i.size})\n`);
                 window.open("https://wa.me/27680871269?text=" + encodeURIComponent(msg), '_blank');
             }
-
-            window.clearCart();
-            window.closeAllModals();
-            window.navigate('customer');
+            window.clearCart(); window.closeAllModals(); window.navigate('customer');
             window.customAlert("Order Submitted Successfully");
-        }
+        };
 
         window.generatePDF = () => window.processQuote(false);
         window.checkoutWhatsApp = () => window.processQuote(true);
 
-        /* ========================================== */
-        /* 5. CUSTOMER PORTAL (HISTORY) */
-        /* ========================================== */
+        /* --- Customer Portal / History --- */
         window.loadClientLeads = function() {
             const list = document.getElementById('client-leads-list');
             if (!list) return;
@@ -1908,41 +1833,69 @@
                     }
                     snapshot.forEach(doc => {
                         const data = doc.data();
+                        
+                        let statusColor = "text-brand-blue";
+                        if(data.status === "Approved") statusColor = "text-green-500";
+                        if(data.status === "Shipped") statusColor = "text-orange-500";
+
+                        const safeItems = encodeURIComponent(JSON.stringify(data.items));
+
                         const el = document.createElement('div');
-                        el.className = "pro-card p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-8 shadow-sm text-left mb-4";
-
-                        const displayTotal = data.total > 0 ? `R${data.total.toFixed(2)}` : "Pending Quote";
-
-                        el.innerHTML = `<div>
-                            <div class='flex items-center gap-3 mb-2'><span class='bg-blue-50 text-brand-blue text-[9px] font-black px-3 py-1 rounded-full uppercase'>Cloud Synced</span><span class='text-[10px] font-bold text-gray-400'>${new Date(data.date).toLocaleDateString()}</span></div>
-                            <h4 class='text-lg font-black dark:text-white uppercase'>Ref: #${data.ref}</h4>
-                            <p class='text-xs text-gray-500'>${data.items.length} Asset(s) | Total: ${displayTotal}</p>
+                        el.className = "bg-white dark:bg-slate-900 p-6 md:p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-4";
+                        el.innerHTML = `
+                            <div class="flex-1 w-full">
+                                <div class='flex items-center gap-3 mb-3'>
+                                    <span class='bg-blue-50 dark:bg-blue-900/20 text-brand-blue text-[9px] font-black px-3 py-1 rounded-full uppercase'>${new Date(data.date).toLocaleDateString()}</span>
+                                    <span class='text-[10px] font-black uppercase tracking-widest text-slate-400'>Ref: #${data.ref}</span>
+                                </div>
+                                <h4 class='text-lg font-black dark:text-white uppercase'>${data.items.length} Asset(s) Ordered</h4>
+                                <div class='mt-4 flex flex-wrap gap-2'>
+                                    ${data.items.map(i => `<span class='text-[8px] bg-slate-100 dark:bg-slate-800 dark:text-slate-300 px-2 py-1 rounded font-bold uppercase'>${i.qty}x ${i.size}</span>`).join('')}
+                                </div>
                             </div>
-                            <div class='text-left md:text-right w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 mt-2 md:mt-0'>
-                                <span class='block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1'>Status</span>
-                                <h5 class='text-xl font-black text-brand-blue tracking-tighter'>${data.status}</h5>
-                            </div>`;
+                            <div class='flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto border-t md:border-t-0 border-gray-100 dark:border-slate-800 pt-4 md:pt-0 gap-4'>
+                                <div class="text-left md:text-right">
+                                    <span class='block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1'>Current Status</span>
+                                    <h5 class='text-xl md:text-2xl font-black ${statusColor} tracking-tighter uppercase'>${data.status}</h5>
+                                </div>
+                                <button onclick="window.reorderOrder('${safeItems}')" class="bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white dark:hover:bg-brand-blue text-brand-navy dark:text-white px-4 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition flex items-center gap-2">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Reorder
+                                </button>
+                            </div>
+                        `;
                         list.appendChild(el);
                     });
                 }, (err) => console.error("History Error:", err));
             } else {
                 list.innerHTML = "<div class='p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] border border-dashed'><p class='text-xs font-black uppercase mb-4'>Login to view order history</p><button onclick='window.toggleAuthModal()' class='px-6 py-3 bg-brand-blue text-white rounded-xl font-black uppercase text-[10px]'>Login Now</button></div>";
             }
-        }
+        };
 
-        /* ========================================== */
-        /* UI HELPERS */
-        /* ========================================== */
+        window.reorderOrder = function(safeItems) {
+            try {
+                const items = JSON.parse(decodeURIComponent(safeItems));
+                window.activeCart = [...items];
+                window.updateCartUI();
+                window.toggleCart();
+                window.customAlert("Order duplicated to basket!");
+            } catch(e) {
+                console.error(e);
+            }
+        };
+
+        /* --- UI HELPERS --- */
         window.toggleCart = function() {
             document.getElementById('cart-sidebar').classList.toggle('open');
             document.getElementById('global-overlay').classList.toggle('hidden');
             document.getElementById('global-overlay').classList.toggle('opacity-0');
-        }
+        };
+
         window.closeAllModals = function() {
             document.getElementById('cart-sidebar').classList.remove('open');
             document.getElementById('auth-modal').classList.remove('open');
             document.getElementById('global-overlay').classList.add('hidden', 'opacity-0');
-        }
+        };
+
         window.navigate = function(viewId) {
             if (viewId === 'admin' && !window.isAdmin) {
                 window.customAlert("Access Denied: Admin Privileges Required.");
@@ -1951,35 +1904,44 @@
             document.getElementById('mobile-menu').classList.add('hidden', 'opacity-0');
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('view-' + viewId).classList.add('active');
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             if (viewId === 'customer') window.loadClientLeads();
             if (viewId === 'catalog') window.renderCatalog();
             if (viewId === 'admin' && typeof window.loadAdminUsers === 'function') window.loadAdminUsers();
-        }
+        };
+
         window.toggleMobileMenu = function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
             setTimeout(() => menu.classList.toggle('opacity-0'), 10);
-        }
+        };
+
         window.toggleTheme = function() {
             document.documentElement.classList.toggle('dark');
-        }
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('moon-icon').classList.toggle('hidden', isDark);
+            document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
+        };
+
         window.customAlert = function(msg) {
             const m = document.createElement('div');
-            m.className = "fixed top-24 md:top-28 left-1/2 transform -translate-x-1/2 bg-brand-navy text-white px-6 py-3 rounded-full shadow-2xl z-[9999] font-black uppercase text-[10px] tracking-widest animate-viewIn border border-white/10 text-center z-[9999]";
+            m.className = "fixed top-24 md:top-28 left-1/2 transform -translate-x-1/2 bg-brand-navy text-white px-6 py-3 rounded-full shadow-2xl z-[9999] font-black uppercase text-[10px] tracking-widest animate-viewIn border border-white/10 text-center";
             m.innerText = msg;
             document.body.appendChild(m);
-            setTimeout(() => {
-                m.classList.add('opacity-0');
-                setTimeout(() => m.remove(), 500);
-            }, 3000);
-        }
-        window.showToast = function(name, size) {
-            window.customAlert(name + " Added");
-        }
+            setTimeout(() => { m.classList.add('opacity-0'); setTimeout(() => m.remove(), 500); }, 3000);
+        };
+
+        window.toggleAI = () => {
+            const el = document.getElementById('ai-chat-window');
+            el.style.display = el.style.display === 'none' ? 'flex' : 'none';
+        };
+
+        window.askAI = () => {
+            document.getElementById('ai-messages').innerHTML += `<div class="p-3 bg-brand-blue text-white rounded-xl mt-2 text-xs ml-auto">Please call 011 412 3529 for API assistance.</div>`;
+            document.getElementById('ai-input').value = "";
+            const chatBox = document.getElementById('ai-messages');
+            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
             const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1988,19 +1950,8 @@
                 document.getElementById('page-loader').classList.add('opacity-0');
                 setTimeout(() => document.getElementById('page-loader').style.display = 'none', 700);
                 window.renderCatalog();
-            }, 100);
+            }, 1000);
         });
-
-        window.toggleAI = () => {
-            const el = document.getElementById('ai-chat-window');
-            el.style.display = el.style.display === 'none' ? 'flex' : 'none';
-        }
-        window.askAI = () => {
-            document.getElementById('ai-messages').innerHTML += `<div class="p-3 bg-brand-blue text-white rounded-xl mt-2 text-xs ml-auto">Please call 011 412 3529 for API assistance.</div>`;
-            document.getElementById('ai-input').value = "";
-            const chatBox = document.getElementById('ai-messages');
-            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-        }
     </script>
 </body>
 
