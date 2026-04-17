@@ -1792,16 +1792,31 @@
             const doc = new jsPDF();
             doc.setFillColor(15, 23, 42);
             doc.rect(0, 0, 210, 40, 'F');
+
+            try {
+                // Dynamically grab the logo from the DOM to embed in PDF
+                const logoImg = document.querySelector('img[src="image_7d531d.png"]');
+                if (logoImg && logoImg.complete && logoImg.naturalWidth > 0) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = logoImg.naturalWidth;
+                    canvas.height = logoImg.naturalHeight;
+                    canvas.getContext('2d').drawImage(logoImg, 0, 0);
+                    doc.addImage(canvas.toDataURL('image/png'), 'PNG', 165, 5, 30, 30);
+                }
+            } catch (e) {
+                console.log('PDF Logo error:', e);
+            }
+
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(20);
             doc.text("ROUTE 64 LUBRICANTS", 15, 20);
             doc.setFontSize(10);
             doc.text("Official Quote / Inquiry", 15, 28);
 
-            doc.setTextColor(80);
-            doc.text("20 Fiat Street, Aureus, Randfontein, 1760", 120, 20);
-            doc.text("Phone: +27 11 412 3529", 120, 25);
-            doc.text("Email: info@route64.co.za", 120, 30);
+            doc.setTextColor(220, 220, 220);
+            doc.text("20 Fiat Street, Aureus, Randfontein, 1760", 90, 20);
+            doc.text("Phone: +27 11 412 3529", 90, 25);
+            doc.text("Email: info@route64.co.za", 90, 30);
 
             doc.setTextColor(0);
             doc.setFont("helvetica", "bold");
