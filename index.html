@@ -21,14 +21,16 @@
         = collection; window.onSnapshot = onSnapshot; window.query = query; window.signInWithEmailAndPassword = signInWithEmailAndPassword; window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; window.signOut = signOut; onAuthStateChanged(auth,
         (user) => { window.currentUser = user; const cloudStatus = document.getElementById('cloud-status'); const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const navAdminBtn
         = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const
-        processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display
-        = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn)
-        processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none"; if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn)
-        mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function')
-        window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display
-        = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display
-        = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if (window.currentView
-        === 'customer' || window.currentView === 'catalog') { window.navigate('home'); } if(typeof window.renderCatalog === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
+        processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); const profileSection = document.getElementById('client-profile-section'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase());
+        if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; /* Show Order Buttons when signed in */ if (navOrderBtn) navOrderBtn.style.display
+        = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; /* Update Process Page UI */ if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none"; if (profileSection)
+        profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing
+        === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers
+        === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; /* Hide Order Buttons when signed out (CATALOG IS PROTECTED)
+        */ if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection) profileSection.classList.add('hidden'); /* Update Process Page UI */ if (processActionBtn) processActionBtn.innerText
+        = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText
+        = 'Client Login'; window.userPricing = {}; /* Kick user out of protected views if they logout */ if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home'); } if(typeof window.renderCatalog === 'function')
+        window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
 
     <script>
@@ -305,10 +307,10 @@
         <div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-slate-800 p-8 w-full max-w-md relative z-10 transform scale-95 transition-transform duration-300" id="auth-modal-content">
             <button onclick="window.toggleAuthModal()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-red transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
 
-            <div class="text-center mb-8">
+            <div class="text-center mb-6">
                 <img src="image_7d531d.png" class="w-16 h-16 mx-auto mb-4" alt="Route 64" onerror="this.style.display='none'">
                 <h3 class="text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter" id="auth-title">Client Login</h3>
-                <p class="text-xs text-brand-blue font-bold uppercase tracking-widest mt-1">Access Private Portal</p>
+                <p class="text-[10px] text-brand-red font-bold uppercase tracking-widest mt-2 bg-brand-red/10 inline-block px-3 py-1 rounded-md border border-brand-red/20">B2B Wholesale Traders Only</p>
             </div>
 
             <form id="auth-form" onsubmit="window.handleAuth(event)" class="space-y-4">
@@ -364,12 +366,12 @@
             </div>
             <div id="ai-messages" class="flex-1 min-h-0 overflow-y-auto chat-scroll p-4 md:p-6 text-xs md:text-sm flex flex-col gap-4 bg-slate-50 dark:bg-slate-950">
                 <div class="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl text-brand-navy dark:text-slate-200 rounded-tl-none font-medium w-fit max-w-[90%] mr-auto shrink-0">
-                    Hello! I'm your Route 64 technical assistant. Ask me about our products, or tell me what you'd like to add to your quote!
+                    Hello! I'm your Route 64 AI technical assistant. I can answer questions about our product catalog and specifications. How can I help you today?
                 </div>
             </div>
             <div class="p-3 md:p-4 border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0 z-20 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
                 <div class="relative flex items-center">
-                    <input type="text" id="ai-input" onkeypress="if(event.key === 'Enter') window.askAI()" placeholder="Ask a question or add items..." class="w-full pl-4 pr-12 py-3 md:py-4 rounded-xl md:rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 transition text-[10px] md:text-xs font-medium shadow-inner">
+                    <input type="text" id="ai-input" onkeypress="if(event.key === 'Enter') window.askAI()" placeholder="Ask about our products..." class="w-full pl-4 pr-12 py-3 md:py-4 rounded-xl md:rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 transition text-[10px] md:text-xs font-medium shadow-inner">
                     <button onclick="window.askAI()" class="absolute right-2 p-2 md:p-3 bg-brand-blue text-white rounded-lg md:rounded-xl hover:bg-blue-700 shadow-md transition transform active:scale-95 flex items-center justify-center">
                         <svg class="w-3 h-3 md:w-4 md:h-4 translate-x-[-1px] translate-y-[1px]" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
                     </button>
@@ -514,9 +516,14 @@
                             THE POWER TO <br className="hidden sm:block" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-orange-500">PROTECT.</span><br/>
                             <span class="text-brand-blue italic text-2xl sm:text-3xl md:text-5xl xl:text-7xl">ENGINEERED LUBRICATION.</span>
                         </h1>
-                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base md:text-xl mb-8 md:mb-12 max-w-xl font-light leading-relaxed mx-auto sm:mx-0">
+                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base md:text-xl mb-6 max-w-xl font-light leading-relaxed mx-auto sm:mx-0">
                             Uncompromising protection for high-value industrial assets. Delivering Route 64's advanced fluid technology to South Africa's most demanding sectors.
                         </p>
+                        <div class="mb-8 md:mb-12 flex justify-center sm:justify-start">
+                            <span class="bg-brand-red/10 border border-brand-red/20 text-brand-red font-black text-[10px] md:text-xs uppercase tracking-widest px-4 py-2 rounded-lg">
+                                Exclusive B2B Trade Portal • Bulk & Wholesale Orders Only
+                            </span>
+                        </div>
                         <div class="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-6 justify-center sm:justify-start">
                             <button onclick="window.navigate('catalog')" class="bg-gradient-to-r from-brand-blue to-blue-600 hover:from-blue-600 hover:to-brand-blue text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all shadow-[0_10px_30px_-10px_rgba(37,99,235,0.6)] transform hover:-translate-y-1">Explore Catalog</button>
                             <button onclick="window.navigate('process')" class="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/20 text-brand-navy dark:text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all backdrop-blur-xl flex items-center justify-center gap-2 md:gap-3">
@@ -574,7 +581,6 @@
             <div class="absolute bottom-0 left-0 w-full border-t border-black/5 dark:border-white/5 bg-white/80 dark:bg-brand-navy/80 backdrop-blur-md overflow-hidden py-2 md:py-3 z-20">
                 <div class="flex space-x-8 md:space-x-12 animate-marquee whitespace-nowrap opacity-60 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[8px] md:text-[10px] text-slate-600 dark:text-slate-300">
                     <span>// Premium Additives</span>
-                    <span>// ISO 9001 Certified Quality</span>
                     <span>// 100% Virgin Base Oils</span>
                     <span>// OEM Specifications</span>
                     <span>// High Thermal Stability</span>
@@ -683,6 +689,7 @@
         <div class="text-center mb-10 md:mb-16 stagger-1">
             <h2 class="text-3xl md:text-6xl font-black italic uppercase tracking-tighter text-brand-navy dark:text-white">How To Order</h2>
             <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2">Requesting quotes is easy</p>
+            <p class="text-brand-red font-bold uppercase tracking-widest text-[10px] md:text-xs mt-4 bg-brand-red/10 inline-block px-4 py-2 rounded-lg border border-brand-red/20">Note: This platform is strictly for B2B traders and bulk purchases.</p>
         </div>
 
         <div class="max-w-4xl mx-auto space-y-6 md:space-y-8 pb-24 md:pb-32">
@@ -860,7 +867,32 @@
             <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">My Portal</h1>
             <p id="cloud-status" class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Not Connected (Login Required)</p>
         </div>
-        <div id="client-leads-list" class="space-y-4 md:space-y-6 mb-24 md:mb-32 text-center stagger-2">
+
+        <!-- NEW: CLIENT PROFILE SECTION -->
+        <div id="client-profile-section" class="bg-white dark:bg-slate-900 rounded-[2rem] p-6 md:p-10 shadow-sm border border-gray-100 dark:border-slate-800 mx-auto max-w-4xl mb-12 stagger-2 hidden">
+            <h3 class="text-xl md:text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-6">Manage Profile Details</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 block">Business Name *</label>
+                    <input type="text" id="profile-business" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition shadow-inner">
+                </div>
+                <div>
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 block">Contact Person</label>
+                    <input type="text" id="profile-name" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition shadow-inner">
+                </div>
+                <div>
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 block">Phone Number *</label>
+                    <input type="tel" id="profile-phone" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition shadow-inner">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 block">Delivery Address</label>
+                    <textarea id="profile-address" rows="2" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none shadow-inner"></textarea>
+                </div>
+            </div>
+            <button onclick="window.saveProfileData()" class="mt-6 py-4 px-8 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl text-[10px]">Save Profile Updates</button>
+        </div>
+
+        <div id="client-leads-list" class="space-y-4 md:space-y-6 mb-24 md:mb-32 text-center stagger-3">
             <div class="p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] border border-dashed mx-4 md:mx-0 dark:border-slate-800">
                 <p class="text-xs md:text-sm font-black uppercase tracking-widest mb-4">You are not logged in</p>
                 <button onclick="window.toggleAuthModal()" class="px-6 py-3 bg-brand-blue text-white rounded-xl font-black uppercase text-xs">Login Now</button>
@@ -1420,13 +1452,49 @@
                 const docSnap = await window.getDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${uid}/profile`, 'details'));
                 if (docSnap.exists()) {
                     const d = docSnap.data();
+
+                    // Update Checkout forms
                     if (document.getElementById('customer-business')) document.getElementById('customer-business').value = d.bizName || '';
                     if (document.getElementById('customer-name')) document.getElementById('customer-name').value = d.contactName || '';
                     if (document.getElementById('customer-phone')) document.getElementById('customer-phone').value = d.phone || '';
                     if (document.getElementById('customer-address')) document.getElementById('customer-address').value = d.address || '';
+
+                    // Update Profile Section forms
+                    if (document.getElementById('profile-business')) document.getElementById('profile-business').value = d.bizName || '';
+                    if (document.getElementById('profile-name')) document.getElementById('profile-name').value = d.contactName || '';
+                    if (document.getElementById('profile-phone')) document.getElementById('profile-phone').value = d.phone || '';
+                    if (document.getElementById('profile-address')) document.getElementById('profile-address').value = d.address || '';
                 }
             } catch (e) {
                 console.error("Profile load err:", e);
+            }
+        };
+
+        window.saveProfileData = async function() {
+            if (!window.currentUser) return;
+            const bizName = document.getElementById('profile-business').value.trim();
+            const contactName = document.getElementById('profile-name').value.trim();
+            const phone = document.getElementById('profile-phone').value.trim();
+            const address = document.getElementById('profile-address').value.trim();
+
+            if (!bizName || !phone) return window.customAlert("Business Name and Phone are required.");
+
+            try {
+                await window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'), {
+                    bizName,
+                    contactName,
+                    phone,
+                    address
+                });
+                window.customAlert("Profile updated successfully!");
+                // Keep the checkout form matching
+                if (document.getElementById('customer-business')) document.getElementById('customer-business').value = bizName;
+                if (document.getElementById('customer-name')) document.getElementById('customer-name').value = contactName;
+                if (document.getElementById('customer-phone')) document.getElementById('customer-phone').value = phone;
+                if (document.getElementById('customer-address')) document.getElementById('customer-address').value = address;
+            } catch (e) {
+                console.error(e);
+                window.customAlert("Error saving profile.");
             }
         };
 
@@ -2398,7 +2466,7 @@
             }
         }
 
-        window.askAI = function() {
+        window.askAI = async function() {
             const input = document.getElementById('ai-input');
             const val = input.value.trim();
             if (!val) return;
@@ -2422,31 +2490,52 @@
             msgs.appendChild(typeDiv);
             msgs.scrollTop = msgs.scrollHeight;
 
-            /* Simple hardcoded simulated intelligent responses */
-            setTimeout(() => {
-                typeDiv.remove();
-                const botDiv = document.createElement('div');
-                botDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl text-brand-navy dark:text-slate-200 rounded-tl-none font-medium w-fit max-w-[90%] mr-auto shrink-0";
-                
-                const lowerVal = val.toLowerCase();
-                let response = "I can assist you in building your order basket. Try asking me about our 'Engine Oils', 'Hydraulic Fluids', or ask me to navigate to a specific section.";
-                
-                if (lowerVal.includes("price") || lowerVal.includes("cost") || lowerVal.includes("quote")) {
-                    response = "Due to the wholesale nature of our business, custom pricing tiers are loaded directly into your account after registration and approval. Please register a profile or log in to view your negotiated rates.";
-                } else if (lowerVal.includes("add") || lowerVal.includes("order") || lowerVal.includes("buy")) {
-                    response = "All case and drum quantities can be added directly via our Order Portal. Let me redirect you there right away. <button onclick='window.navigate(\"catalog\"); window.toggleAI()' class='mt-3 block bg-brand-blue text-white px-4 py-2 rounded-lg text-[9px] uppercase font-black tracking-widest w-full text-center hover:bg-blue-700 transition'>Go to Portal</button>";
-                } else if (lowerVal.includes("contact") || lowerVal.includes("number") || lowerVal.includes("phone")) {
-                    response = "You can reach our centralized sales desk at +27 11 412 3529 or connect with distribution via WhatsApp on 068 087 1269.";
-                } else if (lowerVal.includes("location") || lowerVal.includes("where") || lowerVal.includes("address")) {
-                    response = "Our central distribution hub and headquarters are situated at 20 Fiat Street, Aureus, Randfontein, Gauteng, South Africa.";
-                } else if (lowerVal.includes("hello") || lowerVal.includes("hi")) {
-                    response = "Hello! Welcome to the Route 64 platform. How can I assist you with your fluid and lubrication requirements today?";
-                }
+            /* Real AI Integration */
+            const apiKey = "";
+            const catalogData = JSON.stringify(window.cloudProducts.map(p => ({id: p.id, name: p.name, cat: p.category, sizes: p.variants.map(v=>v.size)})));
+            const systemPrompt = `You are a helpful, professional technical advisor for Route 64 Lubricants. You help customers choose the right oils, greases, and fluids. Keep answers concise. Do not guess prices as pricing is wholesale and account-specific. The current catalog is: ${catalogData}. If they ask to order, tell them to close the chat and use the Order Portal. Format output in plain text.`;
 
-                botDiv.innerHTML = response;
-                msgs.appendChild(botDiv);
-                msgs.scrollTop = msgs.scrollHeight;
-            }, 1200);
+            let responseText = "I'm sorry, I'm having trouble connecting to my knowledge base right now.";
+
+            const fetchAI = async (retries) => {
+                const delays = [1000, 2000, 4000, 8000, 16000];
+                for(let i=0; i<retries; i++) {
+                    try {
+                        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                contents: [{ parts: [{ text: val }] }],
+                                systemInstruction: { parts: [{ text: systemPrompt }] }
+                            })
+                        });
+                        if (!res.ok) throw new Error("API Error");
+                        const data = await res.json();
+                        return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+                    } catch(e) {
+                        if (i < retries - 1) {
+                            await new Promise(r => setTimeout(r, delays[i]));
+                        }
+                    }
+                }
+                throw new Error("Max retries reached");
+            };
+
+            try {
+                responseText = await fetchAI(5);
+            } catch (e) {
+                console.error(e);
+            }
+
+            typeDiv.remove();
+            const botDiv = document.createElement('div');
+            botDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl text-brand-navy dark:text-slate-200 rounded-tl-none font-medium w-fit max-w-[90%] mr-auto shrink-0";
+            
+            const formattedHTML = responseText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            botDiv.innerHTML = formattedHTML;
+            
+            msgs.appendChild(botDiv);
+            msgs.scrollTop = msgs.scrollHeight;
         }
 
         /* ========================================== */
