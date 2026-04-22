@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <!-- Firebase Integration Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"; import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ",
@@ -20,19 +19,13 @@
         = db; window.firebaseAuth = auth; window.appId = appId; window.addDoc = addDoc; window.doc = doc; window.setDoc = setDoc; window.getDoc = getDoc; window.getDocs = getDocs; window.updateDoc = updateDoc; window.deleteDoc = deleteDoc; window.collection
         = collection; window.onSnapshot = onSnapshot; window.query = query; window.signInWithEmailAndPassword = signInWithEmailAndPassword; window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; window.signOut = signOut; onAuthStateChanged(auth,
         (user) => { window.currentUser = user; const cloudStatus = document.getElementById('cloud-status'); const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const navAdminBtn
-        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const
-        processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); const profileSection = document.getElementById('client-profile-section'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase());
-        if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; /* Show Order Buttons when signed in */ if (navOrderBtn) navOrderBtn.style.display
-        = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; /* Update Process Page UI */ if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none"; if (profileSection)
-        profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing
-        === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers
-        === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; /* Hide Order Buttons when signed out (CATALOG IS PROTECTED)
-        */ if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection) profileSection.classList.add('hidden'); /* Update Process Page UI */ if (processActionBtn) processActionBtn.innerText
-        = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText
-        = 'Client Login'; window.userPricing = {}; /* Kick user out of protected views if they logout */ if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home'); } if(typeof window.renderCatalog === 'function')
-        window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
+        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display = window.isAdmin
+        ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn)
+        mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function')
+        window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display
+        = 'none'; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if(typeof window.renderCatalog
+        === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
-
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -2610,6 +2603,35 @@
 
             /* Real AI Integration */
             const apiKey = "";
+
+            if (!apiKey) {
+                setTimeout(() => {
+                    typeDiv.remove();
+                    const botDiv = document.createElement('div');
+                    botDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl text-brand-navy dark:text-slate-200 rounded-tl-none font-medium w-fit max-w-[90%] mr-auto shrink-0";
+                    
+                    const lowerVal = val.toLowerCase();
+                    let response = "I can assist you in building your order basket. Try asking me about our 'Engine Oils', 'Hydraulic Fluids', or ask me to navigate to a specific section.";
+                    
+                    if (lowerVal.includes("price") || lowerVal.includes("cost") || lowerVal.includes("quote")) {
+                        response = "Due to the wholesale nature of our business, custom pricing tiers are loaded directly into your account after registration and approval. Please register a profile or log in to view your negotiated rates.";
+                    } else if (lowerVal.includes("add") || lowerVal.includes("order") || lowerVal.includes("buy")) {
+                        response = "All case and drum quantities can be added directly via our Order Portal. Let me redirect you there right away. <button onclick='window.navigate(\"catalog\"); window.toggleAI()' class='mt-3 block bg-brand-blue text-white px-4 py-2 rounded-lg text-[9px] uppercase font-black tracking-widest w-full text-center hover:bg-blue-700 transition'>Go to Portal</button>";
+                    } else if (lowerVal.includes("contact") || lowerVal.includes("number") || lowerVal.includes("phone")) {
+                        response = "You can reach our centralized sales desk at +27 11 412 3529 or connect with distribution via WhatsApp on 068 087 1269.";
+                    } else if (lowerVal.includes("location") || lowerVal.includes("where") || lowerVal.includes("address")) {
+                        response = "Our central distribution hub and headquarters are situated at 20 Fiat Street, Aureus, Randfontein, Gauteng, South Africa.";
+                    } else if (lowerVal.includes("hello") || lowerVal.includes("hi")) {
+                        response = "Hello! Welcome to the Route 64 platform. How can I assist you with your fluid and lubrication requirements today?";
+                    }
+
+                    botDiv.innerHTML = response;
+                    msgs.appendChild(botDiv);
+                    msgs.scrollTop = msgs.scrollHeight;
+                }, 1200);
+                return;
+            }
+
             const catalogData = JSON.stringify(window.cloudProducts.map(p => ({id: p.id, name: p.name, cat: p.category, sizes: p.variants.map(v=>v.size)})));
             const systemPrompt = `You are a helpful, professional technical advisor for Route 64 Lubricants. You help customers choose the right oils, greases, and fluids. Keep answers concise. Do not guess prices as pricing is wholesale and account-specific. The current catalog is: ${catalogData}. If they ask to order, tell them to close the chat and use the Order Portal. Format output in plain text.`;
 
