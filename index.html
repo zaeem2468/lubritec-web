@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <!-- Firebase Integration Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"; import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ",
@@ -20,16 +19,12 @@
         = db; window.firebaseAuth = auth; window.appId = appId; window.addDoc = addDoc; window.doc = doc; window.setDoc = setDoc; window.getDoc = getDoc; window.getDocs = getDocs; window.updateDoc = updateDoc; window.deleteDoc = deleteDoc; window.collection
         = collection; window.onSnapshot = onSnapshot; window.query = query; window.signInWithEmailAndPassword = signInWithEmailAndPassword; window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; window.signOut = signOut; onAuthStateChanged(auth,
         (user) => { window.currentUser = user; const cloudStatus = document.getElementById('cloud-status'); const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const navAdminBtn
-        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const
-        processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); const profileSection = document.getElementById('client-profile-section'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase());
-        if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display
-        = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none"; if (profileSection) profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText
-        = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads
-        === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin
-        = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection)
-        profileSection.classList.add('hidden'); if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)';
-        if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home');
-        } if(typeof window.renderCatalog === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
+        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display = window.isAdmin
+        ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn)
+        mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function')
+        window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display
+        = 'none'; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if(typeof window.renderCatalog
+        === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
 
     <script>
@@ -51,7 +46,7 @@
                     animation: {
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'float': 'float 3s ease-in-out infinite',
-                        'marquee': 'marquee 20s linear infinite'
+                        'marquee': 'marquee 30s linear infinite'
                     },
                     keyframes: {
                         float: {
@@ -128,6 +123,7 @@
             color: #0f172a;
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
         
         .dark body {
@@ -499,13 +495,13 @@
     <!-- VIEW: HOME -->
     <div id="view-home" class="view-section active">
         <!-- Hero Section -->
-        <section class="bg-slate-50 dark:bg-brand-navy text-brand-navy dark:text-white relative min-h-[90vh] md:min-h-[95vh] flex items-center overflow-hidden">
-            <div class="absolute inset-0 opacity-40 bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920'); mix-blend-mode: screen;"></div>
+        <section class="bg-slate-50 dark:bg-brand-navy text-brand-navy dark:text-white relative min-h-[90vh] md:min-h-[95vh] flex flex-col justify-center overflow-hidden pb-12">
+            <div class="absolute inset-0 opacity-40 bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1605647540924-852290f6b0d5?q=80&w=1920'); mix-blend-mode: screen;"></div>
             <div class="absolute inset-0 bg-gradient-to-br from-white/90 via-slate-50/95 to-slate-100/90 dark:from-brand-navy dark:via-brand-navy/95 dark:to-brand-navy/80"></div>
             <div class="absolute top-[10%] right-[10%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-brand-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse-slow"></div>
 
-            <div class="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10 py-16 md:py-32 w-full mt-10 md:mt-0">
-                <div class="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10 pt-16 md:pt-32 w-full mt-10 md:mt-0">
+                <div class="grid lg:grid-cols-2 gap-10 md:gap-16 items-center mb-16">
                     <div class="text-center sm:text-left stagger-1">
                         <div class="inline-flex items-center gap-2 md:gap-3 px-3 md:px-4 py-1.5 md:py-2 border border-brand-navy/10 dark:border-white/10 bg-black/5 dark:bg-white/5 rounded-full backdrop-blur-xl mb-6 md:mb-8 shadow-[0_0_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
                             <span class="relative flex h-1.5 w-1.5 md:h-2 md:w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 md:h-2 md:w-2 bg-brand-red"></span></span>
@@ -561,7 +557,45 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 pt-12 md:pt-16 mt-12 md:mt-20 relative z-10 border-t border-black/10 dark:border-white/10 stagger-3">
+                <!-- Animated Industry Image Marquee -->
+                <div class="w-full overflow-hidden py-10 md:py-16 relative z-10 group stagger-3 mt-8">
+                    <div class="absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
+                    <div class="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
+                    <div class="flex w-[200%] animate-marquee group-hover:[animation-play-state:paused]">
+                        <!-- Set 1 -->
+                        <div class="flex gap-4 md:gap-8 px-2 md:px-4 w-1/2">
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="https://images.unsplash.com/photo-1615810222378-57f6bcf9cb6f?q=80&w=800" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?q=80&w=800" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <!-- Set 2 (Duplicate for smooth scrolling) -->
+                        <div class="flex gap-4 md:gap-8 px-2 md:px-4 w-1/2">
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="https://images.unsplash.com/photo-1615810222378-57f6bcf9cb6f?q=80&w=800" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?q=80&w=800" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 pt-8 md:pt-12 relative z-10 border-t border-black/10 dark:border-white/10 stagger-4">
                     <div class="p-4 md:p-6 flex flex-col items-center md:items-start text-center md:text-left">
                         <span class="block text-2xl md:text-4xl font-black text-brand-red mb-1 md:mb-2 drop-shadow-md">99.8%</span>
                         <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Service Reliability</span>
@@ -574,16 +608,6 @@
                         <span class="block text-2xl md:text-4xl font-black text-brand-blue mb-1 md:mb-2 drop-shadow-md">30+</span>
                         <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Core Formulations</span>
                     </div>
-                </div>
-            </div>
-
-            <div class="absolute bottom-0 left-0 w-full border-t border-black/5 dark:border-white/5 bg-white/80 dark:bg-brand-navy/80 backdrop-blur-md overflow-hidden py-2 md:py-3 z-20">
-                <div class="flex space-x-8 md:space-x-12 animate-marquee whitespace-nowrap opacity-60 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[8px] md:text-[10px] text-slate-600 dark:text-slate-300">
-                    <span>// Premium Additives</span>
-                    <span>// 100% Virgin Base Oils</span>
-                    <span>// OEM Specifications</span>
-                    <span>// High Thermal Stability</span>
-                    <span>// Extreme Pressure Resistance</span>
                 </div>
             </div>
         </section>
@@ -647,7 +671,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1586191552066-f52fd141afc2?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-blue/20 backdrop-blur-md border border-brand-blue/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -658,7 +682,7 @@
                     </div>
                 </div>
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-red/20 backdrop-blur-md border border-brand-red/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -669,7 +693,7 @@
                     </div>
                 </div>
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1592982537447-6f29cb90ea78?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-green-500/20 backdrop-blur-md border border-green-500/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -724,11 +748,14 @@
     </div>
 
     <!-- VIEW: ABOUT -->
-    <div id="view-about" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-5xl mx-auto min-h-screen text-center">
-        <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6 stagger-1">About Route 64</h1>
-        <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mb-8 md:mb-10 rounded-full stagger-1"></div>
-        <h2 class="text-lg md:text-3xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-12 italic px-4 stagger-2">Protect What Matters, Lubricate What Moves</h2>
-        <div class="pro-card p-6 md:p-20 text-left shadow-2xl relative overflow-hidden stagger-3">
+    <div id="view-about" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
+        <div class="text-center max-w-5xl mx-auto">
+            <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6 stagger-1">About Route 64</h1>
+            <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mb-8 md:mb-10 rounded-full stagger-1"></div>
+            <h2 class="text-lg md:text-3xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-12 italic px-4 stagger-2">Protect What Matters, Lubricate What Moves</h2>
+        </div>
+
+        <div class="pro-card p-6 md:p-20 text-left shadow-2xl relative overflow-hidden stagger-3 max-w-5xl mx-auto mb-16">
             <div class="absolute -right-10 -top-10 md:-right-20 md:-top-20 opacity-5"><svg class="w-64 h-64 md:w-96 md:h-96" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
             <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 leading-relaxed relative z-10">
                 <strong>Route 64 Lubricants</strong> is the leading provider of high-performance, premium grade oils, greases, and industrial chemicals in the Gauteng region. Based out of Aureus, Randfontein, we supply to a wide array of demanding sectors.
@@ -748,6 +775,44 @@
                 <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
                     <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Support</h4>
                     <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Dedicated Tech</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animated Industry Image Marquee (About Page) -->
+        <div class="w-full overflow-hidden py-10 md:py-16 relative z-10 group stagger-4 mb-16">
+            <div class="absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
+            <div class="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
+            <div class="flex w-[200%] animate-marquee group-hover:[animation-play-state:paused]">
+                <!-- Set 1 -->
+                <div class="flex gap-4 md:gap-8 px-2 md:px-4 w-1/2">
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1615810222378-57f6bcf9cb6f?q=80&w=800" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?q=80&w=800" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <!-- Set 2 (Duplicate for smooth scrolling) -->
+                <div class="flex gap-4 md:gap-8 px-2 md:px-4 w-1/2">
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1615810222378-57f6bcf9cb6f?q=80&w=800" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?q=80&w=800" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800" class="w-full h-full object-cover">
+                    </div>
                 </div>
             </div>
         </div>
@@ -807,212 +872,6 @@
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.401186716949!2d27.6830559!3d-26.1500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95995555555555%3A0x5555555555555555!2s20%20Fiat%20St%2C%20Aureus%2C%20Randfontein%2C%201759!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza"
                         class="absolute inset-0 w-full h-full rounded-[20px]" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- VIEW: MASTER CATALOG (NOW SECURED) -->
-    <div id="view-catalog" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 md:mb-12 gap-6 md:gap-8 border-b border-gray-100 dark:border-slate-800 pb-8 md:pb-12 stagger-1">
-            <div class="flex-1 w-full">
-                <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white tracking-tighter uppercase leading-[0.9]">Order<br class="hidden sm:block" />Portal</h1>
-                <div class="flex flex-wrap items-center gap-3 md:gap-4 mt-4 md:mt-6">
-                    <p class="text-gray-500 dark:text-slate-400 text-xs md:text-sm font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] flex items-center gap-2 md:gap-3">
-                        <span class="w-6 h-1 md:w-8 bg-brand-red rounded-full"></span> Wholesale Ordering
-                    </p>
-                    <a href="catalogue.pdf" download="Route_64_Catalogue.pdf" target="_blank" class="ml-2 bg-brand-red/10 text-brand-red hover:bg-brand-red hover:text-white px-4 py-2 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] transition shadow-sm flex items-center gap-2 border border-brand-red/20">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> Download
-                        PDF
-                    </a>
-                </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-6 w-full lg:w-auto">
-                <div class="flex bg-slate-100 dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-xl md:rounded-2xl p-1 md:p-1.5 shadow-inner w-full sm:w-auto justify-center">
-                    <button onclick="window.toggleViewMode('grid')" id="btn-grid-view" class="p-2 md:p-3 bg-white dark:bg-slate-800 text-brand-navy dark:text-white rounded-lg md:rounded-xl shadow-md transition transform active:scale-95 flex-1 sm:flex-none flex justify-center"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg></button>
-                    <button onclick="window.toggleViewMode('list')" id="btn-list-view" class="p-2 md:p-3 text-gray-400 hover:text-brand-navy dark:hover:text-white transition transform active:scale-95 flex-1 sm:flex-none flex justify-center"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
-                </div>
-
-                <div class="relative w-full sm:w-[300px] md:w-[350px]">
-                    <input type="text" id="search-input" oninput="window.renderCatalog()" class="w-full pl-12 pr-4 py-3 md:py-5 bg-white dark:bg-slate-900 dark:text-white rounded-xl md:rounded-full border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/10 transition text-xs md:text-sm"
-                        placeholder="Search spec...">
-                    <div class="absolute left-4 top-3 md:top-5 text-gray-400"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex gap-2 md:gap-4 overflow-x-auto w-full pb-4 md:pb-8 mb-6 md:mb-8 hide-scroll stagger-2" id="filter-buttons">
-            <button class="filter-btn active px-6 py-3 md:px-8 md:py-4 bg-brand-navy text-white rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-md md:shadow-2xl transition" data-filter="all" onclick="window.filterCatalog('all')">All Products</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition"
-                data-filter="Engine Oils" onclick="window.filterCatalog('Engine Oils')">Engine Oils</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition"
-                data-filter="Gear & Auto" onclick="window.filterCatalog('Gear & Auto')">Gear & Transmission</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition"
-                data-filter="Industrial" onclick="window.filterCatalog('Industrial')">Hydraulic Oils</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition"
-                data-filter="Anti-Freeze" onclick="window.filterCatalog('Anti-Freeze')">Anti-Freeze</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition"
-                data-filter="Grease" onclick="window.filterCatalog('Grease')">Grease</button>
-            <button class="filter-btn px-6 py-3 md:px-8 md:py-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap hover:bg-gray-50 dark:hover:bg-slate-800 transition"
-                data-filter="Chemicals & Grease" onclick="window.filterCatalog('Chemicals & Grease')">Chemicals</button>
-        </div>
-
-        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 pb-24 md:pb-40 stagger-3"></div>
-    </div>
-
-    <!-- VIEW: CUSTOMER ORDERS -->
-    <div id="view-customer" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-5xl mx-auto min-h-screen">
-        <div class="mb-10 md:mb-16 text-center stagger-1">
-            <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">My Portal</h1>
-            <p id="cloud-status" class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Not Connected (Login Required)</p>
-        </div>
-
-        <!-- NEW: CLIENT PROFILE SECTION -->
-        <div id="client-profile-section" class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-6 md:p-10 shadow-xl border border-white/20 dark:border-slate-800 mx-auto max-w-4xl mb-12 stagger-2 hidden">
-            <div class="flex items-center gap-4 mb-8 border-b border-gray-100 dark:border-slate-800 pb-6">
-                <div class="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                </div>
-                <div>
-                    <h3 class="text-xl md:text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">Manage Profile Details</h3>
-                    <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold mt-1">Keep your delivery details updated</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <div>
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 block pl-1">Business Name *</label>
-                    <input type="text" id="profile-business" class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition shadow-inner">
-                </div>
-                <div>
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 block pl-1">Contact Person</label>
-                    <input type="text" id="profile-name" class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition shadow-inner">
-                </div>
-                <div>
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 block pl-1">Phone Number *</label>
-                    <input type="tel" id="profile-phone" class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition shadow-inner">
-                </div>
-                <div class="md:col-span-2">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 block pl-1">Delivery Address</label>
-                    <textarea id="profile-address" rows="2" class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition resize-none shadow-inner"></textarea>
-                </div>
-            </div>
-            <div class="mt-8 text-right">
-                <button onclick="window.saveProfileData()" class="py-4 px-8 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl text-[10px] flex items-center gap-2 ml-auto">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    Save Changes
-                </button>
-            </div>
-        </div>
-
-        <div id="client-leads-list" class="space-y-4 md:space-y-6 mb-24 md:mb-32 text-center stagger-3">
-            <div class="p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] border border-dashed mx-4 md:mx-0 dark:border-slate-800">
-                <p class="text-xs md:text-sm font-black uppercase tracking-widest mb-4">You are not logged in</p>
-                <button onclick="window.toggleAuthModal()" class="px-6 py-3 bg-brand-blue text-white rounded-xl font-black uppercase text-xs">Login Now</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- VIEW: ADMIN DASHBOARD (ULTIMATE) -->
-    <div id="view-admin" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1200px] mx-auto min-h-screen">
-        <div class="mb-10 md:mb-16 text-center stagger-1">
-            <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">Admin Dashboard</h1>
-            <p class="text-yellow-500 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Manage Operations</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 shadow-2xl border border-gray-100 dark:border-slate-800 mx-auto max-w-5xl stagger-2">
-
-            <div class="flex gap-4 md:gap-8 mb-8 border-b border-gray-200 dark:border-slate-800 pb-4 overflow-x-auto hide-scroll whitespace-nowrap">
-                <button onclick="window.switchAdminTab('dashboard')" id="tab-dashboard" class="font-black uppercase text-brand-blue border-b-2 border-brand-blue pb-2 text-[10px] md:text-xs tracking-widest transition">Dashboard Analytics</button>
-                <button onclick="window.switchAdminTab('catalog')" id="tab-catalog" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Manage Products</button>
-                <button onclick="window.switchAdminTab('pricing')" id="tab-pricing" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Client Pricing</button>
-                <button onclick="window.switchAdminTab('orders')" id="tab-orders" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Live Orders</button>
-            </div>
-
-            <!-- Tab: Dashboard -->
-            <div id="admin-tab-dashboard" class="animate-viewIn">
-                <h3 class="font-black text-xl dark:text-white uppercase tracking-tighter mb-6">System Overview</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-3xl border border-blue-100 dark:border-blue-900/50 flex flex-col justify-center text-center shadow-sm">
-                        <span class="text-brand-blue text-[10px] font-black uppercase tracking-widest mb-2">Total Inquiries Value</span>
-                        <span class="text-4xl md:text-5xl font-black text-brand-blue tracking-tighter" id="admin-stat-rev">R0.00</span>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-gray-100 dark:border-slate-700 flex flex-col justify-center text-center shadow-sm">
-                        <span class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2 dark:text-slate-400">Total Orders</span>
-                        <span class="text-4xl md:text-5xl font-black text-brand-navy dark:text-white tracking-tighter" id="admin-stat-orders">0</span>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-gray-100 dark:border-slate-700 flex flex-col justify-center text-center shadow-sm">
-                        <span class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2 dark:text-slate-400">Active Clients</span>
-                        <span class="text-4xl md:text-5xl font-black text-brand-navy dark:text-white tracking-tighter" id="admin-stat-clients">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab: Catalog Manager -->
-            <div id="admin-tab-catalog" class="hidden animate-viewIn">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-black text-xl dark:text-white uppercase tracking-tighter">Cloud Catalog</h3>
-                    <button onclick="window.toggleAddProductModal()" class="bg-brand-navy dark:bg-brand-blue text-white px-6 py-3 rounded-xl font-black uppercase text-[10px] tracking-widest shadow-md hover:bg-slate-800 transition">Add New Product</button>
-                </div>
-                <div id="admin-catalog-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
-            </div>
-
-            <!-- Tab: Pricing -->
-            <div id="admin-tab-pricing" class="hidden animate-viewIn">
-                <div class="mb-8">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Select Client Profile</label>
-                    <div class="relative">
-                        <select id="admin-client-select" onchange="window.handleAdminClientSelect(this.value)" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-800 dark:text-white border border-gray-200 dark:border-slate-700 outline-none shadow-inner cursor-pointer text-sm font-bold appearance-none">
-                            <option value="">-- Choose a registered client --</option>
-                        </select>
-                        <div class="absolute right-4 top-4 pointer-events-none text-slate-400">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="admin-workspace" class="hidden">
-                    <div id="admin-pricing-section">
-                        <div id="admin-pricing-grid" class="mb-8 max-h-[60vh] overflow-y-auto pr-2 hide-scroll space-y-4"></div>
-                        <button onclick="window.saveAdminPricing()" class="w-full py-5 bg-yellow-500 text-white font-black uppercase tracking-widest rounded-xl transition shadow-xl hover:bg-yellow-600 text-[10px] md:text-xs">Update Price Profile</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab: Orders -->
-            <div id="admin-tab-orders" class="hidden animate-viewIn">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                    <h3 class="font-black text-xl dark:text-white uppercase tracking-tighter">Global Inquiries</h3>
-                    <div class="flex gap-3">
-                        <button onclick="window.loadAdminOrders()" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-6 py-3 rounded-xl dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition">Refresh</button>
-                        <button onclick="window.exportCSV()" class="text-[10px] font-bold uppercase tracking-widest bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600 shadow-md transition">Export CSV</button>
-                    </div>
-                </div>
-                <div id="admin-orders-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ADMIN PRODUCT ADD MODAL -->
-    <div id="admin-product-modal" class="fixed inset-0 flex items-center justify-center p-4 modal-base z-[150]">
-        <div class="absolute inset-0 bg-brand-navy/80 backdrop-blur-md" onclick="window.toggleAddProductModal()"></div>
-        <div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-slate-800 p-8 w-full max-w-lg relative z-10 animate-viewIn">
-            <button onclick="window.toggleAddProductModal()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-red transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2"/></svg></button>
-            <h3 class="text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-6">Manage Product</h3>
-            <div class="space-y-4">
-                <input type="text" id="prod-id" placeholder="Product ID (e.g., P-X01)" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none font-bold dark:text-white">
-                <input type="text" id="prod-name" placeholder="Product Name" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none font-bold dark:text-white">
-                <select id="prod-cat" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none font-bold dark:text-white cursor-pointer">
-                    <option value="Engine Oils">Engine Oils</option>
-                    <option value="Gear & Auto">Gear & Auto</option>
-                    <option value="Industrial">Industrial</option>
-                    <option value="Chemicals & Grease">Chemicals & Grease</option>
-                    <option value="Anti-Freeze">Anti-Freeze</option>
-                    <option value="Grease">Grease</option>
-                </select>
-                <textarea id="prod-desc" placeholder="Description" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none dark:text-white resize-none" rows="2"></textarea>
-                <input type="text" id="prod-variants" placeholder="Sizes (comma separated: 500ml, 5L, 20L)" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none dark:text-white">
-                <button onclick="window.saveAdminProduct()" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl shadow-xl mt-4">Save to Cloud</button>
             </div>
         </div>
     </div>
