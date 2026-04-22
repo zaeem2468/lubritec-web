@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Route 64 Lubricants | Professional ERP Platform</title>
 
+    <!-- UI & Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+    <!-- Firebase Integration Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"; import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ",
@@ -25,7 +27,6 @@
         = 'none'; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if(typeof window.renderCatalog
         === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
-
 
     <script>
         tailwind.config = {
@@ -166,6 +167,10 @@
             animation: slideFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         
+        .view-section.fade-out {
+            animation: slideFadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
         @keyframes slideFadeIn {
             0% {
                 opacity: 0;
@@ -176,6 +181,19 @@
                 opacity: 1;
                 transform: translateY(0) scale(1);
                 filter: blur(0);
+            }
+        }
+        
+        @keyframes slideFadeOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.98);
+                filter: blur(4px);
             }
         }
         
@@ -208,6 +226,7 @@
             transform: translateX(0);
         }
         
+        #auth-modal,
         .modal-base {
             opacity: 0;
             pointer-events: none;
@@ -215,6 +234,7 @@
             z-index: 200;
         }
         
+        #auth-modal.open,
         .modal-base.open {
             opacity: 1;
             pointer-events: auto;
@@ -233,6 +253,7 @@
 
 <body class="pt-24 md:pt-28 dark:bg-slate-950 selection:bg-brand-blue selection:text-white relative overflow-x-hidden">
 
+    <!-- Ambient glowing orbs -->
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-[-1]">
         <div class="absolute top-[-10%] left-[-10%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 blur-[80px] md:blur-[100px] animate-pulse-slow mix-blend-multiply dark:mix-blend-screen"></div>
         <div class="absolute top-[20%] right-[-10%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] rounded-full bg-brand-red/5 dark:bg-brand-red/10 blur-[80px] md:blur-[100px] animate-pulse-slow delay-1000 mix-blend-multiply dark:mix-blend-screen"></div>
@@ -367,6 +388,7 @@
                 </div>
                 <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block">LUBRICANTS</span>
             </div>
+
             <div class="hidden xl:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 h-full">
                 <button onclick="window.navigate('home')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Home</button>
                 <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-red">Order Portal</button>
@@ -377,16 +399,19 @@
                 <button onclick="window.handleNavLogin()" id="nav-login-btn" class="hover:text-brand-blue transition text-brand-blue h-full border-b-2 border-transparent font-bold">Login</button>
                 <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="hover:text-yellow-500 dark:hover:text-yellow-400 transition text-yellow-600 dark:text-yellow-500 h-full border-b-2 border-transparent hover:border-yellow-400 font-bold">Admin</button>
             </div>
+
             <div class="flex items-center gap-2 md:gap-3">
                 <button onclick="window.toggleTheme()" class="text-slate-500 dark:text-slate-400 hover:text-brand-navy dark:hover:text-white transition p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5" id="theme-toggle">
                     <svg id="moon-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     <svg id="sun-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
+
                 <button onclick="window.toggleCart()" class="relative p-2 md:p-4 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-lg md:rounded-2xl transition border border-brand-blue/20 shadow-xl flex items-center gap-2 md:gap-3 group">
                     <span class="text-[10px] md:text-xs uppercase font-black px-1 md:px-3 text-brand-blue hidden sm:block">Basket</span>
                     <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-110 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     <span id="cart-badge" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all border-2 border-brand-navy shadow-xl">0</span>
                 </button>
+
                 <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
@@ -403,6 +428,7 @@
             </div>
             <button onclick="window.toggleCart()" class="p-2 md:p-3 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-xl transition group"><svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-brand-red transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         </div>
+
         <div class="flex-1 overflow-y-auto p-4 md:p-6 relative hide-scroll">
             <div id="empty-cart-msg" class="absolute inset-0 flex flex-col items-center justify-center text-gray-300 dark:text-slate-700 pointer-events-none">
                 <svg class="w-16 h-16 md:w-20 md:h-20 mb-4 md:mb-6 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
@@ -410,6 +436,7 @@
             </div>
             <div id="cart-items" class="space-y-3 md:space-y-4 relative z-10"></div>
         </div>
+
         <div class="p-4 md:p-6 border-t border-gray-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
             <div class="flex justify-between items-center mb-4">
                 <span class="text-xs font-black uppercase text-slate-400 tracking-widest">Estimated Total</span>
@@ -492,26 +519,14 @@
                     <div class="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
                     <div class="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
                         <div class="flex gap-4 md:gap-8 px-2 md:px-4 shrink-0">
-                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
-                                <img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover">
-                            </div>
-                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
-                                <img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover">
-                            </div>
-                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
-                                <img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover">
-                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover"></div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover"></div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover"></div>
                         </div>
                         <div class="flex gap-4 md:gap-8 px-2 md:px-4 shrink-0">
-                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
-                                <img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover">
-                            </div>
-                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
-                                <img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover">
-                            </div>
-                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
-                                <img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover">
-                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover"></div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover"></div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover"></div>
                         </div>
                     </div>
                 </div>
@@ -533,7 +548,6 @@
             </div>
         </section>
 
-        <!-- Quick Access Section -->
         <section class="max-w-[1400px] mx-auto px-4 md:px-6 py-16 md:py-32 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-10 md:mb-16 gap-6 text-center md:text-left stagger-1">
                 <div>
@@ -582,7 +596,6 @@
             </div>
         </section>
 
-        <!-- SECTORS SECTION -->
         <section class="max-w-[1400px] mx-auto px-4 md:px-6 py-16 md:py-32 stagger-3">
             <div class="text-center mb-10 md:mb-16">
                 <h2 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">Sectors We Power</h2>
@@ -674,6 +687,108 @@
         </div>
 
         <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 pb-24 md:pb-40 stagger-3"></div>
+    </div>
+
+    <!-- VIEW: PROCESS -->
+    <div id="view-process" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
+        <div class="text-center mb-10 md:mb-16 stagger-1">
+            <h2 class="text-3xl md:text-6xl font-black italic uppercase tracking-tighter text-brand-navy dark:text-white">How To Order</h2>
+            <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2">Requesting quotes is easy</p>
+            <p class="text-brand-red font-bold uppercase tracking-widest text-[10px] md:text-xs mt-4 bg-brand-red/10 inline-block px-4 py-2 rounded-lg border border-brand-red/20">Note: This platform is strictly for B2B traders and bulk purchases.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto space-y-6 md:space-y-8 pb-24 md:pb-32">
+            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-2">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-brand-blue rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">1</div>
+                <div>
+                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Create an Account</h3>
+                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Our wholesale portal requires registration. Click the <strong>Login / Register Now</strong> button below to create your client profile.</p>
+                </div>
+            </div>
+            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-3">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-brand-navy dark:bg-slate-800 rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">2</div>
+                <div>
+                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Build Your Basket</h3>
+                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Once logged in, navigate to our Product Catalog. Select your required case loads, type in the quantity, and add them directly to your digital basket.</p>
+                </div>
+            </div>
+            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-4">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#25D366] rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">3</div>
+                <div>
+                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Receive Pricing & Submit</h3>
+                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Our admin team will load your uniquely negotiated case prices directly into your account. Review your basket, enter your delivery details, and submit your RFQ or send it directly via WhatsApp.</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mt-12 gap-4 stagger-4">
+                <p id="process-auth-msg" style="display: none;" class="text-sm font-bold text-brand-red uppercase tracking-widest">You must be logged in to view products</p>
+                <button id="process-action-btn" onclick="window.handleProcessAction()" class="bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-10 rounded-full transition-all shadow-xl hover:scale-105">Go To Order Portal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: ABOUT -->
+    <div id="view-about" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen text-center">
+        <div class="text-center max-w-5xl mx-auto">
+            <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6 stagger-1">About Route 64</h1>
+            <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mb-8 md:mb-10 rounded-full stagger-1"></div>
+            <h2 class="text-lg md:text-3xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-12 italic px-4 stagger-2">Protect What Matters, Lubricate What Moves</h2>
+        </div>
+
+        <div class="pro-card p-6 md:p-20 text-left shadow-2xl relative overflow-hidden stagger-3 max-w-5xl mx-auto mb-16">
+            <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 leading-relaxed relative z-10"><strong>Route 64 Lubricants</strong> is the leading provider of high-performance, premium grade oils, greases, and industrial chemicals in the Gauteng region.</p>
+            <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 leading-relaxed relative z-10">Whether you operate heavy commercial fleets, agricultural machinery, or industrial plant equipment, our catalog is engineered to provide uncompromising protection.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 text-center mt-8 md:mt-12 relative z-10">
+                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
+                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Quality</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Premium Grade</p>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
+                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Location</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Randfontein HQ</p>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
+                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Support</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Dedicated Tech</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: CONTACT -->
+    <div id="view-contact" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-7xl mx-auto min-h-screen pb-24">
+        <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-2 md:mb-4 text-center stagger-1">Contact Us</h1>
+        <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] text-center mb-10 md:mb-16 stagger-1">Sales, Support & Distribution</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-10 stagger-2">
+            <div class="pro-card p-8 md:p-10 shadow-xl relative overflow-hidden h-fit">
+                <h3 class="font-black text-2xl md:text-3xl text-brand-navy dark:text-white uppercase tracking-tight mb-6">Send us a Message</h3>
+                <form onsubmit="event.preventDefault(); window.customAlert('Message sent successfully!'); this.reset();" class="space-y-4 relative z-10">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Your Name" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                        <input type="email" placeholder="Email Address" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                    </div>
+                    <input type="tel" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                    <textarea placeholder="How can we help you?" required rows="4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none"></textarea>
+                    <button type="submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-2">Send Message</button>
+                </form>
+            </div>
+            <div class="space-y-6 md:space-y-8 flex flex-col h-full">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                    <div class="pro-card p-6 shadow-md flex flex-col items-center text-center hover:border-brand-blue transition">
+                        <div class="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue mb-4"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></div>
+                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">Direct Line</h4><a href="tel:+27114123529" class="text-xs text-gray-500 hover:text-brand-blue font-bold transition">+27 11 412 3529</a>
+                    </div>
+                    <div class="pro-card p-6 shadow-md flex flex-col items-center text-center hover:border-[#25D366] transition">
+                        <div class="w-12 h-12 bg-[#25D366]/10 rounded-2xl flex items-center justify-center text-[#25D366] mb-4"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg></div>
+                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">WhatsApp</h4><a href="https://wa.me/27680871269" target="_blank" class="text-xs text-gray-500 hover:text-[#25D366] font-bold transition">068 087 1269</a>
+                    </div>
+                </div>
+                <div class="pro-card p-2 shadow-xl flex-1 min-h-[300px] relative rounded-[24px] overflow-hidden border-2 border-transparent hover:border-brand-blue transition">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.401186716949!2d27.6830559!3d-26.1500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95995555555555%3A0x5555555555555555!2s20%20Fiat%20St%2C%20Aureus%2C%20Randfontein%2C%201759!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza"
+                        class="absolute inset-0 w-full h-full rounded-[20px]" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- VIEW: CUSTOMER ORDERS -->
@@ -802,124 +917,6 @@
         </div>
     </div>
 
-    <!-- VIEW: PROCESS -->
-    <div id="view-process" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
-        <div class="text-center mb-10 md:mb-16 stagger-1">
-            <h2 class="text-3xl md:text-6xl font-black italic uppercase tracking-tighter text-brand-navy dark:text-white">How To Order</h2>
-            <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2">Requesting quotes is easy</p>
-            <p class="text-brand-red font-bold uppercase tracking-widest text-[10px] md:text-xs mt-4 bg-brand-red/10 inline-block px-4 py-2 rounded-lg border border-brand-red/20">Note: This platform is strictly for B2B traders and bulk purchases.</p>
-        </div>
-        <div class="max-w-4xl mx-auto space-y-6 md:space-y-8 pb-24 md:pb-32">
-            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-2">
-                <div class="w-16 h-16 md:w-20 md:h-20 bg-brand-blue rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">1</div>
-                <div>
-                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Create an Account</h3>
-                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Our wholesale portal requires registration. Click the <strong>Login / Register Now</strong> button below to create your client profile.</p>
-                </div>
-            </div>
-            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-3">
-                <div class="w-16 h-16 md:w-20 md:h-20 bg-brand-navy dark:bg-slate-800 rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">2</div>
-                <div>
-                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Build Your Basket</h3>
-                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Once logged in, navigate to our Product Catalog. Select your required case loads, type in the quantity, and add them directly to your digital basket.</p>
-                </div>
-            </div>
-            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-4">
-                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#25D366] rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">3</div>
-                <div>
-                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Receive Pricing & Submit</h3>
-                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Our admin team will load your uniquely negotiated case prices directly into your account. Review your basket, enter your delivery details, and submit your RFQ or send it directly via WhatsApp.</p>
-                </div>
-            </div>
-            <div class="flex flex-col items-center mt-12 gap-4 stagger-4">
-                <p id="process-auth-msg" style="display: none;" class="text-sm font-bold text-brand-red uppercase tracking-widest">You must be logged in to view products</p>
-                <button id="process-action-btn" onclick="window.handleProcessAction()" class="bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-10 rounded-full transition-all shadow-xl hover:scale-105">Go To Order Portal</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- VIEW: ABOUT -->
-    <div id="view-about" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen text-center">
-        <div class="text-center max-w-5xl mx-auto">
-            <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6 stagger-1">About Route 64</h1>
-            <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mb-8 md:mb-10 rounded-full stagger-1"></div>
-            <h2 class="text-lg md:text-3xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-12 italic px-4 stagger-2">Protect What Matters, Lubricate What Moves</h2>
-        </div>
-
-        <div class="pro-card p-6 md:p-20 text-left shadow-2xl relative overflow-hidden stagger-3 max-w-5xl mx-auto mb-16">
-            <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 leading-relaxed relative z-10"><strong>Route 64 Lubricants</strong> is the leading provider of high-performance, premium grade oils, greases, and industrial chemicals in the Gauteng region.</p>
-            <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 leading-relaxed relative z-10">Whether you operate heavy commercial fleets, agricultural machinery, or industrial plant equipment, our catalog is engineered to provide uncompromising protection.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 text-center mt-8 md:mt-12 relative z-10">
-                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
-                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Quality</h4>
-                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Premium Grade</p>
-                </div>
-                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
-                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Location</h4>
-                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Randfontein HQ</p>
-                </div>
-                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
-                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Support</h4>
-                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Dedicated Tech</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="w-full overflow-hidden py-10 md:py-16 relative z-10 group stagger-4 mb-16">
-            <div class="absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
-            <div class="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
-            <div class="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
-                <div class="flex gap-4 md:gap-8 px-2 md:px-4 shrink-0">
-                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover"></div>
-                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover"></div>
-                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover"></div>
-                </div>
-                <div class="flex gap-4 md:gap-8 px-2 md:px-4 shrink-0">
-                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover"></div>
-                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover"></div>
-                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- VIEW: CONTACT -->
-    <div id="view-contact" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-7xl mx-auto min-h-screen pb-24">
-        <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-2 md:mb-4 text-center stagger-1">Contact Us</h1>
-        <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] text-center mb-10 md:mb-16 stagger-1">Sales, Support & Distribution</p>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-10 stagger-2">
-            <div class="pro-card p-8 md:p-10 shadow-xl relative overflow-hidden h-fit">
-                <h3 class="font-black text-2xl md:text-3xl text-brand-navy dark:text-white uppercase tracking-tight mb-6">Send us a Message</h3>
-                <form onsubmit="event.preventDefault(); window.customAlert('Message sent successfully!'); this.reset();" class="space-y-4 relative z-10">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Your Name" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                        <input type="email" placeholder="Email Address" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                    </div>
-                    <input type="tel" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                    <textarea placeholder="How can we help you?" required rows="4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none"></textarea>
-                    <button type="submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-2">Send Message</button>
-                </form>
-            </div>
-            <div class="space-y-6 md:space-y-8 flex flex-col h-full">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                    <div class="pro-card p-6 shadow-md flex flex-col items-center text-center hover:border-brand-blue transition">
-                        <div class="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue mb-4"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></div>
-                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">Direct Line</h4><a href="tel:+27114123529" class="text-xs text-gray-500 hover:text-brand-blue font-bold transition">+27 11 412 3529</a>
-                    </div>
-                    <div class="pro-card p-6 shadow-md flex flex-col items-center text-center hover:border-[#25D366] transition">
-                        <div class="w-12 h-12 bg-[#25D366]/10 rounded-2xl flex items-center justify-center text-[#25D366] mb-4"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg></div>
-                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">WhatsApp</h4><a href="https://wa.me/27680871269" target="_blank" class="text-xs text-gray-500 hover:text-[#25D366] font-bold transition">068 087 1269</a>
-                    </div>
-                </div>
-                <div class="pro-card p-2 shadow-xl flex-1 min-h-[300px] relative rounded-[24px] overflow-hidden border-2 border-transparent hover:border-brand-blue transition">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.401186716949!2d27.6830559!3d-26.1500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95995555555555%3A0x5555555555555555!2s20%20Fiat%20St%2C%20Aureus%2C%20Randfontein%2C%201759!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza"
-                        class="absolute inset-0 w-full h-full rounded-[20px]" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- ADMIN PRODUCT ADD MODAL -->
     <div id="admin-product-modal" class="fixed inset-0 flex items-center justify-center p-4 modal-base z-[150]">
         <div class="absolute inset-0 bg-brand-navy/80 backdrop-blur-md" onclick="window.toggleAddProductModal()"></div>
@@ -944,27 +941,6 @@
         </div>
     </div>
 
-    <!-- DEVELOPER MODAL -->
-    <div id="dev-modal" class="fixed inset-0 flex items-center justify-center p-4 modal-base z-[250]">
-        <div class="absolute inset-0 bg-brand-navy/80 backdrop-blur-md" onclick="window.toggleDevModal()"></div>
-        <div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-slate-800 p-8 w-full max-w-sm relative z-10 transform scale-95 transition-transform duration-300 text-center" id="dev-modal-content">
-            <button onclick="window.toggleDevModal()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-red transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2"/></svg></button>
-            <div class="w-16 h-16 bg-brand-blue/10 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-            </div>
-            <h3 class="text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-1">Let's Build Something</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mb-6">Looking for a custom web platform or software solution? Let's chat.</p>
-            <div class="space-y-3">
-                <a href="mailto:ziemie786@gmail.com" class="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-bold text-brand-navy dark:text-white hover:border-brand-blue transition">
-                    <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>                    ziemie786@gmail.com
-                </a>
-                <a href="https://wa.me/27742997866" target="_blank" class="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-transparent bg-[#25D366] text-white text-sm font-bold hover:opacity-90 transition shadow-lg">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>                    WhatsApp Me
-                </a>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="bg-slate-50 dark:bg-brand-navy pt-16 md:pt-24 pb-12 md:pb-20 border-t border-gray-200 dark:border-white/5 relative overflow-hidden px-4 md:px-6 mt-12">
         <div class="max-w-[1400px] mx-auto relative z-10 text-center flex flex-col items-center gap-4">
@@ -976,6 +952,9 @@
     </footer>
 
     <script>
+        /* ========================================== */
+        /* 1. INITIALIZATION & DATA ENGINE */
+        /* ========================================== */
         window.cloudProducts = [];
         window.userPricing = {};
         window.isRegisterMode = false;
@@ -1005,26 +984,138 @@
                             size: "5L (Case of 4)"
                         }, {
                             size: "20L"
+                        }, {
+                            size: "210L"
                         }]
                     }, {
                         id: "P-E002",
+                        name: "Multigrade (20W50)",
+                        category: "Engine Oils",
+                        desc: "Multigrade 20W50 Engine Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E003",
+                        name: "Engine Oil (SAE 30)",
+                        category: "Engine Oils",
+                        desc: "Standard SAE 30 Engine Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E004",
+                        name: "Diesel Oil (HD40)",
+                        category: "Engine Oils",
+                        desc: "Heavy Duty 40 Diesel Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E005",
                         name: "Turbo Diesel (15W40)",
                         category: "Engine Oils",
                         desc: "15W40 Turbo Diesel Oil.",
                         variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
                             size: "5L (Case of 4)"
                         }, {
                             size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E006",
+                        name: "2 Stroke Oil",
+                        category: "Engine Oils",
+                        desc: "Premium 2 Stroke Engine Oil.",
+                        variants: [{
+                            size: "200ml (Case of 40)"
+                        }, {
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
                         }]
                     }, {
                         id: "P-G001",
+                        name: "Gear Oil (EP90)",
+                        category: "Gear & Auto",
+                        desc: "EP90 Gear Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G002",
                         name: "Gear Oil (80W90)",
                         category: "Gear & Auto",
                         desc: "80W90 Gear Oil.",
                         variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
                             size: "5L (Case of 4)"
                         }, {
                             size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G003",
+                        name: "Transmission (ATF DII)",
+                        category: "Gear & Auto",
+                        desc: "Automatic Transmission Fluid DII.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G004",
+                        name: "Brake Fluid DOT4",
+                        category: "Gear & Auto",
+                        desc: "NRCS Approved Brake Fluid.",
+                        variants: [{
+                            size: "200ml (Case of 40)"
+                        }, {
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
                         }]
                     }, {
                         id: "P-I001",
@@ -1032,29 +1123,195 @@
                         category: "Industrial",
                         desc: "Premium ISO 68 Hydraulic Oil.",
                         variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-I002",
+                        name: "Hydraulic Oil (ISO 46)",
+                        category: "Industrial",
+                        desc: "Premium ISO 46 Hydraulic Oil.",
+                        variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
                             size: "20L"
                         }, {
                             size: "210L"
                         }]
                     }, {
                         id: "P-C001",
-                        name: "Anti-Freeze 50%",
-                        category: "Anti-Freeze",
-                        desc: "50% Anti-freeze mix.",
+                        name: "Engine Cleaner Water Base",
+                        category: "Chemicals & Grease",
+                        desc: "Water-based engine cleaner.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C002",
+                        name: "Engine Cleaner Solvent Base",
+                        category: "Chemicals & Grease",
+                        desc: "Solvent-based engine cleaner.",
                         variants: [{
                             size: "5L (Case of 4)"
                         }, {
                             size: "20L"
+                        }, {
+                            size: "210L"
                         }]
                     }, {
-                        id: "P-C002",
+                        id: "P-C003",
+                        name: "Degreaser Concentrate",
+                        category: "Chemicals & Grease",
+                        desc: "Concentrated Degreaser.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C004",
+                        name: "Degreaser Trigger Spray",
+                        category: "Chemicals & Grease",
+                        desc: "Degreaser spray.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }]
+                    }, {
+                        id: "P-A001",
+                        name: "Anti-Freeze Summer Coolant",
+                        category: "Anti-Freeze",
+                        desc: "Summer coolant anti-freeze.",
+                        variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }]
+                    }, {
+                        id: "P-A002",
+                        name: "Anti-Freeze 30%",
+                        category: "Anti-Freeze",
+                        desc: "30% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-A003",
+                        name: "Anti-Freeze 50%",
+                        category: "Anti-Freeze",
+                        desc: "50% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-A004",
+                        name: "Anti-Freeze 96%",
+                        category: "Anti-Freeze",
+                        desc: "96% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C005",
+                        name: "Grease - Wheel Bearing",
+                        category: "Grease",
+                        desc: "Wheel bearing grease.",
+                        variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C006",
                         name: "Grease - Multipurpose",
                         category: "Grease",
                         desc: "Multipurpose grease.",
                         variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
                             size: "5kg (Case of 4)"
                         }, {
                             size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C007",
+                        name: "Grease - CV Joint",
+                        category: "Grease",
+                        desc: "CV Joint grease.",
+                        variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C008",
+                        name: "Hand Cleaner with Grit",
+                        category: "Chemicals & Grease",
+                        desc: "Citrus hand cleaner with grit.",
+                        variants: [{
+                            size: "800g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }]
+                    }, {
+                        id: "P-C009",
+                        name: "Hand Sanitizer",
+                        category: "Chemicals & Grease",
+                        desc: "70% Alcohol Hand Sanitizer.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "25L"
+                        }, {
+                            size: "200L"
                         }]
                     }];
                 }
@@ -1063,9 +1320,6 @@
                 if (window.isAdmin) window.renderAdminProducts();
             });
         };
-
-        let activeCart = [];
-        let currentFilter = 'all';
 
         window.toggleAuthModal = function() {
             const modal = document.getElementById('auth-modal');
@@ -1499,8 +1753,12 @@
             doc.setFont("helvetica", "bold");
             doc.text("CUSTOMER DETAILS", 120, 45);
             doc.setFont("helvetica", "normal");
-            doc.text("Business: " + (bizName || ''), 120, 52);
-            if (contactName) doc.text("Contact: " + contactName, 120, 57);
+            
+            const sanitizedBizName = (bizName || '').replace(/['"]/g, '');
+            const sanitizedContactName = (contactName || '').replace(/['"]/g, '');
+            
+            doc.text("Business: " + sanitizedBizName, 120, 52);
+            if (contactName) doc.text("Contact: " + sanitizedContactName, 120, 57);
             doc.text("Phone: " + (phone || ''), 120, 62);
             if (address) {
                 const splitAddress = doc.splitTextToSize("Address: " + address, 70);
@@ -1561,6 +1819,8 @@
         /* ========================================== */
         /* 5. CUSTOMER PORTAL (HISTORY) */
         /* ========================================== */
+        window.allCustomerOrders = [];
+        
         window.loadClientLeads = function() {
             const list = document.getElementById('client-leads-list');
             if (!list) return;
@@ -1586,7 +1846,6 @@
 
                         const displayTotal = data.total > 0 ? `R${data.total.toFixed(2)}` : "Pending Quote";
                         let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium py-1">▪ ${i.qty} Cases x ${i.name} (${i.size})</div>`).join('');
-                        const safeItems = data.ref;
 
                         let statusColor = "text-brand-blue";
                         if (data.status === "Approved") statusColor = "text-green-500";
@@ -1610,7 +1869,7 @@
                                     <span class='block text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1'>Status Update</span>
                                     <h5 class='text-2xl md:text-3xl font-black ${statusColor} tracking-tighter uppercase'>${data.status}</h5>
                                 </div>
-                                <button onclick="window.reorderOrder('${safeItems}')" class="bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white text-brand-navy dark:text-white px-4 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition flex items-center gap-2">
+                                <button onclick="window.reorderOrder('${data.ref}')" class="bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white text-brand-navy dark:text-white px-4 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition flex items-center gap-2">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Reorder
                                 </button>
                             </div>
@@ -1827,6 +2086,9 @@
                     if (data.status === "Pending Processing") statusColor = "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400";
                     
                     const safeRef = data.ref;
+                    const safeBizName = (data.customer?.bizName || 'N/A').replace(/['"]/g, '');
+                    const safeContact = (data.customer?.contactName || 'No Contact').replace(/['"]/g, '');
+                    const safePhone = (data.customer?.phone || 'N/A').replace(/['"]/g, '');
 
                     return `
                     <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col md:flex-row gap-6 justify-between items-start hover:border-brand-blue transition">
@@ -1836,7 +2098,7 @@
                                 <span class="text-[9px] font-black ${statusColor} px-3 py-1 rounded-md uppercase tracking-widest">${data.status}</span>
                             </div>
                             <h4 class="font-black text-lg md:text-xl dark:text-white text-brand-navy mb-1 uppercase tracking-tight">Ref: #${data.ref}</h4>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium"><span class="font-bold dark:text-gray-300">${data.customer?.bizName || 'N/A'}</span> | ${data.customer?.contactName || 'No Contact'} | ${data.customer?.phone || 'N/A'}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium"><span class="font-bold dark:text-gray-300">${safeBizName}</span> | ${safeContact} | ${safePhone}</p>
                             <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 mb-4 shadow-inner">
                                 <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Order Items</p>
                                 ${itemsHtml}
@@ -1916,8 +2178,12 @@
             doc.setFont("helvetica", "bold");
             doc.text("CUSTOMER DETAILS", 120, 45);
             doc.setFont("helvetica", "normal");
-            doc.text("Business: " + (data.customer.bizName || ''), 120, 52);
-            if (data.customer.contactName) doc.text("Contact: " + data.customer.contactName, 120, 57);
+            
+            const sanitizedBizName = (data.customer.bizName || '').replace(/['"]/g, '');
+            const sanitizedContactName = (data.customer.contactName || '').replace(/['"]/g, '');
+            
+            doc.text("Business: " + sanitizedBizName, 120, 52);
+            if (data.customer.contactName) doc.text("Contact: " + sanitizedContactName, 120, 57);
             doc.text("Phone: " + (data.customer.phone || ''), 120, 62);
             if (data.customer.address) {
                 const splitAddress = doc.splitTextToSize("Address: " + data.customer.address, 70);
@@ -1959,24 +2225,12 @@
             doc.save(`Route64_${data.ref}.pdf`);
         }
 
-        window.updateOrderStatus = async function(uid, orderId, newStatus) {
-            try {
-                await window.updateDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${uid}/inquiries`, orderId), {
-                    status: newStatus
-                });
-                window.customAlert("Order status updated to " + newStatus);
-            } catch (e) {
-                console.error("Status Update Error:", e);
-                window.customAlert("Error updating order status.");
-            }
-        };
-
         window.exportCSV = function() {
             if (!window.allAdminOrders || window.allAdminOrders.length === 0) return window.customAlert("No order data to export.");
             
             let csv = "Date,Reference,Status,Business Name,Contact,Phone,Email,Total Value\n";
             window.allAdminOrders.forEach(o => {
-                csv += `"${new Date(o.date).toLocaleDateString()}","${o.ref}","${o.status}","${o.customer?.bizName || ''}","${o.customer?.contactName || ''}","${o.customer?.phone || ''}","${o.email}",${o.total || 0}\n`;
+                csv += `"${new Date(o.date).toLocaleDateString()}","${o.ref}","${o.status}","${(o.customer?.bizName || '').replace(/['"]/g, '')}","${(o.customer?.contactName || '').replace(/['"]/g, '')}","${o.customer?.phone || ''}","${o.email}",${o.total || 0}\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv' });
