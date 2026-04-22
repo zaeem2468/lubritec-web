@@ -20,12 +20,15 @@
         = db; window.firebaseAuth = auth; window.appId = appId; window.addDoc = addDoc; window.doc = doc; window.setDoc = setDoc; window.getDoc = getDoc; window.getDocs = getDocs; window.updateDoc = updateDoc; window.deleteDoc = deleteDoc; window.collection
         = collection; window.onSnapshot = onSnapshot; window.query = query; window.signInWithEmailAndPassword = signInWithEmailAndPassword; window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; window.signOut = signOut; onAuthStateChanged(auth,
         (user) => { window.currentUser = user; const cloudStatus = document.getElementById('cloud-status'); const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const navAdminBtn
-        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display = window.isAdmin
-        ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn)
+        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const
+        processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display
+        = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn)
+        processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none"; if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn)
         mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function')
         window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display
-        = 'none'; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if(typeof window.renderCatalog
-        === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
+        = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display
+        = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if (window.currentView
+        === 'customer' || window.currentView === 'catalog') { window.navigate('home'); } if(typeof window.renderCatalog === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
 
     <script>
@@ -151,12 +154,18 @@
         
         .nav-sticky {
             position: fixed;
-            top: 32px;
+            top: 0;
             left: 0;
             width: 100%;
             z-index: 100;
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s;
+        }
+        
+        .dark .nav-sticky {
+            background: rgba(15, 23, 42, 0.85);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         /* Smooth View Transitions */
@@ -268,12 +277,7 @@
     </style>
 </head>
 
-<body class="pt-28 md:pt-32 dark:bg-slate-950 selection:bg-brand-blue selection:text-white relative overflow-x-hidden">
-
-    <!-- Top Announcement Bar -->
-    <div class="fixed top-0 left-0 w-full h-8 bg-brand-blue text-white flex items-center justify-center text-[9px] md:text-xs font-black uppercase tracking-widest z-[200] shadow-md px-4">
-        🛒 Build your basket online and request a quote instantly
-    </div>
+<body class="pt-24 md:pt-28 dark:bg-slate-950 selection:bg-brand-blue selection:text-white relative overflow-x-hidden">
 
     <!-- Ambient glowing orbs -->
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-[-1]">
@@ -282,7 +286,7 @@
     </div>
 
     <!-- Screen Overlay / Loaders -->
-    <div id="page-loader" class="fixed inset-0 bg-brand-navy z-[9999] flex flex-col items-center justify-center text-white transition-opacity duration-700">
+    <div id="page-loader" class="fixed inset-0 bg-slate-50 dark:bg-brand-navy z-[9999] flex flex-col items-center justify-center text-brand-navy dark:text-white transition-opacity duration-700">
         <div class="relative w-32 h-32 md:w-40 md:h-40 mb-6 md:mb-8">
             <div class="absolute inset-0 border-4 border-brand-red/20 rounded-full"></div>
             <div class="absolute inset-0 border-4 border-t-brand-red rounded-full animate-spin"></div>
@@ -290,7 +294,7 @@
                 <img src="image_7d531d.png" alt="Route 64 Logo" class="w-16 h-16 md:w-20 md:h-20 object-contain animate-pulse drop-shadow-2xl" onerror="this.style.display='none'">
             </div>
         </div>
-        <p class="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-50 animate-pulse text-white">Initializing Route 64 ERP</p>
+        <p class="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-50 animate-pulse text-brand-navy dark:text-white">Initializing Route 64 ERP</p>
     </div>
 
     <div id="global-overlay" onclick="window.closeAllModals()" class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm z-[80] hidden opacity-0 transition-all duration-300"></div>
@@ -394,9 +398,9 @@
     </div>
 
     <!-- MOBILE MENU OVERLAY -->
-    <div id="mobile-menu" class="fixed inset-0 bg-brand-navy/95 backdrop-blur-2xl z-[120] hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0">
-        <button onclick="window.toggleMobileMenu()" class="absolute top-6 right-6 md:top-8 md:right-8 text-white p-3 bg-white/10 rounded-full hover:bg-brand-red transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-        <div class="flex flex-col items-center gap-8 text-white font-black uppercase tracking-widest text-lg md:text-xl">
+    <div id="mobile-menu" class="fixed inset-0 bg-white/95 dark:bg-brand-navy/95 backdrop-blur-2xl z-[120] hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0">
+        <button onclick="window.toggleMobileMenu()" class="absolute top-6 right-6 md:top-8 md:right-8 text-brand-navy dark:text-white p-3 bg-black/5 dark:bg-white/10 rounded-full hover:bg-brand-red dark:hover:bg-brand-red hover:text-white transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        <div class="flex flex-col items-center gap-8 text-brand-navy dark:text-white font-black uppercase tracking-widest text-lg md:text-xl">
             <button onclick="window.navigate('home'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Home</button>
             <button onclick="window.navigate('catalog'); window.toggleMobileMenu()" id="mobile-order-btn" class="hover:text-brand-red transition text-brand-red" style="display:none;">Order Portal</button>
             <button onclick="window.navigate('process'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">How To Order</button>
@@ -415,22 +419,22 @@
                 <div class="h-12 w-12 md:h-16 md:w-16 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
                     <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
-                <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-white hidden sm:block">LUBRICANTS</span>
+                <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block">LUBRICANTS</span>
             </div>
 
-            <div class="hidden xl:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 h-full">
-                <button onclick="window.navigate('home')" class="hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Home</button>
-                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-red">Order Portal</button>
-                <button onclick="window.navigate('process')" class="hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">How To Order</button>
-                <button onclick="window.navigate('about')" class="hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">About</button>
-                <button onclick="window.navigate('contact')" class="hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Contact</button>
-                <button onclick="window.navigate('customer')" class="hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">My Inquiries</button>
+            <div class="hidden xl:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 h-full">
+                <button onclick="window.navigate('home')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Home</button>
+                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-red">Order Portal</button>
+                <button onclick="window.navigate('process')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">How To Order</button>
+                <button onclick="window.navigate('about')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">About</button>
+                <button onclick="window.navigate('contact')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Contact</button>
+                <button onclick="window.navigate('customer')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">My Inquiries</button>
                 <button onclick="window.handleNavLogin()" id="nav-login-btn" class="hover:text-brand-blue transition text-brand-blue h-full border-b-2 border-transparent font-bold">Login</button>
-                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500 h-full border-b-2 border-transparent hover:border-yellow-400 font-bold">Admin</button>
+                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="hover:text-yellow-500 dark:hover:text-yellow-400 transition text-yellow-600 dark:text-yellow-500 h-full border-b-2 border-transparent hover:border-yellow-400 font-bold">Admin</button>
             </div>
 
             <div class="flex items-center gap-2 md:gap-3">
-                <button onclick="window.toggleTheme()" class="text-slate-400 hover:text-white transition p-2 md:p-3 rounded-lg md:rounded-xl bg-white/5" id="theme-toggle">
+                <button onclick="window.toggleTheme()" class="text-slate-500 dark:text-slate-400 hover:text-brand-navy dark:hover:text-white transition p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5" id="theme-toggle">
                     <svg id="moon-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     <svg id="sun-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
@@ -441,7 +445,7 @@
                     <span id="cart-badge" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all border-2 border-brand-navy shadow-xl">0</span>
                 </button>
 
-                <button onclick="window.toggleMobileMenu()" class="xl:hidden text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-white/5">
+                <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
@@ -494,56 +498,56 @@
     <!-- VIEW: HOME -->
     <div id="view-home" class="view-section active">
         <!-- Hero Section -->
-        <section class="bg-brand-navy text-white relative min-h-[90vh] md:min-h-[95vh] flex items-center overflow-hidden">
-            <div class="absolute inset-0 opacity-20 bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1615810222378-57f6bcf9cb6f?q=80&w=1920'); mix-blend-mode: luminosity;"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-brand-navy via-brand-navy/95 to-brand-navy/80"></div>
+        <section class="bg-slate-50 dark:bg-brand-navy text-brand-navy dark:text-white relative min-h-[90vh] md:min-h-[95vh] flex items-center overflow-hidden">
+            <div class="absolute inset-0 opacity-40 bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920'); mix-blend-mode: screen;"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-white/90 via-slate-50/95 to-slate-100/90 dark:from-brand-navy dark:via-brand-navy/95 dark:to-brand-navy/80"></div>
             <div class="absolute top-[10%] right-[10%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-brand-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse-slow"></div>
 
             <div class="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10 py-16 md:py-32 w-full mt-10 md:mt-0">
                 <div class="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
                     <div class="text-center sm:text-left stagger-1">
-                        <div class="inline-flex items-center gap-2 md:gap-3 px-3 md:px-4 py-1.5 md:py-2 border border-white/10 bg-white/5 rounded-full backdrop-blur-xl mb-6 md:mb-8 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                        <div class="inline-flex items-center gap-2 md:gap-3 px-3 md:px-4 py-1.5 md:py-2 border border-brand-navy/10 dark:border-white/10 bg-black/5 dark:bg-white/5 rounded-full backdrop-blur-xl mb-6 md:mb-8 shadow-[0_0_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
                             <span class="relative flex h-1.5 w-1.5 md:h-2 md:w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 md:h-2 md:w-2 bg-brand-red"></span></span>
-                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-white/80">Authorized Distribution: Gauteng</span>
+                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-brand-navy/80 dark:text-white/80">Authorized Distribution: Gauteng</span>
                         </div>
                         <h1 class="text-4xl sm:text-5xl md:text-6xl xl:text-8xl font-black mb-6 md:mb-8 leading-[0.95] tracking-tighter">
                             THE POWER TO <br className="hidden sm:block" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-orange-500">PROTECT.</span><br/>
                             <span class="text-brand-blue italic text-2xl sm:text-3xl md:text-5xl xl:text-7xl">ENGINEERED LUBRICATION.</span>
                         </h1>
-                        <p class="text-slate-300 text-sm sm:text-base md:text-xl mb-8 md:mb-12 max-w-xl font-light leading-relaxed mx-auto sm:mx-0">
+                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base md:text-xl mb-8 md:mb-12 max-w-xl font-light leading-relaxed mx-auto sm:mx-0">
                             Uncompromising protection for high-value industrial assets. Delivering Route 64's advanced fluid technology to South Africa's most demanding sectors.
                         </p>
                         <div class="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-6 justify-center sm:justify-start">
                             <button onclick="window.navigate('catalog')" class="bg-gradient-to-r from-brand-blue to-blue-600 hover:from-blue-600 hover:to-brand-blue text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all shadow-[0_10px_30px_-10px_rgba(37,99,235,0.6)] transform hover:-translate-y-1">Explore Catalog</button>
-                            <button onclick="window.navigate('process')" class="bg-white/5 hover:bg-white/10 border border-white/20 text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all backdrop-blur-xl flex items-center justify-center gap-2 md:gap-3">
+                            <button onclick="window.navigate('process')" class="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/20 text-brand-navy dark:text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all backdrop-blur-xl flex items-center justify-center gap-2 md:gap-3">
                                 How To Order
                             </button>
-                            <a href="catalogue.pdf" download="Route_64_Catalogue.pdf" target="_blank" class="bg-brand-red/20 hover:bg-brand-red border border-brand-red/50 text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all backdrop-blur-xl flex items-center justify-center gap-2 md:gap-3 shadow-[0_10px_30px_-10px_rgba(239,68,68,0.6)]">
+                            <a href="catalogue.pdf" download="Route_64_Catalogue.pdf" target="_blank" class="bg-brand-red/10 dark:bg-brand-red/20 hover:bg-brand-red border border-brand-red/30 dark:border-brand-red/50 text-brand-red hover:text-white dark:text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all backdrop-blur-xl flex items-center justify-center gap-2 md:gap-3 shadow-[0_10px_30px_-10px_rgba(239,68,68,0.4)] dark:shadow-[0_10px_30px_-10px_rgba(239,68,68,0.6)]">
                                 <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>                                Download PDF
                             </a>
                         </div>
                     </div>
                     <div class="relative group hidden lg:block stagger-2">
                         <div class="absolute -inset-6 md:-inset-10 bg-brand-blue/20 blur-[60px] md:blur-[80px] rounded-full animate-pulse-slow"></div>
-                        <div class="relative glass-card rounded-3xl md:rounded-[3rem] overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-700 shadow-2xl border border-white/10 h-[350px] sm:h-[450px] md:h-[550px] bg-slate-900/50 flex flex-col justify-center items-center">
+                        <div class="relative glass-card rounded-3xl md:rounded-[3rem] overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-700 shadow-2xl border border-black/10 dark:border-white/10 h-[350px] sm:h-[450px] md:h-[550px] bg-white/50 dark:bg-slate-900/50 flex flex-col justify-center items-center">
                             <div class="absolute inset-0 tech-pattern opacity-30 z-0"></div>
                             <div class="absolute inset-0 flex items-center justify-center z-0 select-none">
-                                <span class="text-[150px] sm:text-[250px] md:text-[350px] font-black text-white/[0.03] italic tracking-tighter transform -rotate-12 translate-y-10">64</span>
+                                <span class="text-[150px] sm:text-[250px] md:text-[350px] font-black text-brand-navy/[0.05] dark:text-white/[0.03] italic tracking-tighter transform -rotate-12 translate-y-10">64</span>
                             </div>
                             <div class="absolute right-4 md:right-6 inset-y-0 flex items-center z-0 opacity-10">
-                                <span class="text-xl md:text-3xl font-black uppercase tracking-[1em] [writing-mode:vertical-lr] text-white">LUBRICANTS</span>
+                                <span class="text-xl md:text-3xl font-black uppercase tracking-[1em] [writing-mode:vertical-lr] text-brand-navy dark:text-white">LUBRICANTS</span>
                             </div>
                             <div class="relative z-10 w-[90%] md:w-[95%] flex justify-center">
                                 <img src="image_bdaa1b-removebg-preview.jpg.jpg.png" alt="Route 64 Product Range" class="w-full h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transform group-hover:scale-110 group-hover:-translate-y-4 transition-all duration-1000 ease-out"
                                     onerror="this.src='image_bdaa1b-removebg-preview.jpg.jpg'">
                             </div>
                             <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20">
-                                <div class="bg-brand-navy/90 backdrop-blur-xl border border-white/10 p-3 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 max-w-[160px] md:max-w-[200px]">
+                                <div class="bg-white/90 dark:bg-brand-navy/90 backdrop-blur-xl border border-black/10 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 max-w-[160px] md:max-w-[200px]">
                                     <div class="flex items-center gap-2 md:gap-3 mb-1.5 md:mb-2">
                                         <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-brand-red animate-ping"></span>
                                         <span class="text-brand-red font-black uppercase tracking-widest text-[7px] md:text-[9px]">Gauteng Certified</span>
                                     </div>
-                                    <p class="text-white font-black text-xs md:text-sm leading-tight">PREMIUM FLUID SOLUTIONS</p>
+                                    <p class="text-brand-navy dark:text-white font-black text-xs md:text-sm leading-tight">PREMIUM FLUID SOLUTIONS</p>
                                     <div class="h-1 w-full bg-brand-blue mt-2 md:mt-3 rounded-full opacity-50"></div>
                                 </div>
                             </div>
@@ -551,24 +555,24 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 pt-12 md:pt-16 mt-12 md:mt-20 relative z-10 border-t border-white/10 stagger-3">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 pt-12 md:pt-16 mt-12 md:mt-20 relative z-10 border-t border-black/10 dark:border-white/10 stagger-3">
                     <div class="p-4 md:p-6 flex flex-col items-center md:items-start text-center md:text-left">
                         <span class="block text-2xl md:text-4xl font-black text-brand-red mb-1 md:mb-2 drop-shadow-md">99.8%</span>
-                        <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">Service Reliability</span>
+                        <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Service Reliability</span>
                     </div>
                     <div class="p-4 md:p-6 flex flex-col items-center md:items-start text-center md:text-left">
-                        <span class="block text-2xl md:text-4xl font-black text-white mb-1 md:mb-2 drop-shadow-md">48hr</span>
-                        <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">Dispatch Target</span>
+                        <span class="block text-2xl md:text-4xl font-black text-brand-navy dark:text-white mb-1 md:mb-2 drop-shadow-md">48hr</span>
+                        <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Dispatch Target</span>
                     </div>
                     <div class="p-4 md:p-6 flex flex-col items-center md:items-start text-center md:text-left">
                         <span class="block text-2xl md:text-4xl font-black text-brand-blue mb-1 md:mb-2 drop-shadow-md">30+</span>
-                        <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">Core Formulations</span>
+                        <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Core Formulations</span>
                     </div>
                 </div>
             </div>
 
-            <div class="absolute bottom-0 left-0 w-full border-t border-white/5 bg-brand-navy/80 backdrop-blur-md overflow-hidden py-2 md:py-3 z-20">
-                <div class="flex space-x-8 md:space-x-12 animate-marquee whitespace-nowrap opacity-60 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[8px] md:text-[10px] text-slate-300">
+            <div class="absolute bottom-0 left-0 w-full border-t border-black/5 dark:border-white/5 bg-white/80 dark:bg-brand-navy/80 backdrop-blur-md overflow-hidden py-2 md:py-3 z-20">
+                <div class="flex space-x-8 md:space-x-12 animate-marquee whitespace-nowrap opacity-60 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[8px] md:text-[10px] text-slate-600 dark:text-slate-300">
                     <span>// Premium Additives</span>
                     <span>// ISO 9001 Certified Quality</span>
                     <span>// 100% Virgin Base Oils</span>
@@ -857,7 +861,7 @@
             <p id="cloud-status" class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Not Connected (Login Required)</p>
         </div>
         <div id="client-leads-list" class="space-y-4 md:space-y-6 mb-24 md:mb-32 text-center stagger-2">
-            <div class="p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] border border-dashed mx-4 md:mx-0">
+            <div class="p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] border border-dashed mx-4 md:mx-0 dark:border-slate-800">
                 <p class="text-xs md:text-sm font-black uppercase tracking-widest mb-4">You are not logged in</p>
                 <button onclick="window.toggleAuthModal()" class="px-6 py-3 bg-brand-blue text-white rounded-xl font-black uppercase text-xs">Login Now</button>
             </div>
@@ -969,8 +973,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-brand-navy pt-16 md:pt-24 pb-12 md:pb-20 border-t border-white/5 relative overflow-hidden px-4 md:px-6 mt-12">
-        <div class="max-w-[1400px] mx-auto relative z-10 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
+    <footer class="bg-slate-50 dark:bg-brand-navy pt-16 md:pt-24 pb-12 md:pb-20 border-t border-gray-200 dark:border-white/5 relative overflow-hidden px-4 md:px-6 mt-12">
+        <div class="max-w-[1400px] mx-auto relative z-10 text-center text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest">
             © 2026 Route 64 Lubricants. Authorized Distribution.
         </div>
     </footer>
@@ -2229,7 +2233,7 @@
         /* 7. UI & NAVIGATION HELPER FUNCTIONS */
         /* ========================================== */
         window.navigate = function(viewId) {
-            // Protect Views Logic
+            /* Protect Views Logic */
             if (viewId === 'catalog' && !window.currentUser) {
                 window.customAlert("Please log in or register to view the catalog.");
                 window.toggleAuthModal();
@@ -2271,11 +2275,11 @@
                 if (target) {
                     target.style.display = 'block';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    // Force reflow
+                    /* Force reflow */
                     void target.offsetWidth;
                     target.classList.add('active');
                     
-                    // Context specific renders
+                    /* Context specific renders */
                     if (viewId === 'catalog') window.renderCatalog();
                     if (viewId === 'customer') window.loadClientLeads();
                     if (viewId === 'admin' && window.isAdmin) window.switchAdminTab('dashboard');
@@ -2401,24 +2405,24 @@
             
             const msgs = document.getElementById('ai-messages');
             
-            // Add User Message Node
+            /* Add User Message Node */
             const userDiv = document.createElement('div');
             userDiv.className = "bg-brand-blue text-white p-3 md:p-4 rounded-xl md:rounded-2xl rounded-tr-none font-medium w-fit max-w-[90%] ml-auto shrink-0 shadow-md";
             userDiv.innerText = val;
             msgs.appendChild(userDiv);
             input.value = '';
             
-            // Force Scroll to bottom
+            /* Force Scroll to bottom */
             msgs.scrollTop = msgs.scrollHeight;
 
-            // Simulate Typing Indicator
+            /* Simulate Typing Indicator */
             const typeDiv = document.createElement('div');
             typeDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl rounded-tl-none font-medium w-fit flex items-center gap-2 mr-auto shrink-0";
             typeDiv.innerHTML = `<span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.2s"></span>`;
             msgs.appendChild(typeDiv);
             msgs.scrollTop = msgs.scrollHeight;
 
-            // Simple hardcoded simulated intelligent responses
+            /* Simple hardcoded simulated intelligent responses */
             setTimeout(() => {
                 typeDiv.remove();
                 const botDiv = document.createElement('div');
@@ -2449,7 +2453,7 @@
         /* 9. ON LOAD INITIALIZATION */
         /* ========================================== */
         window.addEventListener('DOMContentLoaded', () => {
-            // Determine and Apply User Theme Preference
+            /* Determine and Apply User Theme Preference */
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
@@ -2462,7 +2466,7 @@
                 document.getElementById('moon-icon').classList.remove('hidden');
             }
 
-            // Handle Boot Sequence & Loader
+            /* Handle Boot Sequence & Loader */
             setTimeout(() => {
                 const loader = document.getElementById('page-loader');
                 if(loader) {
@@ -2470,7 +2474,7 @@
                     setTimeout(() => loader.style.display = 'none', 700);
                 }
                 
-                // Trigger initial data fetch once UI is presented
+                /* Trigger initial data fetch once UI is presented */
                 window.initCatalog();
             }, 2500);
         });
