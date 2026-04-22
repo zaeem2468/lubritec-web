@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Route 64 Lubricants | Professional ERP Platform</title>
 
-    <!-- UI & Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <!-- Firebase Integration Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"; import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ",
@@ -28,15 +26,6 @@
         === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
 
-    <!-- Supplemental UI State Logic -->
-    <script type="module">
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"; const secondaryAuth = getAuth(); onAuthStateChanged(secondaryAuth, (user) => { const navOrderBtn = document.getElementById('nav-order-btn'); const
-        mobileOrderBtn = document.getElementById('mobile-order-btn'); const processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); const profileSection = document.getElementById('client-profile-section');
-        if (user) { if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display
-        = "none"; if (profileSection) profileSection.classList.remove('hidden'); } else { if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (processActionBtn) processActionBtn.innerText
-        = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (profileSection) profileSection.classList.add('hidden'); if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home');
-        } } });
-    </script>
 
     <script>
         tailwind.config = {
@@ -56,18 +45,9 @@
                     },
                     animation: {
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                        'marquee': 'marquee 20s linear infinite'
+                        'marquee': 'marquee 30s linear infinite'
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': {
-                                transform: 'translateY(0)'
-                            },
-                            '50%': {
-                                transform: 'translateY(-10px)'
-                            }
-                        },
                         marquee: {
                             '0%': {
                                 transform: 'translateX(0%)'
@@ -134,6 +114,7 @@
             color: #0f172a;
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
         
         .dark body {
@@ -175,7 +156,6 @@
             background: rgba(15, 23, 42, 0.85);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        /* Smooth View Transitions */
         
         .view-section {
             display: none;
@@ -184,10 +164,6 @@
         .view-section.active {
             display: block;
             animation: slideFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        
-        .view-section.fade-out {
-            animation: slideFadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         
         @keyframes slideFadeIn {
@@ -202,20 +178,6 @@
                 filter: blur(0);
             }
         }
-        
-        @keyframes slideFadeOut {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-20px) scale(0.98);
-                filter: blur(4px);
-            }
-        }
-        /* Staggered Element Animations */
         
         .stagger-1 {
             animation: slideFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.1s;
@@ -246,7 +208,6 @@
             transform: translateX(0);
         }
         
-        #auth-modal,
         .modal-base {
             opacity: 0;
             pointer-events: none;
@@ -254,7 +215,6 @@
             z-index: 200;
         }
         
-        #auth-modal.open,
         .modal-base.open {
             opacity: 1;
             pointer-events: auto;
@@ -262,19 +222,6 @@
         
         .hide-scroll::-webkit-scrollbar {
             display: none;
-        }
-        
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .tech-pattern {
@@ -286,7 +233,6 @@
 
 <body class="pt-24 md:pt-28 dark:bg-slate-950 selection:bg-brand-blue selection:text-white relative overflow-x-hidden">
 
-    <!-- Ambient glowing orbs -->
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-[-1]">
         <div class="absolute top-[-10%] left-[-10%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 blur-[80px] md:blur-[100px] animate-pulse-slow mix-blend-multiply dark:mix-blend-screen"></div>
         <div class="absolute top-[20%] right-[-10%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] rounded-full bg-brand-red/5 dark:bg-brand-red/10 blur-[80px] md:blur-[100px] animate-pulse-slow delay-1000 mix-blend-multiply dark:mix-blend-screen"></div>
@@ -307,23 +253,20 @@
     <div id="global-overlay" onclick="window.closeAllModals()" class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm z-[80] hidden opacity-0 transition-all duration-300"></div>
 
     <!-- AUTHENTICATION MODAL -->
-    <div id="auth-modal" class="fixed inset-0 z-[130] flex items-center justify-center p-4 modal-base">
+    <div id="auth-modal" class="fixed inset-0 flex items-center justify-center p-4 modal-base z-[130]">
         <div class="absolute inset-0 bg-brand-navy/80 backdrop-blur-md" onclick="window.toggleAuthModal()"></div>
         <div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-slate-800 p-8 w-full max-w-md relative z-10 transform scale-95 transition-transform duration-300" id="auth-modal-content">
             <button onclick="window.toggleAuthModal()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-red transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-
             <div class="text-center mb-6">
                 <img src="image_7d531d.png" class="w-16 h-16 mx-auto mb-4" alt="Route 64" onerror="this.style.display='none'">
                 <h3 class="text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter" id="auth-title">Client Login</h3>
                 <p class="text-[10px] text-brand-red font-bold uppercase tracking-widest mt-2 bg-brand-red/10 inline-block px-3 py-1 rounded-md border border-brand-red/20">B2B Wholesale Traders Only</p>
             </div>
-
             <form id="auth-form" onsubmit="window.handleAuth(event)" class="space-y-4">
                 <input type="email" id="auth-email" placeholder="Business Email" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition">
                 <input type="password" id="auth-password" placeholder="Password" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition">
                 <button type="submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-4" id="auth-submit-btn">Sign In</button>
             </form>
-
             <div class="mt-6 text-center">
                 <button onclick="window.toggleAuthMode()" class="text-xs font-bold text-gray-500 hover:text-brand-blue transition" id="auth-toggle-btn">Need an account? Register here</button>
             </div>
@@ -333,7 +276,7 @@
     <!-- QUICK VIEW MODAL -->
     <div id="quickview-modal" class="fixed inset-0 flex items-center justify-center p-4 modal-base z-[140]">
         <div class="absolute inset-0 bg-brand-navy/80 backdrop-blur-md" onclick="window.closeQuickView()"></div>
-        <div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl w-full max-w-2xl relative z-10 overflow-hidden border dark:border-slate-800" style="animation: slideFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;">
+        <div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl w-full max-w-2xl relative z-10 overflow-hidden border dark:border-slate-800">
             <button onclick="window.closeQuickView()" class="absolute top-6 right-6 z-20 text-gray-400 hover:text-brand-red bg-white dark:bg-slate-800 rounded-full p-1 transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             <div class="flex flex-col md:flex-row">
                 <div class="w-full md:w-2/5 bg-slate-100 dark:bg-slate-950 p-8 flex items-center justify-center relative">
@@ -354,8 +297,7 @@
 
     <!-- AI & WHATSAPP FLOATING BUTTONS -->
     <div id="ai-widget-container" class="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[90] flex flex-col items-end gap-3">
-        <div id="ai-chat-window" style="display: none;" class="flex-col w-[90vw] sm:w-80 md:w-96 h-[60vh] md:h-[500px] max-h-[75vh] glass-panel rounded-[24px] md:rounded-[32px] shadow-2xl border border-gray-200 dark:border-white/10 mb-4 overflow-hidden origin-bottom-right"
-            style="animation: slideFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;">
+        <div id="ai-chat-window" style="display: none;" class="flex-col w-[90vw] sm:w-80 md:w-96 h-[60vh] md:h-[500px] max-h-[75vh] bg-white/5 dark:bg-slate-900/90 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-[24px] md:rounded-[32px] shadow-2xl mb-4 overflow-hidden origin-bottom-right">
             <div class="p-4 md:p-5 bg-brand-navy text-white flex justify-between items-center shrink-0 shadow-md z-20">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-tr from-brand-blue to-purple-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.5)] relative overflow-hidden">
@@ -385,12 +327,9 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <!-- WhatsApp Floating Button -->
-            <a href="https://wa.me/27680871269" target="_blank" class="w-12 h-12 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-[0_10px_20px_-5px_rgba(37,211,102,0.8)] flex items-center justify-center hover:scale-110 transition-all duration-300 relative group border-2 border-white/20">
-                <svg class="w-6 h-6 md:w-7 md:h-7 relative z-10 drop-shadow-md group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            <a href="https://wa.me/27742997866" target="_blank" class="w-12 h-12 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-[0_10px_20px_-5px_rgba(37,211,102,0.8)] flex items-center justify-center hover:scale-110 transition-all duration-300 relative group border-2 border-white/20">
+                <svg class="w-6 h-6 md:w-7 md:h-7 relative z-10 drop-shadow-md group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
             </a>
-
-            <!-- AI Bot Bubble -->
             <button id="ai-bot-bubble" onclick="window.toggleAI()" class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-brand-navy via-brand-blue to-purple-700 text-white rounded-full shadow-[0_10px_30px_-5px_rgba(37,99,235,0.8)] flex items-center justify-center hover:scale-110 transition-all duration-300 relative group overflow-hidden border-2 border-white/20 cursor-pointer">
                 <div class="absolute inset-0 border-[2px] border-transparent border-t-white/40 rounded-full animate-[spin_3s_linear_infinite]"></div>
                 <div class="absolute inset-1 border-[2px] border-dashed border-white/30 rounded-full animate-[spin_5s_linear_infinite_reverse]"></div>
@@ -428,7 +367,6 @@
                 </div>
                 <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block">LUBRICANTS</span>
             </div>
-
             <div class="hidden xl:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 h-full">
                 <button onclick="window.navigate('home')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Home</button>
                 <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-red">Order Portal</button>
@@ -439,19 +377,16 @@
                 <button onclick="window.handleNavLogin()" id="nav-login-btn" class="hover:text-brand-blue transition text-brand-blue h-full border-b-2 border-transparent font-bold">Login</button>
                 <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="hover:text-yellow-500 dark:hover:text-yellow-400 transition text-yellow-600 dark:text-yellow-500 h-full border-b-2 border-transparent hover:border-yellow-400 font-bold">Admin</button>
             </div>
-
             <div class="flex items-center gap-2 md:gap-3">
                 <button onclick="window.toggleTheme()" class="text-slate-500 dark:text-slate-400 hover:text-brand-navy dark:hover:text-white transition p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5" id="theme-toggle">
                     <svg id="moon-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     <svg id="sun-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
-
                 <button onclick="window.toggleCart()" class="relative p-2 md:p-4 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-lg md:rounded-2xl transition border border-brand-blue/20 shadow-xl flex items-center gap-2 md:gap-3 group">
                     <span class="text-[10px] md:text-xs uppercase font-black px-1 md:px-3 text-brand-blue hidden sm:block">Basket</span>
                     <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-110 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     <span id="cart-badge" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all border-2 border-brand-navy shadow-xl">0</span>
                 </button>
-
                 <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
@@ -468,7 +403,6 @@
             </div>
             <button onclick="window.toggleCart()" class="p-2 md:p-3 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-xl transition group"><svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-brand-red transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         </div>
-
         <div class="flex-1 overflow-y-auto p-4 md:p-6 relative hide-scroll">
             <div id="empty-cart-msg" class="absolute inset-0 flex flex-col items-center justify-center text-gray-300 dark:text-slate-700 pointer-events-none">
                 <svg class="w-16 h-16 md:w-20 md:h-20 mb-4 md:mb-6 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
@@ -476,7 +410,6 @@
             </div>
             <div id="cart-items" class="space-y-3 md:space-y-4 relative z-10"></div>
         </div>
-
         <div class="p-4 md:p-6 border-t border-gray-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
             <div class="flex justify-between items-center mb-4">
                 <span class="text-xs font-black uppercase text-slate-400 tracking-widest">Estimated Total</span>
@@ -504,14 +437,13 @@
 
     <!-- VIEW: HOME -->
     <div id="view-home" class="view-section active">
-        <!-- Hero Section -->
-        <section class="bg-slate-50 dark:bg-brand-navy text-brand-navy dark:text-white relative min-h-[90vh] md:min-h-[95vh] flex items-center overflow-hidden">
-            <div class="absolute inset-0 opacity-40 bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920'); mix-blend-mode: screen;"></div>
+        <section class="bg-slate-50 dark:bg-brand-navy text-brand-navy dark:text-white relative min-h-[90vh] md:min-h-[95vh] flex flex-col justify-center overflow-hidden pb-12">
+            <div class="absolute inset-0 opacity-40 bg-cover bg-center bg-fixed" style="background-image: url('hero-bg.jpg'); mix-blend-mode: screen;"></div>
             <div class="absolute inset-0 bg-gradient-to-br from-white/90 via-slate-50/95 to-slate-100/90 dark:from-brand-navy dark:via-brand-navy/95 dark:to-brand-navy/80"></div>
             <div class="absolute top-[10%] right-[10%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-brand-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse-slow"></div>
 
-            <div class="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10 py-16 md:py-32 w-full mt-10 md:mt-0">
-                <div class="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10 pt-16 md:pt-32 w-full mt-10 md:mt-0">
+                <div class="grid lg:grid-cols-2 gap-10 md:gap-16 items-center mb-16">
                     <div class="text-center sm:text-left stagger-1">
                         <div class="inline-flex items-center gap-2 md:gap-3 px-3 md:px-4 py-1.5 md:py-2 border border-brand-navy/10 dark:border-white/10 bg-black/5 dark:bg-white/5 rounded-full backdrop-blur-xl mb-6 md:mb-8 shadow-[0_0_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
                             <span class="relative flex h-1.5 w-1.5 md:h-2 md:w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 md:h-2 md:w-2 bg-brand-red"></span></span>
@@ -531,9 +463,7 @@
                         </div>
                         <div class="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-6 justify-center sm:justify-start">
                             <button onclick="window.navigate('catalog')" class="bg-gradient-to-r from-brand-blue to-blue-600 hover:from-blue-600 hover:to-brand-blue text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all shadow-[0_10px_30px_-10px_rgba(37,99,235,0.6)] transform hover:-translate-y-1">Explore Catalog</button>
-                            <button onclick="window.navigate('process')" class="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/20 text-brand-navy dark:text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all backdrop-blur-xl flex items-center justify-center gap-2 md:gap-3">
-                                How To Order
-                            </button>
+                            <button onclick="window.navigate('process')" class="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/20 text-brand-navy dark:text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all backdrop-blur-xl flex items-center justify-center gap-2 md:gap-3">How To Order</button>
                             <a href="catalogue.pdf" download="Route_64_Catalogue.pdf" target="_blank" class="bg-brand-red/10 dark:bg-brand-red/20 hover:bg-brand-red border border-brand-red/30 dark:border-brand-red/50 text-brand-red hover:text-white dark:text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-8 md:py-5 md:px-10 rounded-full transition-all backdrop-blur-xl flex items-center justify-center gap-2 md:gap-3 shadow-[0_10px_30px_-10px_rgba(239,68,68,0.4)] dark:shadow-[0_10px_30px_-10px_rgba(239,68,68,0.6)]">
                                 <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>                                Download PDF
                             </a>
@@ -541,18 +471,8 @@
                     </div>
                     <div class="relative group hidden lg:block stagger-2">
                         <div class="absolute -inset-6 md:-inset-10 bg-brand-blue/20 blur-[60px] md:blur-[80px] rounded-full animate-pulse-slow"></div>
-                        <div class="relative glass-card rounded-3xl md:rounded-[3rem] overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-700 shadow-2xl border border-black/10 dark:border-white/10 h-[350px] sm:h-[450px] md:h-[550px] bg-white/50 dark:bg-slate-900/50 flex flex-col justify-center items-center">
-                            <div class="absolute inset-0 tech-pattern opacity-30 z-0"></div>
-                            <div class="absolute inset-0 flex items-center justify-center z-0 select-none">
-                                <span class="text-[150px] sm:text-[250px] md:text-[350px] font-black text-brand-navy/[0.05] dark:text-white/[0.03] italic tracking-tighter transform -rotate-12 translate-y-10">64</span>
-                            </div>
-                            <div class="absolute right-4 md:right-6 inset-y-0 flex items-center z-0 opacity-10">
-                                <span class="text-xl md:text-3xl font-black uppercase tracking-[1em] [writing-mode:vertical-lr] text-brand-navy dark:text-white">LUBRICANTS</span>
-                            </div>
-                            <div class="relative z-10 w-[90%] md:w-[95%] flex justify-center">
-                                <img src="image_bdaa1b-removebg-preview.jpg.jpg.png" alt="Route 64 Product Range" class="w-full h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transform group-hover:scale-110 group-hover:-translate-y-4 transition-all duration-1000 ease-out"
-                                    onerror="this.src='image_bdaa1b-removebg-preview.jpg.jpg'">
-                            </div>
+                        <div class="relative z-10 w-[90%] md:w-[95%] flex justify-center rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10 transform group-hover:scale-[1.02] transition-transform duration-700 h-[450px] md:h-[550px]">
+                            <img src="main-product-display.jpg" alt="Premium Golden Oil" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-1000 ease-out" onerror="this.style.display='none'">
                             <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20">
                                 <div class="bg-white/90 dark:bg-brand-navy/90 backdrop-blur-xl border border-black/10 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 max-w-[160px] md:max-w-[200px]">
                                     <div class="flex items-center gap-2 md:gap-3 mb-1.5 md:mb-2">
@@ -567,7 +487,36 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 pt-12 md:pt-16 mt-12 md:mt-20 relative z-10 border-t border-black/10 dark:border-white/10 stagger-3">
+                <div class="w-full overflow-hidden py-10 md:py-16 relative z-10 group stagger-3 mt-8 mb-16">
+                    <div class="absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
+                    <div class="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
+                    <div class="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
+                        <div class="flex gap-4 md:gap-8 px-2 md:px-4 shrink-0">
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="flex gap-4 md:gap-8 px-2 md:px-4 shrink-0">
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0">
+                                <img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 pt-8 md:pt-12 relative z-10 border-t border-black/10 dark:border-white/10 stagger-4">
                     <div class="p-4 md:p-6 flex flex-col items-center md:items-start text-center md:text-left">
                         <span class="block text-2xl md:text-4xl font-black text-brand-red mb-1 md:mb-2 drop-shadow-md">99.8%</span>
                         <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Service Reliability</span>
@@ -580,16 +529,6 @@
                         <span class="block text-2xl md:text-4xl font-black text-brand-blue mb-1 md:mb-2 drop-shadow-md">30+</span>
                         <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Core Formulations</span>
                     </div>
-                </div>
-            </div>
-
-            <div class="absolute bottom-0 left-0 w-full border-t border-black/5 dark:border-white/5 bg-white/80 dark:bg-brand-navy/80 backdrop-blur-md overflow-hidden py-2 md:py-3 z-20">
-                <div class="flex space-x-8 md:space-x-12 animate-marquee whitespace-nowrap opacity-60 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[8px] md:text-[10px] text-slate-600 dark:text-slate-300">
-                    <span>// Premium Additives</span>
-                    <span>// 100% Virgin Base Oils</span>
-                    <span>// OEM Specifications</span>
-                    <span>// High Thermal Stability</span>
-                    <span>// Extreme Pressure Resistance</span>
                 </div>
             </div>
         </section>
@@ -653,7 +592,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1586191552066-f52fd141afc2?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('sector-1.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-blue/20 backdrop-blur-md border border-brand-blue/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -664,7 +603,7 @@
                     </div>
                 </div>
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('sector-2.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-red/20 backdrop-blur-md border border-brand-red/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -675,7 +614,7 @@
                     </div>
                 </div>
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1592982537447-6f29cb90ea78?q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('sector-3.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-green-500/20 backdrop-blur-md border border-green-500/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -689,135 +628,7 @@
         </section>
     </div>
 
-    <!-- VIEW: HOW TO ORDER PROCESS -->
-    <div id="view-process" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
-        <div class="text-center mb-10 md:mb-16 stagger-1">
-            <h2 class="text-3xl md:text-6xl font-black italic uppercase tracking-tighter text-brand-navy dark:text-white">How To Order</h2>
-            <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2">Requesting quotes is easy</p>
-            <p class="text-brand-red font-bold uppercase tracking-widest text-[10px] md:text-xs mt-4 bg-brand-red/10 inline-block px-4 py-2 rounded-lg border border-brand-red/20">Note: This platform is strictly for B2B traders and bulk purchases.</p>
-        </div>
-
-        <div class="max-w-4xl mx-auto space-y-6 md:space-y-8 pb-24 md:pb-32">
-            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-2">
-                <div class="absolute -right-10 -top-10 w-32 h-32 bg-blue-50 dark:bg-blue-900/20 rounded-full blur-2xl"></div>
-                <div class="w-16 h-16 md:w-20 md:h-20 bg-brand-blue rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">1</div>
-                <div>
-                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Create an Account</h3>
-                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Our wholesale portal requires registration. Click the <strong>Login / Register Now</strong> button below to create your client profile. Only logged-in users can browse products and build order baskets.</p>
-                </div>
-            </div>
-            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-3">
-                <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-brand-navy/5 dark:bg-white/5 rounded-full blur-2xl"></div>
-                <div class="w-16 h-16 md:w-20 md:h-20 bg-brand-navy dark:bg-slate-800 rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">2</div>
-                <div>
-                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Build Your Basket</h3>
-                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Once logged in, navigate to our Product Catalog. Select your required case loads, type in the quantity, and add them directly to your digital basket.</p>
-                </div>
-            </div>
-            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-4">
-                <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-green-50 dark:bg-green-900/20 rounded-full blur-2xl"></div>
-                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#25D366] rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">3</div>
-                <div>
-                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Receive Pricing & Submit</h3>
-                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Our admin team will load your uniquely negotiated case prices directly into your account. Review your basket, enter your delivery details, and submit your RFQ or send it directly via WhatsApp.</p>
-                </div>
-            </div>
-            <div class="flex flex-col items-center mt-12 gap-4 stagger-4">
-                <p id="process-auth-msg" style="display: none;" class="text-sm font-bold text-brand-red uppercase tracking-widest">You must be logged in to view products</p>
-                <button id="process-action-btn" onclick="window.handleProcessAction()" class="bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-10 rounded-full transition-all shadow-xl hover:scale-105">Go To Order Portal</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- VIEW: ABOUT -->
-    <div id="view-about" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-5xl mx-auto min-h-screen text-center">
-        <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6 stagger-1">About Route 64</h1>
-        <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mb-8 md:mb-10 rounded-full stagger-1"></div>
-        <h2 class="text-lg md:text-3xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-12 italic px-4 stagger-2">Protect What Matters, Lubricate What Moves</h2>
-        <div class="pro-card p-6 md:p-20 text-left shadow-2xl relative overflow-hidden stagger-3">
-            <div class="absolute -right-10 -top-10 md:-right-20 md:-top-20 opacity-5"><svg class="w-64 h-64 md:w-96 md:h-96" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
-            <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 leading-relaxed relative z-10">
-                <strong>Route 64 Lubricants</strong> is the leading provider of high-performance, premium grade oils, greases, and industrial chemicals in the Gauteng region. Based out of Aureus, Randfontein, we supply to a wide array of demanding sectors.
-            </p>
-            <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 leading-relaxed relative z-10">
-                Whether you operate heavy commercial fleets, agricultural machinery, or industrial plant equipment, our catalog is engineered to provide uncompromising protection.
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 text-center mt-8 md:mt-12 relative z-10">
-                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
-                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Quality</h4>
-                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Premium Grade</p>
-                </div>
-                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
-                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Location</h4>
-                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Randfontein HQ</p>
-                </div>
-                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
-                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Support</h4>
-                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Dedicated Tech</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- VIEW: CONTACT -->
-    <div id="view-contact" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-7xl mx-auto min-h-screen pb-24">
-        <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-2 md:mb-4 text-center stagger-1">Contact Us</h1>
-        <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] text-center mb-10 md:mb-16 stagger-1">Sales, Support & Distribution</p>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-10 stagger-2">
-            <!-- Left: Contact Form -->
-            <div class="pro-card p-8 md:p-10 shadow-xl relative overflow-hidden h-fit">
-                <h3 class="font-black text-2xl md:text-3xl text-brand-navy dark:text-white uppercase tracking-tight mb-6">Send us a Message</h3>
-                <form onsubmit="event.preventDefault(); window.customAlert('Message sent successfully! Our team will contact you soon.'); this.reset();" class="space-y-4 relative z-10">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Your Name" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                        <input type="email" placeholder="Email Address" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                    </div>
-                    <input type="tel" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                    <textarea placeholder="How can we help you?" required rows="4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none"></textarea>
-                    <button type="submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-2">Send Message</button>
-                </form>
-                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none"></div>
-            </div>
-
-            <!-- Right: Details & Map -->
-            <div class="space-y-6 md:space-y-8 flex flex-col h-full">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                    <div class="pro-card p-6 shadow-md flex flex-col items-center text-center hover:border-brand-blue transition">
-                        <div class="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue mb-4">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                        </div>
-                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">Direct Line</h4>
-                        <a href="tel:+27114123529" class="text-xs text-gray-500 hover:text-brand-blue font-bold transition">+27 11 412 3529</a>
-                    </div>
-                    <div class="pro-card p-6 shadow-md flex flex-col items-center text-center hover:border-[#25D366] transition">
-                        <div class="w-12 h-12 bg-[#25D366]/10 rounded-2xl flex items-center justify-center text-[#25D366] mb-4">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                        </div>
-                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">WhatsApp</h4>
-                        <a href="https://wa.me/27680871269" target="_blank" class="text-xs text-gray-500 hover:text-[#25D366] font-bold transition">068 087 1269</a>
-                    </div>
-                </div>
-
-                <div class="pro-card p-6 shadow-md flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left hover:border-brand-blue transition">
-                    <div class="w-12 h-12 bg-brand-navy/5 dark:bg-white/5 rounded-2xl flex items-center justify-center text-brand-navy dark:text-white shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">Headquarters</h4>
-                        <p class="text-xs text-gray-500 font-medium">20 Fiat Street, Aureus, Randfontein, 1760</p>
-                    </div>
-                </div>
-
-                <div class="pro-card p-2 shadow-xl flex-1 min-h-[300px] relative rounded-[24px] overflow-hidden border-2 border-transparent hover:border-brand-blue transition">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.401186716949!2d27.6830559!3d-26.1500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95995555555555%3A0x5555555555555555!2s20%20Fiat%20St%2C%20Aureus%2C%20Randfontein%2C%201759!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza"
-                        class="absolute inset-0 w-full h-full rounded-[20px]" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- VIEW: MASTER CATALOG (NOW SECURED) -->
+    <!-- VIEW: CATALOG -->
     <div id="view-catalog" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 md:mb-12 gap-6 md:gap-8 border-b border-gray-100 dark:border-slate-800 pb-8 md:pb-12 stagger-1">
             <div class="flex-1 w-full">
@@ -838,7 +649,6 @@
                     <button onclick="window.toggleViewMode('grid')" id="btn-grid-view" class="p-2 md:p-3 bg-white dark:bg-slate-800 text-brand-navy dark:text-white rounded-lg md:rounded-xl shadow-md transition transform active:scale-95 flex-1 sm:flex-none flex justify-center"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg></button>
                     <button onclick="window.toggleViewMode('list')" id="btn-list-view" class="p-2 md:p-3 text-gray-400 hover:text-brand-navy dark:hover:text-white transition transform active:scale-95 flex-1 sm:flex-none flex justify-center"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
                 </div>
-
                 <div class="relative w-full sm:w-[300px] md:w-[350px]">
                     <input type="text" id="search-input" oninput="window.renderCatalog()" class="w-full pl-12 pr-4 py-3 md:py-5 bg-white dark:bg-slate-900 dark:text-white rounded-xl md:rounded-full border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/10 transition text-xs md:text-sm"
                         placeholder="Search spec...">
@@ -873,7 +683,6 @@
             <p id="cloud-status" class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Not Connected (Login Required)</p>
         </div>
 
-        <!-- NEW: CLIENT PROFILE SECTION -->
         <div id="client-profile-section" class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-6 md:p-10 shadow-xl border border-white/20 dark:border-slate-800 mx-auto max-w-4xl mb-12 stagger-2 hidden">
             <div class="flex items-center gap-4 mb-8 border-b border-gray-100 dark:border-slate-800 pb-6">
                 <div class="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue">
@@ -884,7 +693,6 @@
                     <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold mt-1">Keep your delivery details updated</p>
                 </div>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                     <label class="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 block pl-1">Business Name *</label>
@@ -905,8 +713,7 @@
             </div>
             <div class="mt-8 text-right">
                 <button onclick="window.saveProfileData()" class="py-4 px-8 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl text-[10px] flex items-center gap-2 ml-auto">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    Save Changes
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Save Changes
                 </button>
             </div>
         </div>
@@ -919,7 +726,7 @@
         </div>
     </div>
 
-    <!-- VIEW: ADMIN DASHBOARD (ULTIMATE) -->
+    <!-- VIEW: ADMIN DASHBOARD -->
     <div id="view-admin" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1200px] mx-auto min-h-screen">
         <div class="mb-10 md:mb-16 text-center stagger-1">
             <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">Admin Dashboard</h1>
@@ -927,7 +734,6 @@
         </div>
 
         <div class="bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 shadow-2xl border border-gray-100 dark:border-slate-800 mx-auto max-w-5xl stagger-2">
-
             <div class="flex gap-4 md:gap-8 mb-8 border-b border-gray-200 dark:border-slate-800 pb-4 overflow-x-auto hide-scroll whitespace-nowrap">
                 <button onclick="window.switchAdminTab('dashboard')" id="tab-dashboard" class="font-black uppercase text-brand-blue border-b-2 border-brand-blue pb-2 text-[10px] md:text-xs tracking-widest transition">Dashboard Analytics</button>
                 <button onclick="window.switchAdminTab('catalog')" id="tab-catalog" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Manage Products</button>
@@ -971,12 +777,9 @@
                         <select id="admin-client-select" onchange="window.handleAdminClientSelect(this.value)" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-800 dark:text-white border border-gray-200 dark:border-slate-700 outline-none shadow-inner cursor-pointer text-sm font-bold appearance-none">
                             <option value="">-- Choose a registered client --</option>
                         </select>
-                        <div class="absolute right-4 top-4 pointer-events-none text-slate-400">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </div>
+                        <div class="absolute right-4 top-4 pointer-events-none text-slate-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
                     </div>
                 </div>
-
                 <div id="admin-workspace" class="hidden">
                     <div id="admin-pricing-section">
                         <div id="admin-pricing-grid" class="mb-8 max-h-[60vh] overflow-y-auto pr-2 hide-scroll space-y-4"></div>
@@ -995,6 +798,124 @@
                     </div>
                 </div>
                 <div id="admin-orders-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: PROCESS -->
+    <div id="view-process" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
+        <div class="text-center mb-10 md:mb-16 stagger-1">
+            <h2 class="text-3xl md:text-6xl font-black italic uppercase tracking-tighter text-brand-navy dark:text-white">How To Order</h2>
+            <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2">Requesting quotes is easy</p>
+            <p class="text-brand-red font-bold uppercase tracking-widest text-[10px] md:text-xs mt-4 bg-brand-red/10 inline-block px-4 py-2 rounded-lg border border-brand-red/20">Note: This platform is strictly for B2B traders and bulk purchases.</p>
+        </div>
+        <div class="max-w-4xl mx-auto space-y-6 md:space-y-8 pb-24 md:pb-32">
+            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-2">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-brand-blue rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">1</div>
+                <div>
+                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Create an Account</h3>
+                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Our wholesale portal requires registration. Click the <strong>Login / Register Now</strong> button below to create your client profile.</p>
+                </div>
+            </div>
+            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-3">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-brand-navy dark:bg-slate-800 rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">2</div>
+                <div>
+                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Build Your Basket</h3>
+                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Once logged in, navigate to our Product Catalog. Select your required case loads, type in the quantity, and add them directly to your digital basket.</p>
+                </div>
+            </div>
+            <div class="pro-card p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left shadow-2xl relative overflow-hidden stagger-4">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#25D366] rounded-full text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-xl shrink-0">3</div>
+                <div>
+                    <h3 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-brand-navy dark:text-white mb-2">Receive Pricing & Submit</h3>
+                    <p class="text-sm md:text-base text-gray-500 dark:text-gray-400">Our admin team will load your uniquely negotiated case prices directly into your account. Review your basket, enter your delivery details, and submit your RFQ or send it directly via WhatsApp.</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mt-12 gap-4 stagger-4">
+                <p id="process-auth-msg" style="display: none;" class="text-sm font-bold text-brand-red uppercase tracking-widest">You must be logged in to view products</p>
+                <button id="process-action-btn" onclick="window.handleProcessAction()" class="bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs py-4 px-10 rounded-full transition-all shadow-xl hover:scale-105">Go To Order Portal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: ABOUT -->
+    <div id="view-about" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen text-center">
+        <div class="text-center max-w-5xl mx-auto">
+            <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6 stagger-1">About Route 64</h1>
+            <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mb-8 md:mb-10 rounded-full stagger-1"></div>
+            <h2 class="text-lg md:text-3xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-12 italic px-4 stagger-2">Protect What Matters, Lubricate What Moves</h2>
+        </div>
+
+        <div class="pro-card p-6 md:p-20 text-left shadow-2xl relative overflow-hidden stagger-3 max-w-5xl mx-auto mb-16">
+            <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 leading-relaxed relative z-10"><strong>Route 64 Lubricants</strong> is the leading provider of high-performance, premium grade oils, greases, and industrial chemicals in the Gauteng region.</p>
+            <p class="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 leading-relaxed relative z-10">Whether you operate heavy commercial fleets, agricultural machinery, or industrial plant equipment, our catalog is engineered to provide uncompromising protection.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 text-center mt-8 md:mt-12 relative z-10">
+                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
+                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Quality</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Premium Grade</p>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
+                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Location</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Randfontein HQ</p>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800 p-6 md:p-8 rounded-2xl md:rounded-3xl">
+                    <h4 class="font-black text-brand-navy dark:text-white uppercase text-lg md:text-xl mb-1 md:mb-2">Support</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest text-xs">Dedicated Tech</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full overflow-hidden py-10 md:py-16 relative z-10 group stagger-4 mb-16">
+            <div class="absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
+            <div class="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 dark:from-brand-navy to-transparent z-20 pointer-events-none"></div>
+            <div class="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
+                <div class="flex gap-4 md:gap-8 px-2 md:px-4 shrink-0">
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover"></div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover"></div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover"></div>
+                </div>
+                <div class="flex gap-4 md:gap-8 px-2 md:px-4 shrink-0">
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover"></div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover"></div>
+                    <div class="w-64 sm:w-80 md:w-96 h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:scale-105 border-4 border-white dark:border-slate-800 shrink-0"><img src="marquee-4.jpg" alt="Gallery Image 3" class="w-full h-full object-cover"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: CONTACT -->
+    <div id="view-contact" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-7xl mx-auto min-h-screen pb-24">
+        <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-2 md:mb-4 text-center stagger-1">Contact Us</h1>
+        <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] text-center mb-10 md:mb-16 stagger-1">Sales, Support & Distribution</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-10 stagger-2">
+            <div class="pro-card p-8 md:p-10 shadow-xl relative overflow-hidden h-fit">
+                <h3 class="font-black text-2xl md:text-3xl text-brand-navy dark:text-white uppercase tracking-tight mb-6">Send us a Message</h3>
+                <form onsubmit="event.preventDefault(); window.customAlert('Message sent successfully!'); this.reset();" class="space-y-4 relative z-10">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Your Name" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                        <input type="email" placeholder="Email Address" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                    </div>
+                    <input type="tel" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                    <textarea placeholder="How can we help you?" required rows="4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none"></textarea>
+                    <button type="submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-2">Send Message</button>
+                </form>
+            </div>
+            <div class="space-y-6 md:space-y-8 flex flex-col h-full">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                    <div class="pro-card p-6 shadow-md flex flex-col items-center text-center hover:border-brand-blue transition">
+                        <div class="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue mb-4"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></div>
+                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">Direct Line</h4><a href="tel:+27114123529" class="text-xs text-gray-500 hover:text-brand-blue font-bold transition">+27 11 412 3529</a>
+                    </div>
+                    <div class="pro-card p-6 shadow-md flex flex-col items-center text-center hover:border-[#25D366] transition">
+                        <div class="w-12 h-12 bg-[#25D366]/10 rounded-2xl flex items-center justify-center text-[#25D366] mb-4"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg></div>
+                        <h4 class="font-black text-sm text-brand-navy dark:text-white uppercase mb-1">WhatsApp</h4><a href="https://wa.me/27680871269" target="_blank" class="text-xs text-gray-500 hover:text-[#25D366] font-bold transition">068 087 1269</a>
+                    </div>
+                </div>
+                <div class="pro-card p-2 shadow-xl flex-1 min-h-[300px] relative rounded-[24px] overflow-hidden border-2 border-transparent hover:border-brand-blue transition">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.401186716949!2d27.6830559!3d-26.1500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95995555555555%3A0x5555555555555555!2s20%20Fiat%20St%2C%20Aureus%2C%20Randfontein%2C%201759!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza"
+                        class="absolute inset-0 w-full h-full rounded-[20px]" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -1033,13 +954,12 @@
             </div>
             <h3 class="text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-1">Let's Build Something</h3>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-6">Looking for a custom web platform or software solution? Let's chat.</p>
-
             <div class="space-y-3">
                 <a href="mailto:ziemie786@gmail.com" class="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-bold text-brand-navy dark:text-white hover:border-brand-blue transition">
                     <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>                    ziemie786@gmail.com
                 </a>
                 <a href="https://wa.me/27742997866" target="_blank" class="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-transparent bg-[#25D366] text-white text-sm font-bold hover:opacity-90 transition shadow-lg">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>                    WhatsApp Me
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>                    WhatsApp Me
                 </a>
             </div>
         </div>
@@ -1050,22 +970,19 @@
         <div class="max-w-[1400px] mx-auto relative z-10 text-center flex flex-col items-center gap-4">
             <span class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest">© 2026 Route 64 Lubricants. Authorized Distribution.</span>
             <button onclick="window.toggleDevModal()" class="text-[9px] text-brand-blue hover:text-blue-400 font-black uppercase tracking-widest transition flex items-center gap-1 opacity-70 hover:opacity-100">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                Developed by Zaeem Wajah
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg> Developed by Zaeem Wajah
             </button>
         </div>
     </footer>
 
     <script>
-        /* ========================================== */
-        /* 1. SYSTEM INITIALIZATION & DATA ENGINE */
-        /* ========================================== */
         window.cloudProducts = [];
         window.userPricing = {};
         window.isRegisterMode = false;
         window.cartTotal = 0;
         window.viewMode = 'grid';
         window.allAdminOrders = [];
+        window.allCustomerOrders = [];
 
         window.initCatalog = function() {
             const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`));
@@ -1088,138 +1005,26 @@
                             size: "5L (Case of 4)"
                         }, {
                             size: "20L"
-                        }, {
-                            size: "210L"
                         }]
                     }, {
                         id: "P-E002",
-                        name: "Multigrade (20W50)",
-                        category: "Engine Oils",
-                        desc: "Multigrade 20W50 Engine Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E003",
-                        name: "Engine Oil (SAE 30)",
-                        category: "Engine Oils",
-                        desc: "Standard SAE 30 Engine Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E004",
-                        name: "Diesel Oil (HD40)",
-                        category: "Engine Oils",
-                        desc: "Heavy Duty 40 Diesel Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E005",
                         name: "Turbo Diesel (15W40)",
                         category: "Engine Oils",
                         desc: "15W40 Turbo Diesel Oil.",
                         variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
                             size: "5L (Case of 4)"
                         }, {
                             size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E006",
-                        name: "2 Stroke Oil",
-                        category: "Engine Oils",
-                        desc: "Premium 2 Stroke Engine Oil.",
-                        variants: [{
-                            size: "200ml (Case of 40)"
-                        }, {
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
                         }]
                     }, {
                         id: "P-G001",
-                        name: "Gear Oil (EP90)",
-                        category: "Gear & Auto",
-                        desc: "EP90 Gear Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-G002",
                         name: "Gear Oil (80W90)",
                         category: "Gear & Auto",
                         desc: "80W90 Gear Oil.",
                         variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
                             size: "5L (Case of 4)"
                         }, {
                             size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-G003",
-                        name: "Transmission (ATF DII)",
-                        category: "Gear & Auto",
-                        desc: "Automatic Transmission Fluid DII.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-G004",
-                        name: "Brake Fluid DOT4",
-                        category: "Gear & Auto",
-                        desc: "DOT4 Brake Fluid.",
-                        variants: [{
-                            size: "200ml (Case of 40)"
-                        }, {
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
                         }]
                     }, {
                         id: "P-I001",
@@ -1227,199 +1032,32 @@
                         category: "Industrial",
                         desc: "Premium ISO 68 Hydraulic Oil.",
                         variants: [{
-                            size: "1L (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-I002",
-                        name: "Hydraulic Oil (ISO 46)",
-                        category: "Industrial",
-                        desc: "Premium ISO 46 Hydraulic Oil.",
-                        variants: [{
-                            size: "1L (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
                             size: "20L"
                         }, {
                             size: "210L"
                         }]
                     }, {
                         id: "P-C001",
-                        name: "Engine Cleaner Water Base",
-                        category: "Chemicals & Grease",
-                        desc: "Water-based engine cleaner.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C002",
-                        name: "Engine Cleaner Solvent Base",
-                        category: "Chemicals & Grease",
-                        desc: "Solvent-based engine cleaner.",
-                        variants: [{
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C003",
-                        name: "Degreaser Concentrate",
-                        category: "Chemicals & Grease",
-                        desc: "Concentrated Degreaser.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C004",
-                        name: "Degreaser (Spray)",
-                        category: "Chemicals & Grease",
-                        desc: "Degreaser Concentrate spray.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }]
-                    }, {
-                        id: "P-C005",
-                        name: "Anti-Freeze Summer Coolant",
-                        category: "Anti-Freeze",
-                        desc: "Summer coolant anti-freeze.",
-                        variants: [{
-                            size: "1L (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }]
-                    }, {
-                        id: "P-C006",
-                        name: "Anti-Freeze 30%",
-                        category: "Anti-Freeze",
-                        desc: "30% Anti-freeze mix.",
-                        variants: [{
-                            size: "1L (Case of 14)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C007",
                         name: "Anti-Freeze 50%",
                         category: "Anti-Freeze",
                         desc: "50% Anti-freeze mix.",
                         variants: [{
-                            size: "1L (Case of 14)"
-                        }, {
                             size: "5L (Case of 4)"
                         }, {
                             size: "20L"
-                        }, {
-                            size: "210L"
                         }]
                     }, {
-                        id: "P-C008",
-                        name: "Anti-Freeze 96%",
-                        category: "Anti-Freeze",
-                        desc: "96% Anti-freeze mix.",
-                        variants: [{
-                            size: "1L (Case of 14)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C009",
-                        name: "Grease - Wheel Bearing",
-                        category: "Grease",
-                        desc: "Wheel bearing grease.",
-                        variants: [{
-                            size: "500g (Case of 20)"
-                        }, {
-                            size: "5kg (Case of 4)"
-                        }, {
-                            size: "15kg"
-                        }, {
-                            size: "180kg"
-                        }]
-                    }, {
-                        id: "P-C010",
+                        id: "P-C002",
                         name: "Grease - Multipurpose",
                         category: "Grease",
                         desc: "Multipurpose grease.",
                         variants: [{
-                            size: "500g (Case of 20)"
-                        }, {
                             size: "5kg (Case of 4)"
                         }, {
                             size: "15kg"
-                        }, {
-                            size: "180kg"
-                        }]
-                    }, {
-                        id: "P-C011",
-                        name: "Grease - CV Joint",
-                        category: "Grease",
-                        desc: "CV Joint grease.",
-                        variants: [{
-                            size: "500g (Case of 20)"
-                        }, {
-                            size: "5kg (Case of 4)"
-                        }, {
-                            size: "15kg"
-                        }, {
-                            size: "180kg"
-                        }]
-                    }, {
-                        id: "P-C012",
-                        name: "Hand Cleaner with Grit",
-                        category: "Chemicals & Grease",
-                        desc: "Citrus hand cleaner with grit.",
-                        variants: [{
-                            size: "800g (Case of 20)"
-                        }, {
-                            size: "5kg (Case of 4)"
-                        }, {
-                            size: "15kg"
-                        }]
-                    }, {
-                        id: "P-C013",
-                        name: "Hand Sanitizer",
-                        category: "Chemicals & Grease",
-                        desc: "70% Alcohol Hand Sanitizer.",
-                        variants: [{
-                            size: "1L (Case of 14)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "25L"
-                        }, {
-                            size: "200L"
                         }]
                     }];
                 }
-
                 window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
                 window.renderCatalog();
                 if (window.isAdmin) window.renderAdminProducts();
@@ -1429,9 +1067,6 @@
         let activeCart = [];
         let currentFilter = 'all';
 
-        /* ========================================== */
-        /* 2. AUTHENTICATION & PRICING ENGINE */
-        /* ========================================== */
         window.toggleAuthModal = function() {
             const modal = document.getElementById('auth-modal');
             const content = document.getElementById('auth-modal-content');
@@ -1449,6 +1084,18 @@
             document.getElementById('auth-title').innerText = window.isRegisterMode ? 'Register Account' : 'Client Login';
             document.getElementById('auth-submit-btn').innerText = window.isRegisterMode ? 'Create Account' : 'Sign In';
             document.getElementById('auth-toggle-btn').innerText = window.isRegisterMode ? 'Already have an account? Login' : 'Need an account? Register here';
+        }
+
+        window.toggleDevModal = function() {
+            const modal = document.getElementById('dev-modal');
+            const content = document.getElementById('dev-modal-content');
+            if (modal.classList.contains('open')) {
+                content.classList.replace('scale-100', 'scale-95');
+                setTimeout(() => modal.classList.remove('open'), 300);
+            } else {
+                modal.classList.add('open');
+                setTimeout(() => content.classList.replace('scale-95', 'scale-100'), 10);
+            }
         }
 
         window.handleNavLogin = function() {
@@ -1483,9 +1130,7 @@
                     window.customAlert("Welcome back!");
                 }
                 window.toggleAuthModal();
-                if (window.currentView !== 'catalog') {
-                    window.navigate('catalog');
-                }
+                if (window.currentView !== 'catalog') window.navigate('catalog');
             } catch (err) {
                 window.customAlert("Error: " + err.message);
             }
@@ -1497,21 +1142,17 @@
                 const docSnap = await window.getDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${uid}/profile`, 'details'));
                 if (docSnap.exists()) {
                     const d = docSnap.data();
-
-                    // Update Checkout forms
                     if (document.getElementById('customer-business')) document.getElementById('customer-business').value = d.bizName || '';
                     if (document.getElementById('customer-name')) document.getElementById('customer-name').value = d.contactName || '';
                     if (document.getElementById('customer-phone')) document.getElementById('customer-phone').value = d.phone || '';
                     if (document.getElementById('customer-address')) document.getElementById('customer-address').value = d.address || '';
-
-                    // Update Profile Section forms
                     if (document.getElementById('profile-business')) document.getElementById('profile-business').value = d.bizName || '';
                     if (document.getElementById('profile-name')) document.getElementById('profile-name').value = d.contactName || '';
                     if (document.getElementById('profile-phone')) document.getElementById('profile-phone').value = d.phone || '';
                     if (document.getElementById('profile-address')) document.getElementById('profile-address').value = d.address || '';
                 }
             } catch (e) {
-                console.error("Profile load err:", e);
+                console.error(e);
             }
         };
 
@@ -1532,29 +1173,25 @@
                     address
                 });
                 window.customAlert("Profile updated successfully!");
-                // Keep the checkout form matching
                 if (document.getElementById('customer-business')) document.getElementById('customer-business').value = bizName;
                 if (document.getElementById('customer-name')) document.getElementById('customer-name').value = contactName;
                 if (document.getElementById('customer-phone')) document.getElementById('customer-phone').value = phone;
                 if (document.getElementById('customer-address')) document.getElementById('customer-address').value = address;
             } catch (e) {
-                console.error(e);
                 window.customAlert("Error saving profile.");
             }
         };
 
         window.loadUserPricing = function(uid) {
             const path = `artifacts/${window.appId}/users/${uid}/pricing`;
-            const q = window.query(window.collection(window.firebaseDb, path));
-
-            window.onSnapshot(q, (snapshot) => {
+            window.onSnapshot(window.query(window.collection(window.firebaseDb, path)), (snapshot) => {
                 window.userPricing = {};
                 snapshot.forEach(doc => {
                     window.userPricing[doc.id] = doc.data().variants || {};
                 });
                 window.renderCatalog();
                 window.updateCartUI();
-            }, (err) => console.error("Pricing sync error:", err));
+            });
         }
 
         window.handleProcessAction = function() {
@@ -1565,9 +1202,6 @@
             }
         }
 
-        /* ========================================== */
-        /* 3. CATALOG RENDER & LOGIC */
-        /* ========================================== */
         window.toggleViewMode = function(mode) {
             window.viewMode = mode;
             const btnGrid = document.getElementById('btn-grid-view');
@@ -1609,7 +1243,6 @@
 
             filtered.forEach(p => {
                 let vHtml = `<select id='${window.viewMode}-sel-${p.id}' class='w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-lg md:rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-3 md:mb-4 mt-2 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition' onclick='event.stopPropagation()'>`;
-
                 const pMap = window.currentUser && window.userPricing ? (window.userPricing[p.id] || {}) : {};
 
                 if (p.variants) {
@@ -1661,9 +1294,7 @@
                     };
 
                     let listPriceDisplay = `<div class="bg-red-50 dark:bg-red-900/20 text-brand-red px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border border-red-100 dark:border-red-900/30">Login for Price</div>`;
-                    if (window.currentUser) {
-                        listPriceDisplay = `<span class="text-[10px] font-black text-brand-blue uppercase tracking-widest">Active</span>`;
-                    }
+                    if (window.currentUser) listPriceDisplay = `<span class="text-[10px] font-black text-brand-blue uppercase tracking-widest">Active</span>`;
 
                     row.innerHTML = `
                         <div class='flex-1 min-w-[200px]'>
@@ -1697,17 +1328,12 @@
             document.getElementById('qv-title').innerText = p.name;
             document.getElementById('qv-cat').innerText = p.category;
             document.getElementById('qv-desc').innerText = p.desc || "High performance formulation designed to meet severe industrial and commercial specifications. Select required case pack or unit size to add to inquiry basket.";
-            document.getElementById('qv-specs').innerHTML = `
-                <div><span class="block text-[8px] uppercase text-gray-400 font-bold tracking-widest mb-1">Product ID</span><span class="text-xs font-black dark:text-white uppercase">${p.id}</span></div>
-            `;
+            document.getElementById('qv-specs').innerHTML = `<div><span class="block text-[8px] uppercase text-gray-400 font-bold tracking-widest mb-1">Product ID</span><span class="text-xs font-black dark:text-white uppercase">${p.id}</span></div>`;
             document.getElementById('quickview-modal').classList.add('open');
         };
 
         window.closeQuickView = () => document.getElementById('quickview-modal').classList.remove('open');
 
-        /* ========================================== */
-        /* 4. CART & CHECKOUT ENGINE */
-        /* ========================================== */
         window.addFromCatalog = function(id, mode) {
             const p = window.cloudProducts.find(x => x.id === id);
             const select = document.getElementById(`${mode}-sel-${id}`);
@@ -1794,9 +1420,7 @@
                                 <span class='text-[9px] font-black uppercase text-brand-blue bg-blue-50 dark:bg-slate-950 px-2 py-1 rounded-md mt-1 inline-block'>${item.size}</span>
                                 ${window.currentUser && item.price > 0 ? `<span class="text-[9px] text-gray-500 font-bold tracking-widest block mt-1">R${item.price.toFixed(2)} / CASE</span>` : ''}
                             </div>
-                            <div class="text-right shrink-0">
-                                ${priceText}
-                            </div>
+                            <div class="text-right shrink-0">${priceText}</div>
                         </div>
                         <div class='flex items-center justify-between border-t border-gray-50 dark:border-slate-700 pt-3 mt-1'>
                             <div class='flex items-center bg-slate-50 dark:bg-slate-950 rounded-lg border dark:border-slate-700 p-0.5 shadow-inner'>
@@ -1811,11 +1435,8 @@
             }
 
             if (totalDisplay) {
-                if (window.currentUser) {
-                    totalDisplay.innerText = total > 0 ? `R${total.toFixed(2)}` : "Pending Quote";
-                } else {
-                    totalDisplay.innerText = "Login for Pricing";
-                }
+                if (window.currentUser) { totalDisplay.innerText = total > 0 ? `R${total.toFixed(2)}` : "Pending Quote"; } 
+                else { totalDisplay.innerText = "Login for Pricing"; }
                 window.cartTotal = total;
             }
         }
@@ -1831,41 +1452,22 @@
             if (!bizName || !phone) return window.customAlert("Please enter Business Name and Phone.");
 
             const newQuoteId = "REQ-" + Math.floor(Math.random() * 100000);
-            const customerDetails = {
-                bizName,
-                contactName,
-                phone,
-                address
-            };
+            const customerDetails = { bizName, contactName, phone, address };
 
             if (window.currentUser && window.firebaseDb) {
                 try {
-                    const inquiry = {
-                        date: new Date().toISOString(),
-                        customer: customerDetails,
-                        items: activeCart,
-                        total: window.cartTotal || 0,
-                        status: "Pending Processing",
-                        ref: newQuoteId
-                    };
+                    const inquiry = { date: new Date().toISOString(), customer: customerDetails, items: activeCart, total: window.cartTotal || 0, status: "Pending Processing", ref: newQuoteId };
                     await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/inquiries`), inquiry);
-
-                    // Auto-save Client Profile
                     await window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'), customerDetails);
-                } catch (error) {
-                    console.error("Cloud error:", error);
-                }
+                } catch (error) { console.error(error); }
             }
 
-            const {
-                jsPDF
-            } = window.jspdf;
+            const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             doc.setFillColor(15, 23, 42);
             doc.rect(0, 0, 210, 40, 'F');
 
             try {
-                // Dynamically grab the logo from the DOM to embed in PDF
                 const logoImg = document.querySelector('img[src="image_7d531d.png"]');
                 if (logoImg && logoImg.complete && logoImg.naturalWidth > 0) {
                     const canvas = document.createElement('canvas');
@@ -1874,9 +1476,7 @@
                     canvas.getContext('2d').drawImage(logoImg, 0, 0);
                     doc.addImage(canvas.toDataURL('image/png'), 'PNG', 165, 5, 30, 30);
                 }
-            } catch (e) {
-                console.log('PDF Logo error:', e);
-            }
+            } catch (e) { console.log(e); }
 
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(20);
@@ -1899,9 +1499,9 @@
             doc.setFont("helvetica", "bold");
             doc.text("CUSTOMER DETAILS", 120, 45);
             doc.setFont("helvetica", "normal");
-            doc.text("Business: " + bizName, 120, 52);
+            doc.text("Business: " + (bizName || ''), 120, 52);
             if (contactName) doc.text("Contact: " + contactName, 120, 57);
-            doc.text("Phone: " + phone, 120, 62);
+            doc.text("Phone: " + (phone || ''), 120, 62);
             if (address) {
                 const splitAddress = doc.splitTextToSize("Address: " + address, 70);
                 doc.text(splitAddress, 120, 67);
@@ -1915,7 +1515,7 @@
             doc.text("CASES", 15, y);
             doc.text("ITEM", 35, y);
             doc.text("SIZE", 120, y);
-            if (window.currentUser) doc.text("TOTAL", 170, y);
+            doc.text("TOTAL", 170, y);
             y += 5;
             doc.line(15, y, 195, y);
             y += 10;
@@ -1925,24 +1525,17 @@
                 doc.text(it.qty.toString() + " Cs", 15, y);
                 doc.text(it.name.substring(0, 40), 35, y);
                 doc.text(it.size, 120, y);
-                if (window.currentUser) {
-                    const lineTotal = it.price > 0 ? "R" + (it.qty * it.price).toFixed(2) : "TBD";
-                    doc.text(lineTotal, 170, y);
-                }
+                const lineTotal = it.price > 0 ? "R" + (it.qty * it.price).toFixed(2) : "TBD";
+                doc.text(lineTotal, 170, y);
                 y += 10;
-                if (y > 270) {
-                    doc.addPage();
-                    y = 20;
-                }
+                if (y > 270) { doc.addPage(); y = 20; }
             });
 
+            y += 5;
+            doc.setFont("helvetica", "bold");
             if (window.currentUser && window.cartTotal > 0) {
-                y += 5;
-                doc.setFont("helvetica", "bold");
                 doc.text("GRAND TOTAL: R" + window.cartTotal.toFixed(2), 140, y);
-            } else if (window.currentUser) {
-                y += 5;
-                doc.setFont("helvetica", "bold");
+            } else {
                 doc.text("GRAND TOTAL: Pending Quote", 130, y);
             }
 
@@ -1951,11 +1544,8 @@
             if (sendToWhatsApp) {
                 let msg = `*ROUTE 64 ORDER: ${newQuoteId}*\n🏢 ${bizName} | 📞 ${phone}\n\n*Items:*\n`;
                 activeCart.forEach(i => msg += `▪ *${i.qty} Cases* ${i.name} (${i.size})\n`);
-                if (window.currentUser && window.cartTotal > 0) {
-                    msg += `\n*Total: R${window.cartTotal.toFixed(2)}*`;
-                } else {
-                    msg += `\n*Please provide pricing.*`;
-                }
+                if (window.currentUser && window.cartTotal > 0) { msg += `\n*Total: R${window.cartTotal.toFixed(2)}*`; } 
+                else { msg += `\n*Please provide pricing.*`; }
                 window.open("https://wa.me/27680871269?text=" + encodeURIComponent(msg), '_blank');
             }
 
@@ -1985,11 +1575,9 @@
                     }
 
                     const inquiries = [];
-                    snapshot.forEach(doc => inquiries.push({
-                        id: doc.id,
-                        data: doc.data()
-                    }));
+                    snapshot.forEach(doc => inquiries.push({ id: doc.id, data: doc.data() }));
                     inquiries.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+                    window.allCustomerOrders = inquiries;
 
                     inquiries.forEach(inq => {
                         const data = inq.data;
@@ -1997,9 +1585,8 @@
                         el.className = "pro-card p-6 md:p-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8 shadow-sm text-left mb-6";
 
                         const displayTotal = data.total > 0 ? `R${data.total.toFixed(2)}` : "Pending Quote";
-
                         let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium py-1">▪ ${i.qty} Cases x ${i.name} (${i.size})</div>`).join('');
-                        const safeItems = encodeURIComponent(JSON.stringify(data.items));
+                        const safeItems = data.ref;
 
                         let statusColor = "text-brand-blue";
                         if (data.status === "Approved") statusColor = "text-green-500";
@@ -2036,40 +1623,29 @@
             }
         }
 
-        window.reorderOrder = function(safeItems) {
+        window.reorderOrder = function(ref) {
             try {
-                const items = JSON.parse(decodeURIComponent(safeItems));
-                items.forEach(item => {
+                const order = window.allCustomerOrders.find(o => o.data.ref === ref);
+                if (!order) return;
+                
+                order.data.items.forEach(item => {
                     const cartId = `${item.id}-${item.size}`;
                     const existing = activeCart.find(i => i.cartId === cartId);
-
                     let currentPrice = item.price;
                     if (window.currentUser && window.userPricing[item.id]) {
                         currentPrice = window.userPricing[item.id][item.size] || 0;
                     }
-
                     if (existing) {
                         existing.qty += item.qty;
                         existing.price = currentPrice;
                     } else {
-                        activeCart.push({
-                            cartId: cartId,
-                            id: item.id,
-                            name: item.name,
-                            size: item.size,
-                            qty: item.qty,
-                            price: currentPrice
-                        });
+                        activeCart.push({ cartId: cartId, id: item.id, name: item.name, size: item.size, qty: item.qty, price: currentPrice });
                     }
                 });
                 window.updateCartUI();
-                if (!document.getElementById('cart-sidebar').classList.contains('open')) {
-                    window.toggleCart();
-                }
+                if (!document.getElementById('cart-sidebar').classList.contains('open')) window.toggleCart();
                 window.customAlert("Order duplicated to basket!");
-            } catch (e) {
-                console.error(e);
-            }
+            } catch (e) { console.error(e); }
         };
 
         /* ========================================== */
@@ -2101,11 +1677,9 @@
                 });
                 if (currentVal) select.value = currentVal;
             }, (err) => console.error("Admin user sync error:", err));
-
             window.loadAdminOrders();
         };
 
-        // ADMIN FEATURE: Dynamic Product Manager
         window.renderAdminProducts = function() {
             const grid = document.getElementById('admin-catalog-grid');
             if (!grid) return;
@@ -2130,26 +1704,14 @@
             const desc = document.getElementById('prod-desc').value.trim();
             const varsStr = document.getElementById('prod-variants').value.trim();
             if (!id || !name || !varsStr) return window.customAlert("ID, Name, and Sizes required");
-            const variants = varsStr.split(',').map(s => ({
-                size: s.trim()
-            }));
+            const variants = varsStr.split(',').map(s => ({ size: s.trim() }));
             try {
-                await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`), {
-                    id,
-                    name,
-                    category: cat,
-                    desc,
-                    variants
-                });
+                await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`), { id, name, category: cat, desc, variants });
                 window.customAlert("Product Added!");
                 window.toggleAddProductModal();
-                document.getElementById('prod-id').value = '';
-                document.getElementById('prod-name').value = '';
-                document.getElementById('prod-desc').value = '';
-                document.getElementById('prod-variants').value = '';
-            } catch (e) {
-                console.error(e);
-            }
+                document.getElementById('prod-id').value = ''; document.getElementById('prod-name').value = '';
+                document.getElementById('prod-desc').value = ''; document.getElementById('prod-variants').value = '';
+            } catch (e) { console.error(e); }
         };
 
         window.deleteAdminProduct = async function(docId) {
@@ -2157,9 +1719,7 @@
             try {
                 await window.deleteDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/products`, docId));
                 window.customAlert("Product Deleted");
-            } catch (e) {
-                console.error(e);
-            }
+            } catch (e) { console.error(e); }
         };
 
         window.handleAdminClientSelect = function(uid) {
@@ -2173,18 +1733,13 @@
 
         window.loadAdminPricingForClient = function(uid) {
                 const grid = document.getElementById('admin-pricing-grid');
-                if (!uid) {
-                    grid.innerHTML = "";
-                    return;
-                }
+                if (!uid) { grid.innerHTML = ""; return; }
                 grid.innerHTML = "<p class='text-slate-400 p-4 font-bold text-xs uppercase animate-pulse'>Loading prices...</p>";
 
                 const path = `artifacts/${window.appId}/users/${uid}/pricing`;
                 window.onSnapshot(window.query(window.collection(window.firebaseDb, path)), (snapshot) => {
                             const clientPricing = {};
-                            snapshot.forEach(doc => {
-                                clientPricing[doc.id] = doc.data().variants || {};
-                            });
+                            snapshot.forEach(doc => { clientPricing[doc.id] = doc.data().variants || {}; });
 
                             grid.innerHTML = window.cloudProducts.map(p => `
                     <div class="bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm">
@@ -2215,27 +1770,19 @@
             try {
                 const inputs = document.querySelectorAll('.admin-price-input');
                 const dataToSave = {};
-
                 inputs.forEach(input => {
                     const pid = input.getAttribute('data-pid');
                     const size = input.getAttribute('data-size');
                     const val = parseFloat(input.value) || 0;
-
                     if (!dataToSave[pid]) dataToSave[pid] = {};
                     dataToSave[pid][size] = val;
                 });
-
                 for (const pid in dataToSave) {
                     const docPath = `artifacts/${window.appId}/users/${uid}/pricing`;
-                    await window.setDoc(window.doc(window.firebaseDb, docPath, pid), {
-                        variants: dataToSave[pid]
-                    });
+                    await window.setDoc(window.doc(window.firebaseDb, docPath, pid), { variants: dataToSave[pid] });
                 }
                 window.customAlert("Client pricing updated successfully!");
-            } catch (e) {
-                console.error(e);
-                window.customAlert("Error saving prices");
-            }
+            } catch (e) { window.customAlert("Error saving prices"); }
         };
 
         window.loadAdminOrders = async function() {
@@ -2261,7 +1808,6 @@
                 allOrders.sort((a,b) => new Date(b.date) - new Date(a.date));
                 window.allAdminOrders = allOrders;
 
-                // Update Analytics Dashboard
                 const totalRev = allOrders.reduce((sum, o) => sum + (o.total || 0), 0);
                 if(document.getElementById('admin-stat-rev')) document.getElementById('admin-stat-rev').innerText = `R${totalRev.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 if(document.getElementById('admin-stat-orders')) document.getElementById('admin-stat-orders').innerText = allOrders.length;
@@ -2280,7 +1826,7 @@
                     if (data.status === "Shipped") statusColor = "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400";
                     if (data.status === "Pending Processing") statusColor = "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400";
                     
-                    const safeDataStr = encodeURIComponent(JSON.stringify(data));
+                    const safeRef = data.ref;
 
                     return `
                     <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col md:flex-row gap-6 justify-between items-start hover:border-brand-blue transition">
@@ -2290,7 +1836,7 @@
                                 <span class="text-[9px] font-black ${statusColor} px-3 py-1 rounded-md uppercase tracking-widest">${data.status}</span>
                             </div>
                             <h4 class="font-black text-lg md:text-xl dark:text-white text-brand-navy mb-1 uppercase tracking-tight">Ref: #${data.ref}</h4>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium"><span class="font-bold dark:text-gray-300">${data.customer.bizName}</span> | ${data.customer.contactName || 'No Contact'} | ${data.customer.phone}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium"><span class="font-bold dark:text-gray-300">${data.customer?.bizName || 'N/A'}</span> | ${data.customer?.contactName || 'No Contact'} | ${data.customer?.phone || 'N/A'}</p>
                             <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 mb-4 shadow-inner">
                                 <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Order Items</p>
                                 ${itemsHtml}
@@ -2306,7 +1852,7 @@
                             </select>
                             
                             <div class="flex items-center gap-2 mt-2">
-                                <button onclick="window.adminDownloadQuote('${safeDataStr}')" class="flex-1 text-[9px] bg-brand-navy dark:bg-brand-blue text-white py-2.5 rounded-lg font-black uppercase tracking-widest shadow-md flex justify-center items-center gap-1 hover:opacity-90 transition"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> PDF</button>
+                                <button onclick="window.adminDownloadQuote('${safeRef}')" class="flex-1 text-[9px] bg-brand-navy dark:bg-brand-blue text-white py-2.5 rounded-lg font-black uppercase tracking-widest shadow-md flex justify-center items-center gap-1 hover:opacity-90 transition"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> PDF</button>
                                 <button onclick="window.deleteAdminOrder('${data.uid}', '${data.orderId}')" class="flex-1 text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 py-2.5 rounded-lg font-black uppercase tracking-widest flex justify-center items-center gap-1 hover:bg-red-200 dark:hover:bg-red-900/50 transition"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash</button>
                             </div>
                         </div>
@@ -2317,7 +1863,7 @@
                 grid.innerHTML = "<div class='p-10 text-center bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30'><p class='text-brand-red text-xs font-black uppercase tracking-widest'>Error loading global orders.</p></div>";
             }
         };
-        
+
         window.deleteAdminOrder = async function(uid, orderId) {
             if (!confirm("Are you sure you want to permanently delete this order?")) return;
             try {
@@ -2330,8 +1876,9 @@
             }
         };
 
-        window.adminDownloadQuote = function(safeOrderData) {
-            const data = JSON.parse(decodeURIComponent(safeOrderData));
+        window.adminDownloadQuote = function(ref) {
+            const data = window.allAdminOrders.find(o => o.ref === ref);
+            if(!data) return;
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             doc.setFillColor(15, 23, 42);
@@ -2398,10 +1945,7 @@
                 const lineTotal = it.price > 0 ? "R" + (it.qty * it.price).toFixed(2) : "TBD";
                 doc.text(lineTotal, 170, y);
                 y += 10;
-                if (y > 270) {
-                    doc.addPage();
-                    y = 20;
-                }
+                if (y > 270) { doc.addPage(); y = 20; }
             });
 
             y += 5;
@@ -2432,7 +1976,7 @@
             
             let csv = "Date,Reference,Status,Business Name,Contact,Phone,Email,Total Value\n";
             window.allAdminOrders.forEach(o => {
-                csv += `"${new Date(o.date).toLocaleDateString()}","${o.ref}","${o.status}","${o.customer.bizName}","${o.customer.contactName || ''}","${o.customer.phone}","${o.email}",${o.total || 0}\n`;
+                csv += `"${new Date(o.date).toLocaleDateString()}","${o.ref}","${o.status}","${o.customer?.bizName || ''}","${o.customer?.contactName || ''}","${o.customer?.phone || ''}","${o.email}",${o.total || 0}\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv' });
@@ -2450,7 +1994,6 @@
         /* 7. UI & NAVIGATION HELPER FUNCTIONS */
         /* ========================================== */
         window.navigate = function(viewId) {
-            /* Protect Views Logic */
             if (viewId === 'catalog' && !window.currentUser) {
                 window.customAlert("Please log in or register to view the catalog.");
                 window.toggleAuthModal();
@@ -2492,11 +2035,9 @@
                 if (target) {
                     target.style.display = 'block';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    /* Force reflow */
                     void target.offsetWidth;
                     target.classList.add('active');
                     
-                    /* Context specific renders */
                     if (viewId === 'catalog') window.renderCatalog();
                     if (viewId === 'customer') window.loadClientLeads();
                     if (viewId === 'admin' && window.isAdmin) window.switchAdminTab('dashboard');
@@ -2523,16 +2064,15 @@
 
         window.closeAllModals = function() {
             document.getElementById('cart-sidebar').classList.remove('open');
-            
             const overlay = document.getElementById('global-overlay');
             overlay.classList.add('hidden');
             overlay.classList.remove('opacity-100');
-            
             document.body.style.overflow = '';
             
             document.getElementById('auth-modal').classList.remove('open');
             document.getElementById('quickview-modal').classList.remove('open');
             document.getElementById('admin-product-modal').classList.remove('open');
+            if (document.getElementById('dev-modal')) document.getElementById('dev-modal').classList.remove('open');
         }
 
         window.toggleMobileMenu = function() {
@@ -2622,24 +2162,20 @@
             
             const msgs = document.getElementById('ai-messages');
             
-            /* Add User Message Node */
             const userDiv = document.createElement('div');
             userDiv.className = "bg-brand-blue text-white p-3 md:p-4 rounded-xl md:rounded-2xl rounded-tr-none font-medium w-fit max-w-[90%] ml-auto shrink-0 shadow-md";
             userDiv.innerText = val;
             msgs.appendChild(userDiv);
             input.value = '';
             
-            /* Force Scroll to bottom */
             msgs.scrollTop = msgs.scrollHeight;
 
-            /* Simulate Typing Indicator */
             const typeDiv = document.createElement('div');
             typeDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl rounded-tl-none font-medium w-fit flex items-center gap-2 mr-auto shrink-0";
             typeDiv.innerHTML = `<span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.2s"></span>`;
             msgs.appendChild(typeDiv);
             msgs.scrollTop = msgs.scrollHeight;
 
-            /* Real AI Integration */
             const apiKey = window.apiKey || ""; 
 
             if (!apiKey) {
@@ -2720,7 +2256,6 @@
         /* 9. ON LOAD INITIALIZATION */
         /* ========================================== */
         window.addEventListener('DOMContentLoaded', () => {
-            /* Determine and Apply User Theme Preference */
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
@@ -2733,15 +2268,12 @@
                 document.getElementById('moon-icon').classList.remove('hidden');
             }
 
-            /* Handle Boot Sequence & Loader */
             setTimeout(() => {
                 const loader = document.getElementById('page-loader');
                 if(loader) {
                     loader.style.opacity = '0';
                     setTimeout(() => loader.style.display = 'none', 700);
                 }
-                
-                /* Trigger initial data fetch once UI is presented */
                 window.initCatalog();
             }, 2500);
         });
