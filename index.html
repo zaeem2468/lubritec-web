@@ -2377,17 +2377,16 @@
         
         // Setup Official Gemini API Fetch Logic
         const fetchGeminiAI = async (promptText) => {
-            // NOTE: Paste your Gemini API key here!
-            const apiKey = "AIzaSyBIa_wUZV7LV4rEQZb7QrM6QOuSKKXJ9Ww"; 
+            // Fallback to internal environment key to fix the 401 Unauthorized OpenRouter error
+            const apiKey = ""; 
             
-            // Switched to the universally available stable model
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            // Reverting to the built-in Gemini 2.5 endpoint
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
             const delays = [1000, 2000, 4000, 8000, 16000];
             
             const catalogContext = window.cloudProducts.map(p => `${p.name} (${p.category}) - ${p.desc}`).join(" | ");
             const systemPrompt = `You are a technical advisor for Route 64 Lubricants. Here is our catalog: ${catalogContext}. Be very brief. Do not mention pricing. Help the user find the right oil or grease. Keep answers to 2 short sentences.`;
 
-            // Updated robust payload format
             const payload = {
                 contents: [{ parts: [{ text: promptText }] }],
                 systemInstruction: { parts: [{ text: systemPrompt }] }
@@ -2397,15 +2396,13 @@
                 try {
                     const res = await fetch(url, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json'
+                        },
                         body: JSON.stringify(payload)
                     });
                     
                     if (!res.ok) {
-                        // Catch missing API key errors when running locally
-                        if (res.status === 403 || res.status === 400) {
-                            return "Demo Mode: AI is offline because no valid API key was found. (Add your Gemini API key to the code!)";
-                        }
                         const errorText = await res.text();
                         throw new Error(`API Error ${res.status}: ${errorText}`);
                     }
