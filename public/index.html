@@ -2377,11 +2377,11 @@
         
         // Setup Official Gemini API Fetch Logic
         const fetchGeminiAI = async (promptText) => {
-            // Fallback to internal environment key to fix the 401 Unauthorized OpenRouter error
-            const apiKey = ""; 
+            // Using the provided Gemini API key for local usage
+            const apiKey = "AIzaSyBIa_wUZV7LV4rEQZb7QrM6QOuSKKXJ9Ww"; 
             
-            // Reverting to the built-in Gemini 2.5 endpoint
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            // Clean URL without query params (we pass the key in the headers now)
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
             const delays = [1000, 2000, 4000, 8000, 16000];
             
             const catalogContext = window.cloudProducts.map(p => `${p.name} (${p.category}) - ${p.desc}`).join(" | ");
@@ -2397,7 +2397,8 @@
                     const res = await fetch(url, {
                         method: 'POST',
                         headers: { 
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'x-goog-api-key': apiKey
                         },
                         body: JSON.stringify(payload)
                     });
