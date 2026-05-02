@@ -283,6 +283,201 @@
             background-image: radial-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 0);
             background-size: 30px 30px;
         }
+        /* Premium Navigation Enhancements */
+        
+        .nav-sticky {
+            background: rgba(248, 250, 252, 0.95) !important;
+            backdrop-filter: blur(20px) !important;
+            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.15) !important;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1) !important;
+        }
+        
+        .dark .nav-sticky {
+            background: rgba(15, 23, 42, 0.95) !important;
+            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5) !important;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2) !important;
+        }
+        /* Enhanced nav button with animated underline */
+        
+        .nav-sticky button[onclick*="navigate"],
+        .nav-sticky button[onclick*="handleNavLogin"],
+        .nav-sticky button[onclick*="admin"] {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-sticky button[onclick*="navigate"]::after,
+        .nav-sticky button[onclick*="handleNavLogin"]::after,
+        .nav-sticky button[onclick*="admin"]::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .nav-sticky button[onclick*="navigate"]:hover::after,
+        .nav-sticky button[onclick*="handleNavLogin"]:hover::after,
+        .nav-sticky button[onclick*="admin"]:hover::after {
+            left: 100%;
+        }
+        /* Premium button styles */
+        
+        .nav-sticky button[onclick*="toggleCart"] {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.08) 100%) !important;
+            border: 1.5px solid rgba(37, 99, 235, 0.3) !important;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15) !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        }
+        
+        .nav-sticky button[onclick*="toggleCart"]:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.15) 100%) !important;
+            border-color: rgba(37, 99, 235, 0.5) !important;
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.25) !important;
+            transform: translateY(-2px) !important;
+        }
+        /* Logo hover effect */
+        
+        .nav-sticky .group:hover {
+            transform: translateY(-2px);
+        }
+        
+        .nav-sticky .group img {
+            filter: drop-shadow(0 4px 16px rgba(37, 99, 235, 0.2));
+        }
+        /* Theme toggle button enhancement */
+        
+        .nav-sticky button[onclick*="toggleTheme"] {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02)) !important;
+            transition: all 0.3s ease !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        }
+        
+        .dark .nav-sticky button[onclick*="toggleTheme"] {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)) !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        
+        .nav-sticky button[onclick*="toggleTheme"]:hover {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.04)) !important;
+            transform: scale(1.08) rotate(20deg);
+        }
+        
+        .dark .nav-sticky button[onclick*="toggleTheme"]:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08)) !important;
+        }
+        /* Mobile menu button */
+        
+        .nav-sticky button[onclick*="toggleMobileMenu"] {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02)) !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .dark .nav-sticky button[onclick*="toggleMobileMenu"] {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)) !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        
+        .nav-sticky button[onclick*="toggleMobileMenu"]:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(37, 99, 235, 0.08)) !important;
+            transform: scale(1.05);
+        }
+        /* Enhanced cart badge */
+        
+        #cart-badge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        #cart-badge:not(.scale-0) {
+            animation: badgePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes badgePulse {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        /* Refined pro-card animations */
+        
+        .pro-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .dark .pro-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1a2c5e 100%);
+        }
+        
+        .pro-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 40px 80px -15px rgba(37, 99, 235, 0.3);
+            border-color: rgba(37, 99, 235, 0.5);
+        }
+        /* Button gradient animations */
+        
+        .bg-gradient-to-r {
+            background-size: 200% 200%;
+            transition: background-position 0.4s ease, transform 0.3s ease;
+        }
+        
+        button:not(.rounded-full):not([onclick*="toggleCart"]):not([onclick*="toggleTheme"]):not([onclick*="toggleMobileMenu"]) {
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        /* Premium section shadows and depth */
+        
+        section {
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
+            pointer-events: none;
+        }
+        /* Enhanced hero section depth */
+        
+        .min-h-\[90vh\] {
+            position: relative;
+        }
+        /* Smooth scrollbar with gradient */
+        
+         ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.01) 100%);
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: background 0.3s ease;
+        }
+        
+         ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.6) 100%);
+            background-clip: padding-box;
+        }
     </style>
 </head>
 
@@ -415,49 +610,70 @@
         <div class="flex flex-col items-center gap-8 text-brand-navy dark:text-white font-black uppercase tracking-widest text-lg md:text-xl">
             <button onclick="window.navigate('home'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Home</button>
             <button onclick="window.navigate('catalog'); window.toggleMobileMenu()" id="mobile-order-btn" class="hover:text-brand-red transition text-brand-red" style="display:none;">Order Portal</button>
+            <button onclick="window.navigate('tracking'); window.toggleMobileMenu()" id="mobile-tracking-btn" class="hover:text-emerald-500 transition text-emerald-600" style="display:none;">Orders & Tracking</button>
+            <button onclick="window.navigate('reorder'); window.toggleMobileMenu()" id="mobile-reorder-btn" class="hover:text-blue-500 transition text-blue-600" style="display:none;">Quick Reorder</button>
+            <button onclick="window.navigate('calculator'); window.toggleMobileMenu()" id="mobile-calculator-btn" class="hover:text-purple-500 transition text-purple-600" style="display:none;">Bulk Calculator</button>
             <button onclick="window.navigate('process'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">How To Order</button>
             <button onclick="window.navigate('about'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">About Us</button>
             <button onclick="window.navigate('contact'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Contact Details</button>
             <button onclick="window.navigate('customer'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">My Inquiries</button>
             <button onclick="window.handleNavLogin(); window.toggleMobileMenu()" id="mobile-login-btn" class="hover:text-brand-blue transition text-brand-blue">Client Login</button>
+            <button onclick="window.navigate('analytics'); window.toggleMobileMenu()" id="mobile-analytics-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Analytics</button>
             <button onclick="window.navigate('admin'); window.toggleMobileMenu()" id="mobile-admin-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Admin Dashboard</button>
         </div>
     </div>
 
     <!-- TOP NAVIGATION -->
     <nav class="nav-sticky">
-        <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-24 flex justify-between items-center">
-            <div class="flex items-center gap-3 md:gap-4 cursor-pointer group" onclick="window.navigate('home')">
-                <div class="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+        <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-24 flex justify-between items-center gap-8">
+            <div class="flex items-center gap-3 md:gap-4 cursor-pointer group" onclick="window.navigate('home')" style="transition: all 0.3s ease;">
+                <div class="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 transition-all duration-300 flex items-center justify-center transform group-hover:scale-110">
                     <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
-                <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block">LUBRICANTS</span>
+                <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block transform transition-all duration-300 group-hover:text-brand-blue">LUBRICANTS</span>
             </div>
 
-            <div class="hidden xl:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 h-full">
-                <button onclick="window.navigate('home')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Home</button>
-                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-red">Order Portal</button>
-                <button onclick="window.navigate('process')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">How To Order</button>
-                <button onclick="window.navigate('about')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">About</button>
-                <button onclick="window.navigate('contact')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Contact</button>
-                <button onclick="window.navigate('customer')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">My Inquiries</button>
-                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="hover:text-brand-blue transition text-brand-blue h-full border-b-2 border-transparent font-bold">Login</button>
-                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="hover:text-yellow-500 dark:hover:text-yellow-400 transition text-yellow-600 dark:text-yellow-500 h-full border-b-2 border-transparent hover:border-yellow-400 font-bold">Admin</button>
+            <div class="hidden xl:flex items-center gap-1 text-[11px] font-black uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300 h-full flex-1 justify-center">
+                <button onclick="window.navigate('home')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                    Home
+                </button>
+                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group text-brand-red font-bold">
+                    Order Portal
+                </button>
+                <button onclick="window.navigate('process')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                    How To Order
+                </button>
+                <button onclick="window.navigate('about')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                    About
+                </button>
+                <button onclick="window.navigate('contact')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                    Contact
+                </button>
+                <button onclick="window.navigate('customer')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                    My Inquiries
+                </button>
+                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="px-4 md:px-6 py-2 text-brand-blue font-bold hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 relative group">
+                    Login
+                </button>
+                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
+                    Admin
+                </button>
             </div>
 
-            <div class="flex items-center gap-2 md:gap-3">
-                <button onclick="window.toggleTheme()" class="text-slate-500 dark:text-slate-400 hover:text-brand-navy dark:hover:text-white transition p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5" id="theme-toggle">
+            <div class="flex items-center gap-2 md:gap-4 ml-auto">
+                <button onclick="window.toggleTheme()" class="text-slate-600 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white transition-all p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transform hover:scale-110"
+                    id="theme-toggle">
                     <svg id="moon-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     <svg id="sun-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
 
-                <button onclick="window.toggleCart()" class="relative p-2 md:p-4 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-lg md:rounded-2xl transition border border-brand-blue/20 shadow-xl flex items-center gap-2 md:gap-3 group">
+                <button onclick="window.toggleCart()" class="relative p-2 md:p-4 rounded-lg md:rounded-xl transition-all duration-300 flex items-center gap-2 md:gap-3 group hover:scale-105 transform active:scale-95">
                     <span class="text-[10px] md:text-xs uppercase font-black px-1 md:px-3 text-brand-blue hidden sm:block">Basket</span>
-                    <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-110 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all border-2 border-brand-navy shadow-xl">0</span>
+                    <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-125 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all duration-300 border-2 border-white shadow-lg">0</span>
                 </button>
 
-                <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5">
+                <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
@@ -465,13 +681,15 @@
     </nav>
 
     <!-- CART SIDEBAR -->
-    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white dark:bg-slate-900 shadow-[0_0_100px_rgba(0,0,0,0.5)] z-[110] flex flex-col border-l border-gray-100 dark:border-slate-800">
-        <div class="p-4 md:p-6 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950 pt-24 md:pt-6">
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white dark:bg-slate-900 shadow-[0_0_100px_rgba(0,0,0,0.5)] z-[110] flex flex-col border-l border-gray-100 dark:border-slate-800 transform transition-transform duration-400 ease-out origin-right">
+        <div class="p-4 md:p-6 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-slate-50 via-blue-50/30 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pt-24 md:pt-6">
             <div>
-                <h3 class="font-black text-lg md:text-xl text-brand-navy dark:text-white tracking-tighter uppercase">Inquiry Basket</h3>
+                <h3 class="font-black text-lg md:text-xl text-brand-navy dark:text-white tracking-tighter uppercase transform transition-all duration-300">Inquiry Basket</h3>
                 <p class="text-[9px] md:text-[10px] text-brand-blue font-black uppercase tracking-widest mt-1">Request a Quote</p>
             </div>
-            <button onclick="window.toggleCart()" class="p-2 md:p-3 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-xl transition group"><svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-brand-red transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            <button onclick="window.toggleCart()" class="p-2 md:p-3 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-xl transition-all duration-300 group transform hover:scale-110 active:scale-95">
+                <svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-brand-red transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
         </div>
 
         <div class="flex-1 overflow-y-auto p-4 md:p-6 relative hide-scroll">
@@ -482,28 +700,32 @@
             <div id="cart-items" class="space-y-3 md:space-y-4 relative z-10"></div>
         </div>
 
-        <div class="p-4 md:p-6 border-t border-gray-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-xs font-black uppercase text-slate-400 tracking-widest">Estimated Total</span>
-                <span id="cart-total" class="text-xl font-black text-brand-blue">Login for Pricing</span>
+        <div class="p-4 md:p-6 border-t border-gray-100 dark:border-slate-800 bg-gradient-to-r from-slate-50 via-blue-50/30 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+            <div class="space-y-2 mb-4 border-b border-gray-100 dark:border-slate-800 pb-4">
+                <div class="flex justify-between text-[10px] uppercase font-bold text-slate-400"><span>Subtotal</span><span id="cart-subtotal">R0.00</span></div>
+                <div class="flex justify-between text-[10px] uppercase font-bold text-slate-400"><span>VAT (15%)</span><span id="cart-vat">R0.00</span></div>
+                <div class="flex justify-between items-center pt-2">
+                    <span class="text-xs font-black uppercase text-brand-navy dark:text-white tracking-widest">Total Estimate</span>
+                    <span id="cart-total" class="text-xl font-black text-brand-blue">Login for Pricing</span>
+                </div>
             </div>
             <div class="mb-4 md:mb-6 space-y-2 md:space-y-3">
                 <p class="text-[9px] md:text-[10px] font-black uppercase text-slate-400 tracking-widest border-b border-gray-200 dark:border-slate-800 pb-2 mb-3">Delivery & Contact Details</p>
-                <input type="text" id="customer-business" placeholder="Business Name *" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue dark:text-white transition shadow-sm"
+                <input type="text" id="customer-business" placeholder="Business Name *" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition-all shadow-sm dark:focus:ring-brand-blue/30"
                     required>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
-                    <input type="text" id="customer-name" placeholder="Contact Person" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue dark:text-white transition shadow-sm">
-                    <input type="tel" id="customer-phone" placeholder="Phone Number *" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue dark:text-white transition shadow-sm"
+                    <input type="text" id="customer-name" placeholder="Contact Person" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition-all shadow-sm dark:focus:ring-brand-blue/30">
+                    <input type="tel" id="customer-phone" placeholder="Phone Number *" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition-all shadow-sm dark:focus:ring-brand-blue/30"
                         required>
                 </div>
-                <textarea id="customer-address" placeholder="Delivery Address" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue dark:text-white transition shadow-sm resize-none"
+                <textarea id="customer-address" placeholder="Delivery Address" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition-all shadow-sm resize-none dark:focus:ring-brand-blue/30"
                     rows="2"></textarea>
             </div>
             <div class="grid grid-cols-2 gap-2 md:gap-3 mb-3">
-                <button onclick="window.processQuote(false)" class="bg-brand-navy dark:bg-brand-blue hover:opacity-90 text-white font-black uppercase text-[8px] md:text-[9px] tracking-widest py-3 md:py-4 rounded-lg md:rounded-xl shadow-md transition flex justify-center items-center gap-1.5 md:gap-2">Download RFQ</button>
-                <button onclick="window.processQuote(true)" class="bg-[#25D366] hover:bg-[#128C7E] text-white font-black uppercase text-[8px] md:text-[9px] tracking-widest py-3 md:py-4 rounded-lg md:rounded-xl shadow-md transition flex justify-center items-center gap-1.5 md:gap-2">WhatsApp</button>
+                <button onclick="window.processQuote(false)" class="bg-gradient-to-r from-brand-navy to-brand-blue hover:from-blue-700 hover:to-brand-blue text-white font-black uppercase text-[8px] md:text-[9px] tracking-widest py-3 md:py-4 rounded-lg md:rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-1.5 md:gap-2 transform hover:scale-105 active:scale-95">Download RFQ</button>
+                <button onclick="window.processQuote(true)" class="bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#128C7E] hover:to-[#0a7e60] text-white font-black uppercase text-[8px] md:text-[9px] tracking-widest py-3 md:py-4 rounded-lg md:rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-1.5 md:gap-2 transform hover:scale-105 active:scale-95">WhatsApp</button>
             </div>
-            <button onclick="window.clearCart()" class="w-full py-2.5 md:py-3 text-[9px] md:text-[10px] font-black uppercase text-gray-400 border border-gray-200 dark:border-slate-800 rounded-lg md:rounded-xl hover:bg-red-50 hover:text-brand-red transition mb-2">Clear All</button>
+            <button onclick="window.clearCart()" class="w-full py-2.5 md:py-3 text-[9px] md:text-[10px] font-black uppercase text-gray-400 border border-gray-200 dark:border-slate-800 rounded-lg md:rounded-xl hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-brand-red hover:border-brand-red dark:hover:border-brand-red transition-all duration-300 mb-2 transform hover:scale-102 active:scale-95">Clear All</button>
         </div>
     </div>
 
@@ -782,14 +1004,14 @@
             <!-- Left: Contact Form -->
             <div class="pro-card p-8 md:p-10 shadow-xl relative overflow-hidden h-fit">
                 <h3 class="font-black text-2xl md:text-3xl text-brand-navy dark:text-white uppercase tracking-tight mb-6">Send us a Message</h3>
-                <form onsubmit="event.preventDefault(); window.customAlert('Message sent successfully! Our team will contact you soon.'); this.reset();" class="space-y-4 relative z-10">
+                <form id="contact-form" onsubmit="window.handleContactSubmit(event)" class="space-y-4 relative z-10">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Your Name" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                        <input type="email" placeholder="Email Address" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                        <input type="text" id="contact-name" placeholder="Your Name" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                        <input type="email" id="contact-email" placeholder="Email Address" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
                     </div>
-                    <input type="tel" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                    <textarea placeholder="How can we help you?" required rows="4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none"></textarea>
-                    <button type="submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-2">Send Message</button>
+                    <input type="tel" id="contact-phone" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                    <textarea id="contact-msg" placeholder="How can we help you?" required rows="4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none"></textarea>
+                    <button type="submit" id="contact-submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-2">Send Message</button>
                 </form>
                 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none"></div>
             </div>
@@ -853,16 +1075,22 @@
                     <button onclick="window.toggleViewMode('list')" id="btn-list-view" class="p-2 md:p-3 text-gray-400 hover:text-brand-navy dark:hover:text-white transition transform active:scale-95 flex-1 sm:flex-none flex justify-center"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
                 </div>
 
-                <div class="relative w-full sm:w-[300px] md:w-[350px] flex gap-2">
+                <div class="relative w-full sm:w-[450px] flex flex-wrap sm:flex-nowrap gap-2">
+                    <select id="sort-select" onchange="window.renderCatalog()" class="bg-white dark:bg-slate-900 dark:text-white rounded-xl border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue transition text-xs px-3 py-3 md:py-4 cursor-pointer">
+                        <option value="name-asc">Name A-Z</option>
+                        <option value="name-desc">Name Z-A</option>
+                        <option value="cat-asc">Category</option>
+                    </select>
                     <div class="relative flex-1">
-                        <input type="text" id="search-input" oninput="window.renderCatalog()" class="w-full pl-10 pr-4 py-3 md:py-4 bg-white dark:bg-slate-900 dark:text-white rounded-xl md:rounded-2xl border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue transition text-xs md:text-sm"
+                        <input type="text" id="search-input" oninput="window.renderCatalog()" class="w-full pl-10 pr-14 py-3 md:py-4 bg-white dark:bg-slate-900 dark:text-white rounded-xl md:rounded-2xl border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue transition text-xs md:text-sm"
                             placeholder="Search spec...">
                         <div class="absolute left-3 top-3.5 md:top-4 text-gray-400"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
-                    </div>
-                    <!-- New AI Recommend Button -->
-                    <button onclick="window.aiAutoRecommend()" class="bg-gradient-to-tr from-brand-blue to-purple-600 text-white p-3 md:p-4 rounded-xl md:rounded-2xl shadow-md hover:shadow-lg transition transform active:scale-95 flex items-center justify-center group" title="AI Product Recommender">
+                        <!-- New AI Recommend Button -->
+                        <button onclick="window.aiAutoRecommend()" class="absolute right-2 top-2 bottom-2 bg-gradient-to-tr from-brand-blue to-purple-600 text-white px-3 rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition transform active:scale-95 flex items-center justify-center group"
+                            title="AI Product Recommender">
                         <svg class="w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -964,6 +1192,7 @@
                 <button onclick="window.switchAdminTab('catalog')" id="tab-catalog" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Manage Products</button>
                 <button onclick="window.switchAdminTab('pricing')" id="tab-pricing" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Client Pricing</button>
                 <button onclick="window.switchAdminTab('orders')" id="tab-orders" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Live Orders</button>
+                <button onclick="window.switchAdminTab('leads')" id="tab-leads" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Contact Inquiries</button>
             </div>
 
             <!-- Tab: Dashboard -->
@@ -1026,6 +1255,15 @@
                     </div>
                 </div>
                 <div id="admin-orders-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
+            </div>
+
+            <!-- Tab: Leads / Inquiries -->
+            <div id="admin-tab-leads" class="hidden animate-viewIn">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                    <h3 class="font-black text-xl dark:text-white uppercase tracking-tighter">Contact Inquiries</h3>
+                    <button onclick="window.loadAdminLeads()" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-6 py-3 rounded-xl dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition">Refresh</button>
+                </div>
+                <div id="admin-leads-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
             </div>
         </div>
     </div>
@@ -1092,7 +1330,7 @@
         /* ========================================== */
         /* 1. SYSTEM INITIALIZATION & DATA ENGINE */
         /* ========================================== */
-        window.cloudProducts = [];
+        window.cloudProducts = JSON.parse(localStorage.getItem('route64_products')) || [];
         window.userPricing = {};
         window.isRegisterMode = false;
         window.cartTotal = 0;
@@ -1100,375 +1338,382 @@
         window.allAdminOrders = [];
 
         window.initCatalog = function() {
-            const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`));
-            window.onSnapshot(q, (snapshot) => {
-                window.cloudProducts = [];
-                snapshot.forEach(doc => window.cloudProducts.push({
-                    docId: doc.id,
-                    ...doc.data()
-                }));
+            try {
+                const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`));
+                window.onSnapshot(q, (snapshot) => {
+                    window.cloudProducts = [];
+                    snapshot.forEach(doc => window.cloudProducts.push({
+                        docId: doc.id,
+                        ...doc.data()
+                    }));
+                    localStorage.setItem('route64_products', JSON.stringify(window.cloudProducts));
 
-                const all25Products = [{
-                    id: "P-E001",
-                    name: "Engine Oil (SAE 40)",
-                    category: "Engine Oils",
-                    desc: "Standard SAE 40 Engine Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E002",
-                    name: "Multigrade (20W50)",
-                    category: "Engine Oils",
-                    desc: "Multigrade 20W50 Engine Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E003",
-                    name: "Engine Oil (SAE 30)",
-                    category: "Engine Oils",
-                    desc: "Standard SAE 30 Engine Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E004",
-                    name: "Diesel Oil (HD40)",
-                    category: "Engine Oils",
-                    desc: "Heavy Duty 40 Diesel Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E005",
-                    name: "Turbo Diesel (15W40)",
-                    category: "Engine Oils",
-                    desc: "15W40 Turbo Diesel Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E006",
-                    name: "2 Stroke Oil",
-                    category: "Engine Oils",
-                    desc: "Premium 2 Stroke Engine Oil.",
-                    variants: [{
-                        size: "200ml (Case of 40)"
-                    }, {
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-G001",
-                    name: "Gear Oil (EP90)",
-                    category: "Gear & Auto",
-                    desc: "EP90 Gear Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-G002",
-                    name: "Gear Oil (80W90)",
-                    category: "Gear & Auto",
-                    desc: "80W90 Gear Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-G003",
-                    name: "Transmission (ATF DII)",
-                    category: "Gear & Auto",
-                    desc: "Automatic Transmission Fluid DII.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-G004",
-                    name: "Brake Fluid DOT4",
-                    category: "Gear & Auto",
-                    desc: "DOT4 Brake Fluid.",
-                    variants: [{
-                        size: "200ml (Case of 40)"
-                    }, {
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-I001",
-                    name: "Hydraulic Oil (ISO 68)",
-                    category: "Industrial",
-                    desc: "Premium ISO 68 Hydraulic Oil.",
-                    variants: [{
-                        size: "1L (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-I002",
-                    name: "Hydraulic Oil (ISO 46)",
-                    category: "Industrial",
-                    desc: "Premium ISO 46 Hydraulic Oil.",
-                    variants: [{
-                        size: "1L (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C001",
-                    name: "Engine Cleaner Water Base",
-                    category: "Chemicals & Grease",
-                    desc: "Water-based engine cleaner.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C002",
-                    name: "Engine Cleaner Solvent Base",
-                    category: "Chemicals & Grease",
-                    desc: "Solvent-based engine cleaner.",
-                    variants: [{
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C003",
-                    name: "Degreaser Concentrate",
-                    category: "Chemicals & Grease",
-                    desc: "Concentrated Degreaser.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C004",
-                    name: "Degreaser (Spray)",
-                    category: "Chemicals & Grease",
-                    desc: "Degreaser Concentrate spray.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }]
-                }, {
-                    id: "P-C005",
-                    name: "Anti-Freeze Summer Coolant",
-                    category: "Anti-Freeze",
-                    desc: "Summer coolant anti-freeze.",
-                    variants: [{
-                        size: "1L (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }]
-                }, {
-                    id: "P-C006",
-                    name: "Anti-Freeze 30%",
-                    category: "Anti-Freeze",
-                    desc: "30% Anti-freeze mix.",
-                    variants: [{
-                        size: "1L (Case of 14)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C007",
-                    name: "Anti-Freeze 50%",
-                    category: "Anti-Freeze",
-                    desc: "50% Anti-freeze mix.",
-                    variants: [{
-                        size: "1L (Case of 14)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C008",
-                    name: "Anti-Freeze 96%",
-                    category: "Anti-Freeze",
-                    desc: "96% Anti-freeze mix.",
-                    variants: [{
-                        size: "1L (Case of 14)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C009",
-                    name: "Grease - Wheel Bearing",
-                    category: "Grease",
-                    desc: "Wheel bearing grease.",
-                    variants: [{
-                        size: "500g (Case of 20)"
-                    }, {
-                        size: "5kg (Case of 4)"
-                    }, {
-                        size: "15kg"
-                    }, {
-                        size: "180kg"
-                    }]
-                }, {
-                    id: "P-C010",
-                    name: "Grease - Multipurpose",
-                    category: "Grease",
-                    desc: "Multipurpose grease.",
-                    variants: [{
-                        size: "500g (Case of 20)"
-                    }, {
-                        size: "5kg (Case of 4)"
-                    }, {
-                        size: "15kg"
-                    }, {
-                        size: "180kg"
-                    }]
-                }, {
-                    id: "P-C011",
-                    name: "Grease - CV Joint",
-                    category: "Grease",
-                    desc: "CV Joint grease.",
-                    variants: [{
-                        size: "500g (Case of 20)"
-                    }, {
-                        size: "5kg (Case of 4)"
-                    }, {
-                        size: "15kg"
-                    }, {
-                        size: "180kg"
-                    }]
-                }, {
-                    id: "P-C012",
-                    name: "Hand Cleaner with Grit",
-                    category: "Chemicals & Grease",
-                    desc: "Citrus hand cleaner with grit.",
-                    variants: [{
-                        size: "800g (Case of 20)"
-                    }, {
-                        size: "5kg (Case of 4)"
-                    }, {
-                        size: "15kg"
-                    }]
-                }, {
-                    id: "P-C013",
-                    name: "Hand Sanitizer",
-                    category: "Chemicals & Grease",
-                    desc: "70% Alcohol Hand Sanitizer.",
-                    variants: [{
-                        size: "1L (Case of 14)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "25L"
-                    }, {
-                        size: "200L"
-                    }]
-                }];
+                    const all25Products = [{
+                        id: "P-E001",
+                        name: "Engine Oil (SAE 40)",
+                        category: "Engine Oils",
+                        desc: "Standard SAE 40 Engine Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E002",
+                        name: "Multigrade (20W50)",
+                        category: "Engine Oils",
+                        desc: "Multigrade 20W50 Engine Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E003",
+                        name: "Engine Oil (SAE 30)",
+                        category: "Engine Oils",
+                        desc: "Standard SAE 30 Engine Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E004",
+                        name: "Diesel Oil (HD40)",
+                        category: "Engine Oils",
+                        desc: "Heavy Duty 40 Diesel Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E005",
+                        name: "Turbo Diesel (15W40)",
+                        category: "Engine Oils",
+                        desc: "15W40 Turbo Diesel Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E006",
+                        name: "2 Stroke Oil",
+                        category: "Engine Oils",
+                        desc: "Premium 2 Stroke Engine Oil.",
+                        variants: [{
+                            size: "200ml (Case of 40)"
+                        }, {
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G001",
+                        name: "Gear Oil (EP90)",
+                        category: "Gear & Auto",
+                        desc: "EP90 Gear Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G002",
+                        name: "Gear Oil (80W90)",
+                        category: "Gear & Auto",
+                        desc: "80W90 Gear Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G003",
+                        name: "Transmission (ATF DII)",
+                        category: "Gear & Auto",
+                        desc: "Automatic Transmission Fluid DII.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G004",
+                        name: "Brake Fluid DOT4",
+                        category: "Gear & Auto",
+                        desc: "DOT4 Brake Fluid.",
+                        variants: [{
+                            size: "200ml (Case of 40)"
+                        }, {
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-I001",
+                        name: "Hydraulic Oil (ISO 68)",
+                        category: "Industrial",
+                        desc: "Premium ISO 68 Hydraulic Oil.",
+                        variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-I002",
+                        name: "Hydraulic Oil (ISO 46)",
+                        category: "Industrial",
+                        desc: "Premium ISO 46 Hydraulic Oil.",
+                        variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C001",
+                        name: "Engine Cleaner Water Base",
+                        category: "Chemicals & Grease",
+                        desc: "Water-based engine cleaner.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C002",
+                        name: "Engine Cleaner Solvent Base",
+                        category: "Chemicals & Grease",
+                        desc: "Solvent-based engine cleaner.",
+                        variants: [{
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C003",
+                        name: "Degreaser Concentrate",
+                        category: "Chemicals & Grease",
+                        desc: "Concentrated Degreaser.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C004",
+                        name: "Degreaser (Spray)",
+                        category: "Chemicals & Grease",
+                        desc: "Degreaser Concentrate spray.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }]
+                    }, {
+                        id: "P-C005",
+                        name: "Anti-Freeze Summer Coolant",
+                        category: "Anti-Freeze",
+                        desc: "Summer coolant anti-freeze.",
+                        variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }]
+                    }, {
+                        id: "P-C006",
+                        name: "Anti-Freeze 30%",
+                        category: "Anti-Freeze",
+                        desc: "30% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C007",
+                        name: "Anti-Freeze 50%",
+                        category: "Anti-Freeze",
+                        desc: "50% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C008",
+                        name: "Anti-Freeze 96%",
+                        category: "Anti-Freeze",
+                        desc: "96% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C009",
+                        name: "Grease - Wheel Bearing",
+                        category: "Grease",
+                        desc: "Wheel bearing grease.",
+                        variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C010",
+                        name: "Grease - Multipurpose",
+                        category: "Grease",
+                        desc: "Multipurpose grease.",
+                        variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C011",
+                        name: "Grease - CV Joint",
+                        category: "Grease",
+                        desc: "CV Joint grease.",
+                        variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C012",
+                        name: "Hand Cleaner with Grit",
+                        category: "Chemicals & Grease",
+                        desc: "Citrus hand cleaner with grit.",
+                        variants: [{
+                            size: "800g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }]
+                    }, {
+                        id: "P-C013",
+                        name: "Hand Sanitizer",
+                        category: "Chemicals & Grease",
+                        desc: "70% Alcohol Hand Sanitizer.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "25L"
+                        }, {
+                            size: "200L"
+                        }]
+                    }];
 
-                // Auto-sync missing products to your Firebase database
-                if (window.cloudProducts.length < all25Products.length) {
-                    all25Products.forEach(p => {
-                        if (!window.cloudProducts.find(cp => cp.id === p.id)) {
-                            window.cloudProducts.push(p); // Display immediately
-                            try {
-                                window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/products`, p.id), p);
-                            } catch (e) {}
-                        }
-                    });
-                }
+                    // Auto-sync missing products to your Firebase database
+                    if (window.isAdmin && window.cloudProducts.length < all25Products.length) {
+                        all25Products.forEach(p => {
+                            if (!window.cloudProducts.find(cp => cp.id === p.id)) {
+                                window.cloudProducts.push(p); // Display immediately
+                                try {
+                                    window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/products`, p.id), p);
+                                } catch (e) {}
+                            }
+                        });
+                    }
 
-                window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
-                window.renderCatalog();
-                if (window.isAdmin) window.renderAdminProducts();
-            });
+                    window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
+                    window.renderCatalog();
+                    if (window.isAdmin) window.renderAdminProducts();
+                }, (error) => {
+                    console.error("API Data-fetching error:", error);
+                });
+            } catch (err) {
+                console.error("Critical API initialization error:", err);
+            }
         };
 
-        let activeCart = [];
+        let activeCart = JSON.parse(localStorage.getItem('route64_basket')) || [];
         let currentFilter = 'all';
 
         /* ========================================== */
@@ -1657,13 +1902,19 @@
             const grid = document.getElementById('catalog-grid');
             if (!grid || window.cloudProducts.length === 0) return;
             const term = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase() : '';
+            const sortVal = document.getElementById('sort-select') ? document.getElementById('sort-select').value : 'name-asc';
+
             grid.innerHTML = "";
             grid.className = window.viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 pb-24 md:pb-40 stagger-3" : "block space-y-4 md:space-y-6 pb-24 md:pb-40 stagger-3";
 
-            const filtered = window.cloudProducts.filter(p => {
+            let filtered = window.cloudProducts.filter(p => {
                 return (window.currentFilter === 'all' || p.category === window.currentFilter) &&
                     (p.name.toLowerCase().includes(term) || (p.desc && p.desc.toLowerCase().includes(term)) || p.id.toLowerCase().includes(term));
             });
+
+            if (sortVal === 'name-asc') filtered.sort((a, b) => a.name.localeCompare(b.name));
+            else if (sortVal === 'name-desc') filtered.sort((a, b) => b.name.localeCompare(a.name));
+            else if (sortVal === 'cat-asc') filtered.sort((a, b) => a.category.localeCompare(b.category));
 
             filtered.forEach(p => {
                 let vHtml = `<select id='${window.viewMode}-sel-${p.id}' class='w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-lg md:rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-3 md:mb-4 mt-2 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition' onclick='event.stopPropagation()'>`;
@@ -1821,6 +2072,7 @@
         }
 
         window.updateCartUI = function() {
+                localStorage.setItem('route64_basket', JSON.stringify(activeCart));
                 const container = document.getElementById('cart-items');
                 const badge = document.getElementById('cart-badge');
                 const empty = document.getElementById('empty-cart-msg');
@@ -1872,12 +2124,19 @@
             }
 
             if (totalDisplay) {
+                const subtotal = total;
+                const vat = subtotal * 0.15;
+                const grandTotal = subtotal + vat;
+
+                if (document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').innerText = `R${subtotal.toFixed(2)}`;
+                if (document.getElementById('cart-vat')) document.getElementById('cart-vat').innerText = `R${vat.toFixed(2)}`;
+
                 if (window.currentUser && window.currentUser.email) {
-                    totalDisplay.innerText = total > 0 ? `R${total.toFixed(2)}` : "Pending Quote";
+                    totalDisplay.innerText = grandTotal > 0 ? `R${grandTotal.toFixed(2)}` : "Pending Quote";
                 } else {
                     totalDisplay.innerText = "Login for Pricing";
                 }
-                window.cartTotal = total;
+                window.cartTotal = grandTotal;
             }
         }
 
@@ -1934,7 +2193,13 @@
             if (sendToWhatsApp) {
                 let msg = `*ROUTE 64 ORDER: ${newQuoteId}*\n🏢 ${bizName} | 📞 ${phone}\n\n*Items:*\n`;
                 activeCart.forEach(i => msg += `▪ *${i.qty} Cases* ${i.name} (${i.size})\n`);
-                msg += (window.currentUser && window.currentUser.email && window.cartTotal > 0) ? `\n*Total: R${window.cartTotal.toFixed(2)}*` : `\n*Please provide pricing.*`;
+                if (window.currentUser && window.currentUser.email && window.cartTotal > 0) {
+                    const sub = window.cartTotal / 1.15;
+                    const v = window.cartTotal - sub;
+                    msg += `\n*Subtotal:* R${sub.toFixed(2)}\n*VAT (15%):* R${v.toFixed(2)}\n*Total Estimate:* R${window.cartTotal.toFixed(2)}`;
+                } else {
+                    msg += `\n*Please provide pricing.*`;
+                }
                 window.open("https://wa.me/27680871269?text=" + encodeURIComponent(msg), '_blank');
             }
 
@@ -1942,6 +2207,24 @@
             if (window.currentUser && window.currentUser.email) window.navigate('customer');
             window.customAlert("Order Submitted Successfully");
         }
+
+        window.handleContactSubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('contact-submit');
+            btn.innerText = "Sending..."; btn.disabled = true;
+            const payload = { name: document.getElementById('contact-name').value, email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value, message: document.getElementById('contact-msg').value, date: new Date().toISOString() };
+            try {
+                if (window.firebaseDb) await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`), payload);
+                window.customAlert("Message sent successfully! Our team will contact you soon.");
+                document.getElementById('contact-form').reset();
+            } catch (err) { console.error(err); window.customAlert("Error sending message."); }
+            btn.innerText = "Send Message"; btn.disabled = false;
+        };
+
+        window.addEventListener('hashchange', () => {
+            const viewId = window.location.hash.replace('#', '') || 'home';
+            window.navigate(viewId, false);
+        });
 
         /* ========================================== */
         /* 5. CUSTOMER PORTAL (HISTORY) */
@@ -2028,15 +2311,16 @@
         /* 6. ADMIN DASHBOARD & ANALYTICS */
         /* ========================================== */
         window.switchAdminTab = function(tab) {
-            ['dashboard', 'catalog', 'pricing', 'orders'].forEach(t => {
+            ['dashboard', 'catalog', 'pricing', 'orders', 'leads'].forEach(t => {
                 document.getElementById(`admin-tab-${t}`).classList.add('hidden');
                 document.getElementById(`tab-${t}`).className = "font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition";
             });
             document.getElementById(`admin-tab-${tab}`).classList.remove('hidden');
             document.getElementById(`tab-${tab}`).className = "font-black uppercase text-brand-blue border-b-2 border-brand-blue pb-2 text-[10px] md:text-xs tracking-widest transition";
 
-            if (tab === 'orders' || tab === 'dashboard') window.loadAdminOrders();
+            if (tab === 'orders' || tab === 'dashboard') { window.loadAdminOrders(); }
             if (tab === 'catalog') window.renderAdminProducts();
+            if (tab === 'leads') window.loadAdminLeads();
         };
 
         window.loadAdminUsers = function() {
@@ -2258,10 +2542,56 @@
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
         };
 
+        window.loadAdminLeads = async function() {
+            const grid = document.getElementById('admin-leads-grid');
+            if(!window.firebaseDb || !grid) return;
+            grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest animate-pulse'>Fetching Inquiries...</p>";
+            
+            try {
+                const leadsSnap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`));
+                let allLeads = [];
+                leadsSnap.forEach(doc => { allLeads.push({ ...doc.data(), id: doc.id }); });
+                allLeads.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+                if(allLeads.length === 0) { grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest'>No contact inquiries found</p>"; return; }
+
+                grid.innerHTML = allLeads.map(data => `
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col md:flex-row gap-6 justify-between items-start hover:border-brand-blue transition">
+                        <div class="flex-1 w-full">
+                            <span class="text-[9px] font-black bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500 uppercase tracking-widest mb-3 inline-block">${new Date(data.date).toLocaleString()}</span>
+                            <h4 class="font-black text-lg dark:text-white text-brand-navy mb-1 tracking-tight">${data.name}</h4>
+                            <div class="flex flex-wrap gap-4 text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium">
+                                <span><strong class="dark:text-gray-300">Email:</strong> <a href="mailto:${data.email}" class="text-brand-blue hover:underline">${data.email}</a></span>
+                                ${data.phone ? `<span><strong class="dark:text-gray-300">Phone:</strong> <a href="tel:${data.phone}" class="text-brand-blue hover:underline">${data.phone}</a></span>` : ''}
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner text-sm dark:text-gray-300 whitespace-pre-wrap">${data.message}</div>
+                        </div>
+                        <div class="flex flex-col gap-2 shrink-0">
+                            <button onclick="window.deleteAdminLead('${data.id}')" class="text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-red-200 transition flex items-center gap-2">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+                grid.innerHTML = "<div class='p-10 text-center bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30'><p class='text-brand-red text-xs font-black uppercase tracking-widest'>Error loading inquiries.</p></div>";
+            }
+        };
+
+        window.deleteAdminLead = async function(leadId) {
+            if (!confirm("Are you sure you want to permanently delete this inquiry?")) return;
+            try {
+                await window.deleteDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`, leadId));
+                window.customAlert("Inquiry deleted successfully.");
+                window.loadAdminLeads();
+            } catch (e) { window.customAlert("Error deleting inquiry."); }
+        };
+
         /* ========================================== */
         /* 7. UI & NAVIGATION HELPER FUNCTIONS */
         /* ========================================== */
-        window.navigate = function(viewId) {
+        window.navigate = function(viewId, updateHash = true) {
             if (viewId === 'catalog' && !window.currentUser) { window.customAlert("Please log in or register to view the catalog."); window.toggleAuthModal(); return; }
             if (viewId === 'customer' && !window.currentUser) { window.customAlert("Please log in to view your inquiries."); window.toggleAuthModal(); return; }
             if (viewId === 'admin' && !window.isAdmin) { window.customAlert("Unauthorized access."); return; }
@@ -2270,6 +2600,7 @@
             const target = document.getElementById(`view-${viewId}`);
             if (currentActive && currentActive.id === `view-${viewId}`) return;
             window.currentView = viewId;
+            if (updateHash) window.location.hash = viewId;
             if(document.getElementById('mobile-menu').classList.contains('flex')) window.toggleMobileMenu();
 
             if (currentActive) {
@@ -2337,8 +2668,8 @@
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.getElementById('moon-icon').classList.toggle('hidden', isDark);
-            document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
+            if(document.getElementById('moon-icon')) document.getElementById('moon-icon').classList.toggle('hidden', isDark);
+            if(document.getElementById('sun-icon')) document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
         }
 
         window.customAlert = function(msg) {
@@ -2448,6 +2779,28 @@
             typeDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl rounded-tl-none font-medium w-fit flex items-center gap-2 mr-auto shrink-0";
             typeDiv.innerHTML = `<span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.2s"></span>`;
             msgs.appendChild(typeDiv);
+            const initialView = window.location.hash.replace('#', '') || 'home';
+            if (initialView !== 'home') window.navigate(initialView, false);
+
+
+        window.addEventListener('hashchange', () => {
+            const viewId = window.location.hash.replace('#', '') || 'home';
+            window.navigate(viewId, false);
+        });
+
+        window.handleContactSubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('contact-submit');
+            btn.innerText = "Sending..."; btn.disabled = true;
+            const payload = { name: document.getElementById('contact-name').value, email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value, message: document.getElementById('contact-msg').value, date: new Date().toISOString() };
+            try {
+                if (window.firebaseDb) await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`), payload);
+                window.customAlert("Message sent successfully! Our team will contact you soon.");
+                document.getElementById('contact-form').reset();
+            } catch (err) { console.error(err); window.customAlert("Error sending message."); }
+            btn.innerText = "Send Message"; btn.disabled = false;
+        };
+
             msgs.scrollTop = msgs.scrollHeight;
 
             // Fetch Real AI
@@ -2509,10 +2862,62 @@
             }
         }
 
+        window.handleContactSubmit = async function(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('contact-email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            // Validate Email Field
+            if (!emailRegex.test(emailInput)) {
+                window.customAlert("Please enter a valid email address.");
+                return;
+            }
+
+            // Toggle loading state on button
+            const btn = document.getElementById('contact-submit');
+            const originalText = btn.innerText;
+            btn.innerText = "Sending..."; 
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            const payload = { 
+                name: document.getElementById('contact-name').value.trim(), 
+                email: emailInput, 
+                phone: document.getElementById('contact-phone').value.trim(), 
+                message: document.getElementById('contact-msg').value.trim(), 
+                date: new Date().toISOString() 
+            };
+            
+            try {
+                if (window.firebaseDb) {
+                    await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`), payload);
+                }
+                window.customAlert("Message sent successfully! Our team will contact you soon.");
+                document.getElementById('contact-form').reset();
+            } catch (err) { 
+                console.error(err); 
+                window.customAlert("Error sending message. Please try again."); 
+            } finally {
+                // Revert button state
+                btn.innerText = originalText; 
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        };
+
+        window.addEventListener('hashchange', () => {
+            const viewId = window.location.hash.replace('#', '') || 'home';
+            window.navigate(viewId, false);
+        });
+
         /* ========================================== */
         /* 9. ON LOAD INITIALIZATION */
         /* ========================================== */
         window.addEventListener('DOMContentLoaded', () => {
+            const initialView = window.location.hash.replace('#', '') || 'home';
+            if (initialView !== 'home') window.navigate(initialView, false);
+
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {

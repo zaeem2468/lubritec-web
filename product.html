@@ -28,9 +28,66 @@
         }
         
         .glass-nav {
-            background: rgba(3, 3, 3, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.95) !important;
+            backdrop-filter: saturate(180%) blur(20px) !important;
+            -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2) !important;
+            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5) !important;
+        }
+        /* Enhanced nav button styles */
+        
+        .glass-nav button {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        }
+        
+        .glass-nav button:hover {
+            transform: scale(1.05);
+        }
+        /* Cart button enhancement */
+        
+        .glass-nav button[onclick*="toggleCart"] {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.08) 100%) !important;
+            border: 1.5px solid rgba(37, 99, 235, 0.3) !important;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15) !important;
+        }
+        
+        .glass-nav button[onclick*="toggleCart"]:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.15) 100%) !important;
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.25) !important;
+            transform: translateY(-2px) scale(1.05) !important;
+        }
+        /* Logo hover effect */
+        
+        .glass-nav .group:hover {
+            transform: translateY(-2px);
+        }
+        
+        .glass-nav .group img {
+            filter: drop-shadow(0 4px 16px rgba(37, 99, 235, 0.2));
+        }
+        /* Enhanced cart badge */
+        
+        #cart-count {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+        /* Premium card styles */
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-4px) scale(1.02) !important;
         }
         
         select {
@@ -51,22 +108,52 @@
         #cart-sidebar.open {
             transform: translateX(0);
         }
+        /* Smooth scrollbar */
+        
+         ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: background 0.3s ease;
+        }
+        
+         ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.6) 100%);
+            background-clip: padding-box;
+        }
     </style>
 </head>
 
 <body class="antialiased">
 
+    <!-- Ambient glowing orbs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] rounded-full bg-blue-600/10 blur-[100px] mix-blend-screen"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] rounded-full bg-red-600/5 blur-[100px] mix-blend-screen"></div>
+    </div>
+
     <nav class="fixed w-full z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="catalog.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                <span class="text-xs font-bold uppercase tracking-widest">Back</span>
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 h-24 md:h-32 flex justify-between items-center gap-6 md:gap-8">
+            <a href="catalog.html" class="flex items-center gap-2 sm:gap-3 md:gap-4 group transition-transform duration-300 hover:scale-105">
+                <div class="h-10 w-10 sm:h-16 sm:w-16 md:h-20 md:w-20 flex-shrink-0 transition-transform duration-300 flex items-center justify-center transform group-hover:scale-110">
+                    <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg filter drop-shadow-[0_4px_16px_rgba(37,99,235,0.2)]" onerror="this.style.display='none'">
+                </div>
+                <span class="font-bold text-lg sm:text-2xl md:text-4xl tracking-wide uppercase text-white drop-shadow-md group-hover:text-blue-400 transition-colors duration-300">LUBRICANTS</span>
             </a>
-            <div class="flex items-center gap-3">
-                <button onclick="toggleCart()" class="relative p-2 text-white bg-gray-900 rounded-full border border-gray-700 flex items-center gap-2">
-                    <span class="text-[10px] uppercase font-bold hidden sm:block px-2">Quote</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span id="cart-count" class="absolute -top-1 -right-1 bg-brand-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center scale-0 transition-transform shadow-lg">0</span>
+            <div class="flex items-center gap-3 md:gap-6 ml-auto">
+                <button onclick="toggleCart()" class="relative p-2 md:p-4 transition-all duration-300 flex items-center group bg-transparent border-none shadow-none hover:scale-105 active:scale-95">
+                    <span class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300">Basket</span>
+                    <svg class="w-6 h-6 md:w-7 md:h-7 text-white group-hover:text-blue-300 group-hover:scale-125 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute top-0 right-0 md:top-1 md:-right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-black h-5 w-5 flex items-center justify-center rounded-full scale-0 transition-all duration-300 shadow-lg border border-white/30">0</span>
                 </button>
             </div>
         </div>
@@ -172,6 +259,15 @@
             });
         }
     </script>
+    <style>
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </body>
 
 </html>

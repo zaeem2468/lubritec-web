@@ -483,9 +483,13 @@
         </div>
 
         <div class="p-4 md:p-6 border-t border-gray-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-xs font-black uppercase text-slate-400 tracking-widest">Estimated Total</span>
-                <span id="cart-total" class="text-xl font-black text-brand-blue">Login for Pricing</span>
+            <div class="space-y-2 mb-4 border-b border-gray-100 dark:border-slate-800 pb-4">
+                <div class="flex justify-between text-[10px] uppercase font-bold text-slate-400"><span>Subtotal</span><span id="cart-subtotal">R0.00</span></div>
+                <div class="flex justify-between text-[10px] uppercase font-bold text-slate-400"><span>VAT (15%)</span><span id="cart-vat">R0.00</span></div>
+                <div class="flex justify-between items-center pt-2">
+                    <span class="text-xs font-black uppercase text-brand-navy dark:text-white tracking-widest">Total Estimate</span>
+                    <span id="cart-total" class="text-xl font-black text-brand-blue">Login for Pricing</span>
+                </div>
             </div>
             <div class="mb-4 md:mb-6 space-y-2 md:space-y-3">
                 <p class="text-[9px] md:text-[10px] font-black uppercase text-slate-400 tracking-widest border-b border-gray-200 dark:border-slate-800 pb-2 mb-3">Delivery & Contact Details</p>
@@ -782,14 +786,14 @@
             <!-- Left: Contact Form -->
             <div class="pro-card p-8 md:p-10 shadow-xl relative overflow-hidden h-fit">
                 <h3 class="font-black text-2xl md:text-3xl text-brand-navy dark:text-white uppercase tracking-tight mb-6">Send us a Message</h3>
-                <form onsubmit="event.preventDefault(); window.customAlert('Message sent successfully! Our team will contact you soon.'); this.reset();" class="space-y-4 relative z-10">
+                <form id="contact-form" onsubmit="window.handleContactSubmit(event)" class="space-y-4 relative z-10">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Your Name" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                        <input type="email" placeholder="Email Address" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                        <input type="text" id="contact-name" placeholder="Your Name" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                        <input type="email" id="contact-email" placeholder="Email Address" required class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
                     </div>
-                    <input type="tel" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
-                    <textarea placeholder="How can we help you?" required rows="4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none"></textarea>
-                    <button type="submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-2">Send Message</button>
+                    <input type="tel" id="contact-phone" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition">
+                    <textarea id="contact-msg" placeholder="How can we help you?" required rows="4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:border-brand-blue dark:text-white transition resize-none"></textarea>
+                    <button type="submit" id="contact-submit" class="w-full py-4 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl mt-2">Send Message</button>
                 </form>
                 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none"></div>
             </div>
@@ -853,16 +857,22 @@
                     <button onclick="window.toggleViewMode('list')" id="btn-list-view" class="p-2 md:p-3 text-gray-400 hover:text-brand-navy dark:hover:text-white transition transform active:scale-95 flex-1 sm:flex-none flex justify-center"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
                 </div>
 
-                <div class="relative w-full sm:w-[300px] md:w-[350px] flex gap-2">
+                <div class="relative w-full sm:w-[450px] flex flex-wrap sm:flex-nowrap gap-2">
+                    <select id="sort-select" onchange="window.renderCatalog()" class="bg-white dark:bg-slate-900 dark:text-white rounded-xl border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue transition text-xs px-3 py-3 md:py-4 cursor-pointer">
+                        <option value="name-asc">Name A-Z</option>
+                        <option value="name-desc">Name Z-A</option>
+                        <option value="cat-asc">Category</option>
+                    </select>
                     <div class="relative flex-1">
-                        <input type="text" id="search-input" oninput="window.renderCatalog()" class="w-full pl-10 pr-4 py-3 md:py-4 bg-white dark:bg-slate-900 dark:text-white rounded-xl md:rounded-2xl border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue transition text-xs md:text-sm"
+                        <input type="text" id="search-input" oninput="window.renderCatalog()" class="w-full pl-10 pr-14 py-3 md:py-4 bg-white dark:bg-slate-900 dark:text-white rounded-xl md:rounded-2xl border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue transition text-xs md:text-sm"
                             placeholder="Search spec...">
                         <div class="absolute left-3 top-3.5 md:top-4 text-gray-400"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
-                    </div>
-                    <!-- New AI Recommend Button -->
-                    <button onclick="window.aiAutoRecommend()" class="bg-gradient-to-tr from-brand-blue to-purple-600 text-white p-3 md:p-4 rounded-xl md:rounded-2xl shadow-md hover:shadow-lg transition transform active:scale-95 flex items-center justify-center group" title="AI Product Recommender">
+                        <!-- New AI Recommend Button -->
+                        <button onclick="window.aiAutoRecommend()" class="absolute right-2 top-2 bottom-2 bg-gradient-to-tr from-brand-blue to-purple-600 text-white px-3 rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition transform active:scale-95 flex items-center justify-center group"
+                            title="AI Product Recommender">
                         <svg class="w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1092,7 +1102,7 @@
         /* ========================================== */
         /* 1. SYSTEM INITIALIZATION & DATA ENGINE */
         /* ========================================== */
-        window.cloudProducts = [];
+        window.cloudProducts = JSON.parse(localStorage.getItem('route64_products')) || [];
         window.userPricing = {};
         window.isRegisterMode = false;
         window.cartTotal = 0;
@@ -1100,375 +1110,382 @@
         window.allAdminOrders = [];
 
         window.initCatalog = function() {
-            const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`));
-            window.onSnapshot(q, (snapshot) => {
-                window.cloudProducts = [];
-                snapshot.forEach(doc => window.cloudProducts.push({
-                    docId: doc.id,
-                    ...doc.data()
-                }));
+            try {
+                const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`));
+                window.onSnapshot(q, (snapshot) => {
+                    window.cloudProducts = [];
+                    snapshot.forEach(doc => window.cloudProducts.push({
+                        docId: doc.id,
+                        ...doc.data()
+                    }));
+                    localStorage.setItem('route64_products', JSON.stringify(window.cloudProducts));
 
-                const all25Products = [{
-                    id: "P-E001",
-                    name: "Engine Oil (SAE 40)",
-                    category: "Engine Oils",
-                    desc: "Standard SAE 40 Engine Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E002",
-                    name: "Multigrade (20W50)",
-                    category: "Engine Oils",
-                    desc: "Multigrade 20W50 Engine Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E003",
-                    name: "Engine Oil (SAE 30)",
-                    category: "Engine Oils",
-                    desc: "Standard SAE 30 Engine Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E004",
-                    name: "Diesel Oil (HD40)",
-                    category: "Engine Oils",
-                    desc: "Heavy Duty 40 Diesel Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E005",
-                    name: "Turbo Diesel (15W40)",
-                    category: "Engine Oils",
-                    desc: "15W40 Turbo Diesel Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-E006",
-                    name: "2 Stroke Oil",
-                    category: "Engine Oils",
-                    desc: "Premium 2 Stroke Engine Oil.",
-                    variants: [{
-                        size: "200ml (Case of 40)"
-                    }, {
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-G001",
-                    name: "Gear Oil (EP90)",
-                    category: "Gear & Auto",
-                    desc: "EP90 Gear Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-G002",
-                    name: "Gear Oil (80W90)",
-                    category: "Gear & Auto",
-                    desc: "80W90 Gear Oil.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-G003",
-                    name: "Transmission (ATF DII)",
-                    category: "Gear & Auto",
-                    desc: "Automatic Transmission Fluid DII.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-G004",
-                    name: "Brake Fluid DOT4",
-                    category: "Gear & Auto",
-                    desc: "DOT4 Brake Fluid.",
-                    variants: [{
-                        size: "200ml (Case of 40)"
-                    }, {
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-I001",
-                    name: "Hydraulic Oil (ISO 68)",
-                    category: "Industrial",
-                    desc: "Premium ISO 68 Hydraulic Oil.",
-                    variants: [{
-                        size: "1L (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-I002",
-                    name: "Hydraulic Oil (ISO 46)",
-                    category: "Industrial",
-                    desc: "Premium ISO 46 Hydraulic Oil.",
-                    variants: [{
-                        size: "1L (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C001",
-                    name: "Engine Cleaner Water Base",
-                    category: "Chemicals & Grease",
-                    desc: "Water-based engine cleaner.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C002",
-                    name: "Engine Cleaner Solvent Base",
-                    category: "Chemicals & Grease",
-                    desc: "Solvent-based engine cleaner.",
-                    variants: [{
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C003",
-                    name: "Degreaser Concentrate",
-                    category: "Chemicals & Grease",
-                    desc: "Concentrated Degreaser.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C004",
-                    name: "Degreaser (Spray)",
-                    category: "Chemicals & Grease",
-                    desc: "Degreaser Concentrate spray.",
-                    variants: [{
-                        size: "500ml (Case of 20)"
-                    }]
-                }, {
-                    id: "P-C005",
-                    name: "Anti-Freeze Summer Coolant",
-                    category: "Anti-Freeze",
-                    desc: "Summer coolant anti-freeze.",
-                    variants: [{
-                        size: "1L (Case of 20)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }]
-                }, {
-                    id: "P-C006",
-                    name: "Anti-Freeze 30%",
-                    category: "Anti-Freeze",
-                    desc: "30% Anti-freeze mix.",
-                    variants: [{
-                        size: "1L (Case of 14)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C007",
-                    name: "Anti-Freeze 50%",
-                    category: "Anti-Freeze",
-                    desc: "50% Anti-freeze mix.",
-                    variants: [{
-                        size: "1L (Case of 14)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C008",
-                    name: "Anti-Freeze 96%",
-                    category: "Anti-Freeze",
-                    desc: "96% Anti-freeze mix.",
-                    variants: [{
-                        size: "1L (Case of 14)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "20L"
-                    }, {
-                        size: "210L"
-                    }]
-                }, {
-                    id: "P-C009",
-                    name: "Grease - Wheel Bearing",
-                    category: "Grease",
-                    desc: "Wheel bearing grease.",
-                    variants: [{
-                        size: "500g (Case of 20)"
-                    }, {
-                        size: "5kg (Case of 4)"
-                    }, {
-                        size: "15kg"
-                    }, {
-                        size: "180kg"
-                    }]
-                }, {
-                    id: "P-C010",
-                    name: "Grease - Multipurpose",
-                    category: "Grease",
-                    desc: "Multipurpose grease.",
-                    variants: [{
-                        size: "500g (Case of 20)"
-                    }, {
-                        size: "5kg (Case of 4)"
-                    }, {
-                        size: "15kg"
-                    }, {
-                        size: "180kg"
-                    }]
-                }, {
-                    id: "P-C011",
-                    name: "Grease - CV Joint",
-                    category: "Grease",
-                    desc: "CV Joint grease.",
-                    variants: [{
-                        size: "500g (Case of 20)"
-                    }, {
-                        size: "5kg (Case of 4)"
-                    }, {
-                        size: "15kg"
-                    }, {
-                        size: "180kg"
-                    }]
-                }, {
-                    id: "P-C012",
-                    name: "Hand Cleaner with Grit",
-                    category: "Chemicals & Grease",
-                    desc: "Citrus hand cleaner with grit.",
-                    variants: [{
-                        size: "800g (Case of 20)"
-                    }, {
-                        size: "5kg (Case of 4)"
-                    }, {
-                        size: "15kg"
-                    }]
-                }, {
-                    id: "P-C013",
-                    name: "Hand Sanitizer",
-                    category: "Chemicals & Grease",
-                    desc: "70% Alcohol Hand Sanitizer.",
-                    variants: [{
-                        size: "1L (Case of 14)"
-                    }, {
-                        size: "5L (Case of 4)"
-                    }, {
-                        size: "25L"
-                    }, {
-                        size: "200L"
-                    }]
-                }];
+                    const all25Products = [{
+                        id: "P-E001",
+                        name: "Engine Oil (SAE 40)",
+                        category: "Engine Oils",
+                        desc: "Standard SAE 40 Engine Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E002",
+                        name: "Multigrade (20W50)",
+                        category: "Engine Oils",
+                        desc: "Multigrade 20W50 Engine Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E003",
+                        name: "Engine Oil (SAE 30)",
+                        category: "Engine Oils",
+                        desc: "Standard SAE 30 Engine Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E004",
+                        name: "Diesel Oil (HD40)",
+                        category: "Engine Oils",
+                        desc: "Heavy Duty 40 Diesel Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E005",
+                        name: "Turbo Diesel (15W40)",
+                        category: "Engine Oils",
+                        desc: "15W40 Turbo Diesel Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-E006",
+                        name: "2 Stroke Oil",
+                        category: "Engine Oils",
+                        desc: "Premium 2 Stroke Engine Oil.",
+                        variants: [{
+                            size: "200ml (Case of 40)"
+                        }, {
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G001",
+                        name: "Gear Oil (EP90)",
+                        category: "Gear & Auto",
+                        desc: "EP90 Gear Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G002",
+                        name: "Gear Oil (80W90)",
+                        category: "Gear & Auto",
+                        desc: "80W90 Gear Oil.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G003",
+                        name: "Transmission (ATF DII)",
+                        category: "Gear & Auto",
+                        desc: "Automatic Transmission Fluid DII.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-G004",
+                        name: "Brake Fluid DOT4",
+                        category: "Gear & Auto",
+                        desc: "DOT4 Brake Fluid.",
+                        variants: [{
+                            size: "200ml (Case of 40)"
+                        }, {
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-I001",
+                        name: "Hydraulic Oil (ISO 68)",
+                        category: "Industrial",
+                        desc: "Premium ISO 68 Hydraulic Oil.",
+                        variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-I002",
+                        name: "Hydraulic Oil (ISO 46)",
+                        category: "Industrial",
+                        desc: "Premium ISO 46 Hydraulic Oil.",
+                        variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C001",
+                        name: "Engine Cleaner Water Base",
+                        category: "Chemicals & Grease",
+                        desc: "Water-based engine cleaner.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C002",
+                        name: "Engine Cleaner Solvent Base",
+                        category: "Chemicals & Grease",
+                        desc: "Solvent-based engine cleaner.",
+                        variants: [{
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C003",
+                        name: "Degreaser Concentrate",
+                        category: "Chemicals & Grease",
+                        desc: "Concentrated Degreaser.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C004",
+                        name: "Degreaser (Spray)",
+                        category: "Chemicals & Grease",
+                        desc: "Degreaser Concentrate spray.",
+                        variants: [{
+                            size: "500ml (Case of 20)"
+                        }]
+                    }, {
+                        id: "P-C005",
+                        name: "Anti-Freeze Summer Coolant",
+                        category: "Anti-Freeze",
+                        desc: "Summer coolant anti-freeze.",
+                        variants: [{
+                            size: "1L (Case of 20)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }]
+                    }, {
+                        id: "P-C006",
+                        name: "Anti-Freeze 30%",
+                        category: "Anti-Freeze",
+                        desc: "30% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C007",
+                        name: "Anti-Freeze 50%",
+                        category: "Anti-Freeze",
+                        desc: "50% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C008",
+                        name: "Anti-Freeze 96%",
+                        category: "Anti-Freeze",
+                        desc: "96% Anti-freeze mix.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "20L"
+                        }, {
+                            size: "210L"
+                        }]
+                    }, {
+                        id: "P-C009",
+                        name: "Grease - Wheel Bearing",
+                        category: "Grease",
+                        desc: "Wheel bearing grease.",
+                        variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C010",
+                        name: "Grease - Multipurpose",
+                        category: "Grease",
+                        desc: "Multipurpose grease.",
+                        variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C011",
+                        name: "Grease - CV Joint",
+                        category: "Grease",
+                        desc: "CV Joint grease.",
+                        variants: [{
+                            size: "500g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }, {
+                            size: "180kg"
+                        }]
+                    }, {
+                        id: "P-C012",
+                        name: "Hand Cleaner with Grit",
+                        category: "Chemicals & Grease",
+                        desc: "Citrus hand cleaner with grit.",
+                        variants: [{
+                            size: "800g (Case of 20)"
+                        }, {
+                            size: "5kg (Case of 4)"
+                        }, {
+                            size: "15kg"
+                        }]
+                    }, {
+                        id: "P-C013",
+                        name: "Hand Sanitizer",
+                        category: "Chemicals & Grease",
+                        desc: "70% Alcohol Hand Sanitizer.",
+                        variants: [{
+                            size: "1L (Case of 14)"
+                        }, {
+                            size: "5L (Case of 4)"
+                        }, {
+                            size: "25L"
+                        }, {
+                            size: "200L"
+                        }]
+                    }];
 
-                // Auto-sync missing products to your Firebase database
-                if (window.cloudProducts.length < all25Products.length) {
-                    all25Products.forEach(p => {
-                        if (!window.cloudProducts.find(cp => cp.id === p.id)) {
-                            window.cloudProducts.push(p); // Display immediately
-                            try {
-                                window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/products`, p.id), p);
-                            } catch (e) {}
-                        }
-                    });
-                }
+                    // Auto-sync missing products to your Firebase database
+                    if (window.isAdmin && window.cloudProducts.length < all25Products.length) {
+                        all25Products.forEach(p => {
+                            if (!window.cloudProducts.find(cp => cp.id === p.id)) {
+                                window.cloudProducts.push(p); // Display immediately
+                                try {
+                                    window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/products`, p.id), p);
+                                } catch (e) {}
+                            }
+                        });
+                    }
 
-                window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
-                window.renderCatalog();
-                if (window.isAdmin) window.renderAdminProducts();
-            });
+                    window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
+                    window.renderCatalog();
+                    if (window.isAdmin) window.renderAdminProducts();
+                }, (error) => {
+                    console.error("API Data-fetching error:", error);
+                });
+            } catch (err) {
+                console.error("Critical API initialization error:", err);
+            }
         };
 
-        let activeCart = [];
+        let activeCart = JSON.parse(localStorage.getItem('route64_basket')) || [];
         let currentFilter = 'all';
 
         /* ========================================== */
@@ -1657,13 +1674,19 @@
             const grid = document.getElementById('catalog-grid');
             if (!grid || window.cloudProducts.length === 0) return;
             const term = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase() : '';
+            const sortVal = document.getElementById('sort-select') ? document.getElementById('sort-select').value : 'name-asc';
+
             grid.innerHTML = "";
             grid.className = window.viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 pb-24 md:pb-40 stagger-3" : "block space-y-4 md:space-y-6 pb-24 md:pb-40 stagger-3";
 
-            const filtered = window.cloudProducts.filter(p => {
+            let filtered = window.cloudProducts.filter(p => {
                 return (window.currentFilter === 'all' || p.category === window.currentFilter) &&
                     (p.name.toLowerCase().includes(term) || (p.desc && p.desc.toLowerCase().includes(term)) || p.id.toLowerCase().includes(term));
             });
+
+            if (sortVal === 'name-asc') filtered.sort((a, b) => a.name.localeCompare(b.name));
+            else if (sortVal === 'name-desc') filtered.sort((a, b) => b.name.localeCompare(a.name));
+            else if (sortVal === 'cat-asc') filtered.sort((a, b) => a.category.localeCompare(b.category));
 
             filtered.forEach(p => {
                 let vHtml = `<select id='${window.viewMode}-sel-${p.id}' class='w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-lg md:rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-3 md:mb-4 mt-2 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition' onclick='event.stopPropagation()'>`;
@@ -1821,6 +1844,7 @@
         }
 
         window.updateCartUI = function() {
+                localStorage.setItem('route64_basket', JSON.stringify(activeCart));
                 const container = document.getElementById('cart-items');
                 const badge = document.getElementById('cart-badge');
                 const empty = document.getElementById('empty-cart-msg');
@@ -1872,12 +1896,19 @@
             }
 
             if (totalDisplay) {
+                const subtotal = total;
+                const vat = subtotal * 0.15;
+                const grandTotal = subtotal + vat;
+
+                if (document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').innerText = `R${subtotal.toFixed(2)}`;
+                if (document.getElementById('cart-vat')) document.getElementById('cart-vat').innerText = `R${vat.toFixed(2)}`;
+
                 if (window.currentUser && window.currentUser.email) {
-                    totalDisplay.innerText = total > 0 ? `R${total.toFixed(2)}` : "Pending Quote";
+                    totalDisplay.innerText = grandTotal > 0 ? `R${grandTotal.toFixed(2)}` : "Pending Quote";
                 } else {
                     totalDisplay.innerText = "Login for Pricing";
                 }
-                window.cartTotal = total;
+                window.cartTotal = grandTotal;
             }
         }
 
@@ -1934,7 +1965,13 @@
             if (sendToWhatsApp) {
                 let msg = `*ROUTE 64 ORDER: ${newQuoteId}*\n🏢 ${bizName} | 📞 ${phone}\n\n*Items:*\n`;
                 activeCart.forEach(i => msg += `▪ *${i.qty} Cases* ${i.name} (${i.size})\n`);
-                msg += (window.currentUser && window.currentUser.email && window.cartTotal > 0) ? `\n*Total: R${window.cartTotal.toFixed(2)}*` : `\n*Please provide pricing.*`;
+                if (window.currentUser && window.currentUser.email && window.cartTotal > 0) {
+                    const sub = window.cartTotal / 1.15;
+                    const v = window.cartTotal - sub;
+                    msg += `\n*Subtotal:* R${sub.toFixed(2)}\n*VAT (15%):* R${v.toFixed(2)}\n*Total Estimate:* R${window.cartTotal.toFixed(2)}`;
+                } else {
+                    msg += `\n*Please provide pricing.*`;
+                }
                 window.open("https://wa.me/27680871269?text=" + encodeURIComponent(msg), '_blank');
             }
 
@@ -1942,6 +1979,24 @@
             if (window.currentUser && window.currentUser.email) window.navigate('customer');
             window.customAlert("Order Submitted Successfully");
         }
+
+        window.handleContactSubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('contact-submit');
+            btn.innerText = "Sending..."; btn.disabled = true;
+            const payload = { name: document.getElementById('contact-name').value, email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value, message: document.getElementById('contact-msg').value, date: new Date().toISOString() };
+            try {
+                if (window.firebaseDb) await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`), payload);
+                window.customAlert("Message sent successfully! Our team will contact you soon.");
+                document.getElementById('contact-form').reset();
+            } catch (err) { console.error(err); window.customAlert("Error sending message."); }
+            btn.innerText = "Send Message"; btn.disabled = false;
+        };
+
+        window.addEventListener('hashchange', () => {
+            const viewId = window.location.hash.replace('#', '') || 'home';
+            window.navigate(viewId, false);
+        });
 
         /* ========================================== */
         /* 5. CUSTOMER PORTAL (HISTORY) */
@@ -2261,7 +2316,7 @@
         /* ========================================== */
         /* 7. UI & NAVIGATION HELPER FUNCTIONS */
         /* ========================================== */
-        window.navigate = function(viewId) {
+        window.navigate = function(viewId, updateHash = true) {
             if (viewId === 'catalog' && !window.currentUser) { window.customAlert("Please log in or register to view the catalog."); window.toggleAuthModal(); return; }
             if (viewId === 'customer' && !window.currentUser) { window.customAlert("Please log in to view your inquiries."); window.toggleAuthModal(); return; }
             if (viewId === 'admin' && !window.isAdmin) { window.customAlert("Unauthorized access."); return; }
@@ -2270,6 +2325,7 @@
             const target = document.getElementById(`view-${viewId}`);
             if (currentActive && currentActive.id === `view-${viewId}`) return;
             window.currentView = viewId;
+            if (updateHash) window.location.hash = viewId;
             if(document.getElementById('mobile-menu').classList.contains('flex')) window.toggleMobileMenu();
 
             if (currentActive) {
@@ -2448,6 +2504,28 @@
             typeDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl rounded-tl-none font-medium w-fit flex items-center gap-2 mr-auto shrink-0";
             typeDiv.innerHTML = `<span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.2s"></span>`;
             msgs.appendChild(typeDiv);
+            const initialView = window.location.hash.replace('#', '') || 'home';
+            if (initialView !== 'home') window.navigate(initialView, false);
+
+
+        window.addEventListener('hashchange', () => {
+            const viewId = window.location.hash.replace('#', '') || 'home';
+            window.navigate(viewId, false);
+        });
+
+        window.handleContactSubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('contact-submit');
+            btn.innerText = "Sending..."; btn.disabled = true;
+            const payload = { name: document.getElementById('contact-name').value, email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value, message: document.getElementById('contact-msg').value, date: new Date().toISOString() };
+            try {
+                if (window.firebaseDb) await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`), payload);
+                window.customAlert("Message sent successfully! Our team will contact you soon.");
+                document.getElementById('contact-form').reset();
+            } catch (err) { console.error(err); window.customAlert("Error sending message."); }
+            btn.innerText = "Send Message"; btn.disabled = false;
+        };
+
             msgs.scrollTop = msgs.scrollHeight;
 
             // Fetch Real AI
@@ -2509,10 +2587,62 @@
             }
         }
 
+        window.handleContactSubmit = async function(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('contact-email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            // Validate Email Field
+            if (!emailRegex.test(emailInput)) {
+                window.customAlert("Please enter a valid email address.");
+                return;
+            }
+
+            // Toggle loading state on button
+            const btn = document.getElementById('contact-submit');
+            const originalText = btn.innerText;
+            btn.innerText = "Sending..."; 
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            const payload = { 
+                name: document.getElementById('contact-name').value.trim(), 
+                email: emailInput, 
+                phone: document.getElementById('contact-phone').value.trim(), 
+                message: document.getElementById('contact-msg').value.trim(), 
+                date: new Date().toISOString() 
+            };
+            
+            try {
+                if (window.firebaseDb) {
+                    await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`), payload);
+                }
+                window.customAlert("Message sent successfully! Our team will contact you soon.");
+                document.getElementById('contact-form').reset();
+            } catch (err) { 
+                console.error(err); 
+                window.customAlert("Error sending message. Please try again."); 
+            } finally {
+                // Revert button state
+                btn.innerText = originalText; 
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        };
+
+        window.addEventListener('hashchange', () => {
+            const viewId = window.location.hash.replace('#', '') || 'home';
+            window.navigate(viewId, false);
+        });
+
         /* ========================================== */
         /* 9. ON LOAD INITIALIZATION */
         /* ========================================== */
         window.addEventListener('DOMContentLoaded', () => {
+            const initialView = window.location.hash.replace('#', '') || 'home';
+            if (initialView !== 'home') window.navigate(initialView, false);
+
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
