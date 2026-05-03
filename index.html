@@ -922,6 +922,17 @@
                 </div>
             </div>
         </section>
+
+        <!-- CLIENT REVIEWS / TESTIMONIALS SECTION -->
+        <section id="homepage-reviews-section" class="max-w-[1400px] mx-auto px-4 md:px-6 py-16 md:py-32 border-t border-gray-100 dark:border-slate-800 stagger-4 hidden">
+            <div class="text-center mb-10 md:mb-16">
+                <h2 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">Client Reviews</h2>
+                <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mt-4 md:mt-6 rounded-full"></div>
+                <p class="text-sm md:text-base text-gray-500 mt-4 md:mt-6 max-w-2xl mx-auto font-medium">Trusted by leading businesses across South Africa.</p>
+            </div>
+            <div id="homepage-reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            </div>
+        </section>
     </div>
 
     <!-- VIEW: HOW TO ORDER PROCESS -->
@@ -1181,6 +1192,16 @@
                 <button onclick="window.toggleAuthModal()" class="px-6 py-3 bg-brand-blue text-white rounded-xl font-black uppercase text-xs">Login Now</button>
             </div>
         </div>
+
+        <div id="client-review-section" class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-6 md:p-10 shadow-xl border border-white/20 dark:border-slate-800 mx-auto max-w-4xl mb-12 stagger-4 hidden">
+            <h3 class="text-xl md:text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-2">Leave a Review</h3>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold mb-6">Share your experience with Route 64</p>
+            <div class="space-y-4">
+                <input type="text" id="review-role" placeholder="Your Role / Company" class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition shadow-inner">
+                <textarea id="review-text" rows="3" placeholder="Write your review here..." class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition resize-none shadow-inner"></textarea>
+                <button onclick="window.submitSiteReview()" class="py-4 px-8 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl text-[10px]">Submit Review</button>
+            </div>
+        </div>
     </div>
 
     <!-- VIEW: ADMIN DASHBOARD (ULTIMATE) -->
@@ -1198,6 +1219,7 @@
                 <button onclick="window.switchAdminTab('pricing')" id="tab-pricing" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Client Pricing</button>
                 <button onclick="window.switchAdminTab('orders')" id="tab-orders" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Live Orders</button>
                 <button onclick="window.switchAdminTab('leads')" id="tab-leads" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Contact Inquiries</button>
+                <button onclick="window.switchAdminTab('reviews')" id="tab-reviews" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Manage Reviews</button>
             </div>
 
             <!-- Tab: Dashboard -->
@@ -1269,6 +1291,15 @@
                     <button onclick="window.loadAdminLeads()" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-6 py-3 rounded-xl dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition">Refresh</button>
                 </div>
                 <div id="admin-leads-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
+            </div>
+
+            <!-- Tab: Reviews -->
+            <div id="admin-tab-reviews" class="hidden animate-viewIn">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                    <h3 class="font-black text-xl dark:text-white uppercase tracking-tighter">Client Reviews</h3>
+                    <button onclick="window.loadAdminReviews()" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-6 py-3 rounded-xl dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition">Refresh</button>
+                </div>
+                <div id="admin-reviews-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
             </div>
         </div>
     </div>
@@ -2238,6 +2269,12 @@
             const list = document.getElementById('client-leads-list');
             if (!list) return;
 
+            const reviewSection = document.getElementById('client-review-section');
+            if (reviewSection) {
+                if (window.currentUser && window.currentUser.email) reviewSection.classList.remove('hidden');
+                else reviewSection.classList.add('hidden');
+            }
+
             if (window.currentUser && window.currentUser.email && window.firebaseDb) {
                 const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/inquiries`));
                 window.onSnapshot(q, (snapshot) => {
@@ -2316,7 +2353,7 @@
         /* 6. ADMIN DASHBOARD & ANALYTICS */
         /* ========================================== */
         window.switchAdminTab = function(tab) {
-            ['dashboard', 'catalog', 'pricing', 'orders', 'leads'].forEach(t => {
+            ['dashboard', 'catalog', 'pricing', 'orders', 'leads', 'reviews'].forEach(t => {
                 document.getElementById(`admin-tab-${t}`).classList.add('hidden');
                 document.getElementById(`tab-${t}`).className = "font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition";
             });
@@ -2326,6 +2363,7 @@
             if (tab === 'orders' || tab === 'dashboard') { window.loadAdminOrders(); }
             if (tab === 'catalog') window.renderAdminProducts();
             if (tab === 'leads') window.loadAdminLeads();
+            if (tab === 'reviews') window.loadAdminReviews();
         };
 
         window.loadAdminUsers = function() {
@@ -2593,6 +2631,127 @@
             } catch (e) { window.customAlert("Error deleting inquiry."); }
         };
 
+        window.submitSiteReview = async function() {
+            if (!window.currentUser) return window.customAlert("Please log in first");
+            const role = document.getElementById('review-role').value.trim();
+            const text = document.getElementById('review-text').value.trim();
+            if (!text) return window.customAlert("Review text cannot be empty.");
+
+            let name = window.currentUser.email.split('@')[0];
+            try {
+                const profileSnap = await window.getDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'));
+                if(profileSnap.exists() && profileSnap.data().contactName) {
+                    name = profileSnap.data().contactName;
+                }
+            } catch (e) {}
+
+            const payload = {
+                uid: window.currentUser.uid,
+                name: name,
+                role: role,
+                text: text,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+
+            try {
+                await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`), payload);
+                window.customAlert("Review submitted and pending admin approval!");
+                document.getElementById('review-text').value = '';
+                document.getElementById('review-role').value = '';
+            } catch (e) {
+                console.error(e);
+                window.customAlert("Error submitting review.");
+            }
+        };
+
+        window.loadAdminReviews = async function() {
+            const grid = document.getElementById('admin-reviews-grid');
+            if(!window.firebaseDb || !grid) return;
+            grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest animate-pulse'>Fetching Reviews...</p>";
+            
+            try {
+                const snap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`));
+                let allReviews = [];
+                snap.forEach(doc => allReviews.push({ id: doc.id, ...doc.data() }));
+                allReviews.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+                if(allReviews.length === 0) {
+                    grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest'>No reviews found</p>"; 
+                    return;
+                }
+
+                grid.innerHTML = allReviews.map(r => `
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col md:flex-row gap-6 justify-between items-start hover:border-brand-blue transition">
+                        <div class="flex-1 w-full">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="text-[9px] font-black bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500 uppercase tracking-widest">${new Date(r.date).toLocaleDateString()}</span>
+                                <span class="text-[9px] font-black px-3 py-1 rounded-md uppercase tracking-widest ${r.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'}">${r.status}</span>
+                            </div>
+                            <h4 class="font-black text-base dark:text-white text-brand-navy mb-1 tracking-tight">${r.name} <span class="text-xs text-gray-500 font-normal">(${r.role || 'N/A'})</span></h4>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner text-sm dark:text-gray-300 italic">"${r.text}"</div>
+                        </div>
+                        <div class="flex flex-col gap-2 shrink-0 w-full md:w-auto mt-2 md:mt-0">
+                            ${r.status === 'pending' ? `<button onclick="window.approveReview('${r.id}')" class="text-[9px] bg-green-500 text-white px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-md">Approve</button>` : `<button onclick="window.unapproveReview('${r.id}')" class="text-[9px] bg-orange-500 text-white px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-orange-600 transition flex items-center justify-center gap-2 shadow-md">Unapprove</button>`}
+                            <button onclick="window.deleteReview('${r.id}')" class="text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-red-200 transition flex items-center justify-center gap-2">Trash</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+                grid.innerHTML = "<div class='p-10 text-center bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30'><p class='text-brand-red text-xs font-black uppercase tracking-widest'>Error loading reviews.</p></div>";
+            }
+        };
+
+        window.approveReview = async function(id) {
+            try { await window.updateDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`, id), { status: 'approved' }); window.customAlert("Review Approved"); window.loadAdminReviews(); window.loadHomepageReviews(); } catch(e) { window.customAlert("Error approving review"); }
+        };
+
+        window.unapproveReview = async function(id) {
+            try { await window.updateDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`, id), { status: 'pending' }); window.customAlert("Review Unapproved"); window.loadAdminReviews(); window.loadHomepageReviews(); } catch(e) { window.customAlert("Error updating review"); }
+        };
+
+        window.deleteReview = async function(id) {
+            if(!confirm("Delete this review?")) return;
+            try { await window.deleteDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`, id)); window.customAlert("Review Deleted"); window.loadAdminReviews(); window.loadHomepageReviews(); } catch(e) { window.customAlert("Error deleting review"); }
+        };
+
+        window.loadHomepageReviews = async function() {
+            if (!window.firebaseDb) return;
+            try {
+                const snap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`));
+                const reviews = [];
+                snap.forEach(doc => { const data = doc.data(); if(data.status === 'approved') reviews.push({ id: doc.id, ...data }); });
+                
+                const container = document.getElementById('homepage-reviews-grid');
+                const section = document.getElementById('homepage-reviews-section');
+                if(!container || !section) return;
+                
+                if(reviews.length === 0) { section.classList.add('hidden'); return; }
+                
+                section.classList.remove('hidden');
+                container.innerHTML = reviews.map(r => `
+                    <div class="pro-card p-8 md:p-10 shadow-xl relative overflow-hidden group">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-4">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 italic mb-6">"${r.text}"</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center text-white font-black text-lg">${r.name.charAt(0).toUpperCase()}</div>
+                            <div>
+                                <h4 class="font-black text-brand-navy dark:text-white text-sm">${r.name}</h4>
+                                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">${r.role || 'Verified Client'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) { console.error(e); }
+        };
+
         /* ========================================== */
         /* 7. UI & NAVIGATION HELPER FUNCTIONS */
         /* ========================================== */
@@ -2620,6 +2779,7 @@
                     if (viewId === 'catalog') window.renderCatalog();
                     if (viewId === 'customer') window.loadClientLeads();
                     if (viewId === 'admin' && window.isAdmin) window.switchAdminTab('dashboard');
+                    if (viewId === 'home') window.loadHomepageReviews();
                 }
             }
         }
@@ -2936,6 +3096,7 @@
                 const loader = document.getElementById('page-loader');
                 if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 700); }
                 window.initCatalog();
+                window.loadHomepageReviews();
             }, 1000);
         });
     </script>
