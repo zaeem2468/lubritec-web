@@ -118,3 +118,99 @@ function updateCartUI() {
 }
 
 document.addEventListener('DOMContentLoaded', updateCartUI);
+
+// ===== PRODUCT REVIEWS SYSTEM =====
+window.productReviews = {};
+window.reviewCache = {};
+
+window.loadProductReviews = async function(productId) {
+    if (!window.firebaseDb) return [];
+    try {
+        const reviewsRef = window.collection(window.firebaseDb, 'reviews');
+        const q = window.query(reviewsRef, window.firebaseFirestore ? .where ? .('productId', '==', productId) || undefined);
+        const snapshot = await window.getDocs(q);
+        const reviews = [];
+        snapshot.forEach(doc => {
+            reviews.push({ id: doc.id, ...doc.data() });
+        });
+        window.reviewCache[productId] = reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+        return window.reviewCache[productId];
+    } catch (error) {
+        console.log('Reviews not available yet');
+        return [];
+    }
+};
+
+window.submitReview = async function(productId, rating, reviewText, userName) {
+    if (!window.firebaseDb || !window.currentUser) {
+        alert('Please log in to submit a review');
+        return false;
+    }
+    try {
+        const reviewData = {
+            productId: productId,
+            userId: window.currentUser.uid,
+            userEmail: window.currentUser.email,
+            userName: userName || 'Anonymous',
+            rating: parseInt(rating),
+            text: reviewText,
+            date: new Date().toISOString(),
+            helpful: 0
+        };
+        await window.addDoc(window.collection(window.firebaseDb, 'reviews'), reviewData);
+        // Refresh reviews
+        await window.loadProductReviews(productId);
+        return true;
+    } catch (error) {
+        console.error('Error submitting review:', error);
+        return false;
+    }
+};
+
+window.getAverageRating = function(productId) {
+    const reviews = window.reviewCache[productId] || [];
+    if (reviews.length === 0) return 0;
+    const sum = reviews.reduce((acc, r) => acc + r.rating, 0);
+    return (sum / reviews.length).toFixed(1);
+};
+
+// ===== ANALYTICS FUNCTIONS =====
+window.getAnalyticsData = async function() {
+    if (!window.firebaseDb || !window.isAdmin) {
+        alert('Admin access required');
+        return null;
+    }
+    try {
+        const ordersSnapshot = await window.getDocs(window.collection(window.firebaseDb, 'orders'));
+        const usersSnapshot = await window.getDocs(window.collection(window.firebaseDb, 'users'));
+
+        let totalOrders = 0;
+        let totalRevenue = 0;
+        let productSales = {};
+
+        ordersSnapshot.forEach(doc => {
+            const order = doc.data();
+            totalOrders++;
+            totalRevenue += order.total || 0;
+
+            if (order.items) {
+                order.items.forEach(item => {
+                    productSales[item.name] = (productSales[item.name] || 0) + item.qty;
+                });
+            }
+        });
+
+        return {
+            totalOrders: totalOrders,
+            totalRevenue: totalRevenue.toFixed(2),
+            totalUsers: usersSnapshot.size,
+            productSales: productSales,
+            topProducts: Object.entries(productSales)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5)
+        };
+    } catch (error) {
+        console.error('Analytics error:', error);
+        return null;
+    }
+};

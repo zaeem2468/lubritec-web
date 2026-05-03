@@ -20,16 +20,18 @@
         = db; window.firebaseAuth = auth; window.appId = appId; window.addDoc = addDoc; window.doc = doc; window.setDoc = setDoc; window.getDoc = getDoc; window.getDocs = getDocs; window.updateDoc = updateDoc; window.deleteDoc = deleteDoc; window.collection
         = collection; window.onSnapshot = onSnapshot; window.query = query; window.signInWithEmailAndPassword = signInWithEmailAndPassword; window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; window.signOut = signOut; onAuthStateChanged(auth,
         (user) => { window.currentUser = user; const cloudStatus = document.getElementById('cloud-status'); const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const navAdminBtn
-        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const
-        processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); const profileSection = document.getElementById('client-profile-section'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase());
-        if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display
-        = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none"; if (profileSection) profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText
-        = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads
-        === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin
-        = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection)
-        profileSection.classList.add('hidden'); if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)';
-        if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home');
-        } if(typeof window.renderCatalog === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
+        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navAnalyticsBtn = document.getElementById('nav-analytics-btn'); const mobileAnalyticsBtn = document.getElementById('mobile-analytics-btn');
+        const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg');
+        const profileSection = document.getElementById('client-profile-section'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn)
+        mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navAnalyticsBtn) navAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none';
+        if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none";
+        if (profileSection) profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out';
+        if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid);
+        if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navAnalyticsBtn)
+        navAnalyticsBtn.style.display = 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection) profileSection.classList.add('hidden');
+        if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText
+        = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home'); } if(typeof window.renderCatalog ===
+        'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
 
     <!-- Supplemental UI State Logic -->
@@ -618,7 +620,7 @@
             <button onclick="window.navigate('contact'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Contact Details</button>
             <button onclick="window.navigate('customer'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">My Inquiries</button>
             <button onclick="window.handleNavLogin(); window.toggleMobileMenu()" id="mobile-login-btn" class="hover:text-brand-blue transition text-brand-blue">Client Login</button>
-            <button onclick="window.navigate('analytics'); window.toggleMobileMenu()" id="mobile-analytics-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Analytics</button>
+            <button onclick="window.location.href='analytics.html'; window.toggleMobileMenu()" id="mobile-analytics-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Analytics</button>
             <button onclick="window.navigate('admin'); window.toggleMobileMenu()" id="mobile-admin-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Admin Dashboard</button>
         </div>
     </div>
@@ -654,6 +656,9 @@
                 </button>
                 <button onclick="window.handleNavLogin()" id="nav-login-btn" class="px-4 md:px-6 py-2 text-brand-blue font-bold hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 relative group">
                     Login
+                </button>
+                <button onclick="window.location.href='analytics.html'" id="nav-analytics-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
+                    Analytics
                 </button>
                 <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
                     Admin
