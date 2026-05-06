@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Order History | Lubritec</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #030303;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .text-brand-500 {
+            color: #3b82f6;
+        }
+
+        .bg-brand-600 {
+            background-color: #2563eb;
+        }
+
+        .bg-whatsapp {
+            background-color: #25D366;
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.95) !important;
+            backdrop-filter: saturate(180%) blur(20px) !important;
+            -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2) !important;
+            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .glass-nav button {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        }
+
+        .glass-nav button:hover {
+            transform: scale(1.05);
+        }
+
+        .glass-nav button[onclick*="toggleCart"] {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.08) 100%) !important;
+            border: 1.5px solid rgba(37, 99, 235, 0.3) !important;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15) !important;
+        }
+
+        .glass-nav button[onclick*="toggleCart"]:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.15) 100%) !important;
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.25) !important;
+            transform: translateY(-2px) scale(1.05) !important;
+        }
+
+        .glass-nav .group:hover {
+            transform: translateY(-2px);
+        }
+
+        .glass-nav .group img {
+            filter: drop-shadow(0 4px 16px rgba(37, 99, 235, 0.2));
+        }
+
+        #cart-count {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-4px) scale(1.02) !important;
+        }
+
+        #cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+        }
+
+        #cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: background 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.6) 100%);
+            background-clip: padding-box;
+        }
+
+        .order-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-processing {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .status-shipped {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-delivered {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .status-cancelled {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .filter-btn:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: #9ca3af;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .filter-btn:not(.active):hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .reorder-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .reorder-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .view-details-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .view-details-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .order-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .empty-state {
+            background: rgba(10, 10, 10, 0.5);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .tracking-step {
+            position: relative;
+        }
+
+        .tracking-step::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 24px;
+            bottom: -8px;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tracking-step:last-child::before {
+            display: none;
+        }
+
+        .tracking-step.completed .step-dot {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .tracking-step.completed .step-line {
+            background: #10b981;
+        }
+
+        .tracking-step.current .step-dot {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            animation: pulse 2s infinite;
+        }
+
+        .tracking-step.pending .step-dot {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .step-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+            }
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Ambient glowing orbs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] rounded-full bg-blue-600/10 blur-[100px] mix-blend-screen"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] rounded-full bg-red-600/5 blur-[100px] mix-blend-screen"></div>
+    </div>
+
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 h-24 md:h-32 flex justify-between items-center gap-6 md:gap-8">
+            <a href="catalog.html" class="flex items-center gap-2 sm:gap-3 md:gap-4 group transition-transform duration-300 hover:scale-105">
+                <div class="h-10 w-10 sm:h-16 sm:w-16 md:h-20 md:w-20 flex-shrink-0 transition-transform duration-300 flex items-center justify-center transform group-hover:scale-110">
+                    <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg filter drop-shadow-[0_4px_16px_rgba(37,99,235,0.2)]" onerror="this.style.display='none'">
+                </div>
+                <span class="font-bold text-lg sm:text-2xl md:text-4xl tracking-wide uppercase text-white drop-shadow-md group-hover:text-blue-400 transition-colors duration-300">LUBRICANTS</span>
+            </a>
+            <div class="flex items-center gap-3 md:gap-6 ml-auto">
+                <a href="catalog.html" class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300 transition-colors">Catalog</a>
+                <a href="bulk-order.html" class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300 transition-colors">Bulk Order</a>
+                <a href="orders.html" class="text-xs uppercase font-black px-3 text-brand-500 hidden sm:block tracking-widest">Orders</a>
+                <a href="dashboard.html" class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300 transition-colors">Account</a>
+                <button onclick="toggleCart()" class="relative p-2 md:p-4 transition-all duration-300 flex items-center group bg-transparent border-none shadow-none hover:scale-105 active:scale-95">
+                    <span class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300">Basket</span>
+                    <svg class="w-6 h-6 md:w-7 md:h-7 text-white group-hover:text-blue-300 group-hover:scale-125 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute top-0 right-0 md:top-1 md:-right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-black h-5 w-5 flex items-center justify-center rounded-full scale-0 transition-all duration-300 shadow-lg border border-white/30">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#050505] border-l border-gray-800 z-[70] flex flex-col h-full shadow-2xl">
+        <div class="p-5 border-b border-gray-800 flex justify-between items-center bg-black">
+            <div>
+                <h3 class="font-bold text-lg uppercase tracking-widest">Your Quote</h3>
+            </div>
+            <button onclick="toggleCart()" class="p-2 bg-gray-800 rounded-full text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3 pb-40">
+            <div id="empty-cart-msg" class="h-full flex flex-col items-center justify-center text-gray-500 opacity-50">
+                <p class="text-xs font-bold uppercase tracking-widest">Empty</p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-800 bg-black backdrop-blur-md">
+            <div class="space-y-2 mb-5 text-sm">
+                <div class="flex justify-between text-gray-400"><span>Subtotal</span><span id="cart-subtotal">R0.00</span></div>
+                <div class="flex justify-between text-gray-400"><span>VAT (15%)</span><span id="cart-vat">R0.00</span></div>
+                <div class="flex justify-between text-xl font-black pt-3 text-white border-t border-gray-800 mt-2"><span>Total</span><span id="cart-total" class="text-brand-500">R0.00</span></div>
+            </div>
+            <a id="wa-checkout-btn" href="#" class="w-full bg-whatsapp text-white font-bold uppercase tracking-widest py-4 rounded-xl flex justify-center items-center text-sm shadow-xl">Checkout</a>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity"></div>
+
+    <section class="pt-32 pb-20 px-4 min-h-screen bg-[#070707]">
+        <div class="max-w-[1600px] mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl md:text-5xl font-black mb-4 text-white">Order History</h1>
+                <p class="text-gray-400 text-lg">Track your orders and reorder with one click.</p>
+            </div>
+
+            <!-- Stats Summary -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="glass-card rounded-xl p-4">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Total Orders</p>
+                    <p id="stat-total" class="text-2xl font-black text-white">0</p>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Pending</p>
+                    <p id="stat-pending" class="text-2xl font-black text-yellow-400">0</p>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Completed</p>
+                    <p id="stat-completed" class="text-2xl font-black text-green-400">0</p>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Total Spent</p>
+                    <p id="stat-spent" class="text-2xl font-black text-brand-500">R0</p>
+                </div>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="glass-card rounded-xl p-4 mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <!-- Search -->
+                    <div class="flex-1">
+                        <div class="relative">
+                            <input type="text" id="order-search" placeholder="Search by order ID, product name..." class="w-full px-4 py-3 pl-10 bg-black/50 border border-gray-800 rounded-lg text-white outline-none focus:border-brand-500 transition-colors">
+                            <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                    </div>
+                    <!-- Date Range -->
+                    <div class="flex gap-2">
+                        <input type="date" id="date-from" class="px-4 py-3 bg-black/50 border border-gray-800 rounded-lg text-white outline-none focus:border-brand-500 transition-colors">
+                        <input type="date" id="date-to" class="px-4 py-3 bg-black/50 border border-gray-800 rounded-lg text-white outline-none focus:border-brand-500 transition-colors">
+                    </div>
+                    <!-- Export Button -->
+                    <button onclick="exportOrders()" class="px-6 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white font-bold uppercase tracking-widest text-sm hover:bg-gray-700 transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button onclick="filterOrders('all')" class="filter-btn active" data-filter="all">All Orders</button>
+                <button onclick="filterOrders('pending')" class="filter-btn" data-filter="pending">Pending</button>
+                <button onclick="filterOrders('processing')" class="filter-btn" data-filter="processing">Processing</button>
+                <button onclick="filterOrders('shipped')" class="filter-btn" data-filter="shipped">Shipped</button>
+                <button onclick="filterOrders('delivered')" class="filter-btn" data-filter="delivered">Delivered</button>
+                <button onclick="filterOrders('cancelled')" class="filter-btn" data-filter="cancelled">Cancelled</button>
+            </div>
+
+            <!-- Orders List -->
+            <div id="orders-container" class="space-y-4">
+                <!-- Orders will be rendered here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state rounded-2xl p-12 text-center hidden">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-white mb-2">No Orders Yet</h3>
+                <p class="text-gray-500 mb-6">Start shopping to see your orders here.</p>
+                <a href="catalog.html" class="inline-block bg-brand-600 text-white font-bold uppercase tracking-widest px-8 py-3 rounded-xl hover:bg-brand-500 transition-all">
+                    Browse Catalog
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Details Modal -->
+    <div id="order-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeOrderModal()"></div>
+        <div class="absolute inset-4 md:inset-8 lg:inset-16 flex items-center justify-center">
+            <div class="modal-content w-full max-w-4xl max-h-full rounded-2xl overflow-hidden flex flex-col">
+                <div class="p-6 border-b border-gray-800 flex justify-between items-center bg-black">
+                    <div>
+                        <h3 class="font-bold text-lg uppercase tracking-widest text-white">Order Details</h3>
+                        <p id="modal-order-id" class="text-sm text-gray-500">#ORD-000000</p>
+                    </div>
+                    <button onclick="closeOrderModal()" class="p-2 bg-gray-800 rounded-full text-white hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div class="flex-1 overflow-y-auto p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Order Info -->
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Order Date</p>
+                                <p id="modal-date" class="text-white font-bold">-</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Status</p>
+                                <span id="modal-status" class="status-badge">-</span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Payment Method</p>
+                                <p id="modal-payment" class="text-white">-</p>
+                            </div>
+                        </div>
+                        <!-- Shipping Info -->
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Shipping Address</p>
+                                <p id="modal-address" class="text-white text-sm">-</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Contact</p>
+                                <p id="modal-contact" class="text-white">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Tracking -->
+                    <div id="tracking-section" class="mb-6 p-4 bg-gray-900 rounded-xl">
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mb-4">Order Tracking</p>
+                        <div id="tracking-steps" class="space-y-4">
+                            <!-- Tracking steps will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div class="mb-6">
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mb-4">Order Items</p>
+                        <div id="modal-items" class="space-y-3">
+                            <!-- Items will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="bg-gray-900 rounded-xl p-4 mb-4">
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between text-gray-400">
+                                <span>Subtotal</span>
+                                <span id="modal-subtotal">R0.00</span>
+                            </div>
+                            <div class="flex justify-between text-gray-400">
+                                <span>VAT (15%)</span>
+                                <span id="modal-vat">R0.00</span>
+                            </div>
+                            <div class="flex justify-between text-gray-400">
+                                <span>Shipping</span>
+                                <span id="modal-shipping">R0.00</span>
+                            </div>
+                            <div class="flex justify-between text-xl font-black pt-3 text-white border-t border-gray-800 mt-2">
+                                <span>Total</span>
+                                <span id="modal-total" class="text-brand-500">R0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Notes -->
+                    <div class="bg-gray-900 rounded-xl p-4 mb-4">
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mb-3">Order Notes</p>
+                        <textarea id="order-notes" rows="3" placeholder="Add notes about this order..." class="w-full px-4 py-3 bg-black/50 border border-gray-800 rounded-lg text-white outline-none focus:border-brand-500 transition-colors resize-none"></textarea>
+                        <button onclick="saveOrderNotes()" class="mt-2 text-xs text-brand-500 hover:text-brand-400 font-bold uppercase tracking-widest">Save Notes</button>
+                    </div>
+
+                    <!-- Cancel Order Button (for pending orders) -->
+                    <div id="cancel-order-section" class="hidden">
+                        <button onclick="cancelOrder()" class="w-full p-4 bg-red-900/20 border border-red-900/50 rounded-lg text-red-400 font-bold uppercase tracking-widest text-sm hover:bg-red-900/30 transition-colors">
+                            Cancel Order
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6 border-t border-gray-800 bg-black flex gap-3">
+                    <button id="modal-reorder-btn" onclick="reorderFromModal()" class="reorder-btn flex-1 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm">
+                        Reorder
+                    </button>
+                    <button onclick="closeOrderModal()" class="view-details-btn flex-1 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        // Sample order data (in production, this would come from a database)
+        let orders = JSON.parse(localStorage.getItem('lubritec_orders')) || [];
+
+        // Generate some sample orders if none exist
+        if (orders.length === 0) {
+            orders = generateSampleOrders();
+            localStorage.setItem('lubritec_orders', JSON.stringify(orders));
+        }
+
+        let currentFilter = 'all';
+        let currentModalOrder = null;
+        let searchQuery = '';
+        let dateFrom = null;
+        let dateTo = null;
+
+        function generateSampleOrders() {
+            const statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+            const sampleOrders = [];
+
+            for (let i = 1; i <= 5; i++) {
+                const status = statuses[Math.floor(Math.random() * statuses.length)];
+                const date = new Date();
+                date.setDate(date.getDate() - (i * 7));
+
+                const orderItems = [];
+                const numItems = Math.floor(Math.random() * 3) + 1;
+
+                for (let j = 0; j < numItems; j++) {
+                    const product = products[Math.floor(Math.random() * products.length)];
+                    const variant = product.variants[Math.floor(Math.random() * product.variants.length)];
+                    const qty = Math.floor(Math.random() * 3) + 1;
+
+                    orderItems.push({
+                        productId: product.id,
+                        name: product.name,
+                        size: variant.size,
+                        price: variant.price,
+                        qty: qty,
+                        total: variant.price * qty
+                    });
+                }
+
+                const subtotal = orderItems.reduce((sum, item) => sum + item.total, 0);
+                const vat = subtotal * 0.15;
+                const shipping = status === 'delivered' ? 150 : 0;
+                const total = subtotal + vat + shipping;
+
+                sampleOrders.push({
+                    id: `ORD-${String(100000 + i).padStart(6, '0')}`,
+                    date: date.toISOString(),
+                    status: status,
+                    items: orderItems,
+                    subtotal: subtotal,
+                    vat: vat,
+                    shipping: shipping,
+                    total: total,
+                    paymentMethod: 'EFT',
+                    address: '123 Industrial Park, Johannesburg, 2000',
+                    contact: '+27 68 087 1269'
+                });
+            }
+
+            return sampleOrders;
+        }
+
+        function renderOrders() {
+            const container = document.getElementById('orders-container');
+            const emptyState = document.getElementById('empty-state');
+
+            let filteredOrders = orders;
+
+            // Apply status filter
+            if (currentFilter !== 'all') {
+                filteredOrders = filteredOrders.filter(o => o.status === currentFilter);
+            }
+
+            // Apply search filter
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                filteredOrders = filteredOrders.filter(o =>
+                    o.id.toLowerCase().includes(query) ||
+                    o.items.some(item => item.name.toLowerCase().includes(query))
+                );
+            }
+
+            // Apply date range filter
+            if (dateFrom) {
+                const fromDate = new Date(dateFrom);
+                filteredOrders = filteredOrders.filter(o => new Date(o.date) >= fromDate);
+            }
+            if (dateTo) {
+                const toDate = new Date(dateTo);
+                toDate.setHours(23, 59, 59, 999);
+                filteredOrders = filteredOrders.filter(o => new Date(o.date) <= toDate);
+            }
+
+            if (filteredOrders.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            container.innerHTML = filteredOrders.map(order => {
+                const statusClass = `status-${order.status}`;
+                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+                const date = new Date(order.date).toLocaleDateString('en-ZA', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                return `
+                    <div class="order-card rounded-xl overflow-hidden">
+                        <div class="p-4 md:p-6">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div>
+                                        <p class="text-xs text-gray-500 uppercase tracking-widest">Order ID</p>
+                                        <p class="font-bold text-white">${order.id}</p>
+                                    </div>
+                                    <div class="hidden md:block w-px h-8 bg-gray-800"></div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 uppercase tracking-widest">Date</p>
+                                        <p class="text-white">${date}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="status-badge ${statusClass}">${statusText}</span>
+                                    <p class="font-black text-xl text-brand-500">R${order.total.toFixed(2)}</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 mb-4">
+                                ${order.items.slice(0, 3).map(item => `
+                                    <div class="order-item flex justify-between items-center py-2">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs text-gray-500">${item.qty}x</span>
+                                            <span class="text-white text-sm">${item.name}</span>
+                                            <span class="text-xs text-gray-600">(${item.size})</span>
+                                        </div>
+                                        <span class="text-white font-bold text-sm">R${item.total.toFixed(2)}</span>
+                                    </div>
+                                `).join('')}
+                                ${order.items.length > 3 ? `<p class="text-xs text-gray-500">+${order.items.length - 3} more items</p>` : ''}
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button onclick="viewOrderDetails('${order.id}')" class="view-details-btn flex-1 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm">
+                                    View Details
+                                </button>
+                                <button onclick="reorder('${order.id}')" class="reorder-btn flex-1 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm">
+                                    Reorder
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            const totalOrders = orders.length;
+            const pendingOrders = orders.filter(o => o.status === 'pending' || o.status === 'processing').length;
+            const completedOrders = orders.filter(o => o.status === 'delivered').length;
+            const totalSpent = orders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + o.total, 0);
+
+            document.getElementById('stat-total').textContent = totalOrders;
+            document.getElementById('stat-pending').textContent = pendingOrders;
+            document.getElementById('stat-completed').textContent = completedOrders;
+            document.getElementById('stat-spent').textContent = `R${totalSpent.toFixed(0)}`;
+        }
+
+        function filterOrders(filter) {
+            currentFilter = filter;
+
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === filter) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            renderOrders();
+        }
+
+        function viewOrderDetails(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            currentModalOrder = order;
+
+            // Populate modal
+            document.getElementById('modal-order-id').textContent = order.id;
+            document.getElementById('modal-date').textContent = new Date(order.date).toLocaleDateString('en-ZA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const statusBadge = document.getElementById('modal-status');
+            statusBadge.className = `status-badge status-${order.status}`;
+            statusBadge.textContent = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+
+            document.getElementById('modal-payment').textContent = order.paymentMethod;
+            document.getElementById('modal-address').textContent = order.address;
+            document.getElementById('modal-contact').textContent = order.contact;
+
+            // Populate order notes
+            document.getElementById('order-notes').value = order.notes || '';
+
+            // Show/hide cancel button
+            const cancelSection = document.getElementById('cancel-order-section');
+            if (order.status === 'pending' || order.status === 'processing') {
+                cancelSection.classList.remove('hidden');
+            } else {
+                cancelSection.classList.add('hidden');
+            }
+
+            // Render tracking steps
+            renderTrackingSteps(order.status);
+
+            // Render items
+            document.getElementById('modal-items').innerHTML = order.items.map(item => `
+                <div class="flex justify-between items-center py-3 border-b border-gray-800 last:border-0">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">${item.qty}x</span>
+                        <div>
+                            <p class="text-white font-bold text-sm">${item.name}</p>
+                            <p class="text-xs text-gray-500">${item.size}</p>
+                        </div>
+                    </div>
+                    <span class="text-white font-bold">R${item.total.toFixed(2)}</span>
+                </div>
+            `).join('');
+
+            // Update summary
+            document.getElementById('modal-subtotal').textContent = `R${order.subtotal.toFixed(2)}`;
+            document.getElementById('modal-vat').textContent = `R${order.vat.toFixed(2)}`;
+            document.getElementById('modal-shipping').textContent = `R${order.shipping.toFixed(2)}`;
+            document.getElementById('modal-total').textContent = `R${order.total.toFixed(2)}`;
+
+            // Show modal
+            document.getElementById('order-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function renderTrackingSteps(status) {
+            const steps = [
+                { key: 'pending', label: 'Order Placed', icon: '📝' },
+                { key: 'processing', label: 'Processing', icon: '⚙️' },
+                { key: 'shipped', label: 'Shipped', icon: '🚚' },
+                { key: 'delivered', label: 'Delivered', icon: '✅' }
+            ];
+
+            const statusOrder = ['pending', 'processing', 'shipped', 'delivered'];
+            const currentIndex = statusOrder.indexOf(status);
+
+            document.getElementById('tracking-steps').innerHTML = steps.map((step, index) => {
+                let stepClass = 'pending';
+                if (status === 'cancelled') {
+                    stepClass = 'pending';
+                } else if (index < currentIndex) {
+                    stepClass = 'completed';
+                } else if (index === currentIndex) {
+                    stepClass = 'current';
+                }
+
+                return `
+                    <div class="tracking-step ${stepClass} flex items-start gap-4">
+                        <div class="step-dot flex-shrink-0">${step.icon}</div>
+                        <div class="flex-1 pt-1">
+                            <p class="text-white font-bold text-sm">${step.label}</p>
+                            <p class="text-xs text-gray-500">${stepClass === 'completed' ? 'Completed' : stepClass === 'current' ? 'In Progress' : 'Pending'}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('order-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            currentModalOrder = null;
+        }
+
+        function reorder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            let added = 0;
+            order.items.forEach(item => {
+                for (let i = 0; i < item.qty; i++) {
+                    addToQuote(item.productId, item.name, item.size, item.price);
+                    added++;
+                }
+            });
+
+            if (added > 0) {
+                // Show cart
+                if (!document.getElementById('cart-sidebar').classList.contains('open')) {
+                    toggleCart();
+                }
+
+                alert(`${added} item(s) added to your quote!`);
+            }
+        }
+
+        function reorderFromModal() {
+            if (currentModalOrder) {
+                reorder(currentModalOrder.id);
+                closeOrderModal();
+            }
+        }
+
+        // Search functionality
+        document.getElementById('order-search').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderOrders();
+        });
+
+        // Date range filtering
+        document.getElementById('date-from').addEventListener('change', (e) => {
+            dateFrom = e.target.value;
+            renderOrders();
+        });
+
+        document.getElementById('date-to').addEventListener('change', (e) => {
+            dateTo = e.target.value;
+            renderOrders();
+        });
+
+        // Export orders to CSV
+        function exportOrders() {
+            let filteredOrders = orders;
+
+            // Apply current filters
+            if (currentFilter !== 'all') {
+                filteredOrders = filteredOrders.filter(o => o.status === currentFilter);
+            }
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                filteredOrders = filteredOrders.filter(o =>
+                    o.id.toLowerCase().includes(query) ||
+                    o.items.some(item => item.name.toLowerCase().includes(query))
+                );
+            }
+            if (dateFrom) {
+                const fromDate = new Date(dateFrom);
+                filteredOrders = filteredOrders.filter(o => new Date(o.date) >= fromDate);
+            }
+            if (dateTo) {
+                const toDate = new Date(dateTo);
+                toDate.setHours(23, 59, 59, 999);
+                filteredOrders = filteredOrders.filter(o => new Date(o.date) <= toDate);
+            }
+
+            if (filteredOrders.length === 0) {
+                alert('No orders to export');
+                return;
+            }
+
+            // Create CSV content
+            let csv = 'Order ID,Date,Status,Items,Subtotal,VAT,Shipping,Total\n';
+
+            filteredOrders.forEach(order => {
+                const date = new Date(order.date).toLocaleDateString('en-ZA');
+                const items = order.items.map(i => `${i.qty}x ${i.name} (${i.size})`).join('; ');
+                csv += `"${order.id}","${date}","${order.status}","${items}",${order.subtotal.toFixed(2)},${order.vat.toFixed(2)},${order.shipping.toFixed(2)},${order.total.toFixed(2)}\n`;
+            });
+
+            // Download CSV
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `lubritec_orders_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Save order notes
+        function saveOrderNotes() {
+            if (!currentModalOrder) return;
+
+            const notes = document.getElementById('order-notes').value;
+            const orderIndex = orders.findIndex(o => o.id === currentModalOrder.id);
+
+            if (orderIndex !== -1) {
+                orders[orderIndex].notes = notes;
+                localStorage.setItem('lubritec_orders', JSON.stringify(orders));
+                alert('Notes saved successfully!');
+            }
+        }
+
+        // Cancel order
+        function cancelOrder() {
+            if (!currentModalOrder) return;
+
+            if (currentModalOrder.status !== 'pending' && currentModalOrder.status !== 'processing') {
+                alert('Only pending or processing orders can be cancelled');
+                return;
+            }
+
+            if (confirm(`Are you sure you want to cancel order ${currentModalOrder.id}? This action cannot be undone.`)) {
+                const orderIndex = orders.findIndex(o => o.id === currentModalOrder.id);
+
+                if (orderIndex !== -1) {
+                    orders[orderIndex].status = 'cancelled';
+                    orders[orderIndex].cancelledAt = new Date().toISOString();
+                    localStorage.setItem('lubritec_orders', JSON.stringify(orders));
+
+                    alert('Order cancelled successfully');
+                    closeOrderModal();
+                    renderOrders();
+                    updateStats();
+                }
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderOrders();
+            updateStats();
+            updateCartUI();
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeOrderModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Bulk Order | Lubritec</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #030303;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .text-brand-500 {
+            color: #3b82f6;
+        }
+
+        .bg-brand-600 {
+            background-color: #2563eb;
+        }
+
+        .bg-whatsapp {
+            background-color: #25D366;
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.95) !important;
+            backdrop-filter: saturate(180%) blur(20px) !important;
+            -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2) !important;
+            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .glass-nav button {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        }
+
+        .glass-nav button:hover {
+            transform: scale(1.05);
+        }
+
+        .glass-nav button[onclick*="toggleCart"] {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.08) 100%) !important;
+            border: 1.5px solid rgba(37, 99, 235, 0.3) !important;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15) !important;
+        }
+
+        .glass-nav button[onclick*="toggleCart"]:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.15) 100%) !important;
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.25) !important;
+            transform: translateY(-2px) scale(1.05) !important;
+        }
+
+        .glass-nav .group:hover {
+            transform: translateY(-2px);
+        }
+
+        .glass-nav .group img {
+            filter: drop-shadow(0 4px 16px rgba(37, 99, 235, 0.2));
+        }
+
+        #cart-count {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-4px) scale(1.02) !important;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.2em 1.2em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        #cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+        }
+
+        #cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: background 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.6) 100%);
+            background-clip: padding-box;
+        }
+
+        .bulk-row {
+            transition: all 0.3s ease;
+        }
+
+        .bulk-row:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .bulk-row.has-quantity {
+            background: rgba(59, 130, 246, 0.08);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .quantity-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .quantity-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .quantity-input.has-value {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .category-badge {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .add-all-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .add-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        .add-all-btn:active {
+            transform: translateY(0);
+        }
+
+        .clear-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        .summary-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sticky-summary {
+            position: sticky;
+            top: 140px;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Ambient glowing orbs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] rounded-full bg-blue-600/10 blur-[100px] mix-blend-screen"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] rounded-full bg-red-600/5 blur-[100px] mix-blend-screen"></div>
+    </div>
+
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 h-24 md:h-32 flex justify-between items-center gap-6 md:gap-8">
+            <a href="catalog.html" class="flex items-center gap-2 sm:gap-3 md:gap-4 group transition-transform duration-300 hover:scale-105">
+                <div class="h-10 w-10 sm:h-16 sm:w-16 md:h-20 md:w-20 flex-shrink-0 transition-transform duration-300 flex items-center justify-center transform group-hover:scale-110">
+                    <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg filter drop-shadow-[0_4px_16px_rgba(37,99,235,0.2)]" onerror="this.style.display='none'">
+                </div>
+                <span class="font-bold text-lg sm:text-2xl md:text-4xl tracking-wide uppercase text-white drop-shadow-md group-hover:text-blue-400 transition-colors duration-300">LUBRICANTS</span>
+            </a>
+            <div class="flex items-center gap-3 md:gap-6 ml-auto">
+                <a href="catalog.html" class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300 transition-colors">Catalog</a>
+                <a href="bulk-order.html" class="text-xs uppercase font-black px-3 text-brand-500 hidden sm:block tracking-widest">Bulk Order</a>
+                <a href="orders.html" class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300 transition-colors">Orders</a>
+                <a href="dashboard.html" class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300 transition-colors">Account</a>
+                <button onclick="toggleCart()" class="relative p-2 md:p-4 transition-all duration-300 flex items-center group bg-transparent border-none shadow-none hover:scale-105 active:scale-95">
+                    <span class="text-xs uppercase font-black px-3 text-white hidden sm:block tracking-widest hover:text-blue-300">Basket</span>
+                    <svg class="w-6 h-6 md:w-7 md:h-7 text-white group-hover:text-blue-300 group-hover:scale-125 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute top-0 right-0 md:top-1 md:-right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-black h-5 w-5 flex items-center justify-center rounded-full scale-0 transition-all duration-300 shadow-lg border border-white/30">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#050505] border-l border-gray-800 z-[70] flex flex-col h-full shadow-2xl">
+        <div class="p-5 border-b border-gray-800 flex justify-between items-center bg-black">
+            <div>
+                <h3 class="font-bold text-lg uppercase tracking-widest">Your Quote</h3>
+            </div>
+            <button onclick="toggleCart()" class="p-2 bg-gray-800 rounded-full text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3 pb-40">
+            <div id="empty-cart-msg" class="h-full flex flex-col items-center justify-center text-gray-500 opacity-50">
+                <p class="text-xs font-bold uppercase tracking-widest">Empty</p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-800 bg-black backdrop-blur-md">
+            <div class="space-y-2 mb-5 text-sm">
+                <div class="flex justify-between text-gray-400"><span>Subtotal</span><span id="cart-subtotal">R0.00</span></div>
+                <div class="flex justify-between text-gray-400"><span>VAT (15%)</span><span id="cart-vat">R0.00</span></div>
+                <div class="flex justify-between text-xl font-black pt-3 text-white border-t border-gray-800 mt-2"><span>Total</span><span id="cart-total" class="text-brand-500">R0.00</span></div>
+            </div>
+            <a id="wa-checkout-btn" href="#" class="w-full bg-whatsapp text-white font-bold uppercase tracking-widest py-4 rounded-xl flex justify-center items-center text-sm shadow-xl">Checkout</a>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity"></div>
+
+    <section class="pt-32 pb-20 px-4 min-h-screen bg-[#070707]">
+        <div class="max-w-[1600px] mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl md:text-5xl font-black mb-4 text-white">Bulk Order</h1>
+                <p class="text-gray-400 text-lg">Quickly add multiple products to your quote. Enter quantities and add all at once.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Product List -->
+                <div class="lg:col-span-3">
+                    <!-- Category Filter -->
+                    <div class="mb-6 flex flex-wrap gap-2">
+                        <button onclick="filterCategory('all')" class="category-filter-btn active px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-brand-600 text-white transition-all" data-category="all">All Products</button>
+                        <button onclick="filterCategory('Engine Oils')" class="category-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" data-category="Engine Oils">Engine Oils</button>
+                        <button onclick="filterCategory('Gear & Auto')" class="category-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" data-category="Gear & Auto">Gear & Auto</button>
+                        <button onclick="filterCategory('Industrial')" class="category-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" data-category="Industrial">Industrial</button>
+                        <button onclick="filterCategory('Chemicals & Grease')" class="category-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" data-category="Chemicals & Grease">Chemicals & Grease</button>
+                    </div>
+
+                    <!-- Bulk Order Table -->
+                    <div class="glass-card rounded-2xl overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-800 bg-black/50">
+                                        <th class="text-left p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Product</th>
+                                        <th class="text-left p-4 text-xs font-bold uppercase tracking-widest text-gray-400 hidden md:table-cell">Category</th>
+                                        <th class="text-center p-4 text-xs font-bold uppercase tracking-widest text-gray-400 w-32">Size</th>
+                                        <th class="text-center p-4 text-xs font-bold uppercase tracking-widest text-gray-400 w-32">Quantity</th>
+                                        <th class="text-right p-4 text-xs font-bold uppercase tracking-widest text-gray-400 w-32">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bulk-table-body">
+                                    <!-- Products will be rendered here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="sticky-summary summary-card rounded-2xl p-6">
+                        <h3 class="font-bold text-lg uppercase tracking-widest mb-6 text-white">Order Summary</h3>
+
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Products</span>
+                                <span id="summary-products" class="text-white font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Total Items</span>
+                                <span id="summary-items" class="text-white font-bold">0</span>
+                            </div>
+                            <div class="border-t border-gray-800 pt-4">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">Subtotal</span>
+                                    <span id="summary-subtotal" class="text-white">R0.00</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">VAT (15%)</span>
+                                    <span id="summary-vat" class="text-white">R0.00</span>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-800 pt-4">
+                                <div class="flex justify-between text-xl font-black">
+                                    <span class="text-white">Total</span>
+                                    <span id="summary-total" class="text-brand-500">R0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <button onclick="addAllToCart()" class="add-all-btn w-full text-white font-bold uppercase tracking-widest py-4 rounded-xl flex justify-center items-center text-sm">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                Add All to Quote
+                            </button>
+                            <button onclick="clearAllQuantities()" class="clear-btn w-full text-red-400 font-bold uppercase tracking-widest py-3 rounded-xl text-sm">
+                                Clear All
+                            </button>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-gray-800">
+                            <p class="text-xs text-gray-500 text-center">
+                                Need help with large orders? <a href="#" class="text-brand-500 hover:underline">Contact us</a> for custom pricing.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="data.js"></script>
+    <script>
+        let bulkQuantities = {};
+        let currentFilter = 'all';
+
+        function renderBulkTable() {
+            const tbody = document.getElementById('bulk-table-body');
+            const filteredProducts = currentFilter === 'all'
+                ? products
+                : products.filter(p => p.category === currentFilter);
+
+            tbody.innerHTML = filteredProducts.map(product => {
+                const defaultVariant = product.variants[0];
+                const quantity = bulkQuantities[`${product.id}-${defaultVariant.size}`] || 0;
+                const total = quantity * defaultVariant.price;
+                const hasQuantity = quantity > 0;
+
+                return `
+                    <tr class="bulk-row border-b border-gray-800 ${hasQuantity ? 'has-quantity' : ''}" data-product-id="${product.id}">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                    <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">${product.name}</h4>
+                                    <p class="text-xs text-gray-500">R${defaultVariant.price.toFixed(2)} / ${defaultVariant.size}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell">
+                            <span class="category-badge px-2 py-1 rounded text-xs font-bold text-brand-400 uppercase tracking-wider">${product.category}</span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <select class="bg-black border border-gray-700 text-white text-xs font-bold rounded-lg px-2 py-2 outline-none focus:border-brand-500" onchange="updateSize('${product.id}', this.value)">
+                                ${product.variants.map(v => `<option value="${v.size}" data-price="${v.price}" ${v.size === defaultVariant.size ? 'selected' : ''}>${v.size}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td class="p-4 text-center">
+                            <input type="number" min="0" max="999" value="${quantity}" class="quantity-input w-20 text-center text-white font-bold rounded-lg px-3 py-2 outline-none text-sm ${hasQuantity ? 'has-value' : ''}" onchange="updateQuantity('${product.id}', this.value)" onkeyup="updateQuantity('${product.id}', this.value)">
+                        </td>
+                        <td class="p-4 text-right">
+                            <span class="font-black text-white ${hasQuantity ? 'text-brand-500' : 'text-gray-600'}">R${total.toFixed(2)}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateQuantity(productId, value) {
+            const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+            const sizeSelect = row.querySelector('select');
+            const size = sizeSelect.value;
+            const key = `${productId}-${size}`;
+            const quantity = parseInt(value) || 0;
+
+            if (quantity > 0) {
+                bulkQuantities[key] = quantity;
+            } else {
+                delete bulkQuantities[key];
+            }
+
+            // Update row styling
+            const input = row.querySelector('.quantity-input');
+            const totalCell = row.querySelector('td:last-child span');
+            const price = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.price);
+            const total = quantity * price;
+
+            if (quantity > 0) {
+                row.classList.add('has-quantity');
+                input.classList.add('has-value');
+                totalCell.classList.remove('text-gray-600');
+                totalCell.classList.add('text-brand-500');
+            } else {
+                row.classList.remove('has-quantity');
+                input.classList.remove('has-value');
+                totalCell.classList.add('text-gray-600');
+                totalCell.classList.remove('text-brand-500');
+            }
+
+            totalCell.textContent = `R${total.toFixed(2)}`;
+            updateSummary();
+        }
+
+        function updateSize(productId, size) {
+            const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+            const input = row.querySelector('.quantity-input');
+            const oldKey = `${productId}-${row.dataset.currentSize || ''}`;
+            const newKey = `${productId}-${size}`;
+
+            // Transfer quantity if exists
+            if (bulkQuantities[oldKey]) {
+                bulkQuantities[newKey] = bulkQuantities[oldKey];
+                delete bulkQuantities[oldKey];
+                input.value = bulkQuantities[newKey];
+            } else {
+                input.value = bulkQuantities[newKey] || 0;
+            }
+
+            row.dataset.currentSize = size;
+
+            // Update price display
+            const sizeSelect = row.querySelector('select');
+            const price = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.price);
+            const quantity = parseInt(input.value) || 0;
+            const total = quantity * price;
+
+            const priceDisplay = row.querySelector('.text-xs.text-gray-500');
+            priceDisplay.textContent = `R${price.toFixed(2)} / ${size}`;
+
+            const totalCell = row.querySelector('td:last-child span');
+            totalCell.textContent = `R${total.toFixed(2)}`;
+
+            updateSummary();
+        }
+
+        function updateSummary() {
+            let totalProducts = 0;
+            let totalItems = 0;
+            let subtotal = 0;
+
+            Object.entries(bulkQuantities).forEach(([key, qty]) => {
+                const [productId, size] = key.split('-');
+                const product = products.find(p => p.id === productId);
+                if (product) {
+                    const variant = product.variants.find(v => v.size === size);
+                    if (variant) {
+                        totalProducts++;
+                        totalItems += qty;
+                        subtotal += qty * variant.price;
+                    }
+                }
+            });
+
+            const vat = subtotal * 0.15;
+            const total = subtotal + vat;
+
+            document.getElementById('summary-products').textContent = totalProducts;
+            document.getElementById('summary-items').textContent = totalItems;
+            document.getElementById('summary-subtotal').textContent = `R${subtotal.toFixed(2)}`;
+            document.getElementById('summary-vat').textContent = `R${vat.toFixed(2)}`;
+            document.getElementById('summary-total').textContent = `R${total.toFixed(2)}`;
+        }
+
+        function addAllToCart() {
+            let added = 0;
+
+            Object.entries(bulkQuantities).forEach(([key, qty]) => {
+                if (qty > 0) {
+                    const [productId, size] = key.split('-');
+                    const product = products.find(p => p.id === productId);
+                    if (product) {
+                        const variant = product.variants.find(v => v.size === size);
+                        if (variant) {
+                            for (let i = 0; i < qty; i++) {
+                                addToQuote(product.id, product.name, size, variant.price);
+                            }
+                            added++;
+                        }
+                    }
+                }
+            });
+
+            if (added > 0) {
+                // Clear bulk quantities
+                bulkQuantities = {};
+                renderBulkTable();
+                updateSummary();
+
+                // Show cart
+                if (!document.getElementById('cart-sidebar').classList.contains('open')) {
+                    toggleCart();
+                }
+
+                // Show success message
+                alert(`${added} product(s) added to your quote!`);
+            } else {
+                alert('Please enter quantities for at least one product.');
+            }
+        }
+
+        function clearAllQuantities() {
+            if (Object.keys(bulkQuantities).length === 0) {
+                alert('No quantities to clear.');
+                return;
+            }
+
+            if (confirm('Are you sure you want to clear all quantities?')) {
+                bulkQuantities = {};
+                renderBulkTable();
+                updateSummary();
+            }
+        }
+
+        function filterCategory(category) {
+            currentFilter = category;
+
+            // Update button states
+            document.querySelectorAll('.category-filter-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.remove('bg-gray-800', 'text-gray-400');
+                    btn.classList.add('bg-brand-600', 'text-white');
+                } else {
+                    btn.classList.remove('bg-brand-600', 'text-white');
+                    btn.classList.add('bg-gray-800', 'text-gray-400');
+                }
+            });
+
+            renderBulkTable();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBulkTable();
+            updateSummary();
+            updateCartUI();
+        });
+    </script>
+</body>
+
+</html>

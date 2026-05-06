@@ -10,6 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="data.js"></script>
 
     <!-- Firebase Integration Logic -->
     <script type="module">
@@ -20,16 +21,18 @@
         = db; window.firebaseAuth = auth; window.appId = appId; window.addDoc = addDoc; window.doc = doc; window.setDoc = setDoc; window.getDoc = getDoc; window.getDocs = getDocs; window.updateDoc = updateDoc; window.deleteDoc = deleteDoc; window.collection
         = collection; window.onSnapshot = onSnapshot; window.query = query; window.signInWithEmailAndPassword = signInWithEmailAndPassword; window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; window.signOut = signOut; onAuthStateChanged(auth,
         (user) => { window.currentUser = user; const cloudStatus = document.getElementById('cloud-status'); const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const navAdminBtn
-        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const
-        processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); const profileSection = document.getElementById('client-profile-section'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase());
-        if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display
-        = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none"; if (profileSection) profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText
-        = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out'; if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads
-        === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid); if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin
-        = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection)
-        profileSection.classList.add('hidden'); if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)';
-        if (navLoginBtn) navLoginBtn.innerText = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home');
-        } if(typeof window.renderCatalog === 'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
+        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navAnalyticsBtn = document.getElementById('nav-analytics-btn'); const mobileAnalyticsBtn = document.getElementById('mobile-analytics-btn');
+        const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg');
+        const profileSection = document.getElementById('client-profile-section'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn)
+        mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navAnalyticsBtn) navAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none';
+        if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none";
+        if (profileSection) profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out';
+        if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid);
+        if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navAnalyticsBtn)
+        navAnalyticsBtn.style.display = 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection) profileSection.classList.add('hidden');
+        if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText
+        = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home'); } if(typeof window.renderCatalog ===
+        'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
     </script>
 
     <!-- Supplemental UI State Logic -->
@@ -283,6 +286,201 @@
             background-image: radial-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 0);
             background-size: 30px 30px;
         }
+        /* Premium Navigation Enhancements */
+        
+        .nav-sticky {
+            background: rgba(248, 250, 252, 0.95) !important;
+            backdrop-filter: blur(20px) !important;
+            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.15) !important;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1) !important;
+        }
+        
+        .dark .nav-sticky {
+            background: rgba(15, 23, 42, 0.95) !important;
+            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5) !important;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2) !important;
+        }
+        /* Enhanced nav button with animated underline */
+        
+        .nav-sticky button[onclick*="navigate"],
+        .nav-sticky button[onclick*="handleNavLogin"],
+        .nav-sticky button[onclick*="admin"] {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-sticky button[onclick*="navigate"]::after,
+        .nav-sticky button[onclick*="handleNavLogin"]::after,
+        .nav-sticky button[onclick*="admin"]::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .nav-sticky button[onclick*="navigate"]:hover::after,
+        .nav-sticky button[onclick*="handleNavLogin"]:hover::after,
+        .nav-sticky button[onclick*="admin"]:hover::after {
+            left: 100%;
+        }
+        /* Premium button styles */
+        
+        .nav-sticky button[onclick*="toggleCart"] {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.08) 100%) !important;
+            border: 1.5px solid rgba(37, 99, 235, 0.3) !important;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15) !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        }
+        
+        .nav-sticky button[onclick*="toggleCart"]:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.15) 100%) !important;
+            border-color: rgba(37, 99, 235, 0.5) !important;
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.25) !important;
+            transform: translateY(-2px) !important;
+        }
+        /* Logo hover effect */
+        
+        .nav-sticky .group:hover {
+            transform: translateY(-2px);
+        }
+        
+        .nav-sticky .group img {
+            filter: drop-shadow(0 4px 16px rgba(37, 99, 235, 0.2));
+        }
+        /* Theme toggle button enhancement */
+        
+        .nav-sticky button[onclick*="toggleTheme"] {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02)) !important;
+            transition: all 0.3s ease !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        }
+        
+        .dark .nav-sticky button[onclick*="toggleTheme"] {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)) !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        
+        .nav-sticky button[onclick*="toggleTheme"]:hover {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.04)) !important;
+            transform: scale(1.08) rotate(20deg);
+        }
+        
+        .dark .nav-sticky button[onclick*="toggleTheme"]:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08)) !important;
+        }
+        /* Mobile menu button */
+        
+        .nav-sticky button[onclick*="toggleMobileMenu"] {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02)) !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .dark .nav-sticky button[onclick*="toggleMobileMenu"] {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)) !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        
+        .nav-sticky button[onclick*="toggleMobileMenu"]:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(37, 99, 235, 0.08)) !important;
+            transform: scale(1.05);
+        }
+        /* Enhanced cart badge */
+        
+        #cart-count {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        #cart-count:not(.scale-0) {
+            animation: badgePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes badgePulse {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        /* Refined pro-card animations */
+        
+        .pro-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .dark .pro-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1a2c5e 100%);
+        }
+        
+        .pro-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 40px 80px -15px rgba(37, 99, 235, 0.3);
+            border-color: rgba(37, 99, 235, 0.5);
+        }
+        /* Button gradient animations */
+        
+        .bg-gradient-to-r {
+            background-size: 200% 200%;
+            transition: background-position 0.4s ease, transform 0.3s ease;
+        }
+        
+        button:not(.rounded-full):not([onclick*="toggleCart"]):not([onclick*="toggleTheme"]):not([onclick*="toggleMobileMenu"]) {
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        /* Premium section shadows and depth */
+        
+        section {
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
+            pointer-events: none;
+        }
+        /* Enhanced hero section depth */
+        
+        .min-h-\[90vh\] {
+            position: relative;
+        }
+        /* Smooth scrollbar with gradient */
+        
+         ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.01) 100%);
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: background 0.3s ease;
+        }
+        
+         ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.6) 100%);
+            background-clip: padding-box;
+        }
     </style>
 </head>
 
@@ -415,63 +613,97 @@
         <div class="flex flex-col items-center gap-8 text-brand-navy dark:text-white font-black uppercase tracking-widest text-lg md:text-xl">
             <button onclick="window.navigate('home'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Home</button>
             <button onclick="window.navigate('catalog'); window.toggleMobileMenu()" id="mobile-order-btn" class="hover:text-brand-red transition text-brand-red" style="display:none;">Order Portal</button>
+            <button onclick="window.navigate('orders'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Orders</button>
+            <button onclick="window.navigate('dashboard'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Account</button>
+            <button onclick="window.navigate('tracking'); window.toggleMobileMenu()" id="mobile-tracking-btn" class="hover:text-emerald-500 transition text-emerald-600" style="display:none;">Orders & Tracking</button>
+            <button onclick="window.navigate('reorder'); window.toggleMobileMenu()" id="mobile-reorder-btn" class="hover:text-blue-500 transition text-blue-600" style="display:none;">Quick Reorder</button>
+            <button onclick="window.navigate('calculator'); window.toggleMobileMenu()" id="mobile-calculator-btn" class="hover:text-purple-500 transition text-purple-600" style="display:none;">Bulk Calculator</button>
             <button onclick="window.navigate('process'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">How To Order</button>
             <button onclick="window.navigate('about'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">About Us</button>
             <button onclick="window.navigate('contact'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Contact Details</button>
             <button onclick="window.navigate('customer'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">My Inquiries</button>
             <button onclick="window.handleNavLogin(); window.toggleMobileMenu()" id="mobile-login-btn" class="hover:text-brand-blue transition text-brand-blue">Client Login</button>
+            <button onclick="window.location.href='analytics.html'; window.toggleMobileMenu()" id="mobile-analytics-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Analytics</button>
             <button onclick="window.navigate('admin'); window.toggleMobileMenu()" id="mobile-admin-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Admin Dashboard</button>
         </div>
     </div>
 
     <!-- TOP NAVIGATION -->
     <nav class="nav-sticky">
-        <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-24 flex justify-between items-center">
-            <div class="flex items-center gap-3 md:gap-4 cursor-pointer group" onclick="window.navigate('home')">
-                <div class="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+        <div class="max-w-[1400px] mx-auto px-3 md:px-5 h-20 md:h-24 flex justify-between items-center gap-4 md:gap-6">
+            <div class="flex items-center gap-2 md:gap-3 cursor-pointer group flex-shrink-0" onclick="window.navigate('home')" style="transition: all 0.3s ease;">
+                <div class="h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 flex-shrink-0 transition-all duration-300 flex items-center justify-center transform group-hover:scale-110">
                     <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
-                <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block">LUBRICANTS</span>
+                <span class="font-black text-lg md:text-2xl lg:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block transform transition-all duration-300 group-hover:text-brand-blue">LUBRICANTS</span>
             </div>
 
-            <div class="hidden xl:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 h-full">
-                <button onclick="window.navigate('home')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Home</button>
-                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-red">Order Portal</button>
-                <button onclick="window.navigate('process')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">How To Order</button>
-                <button onclick="window.navigate('about')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">About</button>
-                <button onclick="window.navigate('contact')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">Contact</button>
-                <button onclick="window.navigate('customer')" class="hover:text-brand-navy dark:hover:text-white transition h-full border-b-2 border-transparent hover:border-brand-blue">My Inquiries</button>
-                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="hover:text-brand-blue transition text-brand-blue h-full border-b-2 border-transparent font-bold">Login</button>
-                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="hover:text-yellow-500 dark:hover:text-yellow-400 transition text-yellow-600 dark:text-yellow-500 h-full border-b-2 border-transparent hover:border-yellow-400 font-bold">Admin</button>
+            <div class="hidden lg:flex items-center gap-0.5 text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em] text-slate-600 dark:text-slate-300 h-full flex-1 justify-center overflow-x-auto">
+                <button onclick="window.navigate('home')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    Home
+                </button>
+                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group text-brand-red font-bold whitespace-nowrap">
+                    Order Portal
+                </button>
+                <button onclick="window.navigate('orders')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    Orders
+                </button>
+                <button onclick="window.navigate('dashboard')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    Account
+                </button>
+                <button onclick="window.navigate('process')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    How To Order
+                </button>
+                <button onclick="window.navigate('about')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    About
+                </button>
+                <button onclick="window.navigate('contact')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    Contact
+                </button>
+                <button onclick="window.navigate('customer')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    My Inquiries
+                </button>
+                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="px-2 md:px-3 lg:px-4 py-2 text-brand-blue font-bold hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 relative group whitespace-nowrap">
+                    Login
+                </button>
+                <button onclick="window.location.href='analytics.html'" id="nav-analytics-btn" style="display: none;" class="px-2 md:px-3 lg:px-4 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group whitespace-nowrap">
+                    Analytics
+                </button>
+                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="px-2 md:px-3 lg:px-4 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group whitespace-nowrap">
+                    Admin
+                </button>
             </div>
 
-            <div class="flex items-center gap-2 md:gap-3">
-                <button onclick="window.toggleTheme()" class="text-slate-500 dark:text-slate-400 hover:text-brand-navy dark:hover:text-white transition p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5" id="theme-toggle">
-                    <svg id="moon-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    <svg id="sun-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <div class="flex items-center gap-1.5 md:gap-3 flex-shrink-0">
+                <button onclick="window.toggleTheme()" class="text-slate-600 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white transition-all p-1.5 md:p-2 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transform hover:scale-110"
+                    id="theme-toggle">
+                    <svg id="moon-icon" class="w-4 h-4 md:w-5 md:h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg id="sun-icon" class="w-4 h-4 md:w-5 md:h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
 
-                <button onclick="window.toggleCart()" class="relative p-2 md:p-4 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-lg md:rounded-2xl transition border border-brand-blue/20 shadow-xl flex items-center gap-2 md:gap-3 group">
-                    <span class="text-[10px] md:text-xs uppercase font-black px-1 md:px-3 text-brand-blue hidden sm:block">Basket</span>
-                    <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-110 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all border-2 border-brand-navy shadow-xl">0</span>
+                <button onclick="window.toggleCart()" class="relative p-1.5 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 flex items-center gap-1.5 md:gap-2 group hover:scale-105 transform active:scale-95">
+                    <span class="text-[9px] md:text-xs uppercase font-black px-1 md:px-2 text-brand-blue hidden sm:block">Basket</span>
+                    <svg class="w-4 h-4 md:w-5 md:h-5 text-brand-blue group-hover:scale-125 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute -top-1 -right-1 md:-top-1.5 md:-right-1.5 bg-brand-red text-white text-[8px] md:text-[10px] font-black h-4 w-4 md:h-6 md:w-6 flex items-center justify-center rounded-full scale-0 transition-all duration-300 border-2 border-white shadow-lg">0</span>
                 </button>
 
-                <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5">
-                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button onclick="window.toggleMobileMenu()" class="lg:hidden text-brand-navy dark:text-white p-1.5 md:p-2 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
     </nav>
 
     <!-- CART SIDEBAR -->
-    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white dark:bg-slate-900 shadow-[0_0_100px_rgba(0,0,0,0.5)] z-[110] flex flex-col border-l border-gray-100 dark:border-slate-800">
-        <div class="p-4 md:p-6 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950 pt-24 md:pt-6">
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white dark:bg-slate-900 shadow-[0_0_100px_rgba(0,0,0,0.5)] z-[110] flex flex-col border-l border-gray-100 dark:border-slate-800 transform transition-transform duration-400 ease-out origin-right">
+        <div class="p-4 md:p-6 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-slate-50 via-blue-50/30 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pt-24 md:pt-6">
             <div>
-                <h3 class="font-black text-lg md:text-xl text-brand-navy dark:text-white tracking-tighter uppercase">Inquiry Basket</h3>
+                <h3 class="font-black text-lg md:text-xl text-brand-navy dark:text-white tracking-tighter uppercase transform transition-all duration-300">Inquiry Basket</h3>
                 <p class="text-[9px] md:text-[10px] text-brand-blue font-black uppercase tracking-widest mt-1">Request a Quote</p>
             </div>
-            <button onclick="window.toggleCart()" class="p-2 md:p-3 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-xl transition group"><svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-brand-red transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            <button onclick="window.toggleCart()" class="p-2 md:p-3 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-xl transition-all duration-300 group transform hover:scale-110 active:scale-95">
+                <svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-brand-red transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
         </div>
 
         <div class="flex-1 overflow-y-auto p-4 md:p-6 relative hide-scroll">
@@ -482,7 +714,7 @@
             <div id="cart-items" class="space-y-3 md:space-y-4 relative z-10"></div>
         </div>
 
-        <div class="p-4 md:p-6 border-t border-gray-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+        <div class="p-4 md:p-6 border-t border-gray-100 dark:border-slate-800 bg-gradient-to-r from-slate-50 via-blue-50/30 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
             <div class="space-y-2 mb-4 border-b border-gray-100 dark:border-slate-800 pb-4">
                 <div class="flex justify-between text-[10px] uppercase font-bold text-slate-400"><span>Subtotal</span><span id="cart-subtotal">R0.00</span></div>
                 <div class="flex justify-between text-[10px] uppercase font-bold text-slate-400"><span>VAT (15%)</span><span id="cart-vat">R0.00</span></div>
@@ -493,21 +725,21 @@
             </div>
             <div class="mb-4 md:mb-6 space-y-2 md:space-y-3">
                 <p class="text-[9px] md:text-[10px] font-black uppercase text-slate-400 tracking-widest border-b border-gray-200 dark:border-slate-800 pb-2 mb-3">Delivery & Contact Details</p>
-                <input type="text" id="customer-business" placeholder="Business Name *" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue dark:text-white transition shadow-sm"
+                <input type="text" id="customer-business" placeholder="Business Name *" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition-all shadow-sm dark:focus:ring-brand-blue/30"
                     required>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
-                    <input type="text" id="customer-name" placeholder="Contact Person" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue dark:text-white transition shadow-sm">
-                    <input type="tel" id="customer-phone" placeholder="Phone Number *" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue dark:text-white transition shadow-sm"
+                    <input type="text" id="customer-name" placeholder="Contact Person" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition-all shadow-sm dark:focus:ring-brand-blue/30">
+                    <input type="tel" id="customer-phone" placeholder="Phone Number *" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition-all shadow-sm dark:focus:ring-brand-blue/30"
                         required>
                 </div>
-                <textarea id="customer-address" placeholder="Delivery Address" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue dark:text-white transition shadow-sm resize-none"
+                <textarea id="customer-address" placeholder="Delivery Address" class="w-full p-2.5 md:p-3 rounded-lg md:rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] md:text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 dark:text-white transition-all shadow-sm resize-none dark:focus:ring-brand-blue/30"
                     rows="2"></textarea>
             </div>
             <div class="grid grid-cols-2 gap-2 md:gap-3 mb-3">
-                <button onclick="window.processQuote(false)" class="bg-brand-navy dark:bg-brand-blue hover:opacity-90 text-white font-black uppercase text-[8px] md:text-[9px] tracking-widest py-3 md:py-4 rounded-lg md:rounded-xl shadow-md transition flex justify-center items-center gap-1.5 md:gap-2">Download RFQ</button>
-                <button onclick="window.processQuote(true)" class="bg-[#25D366] hover:bg-[#128C7E] text-white font-black uppercase text-[8px] md:text-[9px] tracking-widest py-3 md:py-4 rounded-lg md:rounded-xl shadow-md transition flex justify-center items-center gap-1.5 md:gap-2">WhatsApp</button>
+                <button onclick="window.processQuote(false)" class="bg-gradient-to-r from-brand-navy to-brand-blue hover:from-blue-700 hover:to-brand-blue text-white font-black uppercase text-[8px] md:text-[9px] tracking-widest py-3 md:py-4 rounded-lg md:rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-1.5 md:gap-2 transform hover:scale-105 active:scale-95">Download RFQ</button>
+                <button onclick="window.processQuote(true)" class="bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#128C7E] hover:to-[#0a7e60] text-white font-black uppercase text-[8px] md:text-[9px] tracking-widest py-3 md:py-4 rounded-lg md:rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-1.5 md:gap-2 transform hover:scale-105 active:scale-95">WhatsApp</button>
             </div>
-            <button onclick="window.clearCart()" class="w-full py-2.5 md:py-3 text-[9px] md:text-[10px] font-black uppercase text-gray-400 border border-gray-200 dark:border-slate-800 rounded-lg md:rounded-xl hover:bg-red-50 hover:text-brand-red transition mb-2">Clear All</button>
+            <button onclick="window.clearCart()" class="w-full py-2.5 md:py-3 text-[9px] md:text-[10px] font-black uppercase text-gray-400 border border-gray-200 dark:border-slate-800 rounded-lg md:rounded-xl hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-brand-red hover:border-brand-red dark:hover:border-brand-red transition-all duration-300 mb-2 transform hover:scale-102 active:scale-95">Clear All</button>
         </div>
     </div>
 
@@ -697,6 +929,17 @@
                         <p class="text-xs md:text-sm text-gray-300 font-medium">Rugged protection designed for heavy off-highway machinery.</p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- CLIENT REVIEWS / TESTIMONIALS SECTION -->
+        <section id="homepage-reviews-section" class="max-w-[1400px] mx-auto px-4 md:px-6 py-16 md:py-32 border-t border-gray-100 dark:border-slate-800 stagger-4 hidden">
+            <div class="text-center mb-10 md:mb-16">
+                <h2 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">Client Reviews</h2>
+                <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mt-4 md:mt-6 rounded-full"></div>
+                <p class="text-sm md:text-base text-gray-500 mt-4 md:mt-6 max-w-2xl mx-auto font-medium">Trusted by leading businesses across South Africa.</p>
+            </div>
+            <div id="homepage-reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             </div>
         </section>
     </div>
@@ -958,6 +1201,332 @@
                 <button onclick="window.toggleAuthModal()" class="px-6 py-3 bg-brand-blue text-white rounded-xl font-black uppercase text-xs">Login Now</button>
             </div>
         </div>
+
+        <div id="client-review-section" class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-6 md:p-10 shadow-xl border border-white/20 dark:border-slate-800 mx-auto max-w-4xl mb-12 stagger-4 hidden">
+            <h3 class="text-xl md:text-2xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-2">Leave a Review</h3>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold mb-6">Share your experience with Route 64</p>
+            <div class="space-y-4">
+                <input type="text" id="review-role" placeholder="Your Role / Company" class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition shadow-inner">
+                <textarea id="review-text" rows="3" placeholder="Write your review here..." class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition resize-none shadow-inner"></textarea>
+                <button onclick="window.submitSiteReview()" class="py-4 px-8 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl text-[10px]">Submit Review</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: ORDERS HISTORY -->
+    <div id="view-orders" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
+        <div class="mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white mb-4">Order History</h1>
+            <p class="text-gray-500 dark:text-slate-400 text-lg">Track your orders and reorder with one click.</p>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-slate-800">
+                <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Total Orders</p>
+                <p id="orders-stat-total" class="text-2xl font-black text-brand-navy dark:text-white">0</p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-slate-800">
+                <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Pending</p>
+                <p id="orders-stat-pending" class="text-2xl font-black text-yellow-500">0</p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-slate-800">
+                <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Completed</p>
+                <p id="orders-stat-completed" class="text-2xl font-black text-green-500">0</p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-slate-800">
+                <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Total Spent</p>
+                <p id="orders-stat-spent" class="text-2xl font-black text-brand-blue">R0</p>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap gap-2 mb-6">
+            <button onclick="window.filterOrders('all')" class="orders-filter-btn active px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-brand-navy text-white transition-all" data-filter="all">All Orders</button>
+            <button onclick="window.filterOrders('pending')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="pending">Pending</button>
+            <button onclick="window.filterOrders('processing')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="processing">Processing</button>
+            <button onclick="window.filterOrders('shipped')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="shipped">Shipped</button>
+            <button onclick="window.filterOrders('delivered')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="delivered">Delivered</button>
+            <button onclick="window.filterOrders('cancelled')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="cancelled">Cancelled</button>
+        </div>
+
+        <!-- Orders List -->
+        <div id="orders-container" class="space-y-4">
+            <!-- Orders will be rendered here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="orders-empty-state" class="bg-white dark:bg-slate-900 rounded-2xl p-12 text-center shadow-xl border border-dashed border-gray-200 dark:border-slate-800 hidden">
+            <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            <h3 class="text-xl font-bold text-brand-navy dark:text-white mb-2">No Orders Yet</h3>
+            <p class="text-gray-500 dark:text-slate-400 mb-6">Start shopping to see your orders here.</p>
+            <button onclick="window.navigate('catalog')" class="inline-block bg-brand-blue text-white font-bold uppercase tracking-widest px-8 py-3 rounded-xl hover:bg-blue-600 transition-all">
+                Browse Catalog
+            </button>
+        </div>
+    </div>
+
+    <!-- VIEW: USER DASHBOARD -->
+    <div id="view-dashboard" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
+        <div class="mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white mb-4">My Account</h1>
+            <p class="text-gray-500 dark:text-slate-400 text-lg">Manage your profile, view orders, and access your account settings.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                    <!-- Profile Summary -->
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-brand-blue to-blue-600 flex items-center justify-center text-2xl font-bold text-white">
+                            <span id="dashboard-avatar-initials">JD</span>
+                        </div>
+                        <div>
+                            <h3 id="dashboard-profile-name" class="font-bold text-brand-navy dark:text-white text-lg">John Doe</h3>
+                            <p id="dashboard-profile-email" class="text-sm text-gray-500 dark:text-slate-400">john@example.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Tabs -->
+                    <div class="space-y-2">
+                        <button onclick="window.switchDashboardTab('overview')" class="dashboard-nav-tab active w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="overview">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                                Overview
+                            </span>
+                        </button>
+                        <button onclick="window.switchDashboardTab('profile')" class="dashboard-nav-tab w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="profile">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                Profile
+                            </span>
+                        </button>
+                        <button onclick="window.switchDashboardTab('addresses')" class="dashboard-nav-tab w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="addresses">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Addresses
+                            </span>
+                        </button>
+                        <button onclick="window.switchDashboardTab('settings')" class="dashboard-nav-tab w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="settings">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Settings
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                    <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-4">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <button onclick="window.navigate('catalog')" class="w-full p-3 rounded-lg text-sm text-brand-navy dark:text-white bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            Browse Catalog
+                        </button>
+                        <button onclick="window.navigate('orders')" class="w-full p-3 rounded-lg text-sm text-brand-navy dark:text-white bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            View Orders
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <!-- Overview Tab -->
+                <div id="dashboard-tab-overview" class="dashboard-tab-content">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/10 rounded-xl p-4 border border-blue-100 dark:border-blue-900/30">
+                            <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Total Orders</p>
+                            <p id="dashboard-stat-total-orders" class="text-2xl font-black text-brand-navy dark:text-white">0</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-900/10 rounded-xl p-4 border border-yellow-100 dark:border-yellow-900/30">
+                            <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Pending</p>
+                            <p id="dashboard-stat-pending-orders" class="text-2xl font-black text-yellow-600">0</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-900/10 rounded-xl p-4 border border-green-100 dark:border-green-900/30">
+                            <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Completed</p>
+                            <p id="dashboard-stat-completed-orders" class="text-2xl font-black text-green-600">0</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/10 rounded-xl p-4 border border-blue-100 dark:border-blue-900/30">
+                            <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Total Spent</p>
+                            <p id="dashboard-stat-total-spent" class="text-2xl font-black text-brand-blue">R0</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest">Recent Orders</h3>
+                            <button onclick="window.navigate('orders')" class="text-xs text-brand-blue hover:underline">View All</button>
+                        </div>
+                        <div id="dashboard-recent-orders" class="space-y-3">
+                            <!-- Recent orders will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Account Activity -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-4">Account Activity</h3>
+                        <div id="dashboard-activity-log" class="space-y-3">
+                            <div class="flex items-start gap-3 text-sm">
+                                <div class="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
+                                <div>
+                                    <p class="text-brand-navy dark:text-white">Account created</p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">Just now</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="dashboard-tab-profile" class="dashboard-tab-content hidden">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Profile Information</h3>
+                        <form id="dashboard-profile-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">First Name</label>
+                                    <input type="text" id="dashboard-first-name" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Last Name</label>
+                                    <input type="text" id="dashboard-last-name" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Doe">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Email Address</label>
+                                <input type="email" id="dashboard-email" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="john@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Phone Number</label>
+                                <input type="tel" id="dashboard-phone" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="+27 68 087 1269">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Company Name (Optional)</label>
+                                <input type="text" id="dashboard-company" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Your Company">
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
+                                Save Changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Addresses Tab -->
+                <div id="dashboard-tab-addresses" class="dashboard-tab-content hidden">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest">Saved Addresses</h3>
+                            <button onclick="window.showAddAddressForm()" class="text-xs text-brand-blue hover:underline">+ Add New</button>
+                        </div>
+                        <div id="dashboard-addresses-list" class="space-y-4">
+                            <!-- Addresses will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Add Address Form (hidden by default) -->
+                    <div id="dashboard-add-address-form" class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800 hidden">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Add New Address</h3>
+                        <form id="dashboard-address-form" class="space-y-4">
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Address Label</label>
+                                <input type="text" id="dashboard-address-label" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Home, Office, etc.">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Street Address</label>
+                                <input type="text" id="dashboard-street-address" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="123 Main Street">
+                            </div>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">City</label>
+                                    <input type="text" id="dashboard-city" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Johannesburg">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Province</label>
+                                    <input type="text" id="dashboard-province" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Gauteng">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Postal Code</label>
+                                    <input type="text" id="dashboard-postal-code" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="2000">
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="dashboard-default-address" class="w-4 h-4 accent-blue-500">
+                                <label for="dashboard-default-address" class="text-sm text-gray-500 dark:text-slate-400">Set as default address</label>
+                            </div>
+                            <div class="flex gap-3">
+                                <button type="submit" class="flex-1 bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-3 rounded-xl hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
+                                    Save Address
+                                </button>
+                                <button type="button" onclick="window.hideAddAddressForm()" class="flex-1 bg-gray-100 dark:bg-slate-800 text-brand-navy dark:text-white font-bold uppercase tracking-widest py-3 rounded-xl hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="dashboard-tab-settings" class="dashboard-tab-content hidden">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Account Settings</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                                <div>
+                                    <p class="text-brand-navy dark:text-white font-bold">Email Notifications</p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">Receive order updates and promotions</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="dashboard-email-notifications" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                                <div>
+                                    <p class="text-brand-navy dark:text-white font-bold">SMS Notifications</p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">Get SMS alerts for order status</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="dashboard-sms-notifications" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                                <div>
+                                    <p class="text-brand-navy dark:text-white font-bold">Two-Factor Authentication</p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">Add extra security to your account</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="dashboard-two-factor" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Danger Zone</h3>
+                        <div class="space-y-4">
+                            <button class="w-full p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 rounded-lg text-red-500 dark:text-red-400 font-bold text-sm hover:bg-red-100 dark:hover:bg-red-950/30 transition-colors">
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- VIEW: ADMIN DASHBOARD (ULTIMATE) -->
@@ -974,6 +1543,8 @@
                 <button onclick="window.switchAdminTab('catalog')" id="tab-catalog" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Manage Products</button>
                 <button onclick="window.switchAdminTab('pricing')" id="tab-pricing" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Client Pricing</button>
                 <button onclick="window.switchAdminTab('orders')" id="tab-orders" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Live Orders</button>
+                <button onclick="window.switchAdminTab('leads')" id="tab-leads" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Contact Inquiries</button>
+                <button onclick="window.switchAdminTab('reviews')" id="tab-reviews" class="font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition">Manage Reviews</button>
             </div>
 
             <!-- Tab: Dashboard -->
@@ -1037,6 +1608,24 @@
                 </div>
                 <div id="admin-orders-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
             </div>
+
+            <!-- Tab: Leads / Inquiries -->
+            <div id="admin-tab-leads" class="hidden animate-viewIn">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                    <h3 class="font-black text-xl dark:text-white uppercase tracking-tighter">Contact Inquiries</h3>
+                    <button onclick="window.loadAdminLeads()" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-6 py-3 rounded-xl dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition">Refresh</button>
+                </div>
+                <div id="admin-leads-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
+            </div>
+
+            <!-- Tab: Reviews -->
+            <div id="admin-tab-reviews" class="hidden animate-viewIn">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                    <h3 class="font-black text-xl dark:text-white uppercase tracking-tighter">Client Reviews</h3>
+                    <button onclick="window.loadAdminReviews()" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-6 py-3 rounded-xl dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition">Refresh</button>
+                </div>
+                <div id="admin-reviews-grid" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 hide-scroll"></div>
+            </div>
         </div>
     </div>
 
@@ -1080,8 +1669,8 @@
                 <a href="mailto:ziemie786@gmail.com" class="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-bold text-brand-navy dark:text-white hover:border-brand-blue transition">
                     <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v10a2 2 0 002 2z"></path></svg>                    ziemie786@gmail.com
                 </a>
-                <a href="https://wa.me/27842997866" target="_blank" class="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-transparent bg-[#25D366] text-white text-sm font-bold hover:opacity-90 transition shadow-lg">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>                    084 299 7866
+                <a href="https://wa.me/27742997866" target="_blank" class="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-transparent bg-[#25D366] text-white text-sm font-bold hover:opacity-90 transition shadow-lg">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>                    074 299 7866
                 </a>
             </div>
         </div>
@@ -1476,6 +2065,7 @@
 
                     window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
                     window.renderCatalog();
+                    window.renderBulkTable();
                     if (window.isAdmin) window.renderAdminProducts();
                 }, (error) => {
                     console.error("API Data-fetching error:", error);
@@ -1485,7 +2075,7 @@
             }
         };
 
-        let activeCart = JSON.parse(localStorage.getItem('route64_basket')) || [];
+        let activeCart = JSON.parse(localStorage.getItem('lubritec_cart')) || [];
         let currentFilter = 'all';
 
         /* ========================================== */
@@ -1575,6 +2165,7 @@
                     if (window.currentView !== 'catalog') window.navigate('catalog');
 
                     window.renderCatalog();
+                    window.renderBulkTable();
                     window.updateCartUI();
                 } else {
                     window.customAlert("Error: " + err.message);
@@ -1633,6 +2224,7 @@
                 window.userPricing = {};
                 snapshot.forEach(doc => window.userPricing[doc.id] = doc.data().variants || {});
                 window.renderCatalog();
+                window.renderBulkTable();
                 window.updateCartUI();
             }, (err) => console.error("Pricing sync error:", err));
         }
@@ -1844,9 +2436,10 @@
         }
 
         window.updateCartUI = function() {
-                localStorage.setItem('route64_basket', JSON.stringify(activeCart));
+                console.log('updateCartUI called, activeCart:', activeCart);
+                localStorage.setItem('lubritec_cart', JSON.stringify(activeCart));
                 const container = document.getElementById('cart-items');
-                const badge = document.getElementById('cart-badge');
+                const badge = document.getElementById('cart-count');
                 const empty = document.getElementById('empty-cart-msg');
                 const totalDisplay = document.getElementById('cart-total');
                 if (!container) return;
@@ -1910,6 +2503,7 @@
                 }
                 window.cartTotal = grandTotal;
             }
+            console.log('updateCartUI complete, total:', total);
         }
 
         window.processQuote = async function(sendToWhatsApp = false) {
@@ -1980,6 +2574,836 @@
             window.customAlert("Order Submitted Successfully");
         }
 
+        /* ========================================== */
+        /* BULK ORDER FUNCTIONS */
+        /* ========================================== */
+        window.bulkQuantities = {};
+        window.bulkCurrentFilter = 'all';
+
+        window.filterBulkCategory = function(category) {
+            window.bulkCurrentFilter = category;
+            document.querySelectorAll('.bulk-filter-btn').forEach(btn => {
+                const isActive = btn.dataset.category === category;
+                btn.className = isActive ?
+                    "bulk-filter-btn active px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-brand-navy text-white transition-all" :
+                    "bulk-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all";
+            });
+            window.renderBulkTable();
+        }
+
+        window.renderBulkTable = function() {
+            const tbody = document.getElementById('bulk-table-body');
+            console.log('renderBulkTable called, cloudProducts:', window.cloudProducts);
+            if (!tbody || window.cloudProducts.length === 0) return;
+
+            const filteredProducts = window.bulkCurrentFilter === 'all'
+                ? window.cloudProducts
+                : window.cloudProducts.filter(p => p.category === window.bulkCurrentFilter);
+
+            console.log('Filtered products:', filteredProducts);
+
+            tbody.innerHTML = filteredProducts.map(product => {
+                const defaultVariant = product.variants ? product.variants[0] : { size: 'N/A', price: 0 };
+                const quantity = window.bulkQuantities[`${product.id}-${defaultVariant.size}`] || 0;
+                // Get price - user pricing first, then default variant price
+                let price = 0;
+                if (window.currentUser && window.currentUser.email) {
+                    const pMap = window.userPricing[product.id] || {};
+                    price = pMap[defaultVariant.size] || 0;
+                }
+                if (price === 0 && defaultVariant.price) {
+                    price = defaultVariant.price;
+                }
+                const total = quantity * price;
+                const hasQuantity = quantity > 0;
+
+                const pMap = window.currentUser && window.currentUser.email ? (window.userPricing[product.id] || {}) : {};
+                const priceLabel = window.currentUser && window.currentUser.email && pMap[defaultVariant.size] > 0
+                    ? `R${pMap[defaultVariant.size].toFixed(2)}`
+                    : (defaultVariant.price > 0 ? `R${defaultVariant.price.toFixed(2)}` : "Quote Required");
+
+                console.log('Product:', product.id, 'Default variant:', defaultVariant, 'Quantity:', quantity, 'Price:', price, 'Total:', total);
+
+                return `
+                    <tr class="border-b border-gray-100 dark:border-slate-800 ${hasQuantity ? 'bg-blue-50 dark:bg-blue-900/10' : ''} transition-all" data-product-id="${product.id}">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                    ${product.imgUrl ? `<img src="${product.imgUrl}" alt="${product.name}" class="w-full h-full object-cover">` : ''}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-brand-navy dark:text-white text-sm">${product.name}</h4>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">${priceLabel} / ${defaultVariant.size}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell">
+                            <span class="px-2 py-1 rounded text-xs font-bold text-brand-blue uppercase tracking-wider bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/30">${product.category}</span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <select class="w-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white text-xs font-bold rounded-lg px-2 py-2 outline-none focus:border-brand-blue" onchange="window.updateBulkSize('${product.id}', this.value)">
+                                ${product.variants ? product.variants.map(v => {
+                                    const userPrice = window.currentUser && window.currentUser.email ? (window.userPricing[product.id] || {})[v.size] : 0;
+                                    const variantPrice = userPrice > 0 ? userPrice : (v.price || 0);
+                                    return `<option value="${v.size}" data-price="${variantPrice}" ${v.size === defaultVariant.size ? 'selected' : ''}>${v.size}</option>`;
+                                }).join('') : `<option data-price="${defaultVariant.price || 0}">${defaultVariant.size}</option>`}
+                            </select>
+                        </td>
+                        <td class="p-4 text-center">
+                            <input type="number" min="0" max="999" value="${quantity}" class="w-20 text-center bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold rounded-lg px-3 py-2 outline-none text-sm focus:border-brand-blue ${hasQuantity ? 'border-brand-blue bg-blue-50 dark:bg-blue-900/20' : ''}" onchange="window.updateBulkQuantity('${product.id}', this.value)" onkeyup="window.updateBulkQuantity('${product.id}', this.value)">
+                        </td>
+                        <td class="p-4 text-right">
+                            <span class="font-black ${hasQuantity ? 'text-brand-blue' : 'text-gray-400'}">R${total.toFixed(2)}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        window.updateBulkQuantity = function(productId, value) {
+            console.log('updateBulkQuantity called:', productId, 'value:', value);
+            const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+            if (!row) return;
+
+            const sizeSelect = row.querySelector('select');
+            const size = sizeSelect.value;
+            const key = `${productId}-${size}`;
+            const quantity = parseInt(value) || 0;
+
+            console.log('Key:', key, 'Quantity:', quantity);
+
+            if (quantity > 0) {
+                window.bulkQuantities[key] = quantity;
+            } else {
+                delete window.bulkQuantities[key];
+            }
+
+            console.log('Updated bulkQuantities:', window.bulkQuantities);
+
+            // Update row styling
+            const input = row.querySelector('input');
+            const totalCell = row.querySelector('td:last-child span');
+            const price = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.price) || 0;
+            const total = quantity * price;
+
+            if (quantity > 0) {
+                row.classList.add('bg-blue-50', 'dark:bg-blue-900/10');
+                input.classList.add('border-brand-blue', 'bg-blue-50', 'dark:bg-blue-900/20');
+                totalCell.classList.remove('text-gray-400');
+                totalCell.classList.add('text-brand-blue');
+            } else {
+                row.classList.remove('bg-blue-50', 'dark:bg-blue-900/10');
+                input.classList.remove('border-brand-blue', 'bg-blue-50', 'dark:bg-blue-900/20');
+                totalCell.classList.add('text-gray-400');
+                totalCell.classList.remove('text-brand-blue');
+            }
+
+            totalCell.textContent = `R${total.toFixed(2)}`;
+            window.updateBulkSummary();
+        }
+
+        window.updateBulkSize = function(productId, size) {
+            console.log('updateBulkSize called:', productId, 'size:', size);
+            const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+            if (!row) return;
+
+            const input = row.querySelector('input');
+            const oldKey = `${productId}-${row.dataset.currentSize || ''}`;
+            const newKey = `${productId}-${size}`;
+
+            console.log('Old key:', oldKey, 'New key:', newKey);
+
+            // Transfer quantity if exists
+            if (window.bulkQuantities[oldKey]) {
+                window.bulkQuantities[newKey] = window.bulkQuantities[oldKey];
+                delete window.bulkQuantities[oldKey];
+                input.value = window.bulkQuantities[newKey];
+                console.log('Transferred quantity:', window.bulkQuantities[newKey]);
+            } else {
+                input.value = window.bulkQuantities[newKey] || 0;
+                console.log('No existing quantity, using:', window.bulkQuantities[newKey] || 0);
+            }
+
+            row.dataset.currentSize = size;
+
+            // Update price display
+            const sizeSelect = row.querySelector('select');
+            const price = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.price) || 0;
+            const quantity = parseInt(input.value) || 0;
+            const total = quantity * price;
+
+            console.log('Price:', price, 'Quantity:', quantity, 'Total:', total);
+
+            const priceDisplay = row.querySelector('.text-xs.text-gray-500');
+            if (priceDisplay) {
+                priceDisplay.textContent = price > 0 ? `R${price.toFixed(2)} / ${size}` : `Quote Required / ${size}`;
+            }
+
+            const totalCell = row.querySelector('td:last-child span');
+            totalCell.textContent = `R${total.toFixed(2)}`;
+
+            if (typeof window.updateBulkSummary === 'function') {
+                window.updateBulkSummary();
+            }
+        };
+
+        window.updateBulkSummary = function() {
+            console.log('updateBulkSummary called, bulkQuantities:', window.bulkQuantities);
+            let totalProducts = 0;
+            let totalItems = 0;
+            let subtotal = 0;
+
+            Object.entries(window.bulkQuantities).forEach(([key, qty]) => {
+                if (qty > 0) {
+                    const [productId, size] = key.split('-');
+                    const product = window.cloudProducts.find(p => p.id === productId);
+                    if (product) {
+                        // Try user pricing first, fall back to default product price
+                        let price = 0;
+                        if (window.currentUser && window.currentUser.email) {
+                            const pMap = window.userPricing[productId] || {};
+                            price = pMap[size] || 0;
+                        }
+                        // Fall back to default variant price if no user pricing
+                        if (price === 0 && product.variants) {
+                            const variant = product.variants.find(v => v.size === size);
+                            if (variant) {
+                                price = variant.price || 0;
+                            }
+                        }
+                        totalProducts++;
+                        totalItems += qty;
+                        subtotal += qty * price;
+                        console.log('Summary item:', productId, size, qty, price, 'subtotal:', subtotal);
+                    }
+                }
+            });
+
+            const vat = subtotal * 0.15;
+            const total = subtotal + vat;
+
+            console.log('Summary totals - Products:', totalProducts, 'Items:', totalItems, 'Subtotal:', subtotal, 'VAT:', vat, 'Total:', total);
+
+            // Update DOM elements with null checks
+            const productsEl = document.getElementById('bulk-summary-products');
+            const itemsEl = document.getElementById('bulk-summary-items');
+            const subtotalEl = document.getElementById('bulk-summary-subtotal');
+            const vatEl = document.getElementById('bulk-summary-vat');
+            const totalEl = document.getElementById('bulk-summary-total');
+
+            if (productsEl) productsEl.textContent = totalProducts;
+            if (itemsEl) itemsEl.textContent = totalItems;
+            if (subtotalEl) subtotalEl.textContent = `R${subtotal.toFixed(2)}`;
+            if (vatEl) vatEl.textContent = `R${vat.toFixed(2)}`;
+            if (totalEl) totalEl.textContent = `R${total.toFixed(2)}`;
+        }
+
+        window.addAllBulkToCart = function() {
+            console.log('addAllBulkToCart called', window.bulkQuantities);
+            let added = 0;
+
+            Object.entries(window.bulkQuantities).forEach(([key, qty]) => {
+                if (qty > 0) {
+                    const [productId, size] = key.split('-');
+                    const product = window.cloudProducts.find(p => p.id === productId);
+                    console.log('Adding product:', productId, 'size:', size, 'qty:', qty, 'product:', product);
+                    if (product) {
+                        // Try user pricing first, fall back to default product price
+                        let price = 0;
+                        if (window.currentUser && window.currentUser.email) {
+                            const pMap = window.userPricing[productId] || {};
+                            price = pMap[size] || 0;
+                        }
+                        // Fall back to default variant price if no user pricing
+                        if (price === 0 && product.variants) {
+                            const variant = product.variants.find(v => v.size === size);
+                            if (variant) {
+                                price = variant.price || 0;
+                            }
+                        }
+                        console.log('Price for', productId, size, ':', price);
+
+                        const cartId = `${productId}-${size}`;
+                        const existing = activeCart.find(i => i.cartId === cartId);
+                        if (existing) {
+                            existing.qty += qty;
+                            console.log('Updated existing item:', existing);
+                        } else {
+                            activeCart.push({
+                                cartId,
+                                id: productId,
+                                name: product.name,
+                                size: size,
+                                qty: qty,
+                                price: price
+                            });
+                            console.log('Added new item:', { cartId, id: productId, name: product.name, size: size, qty: qty, price: price });
+                        }
+                        added++;
+                    }
+                }
+            });
+
+            console.log('Total items added:', added, 'Active cart:', activeCart);
+
+            if (added > 0) {
+                // Clear bulk quantities
+                window.bulkQuantities = {};
+                window.renderBulkTable();
+                window.updateBulkSummary();
+
+                // Update cart UI
+                window.updateCartUI();
+
+                // Show cart
+                if (!document.getElementById('cart-sidebar').classList.contains('open')) window.toggleCart();
+
+                window.customAlert(`${added} product(s) added to your quote!`);
+            } else {
+                window.customAlert('Please enter quantities for at least one product.');
+            }
+        }
+
+        window.clearAllBulkQuantities = function() {
+            if (Object.keys(window.bulkQuantities).length === 0) {
+                window.customAlert('No quantities to clear.');
+                return;
+            }
+
+            if (confirm('Are you sure you want to clear all quantities?')) {
+                window.bulkQuantities = {};
+                window.renderBulkTable();
+                window.updateBulkSummary();
+            }
+        }
+
+        window.testBulkOrder = function() {
+            console.log('=== BULK ORDER TEST ===');
+            console.log('cloudProducts:', window.cloudProducts);
+            console.log('bulkQuantities:', window.bulkQuantities);
+            console.log('userPricing:', window.userPricing);
+            console.log('currentUser:', window.currentUser);
+            console.log('activeCart:', activeCart);
+
+            // Test: Add a sample quantity
+            if (window.cloudProducts.length > 0) {
+                const testProduct = window.cloudProducts[0];
+                const testSize = testProduct.variants ? testProduct.variants[0].size : 'N/A';
+                const testKey = `${testProduct.id}-${testSize}`;
+                window.bulkQuantities[testKey] = 1;
+                console.log('Test: Set quantity for', testProduct.id, testSize, 'to 1');
+                window.renderBulkTable();
+                window.updateBulkSummary();
+                window.customAlert(`Test: Added 1 of ${testProduct.name} (${testSize}) to bulk order. Click "Add All to Quote" to add to cart.`);
+            } else {
+                window.customAlert('No products available for testing.');
+            }
+        }
+
+        window.initializeSampleOrders = function() {
+            if (window.userOrders.length === 0) {
+                const statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+                const sampleOrders = [];
+
+                for (let i = 1; i <= 5; i++) {
+                    const status = statuses[Math.floor(Math.random() * statuses.length)];
+                    const date = new Date();
+                    date.setDate(date.getDate() - (i * 7));
+
+                    const orderItems = [];
+                    const numItems = Math.floor(Math.random() * 3) + 1;
+
+                    for (let j = 0; j < numItems; j++) {
+                        const product = window.cloudProducts[Math.floor(Math.random() * window.cloudProducts.length)];
+                        const variant = product.variants ? product.variants[Math.floor(Math.random() * product.variants.length)] : null;
+                        const qty = Math.floor(Math.random() * 3) + 1;
+
+                        if (variant) {
+                            orderItems.push({
+                                productId: product.id,
+                                name: product.name,
+                                size: variant.size,
+                                price: 0, // Will use pricing when logged in
+                                qty: qty,
+                                total: 0
+                            });
+                        }
+                    }
+
+                    const subtotal = 0;
+                    const vat = subtotal * 0.15;
+                    const shipping = status === 'delivered' ? 150 : 0;
+                    const total = subtotal + vat + shipping;
+
+                    sampleOrders.push({
+                        id: `ORD-${String(100000 + i).padStart(6, '0')}`,
+                        date: date.toISOString(),
+                        status: status,
+                        items: orderItems,
+                        subtotal: subtotal,
+                        vat: vat,
+                        shipping: shipping,
+                        total: total,
+                        paymentMethod: 'EFT',
+                        address: '123 Industrial Park, Johannesburg, 2000',
+                        contact: '+27 68 087 1269'
+                    });
+                }
+
+                window.userOrders = sampleOrders;
+                localStorage.setItem('lubritec_orders', JSON.stringify(window.userOrders));
+                console.log('Initialized sample orders:', window.userOrders);
+            }
+        }
+
+        /* ========================================== */
+        /* ORDERS HISTORY FUNCTIONS */
+        /* ========================================== */
+        window.userOrders = JSON.parse(localStorage.getItem('lubritec_orders')) || [];
+        window.ordersCurrentFilter = 'all';
+
+        window.filterOrders = function(filter) {
+            window.ordersCurrentFilter = filter;
+            document.querySelectorAll('.orders-filter-btn').forEach(btn => {
+                const isActive = btn.dataset.filter === filter;
+                btn.className = isActive ?
+                    "orders-filter-btn active px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-brand-navy text-white transition-all" :
+                    "orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all";
+            });
+            window.renderOrders();
+        }
+
+        window.renderOrders = function() {
+            const container = document.getElementById('orders-container');
+            const emptyState = document.getElementById('orders-empty-state');
+
+            const filteredOrders = window.ordersCurrentFilter === 'all'
+                ? window.userOrders
+                : window.userOrders.filter(o => o.status === window.ordersCurrentFilter);
+
+            if (filteredOrders.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            container.innerHTML = filteredOrders.map(order => {
+                const statusClass = `status-${order.status}`;
+                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+                const date = new Date(order.date).toLocaleDateString('en-ZA', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                return `
+                    <div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-slate-800 transition-all hover:border-brand-blue">
+                        <div class="p-4 md:p-6">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest">Order ID</p>
+                                        <p class="font-bold text-brand-navy dark:text-white">${order.id}</p>
+                                    </div>
+                                    <div class="hidden md:block w-px h-8 bg-gray-100 dark:bg-slate-800"></div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest">Date</p>
+                                        <p class="text-brand-navy dark:text-white">${date}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${statusClass}">${statusText}</span>
+                                    <p class="font-black text-xl text-brand-blue">R${order.total.toFixed(2)}</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 mb-4">
+                                ${order.items.slice(0, 3).map(item => `
+                                    <div class="flex justify-between items-center py-2 border-b border-gray-50 dark:border-slate-800 last:border-0">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs text-gray-500 dark:text-slate-400">${item.qty}x</span>
+                                            <span class="text-brand-navy dark:text-white text-sm">${item.name}</span>
+                                            <span class="text-xs text-gray-400 dark:text-slate-600">(${item.size})</span>
+                                        </div>
+                                        <span class="text-brand-navy dark:text-white font-bold text-sm">R${item.total.toFixed(2)}</span>
+                                    </div>
+                                `).join('')}
+                                ${order.items.length > 3 ? `<p class="text-xs text-gray-500 dark:text-slate-400">+${order.items.length - 3} more items</p>` : ''}
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button onclick="window.viewOrderDetails('${order.id}')" class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-all">
+                                    View Details
+                                </button>
+                                <button onclick="window.reorder('${order.id}')" class="flex-1 bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
+                                    Reorder
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.updateOrdersStats = function() {
+            const totalOrders = window.userOrders.length;
+            const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing').length;
+            const completedOrders = window.userOrders.filter(o => o.status === 'delivered').length;
+            const totalSpent = window.userOrders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + o.total, 0);
+
+            document.getElementById('orders-stat-total').textContent = totalOrders;
+            document.getElementById('orders-stat-pending').textContent = pendingOrders;
+            document.getElementById('orders-stat-completed').textContent = completedOrders;
+            document.getElementById('orders-stat-spent').textContent = `R${totalSpent.toFixed(0)}`;
+        }
+
+        window.viewOrderDetails = function(orderId) {
+            const order = window.userOrders.find(o => o.id === orderId);
+            if (!order) return;
+
+            // For now, just show an alert. In a full implementation, this would open a modal
+            let details = `Order: ${order.id}\nDate: ${new Date(order.date).toLocaleString()}\nStatus: ${order.status}\n\nItems:\n`;
+            order.items.forEach(item => {
+                details += `- ${item.qty}x ${item.name} (${item.size}) - R${item.total.toFixed(2)}\n`;
+            });
+            details += `\nTotal: R${order.total.toFixed(2)}`;
+            alert(details);
+        }
+
+        window.reorder = function(orderId) {
+            const order = window.userOrders.find(o => o.id === orderId);
+            if (!order) return;
+
+            let added = 0;
+            order.items.forEach(item => {
+                for (let i = 0; i < item.qty; i++) {
+                    const cartId = `${item.productId || item.id}-${item.size}`;
+                    const existing = activeCart.find(i => i.cartId === cartId);
+                    if (existing) existing.qty += 1;
+                    else activeCart.push({
+                        cartId,
+                        id: item.productId || item.id,
+                        name: item.name,
+                        size: item.size,
+                        qty: 1,
+                        price: item.price || 0
+                    });
+                    added++;
+                }
+            });
+
+            if (added > 0) {
+                window.updateCartUI();
+                if (!document.getElementById('cart-sidebar').classList.contains('open')) window.toggleCart();
+                window.customAlert(`${added} item(s) added to your quote!`);
+            }
+        }
+
+        /* ========================================== */
+        /* USER DASHBOARD FUNCTIONS */
+        /* ========================================== */
+        window.userProfile = JSON.parse(localStorage.getItem('lubritec_profile')) || {
+            firstName: 'John',
+            lastName: 'Doe',
+            email: 'john@example.com',
+            phone: '+27 68 087 1269',
+            company: ''
+        };
+
+        window.userAddresses = JSON.parse(localStorage.getItem('lubritec_addresses')) || [
+            {
+                id: 1,
+                label: 'Office',
+                street: '123 Industrial Park',
+                city: 'Johannesburg',
+                province: 'Gauteng',
+                postalCode: '2000',
+                isDefault: true
+            }
+        ];
+
+        window.switchDashboardTab = function(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.dashboard-nav-tab').forEach(btn => {
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('active', 'bg-brand-navy', 'dark:bg-brand-blue', 'text-white');
+                    btn.classList.remove('text-gray-600', 'dark:text-gray-300');
+                } else {
+                    btn.classList.remove('active', 'bg-brand-navy', 'dark:bg-brand-blue', 'text-white');
+                    btn.classList.add('text-gray-600', 'dark:text-gray-300');
+                }
+            });
+
+            // Update tab content
+            document.querySelectorAll('.dashboard-tab-content').forEach(content => {
+                if (content.id === `dashboard-tab-${tabName}`) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+
+            if (tabName === 'overview') {
+                window.updateDashboardStats();
+                window.renderDashboardRecentOrders();
+            } else if (tabName === 'profile') {
+                window.updateDashboardProfileDisplay();
+            } else if (tabName === 'addresses') {
+                window.renderDashboardAddresses();
+            }
+        };
+
+        window.updateDashboardProfileDisplay = function() {
+            if (!window.currentUser) return;
+
+            const initials = (window.userProfile.firstName[0] + window.userProfile.lastName[0]).toUpperCase();
+            const avatarEl = document.getElementById('dashboard-avatar-initials');
+            if (avatarEl) avatarEl.textContent = initials;
+
+            const nameEl = document.getElementById('dashboard-profile-name');
+            if (nameEl) nameEl.textContent = `${window.userProfile.firstName} ${window.userProfile.lastName}`;
+
+            const emailEl = document.getElementById('dashboard-profile-email');
+            if (emailEl) emailEl.textContent = window.userProfile.email;
+
+            // Update form fields
+            const firstNameEl = document.getElementById('dashboard-first-name');
+            if (firstNameEl) firstNameEl.value = window.userProfile.firstName;
+
+            const lastNameEl = document.getElementById('dashboard-last-name');
+            if (lastNameEl) lastNameEl.value = window.userProfile.lastName;
+
+            const emailInputEl = document.getElementById('dashboard-email');
+            if (emailInputEl) emailInputEl.value = window.userProfile.email;
+
+            const phoneEl = document.getElementById('dashboard-phone');
+            if (phoneEl) phoneEl.value = window.userProfile.phone;
+
+            const companyEl = document.getElementById('dashboard-company');
+            if (companyEl) companyEl.value = window.userProfile.company;
+        };
+
+        window.updateDashboardStats = function() {
+            const totalOrders = window.userOrders.length;
+            const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing').length;
+            const completedOrders = window.userOrders.filter(o => o.status === 'delivered').length;
+            const totalSpent = window.userOrders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + (o.total || 0), 0);
+
+            const totalOrdersEl = document.getElementById('dashboard-stat-total-orders');
+            const pendingOrdersEl = document.getElementById('dashboard-stat-pending-orders');
+            const completedOrdersEl = document.getElementById('dashboard-stat-completed-orders');
+            const totalSpentEl = document.getElementById('dashboard-stat-total-spent');
+
+            if (totalOrdersEl) totalOrdersEl.textContent = totalOrders;
+            if (pendingOrdersEl) pendingOrdersEl.textContent = pendingOrders;
+            if (completedOrdersEl) completedOrdersEl.textContent = completedOrders;
+            if (totalSpentEl) totalSpentEl.textContent = `R${totalSpent.toFixed(0)}`;
+        };
+
+        window.renderDashboardRecentOrders = function() {
+            const container = document.getElementById('dashboard-recent-orders');
+            const recentOrders = window.userOrders.slice(0, 5);
+
+            if (recentOrders.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 dark:text-slate-400 text-sm text-center py-4">No orders yet</p>';
+                return;
+            }
+
+            container.innerHTML = recentOrders.map(order => {
+                const statusClass = `status-${order.status}`;
+                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+                const date = new Date(order.date).toLocaleDateString('en-ZA', {
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                return `
+                    <div class="flex items-center justify-between py-3 border-b border-gray-50 dark:border-slate-800 last:border-0">
+                        <div class="flex items-center gap-4">
+                            <div>
+                                <p class="text-brand-navy dark:text-white font-bold text-sm">${order.id}</p>
+                                <p class="text-xs text-gray-500 dark:text-slate-400">${date}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="px-2 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${statusClass}">${statusText}</span>
+                            <p class="font-black text-brand-blue text-sm">R${order.total.toFixed(2)}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
+
+        window.renderDashboardAddresses = function() {
+            const container = document.getElementById('dashboard-addresses-list');
+
+            if (window.userAddresses.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 dark:text-slate-400 text-sm text-center py-4">No saved addresses</p>';
+                return;
+            }
+
+            container.innerHTML = window.userAddresses.map(address => `
+                <div class="p-4 bg-gray-50 dark:bg-slate-800 rounded-lg border ${address.isDefault ? 'border-brand-blue' : 'border-gray-100 dark:border-slate-700'}">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <p class="text-brand-navy dark:text-white font-bold text-sm">${address.label}</p>
+                            ${address.isDefault ? '<span class="text-xs text-brand-blue uppercase tracking-wider">Default</span>' : ''}
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="window.editDashboardAddress(${address.id})" class="text-xs text-gray-400 hover:text-brand-navy dark:hover:text-white">Edit</button>
+                            <button onclick="window.deleteDashboardAddress(${address.id})" class="text-xs text-red-400 hover:text-red-300">Delete</button>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">${address.street}</p>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">${address.city}, ${address.province} ${address.postalCode}</p>
+                </div>
+            `).join('');
+        };
+
+        window.showAddAddressForm = function() {
+            document.getElementById('dashboard-add-address-form').classList.remove('hidden');
+        };
+
+        window.hideAddAddressForm = function() {
+            document.getElementById('dashboard-add-address-form').classList.add('hidden');
+            document.getElementById('dashboard-address-form').reset();
+        };
+
+        window.deleteDashboardAddress = function(id) {
+            if (confirm('Are you sure you want to delete this address?')) {
+                window.userAddresses = window.userAddresses.filter(a => a.id !== id);
+                localStorage.setItem('lubritec_addresses', JSON.stringify(window.userAddresses));
+                window.renderDashboardAddresses();
+            }
+        };
+
+        window.editDashboardAddress = function(id) {
+            const address = window.userAddresses.find(a => a.id === id);
+            if (address) {
+                document.getElementById('dashboard-address-label').value = address.label;
+                document.getElementById('dashboard-street-address').value = address.street;
+                document.getElementById('dashboard-city').value = address.city;
+                document.getElementById('dashboard-province').value = address.province;
+                document.getElementById('dashboard-postal-code').value = address.postalCode;
+                document.getElementById('dashboard-default-address').checked = address.isDefault;
+                window.showAddAddressForm();
+            }
+        };
+
+        // Dashboard profile form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const dashboardProfileForm = document.getElementById('dashboard-profile-form');
+            if (dashboardProfileForm) {
+                dashboardProfileForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    window.userProfile.firstName = document.getElementById('dashboard-first-name').value;
+                    window.userProfile.lastName = document.getElementById('dashboard-last-name').value;
+                    window.userProfile.email = document.getElementById('dashboard-email').value;
+                    window.userProfile.phone = document.getElementById('dashboard-phone').value;
+                    window.userProfile.company = document.getElementById('dashboard-company').value;
+
+                    localStorage.setItem('lubritec_profile', JSON.stringify(window.userProfile));
+                    window.updateDashboardProfileDisplay();
+
+                    // Save to Firebase
+                    await window.saveUserProfileToFirebase();
+
+                    window.customAlert('Profile updated successfully!');
+                });
+            }
+
+            // Dashboard address form submission
+            const dashboardAddressForm = document.getElementById('dashboard-address-form');
+            if (dashboardAddressForm) {
+                dashboardAddressForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const newAddress = {
+                        id: Date.now(),
+                        label: document.getElementById('dashboard-address-label').value,
+                        street: document.getElementById('dashboard-street-address').value,
+                        city: document.getElementById('dashboard-city').value,
+                        province: document.getElementById('dashboard-province').value,
+                        postalCode: document.getElementById('dashboard-postal-code').value,
+                        isDefault: document.getElementById('dashboard-default-address').checked
+                    };
+
+                    // If this is set as default, remove default from others
+                    if (newAddress.isDefault) {
+                        window.userAddresses.forEach(a => a.isDefault = false);
+                    }
+
+                    window.userAddresses.push(newAddress);
+                    localStorage.setItem('lubritec_addresses', JSON.stringify(window.userAddresses));
+
+                    window.hideAddAddressForm();
+                    window.renderDashboardAddresses();
+
+                    window.customAlert('Address saved successfully!');
+                });
+            }
+        });
+
+        // Load user profile from Firebase
+        window.loadUserProfileFromFirebase = async function() {
+            if (!window.currentUser || !window.currentUser.uid) return;
+
+            try {
+                const docSnap = await window.getDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'));
+                if (docSnap.exists()) {
+                    const d = docSnap.data();
+                    window.userProfile = {
+                        firstName: d.contactName?.split(' ')[0] || window.userProfile.firstName,
+                        lastName: d.contactName?.split(' ').slice(1).join(' ') || window.userProfile.lastName,
+                        email: window.currentUser.email || window.userProfile.email,
+                        phone: d.phone || window.userProfile.phone,
+                        company: d.bizName || window.userProfile.company
+                    };
+                    localStorage.setItem('lubritec_profile', JSON.stringify(window.userProfile));
+                }
+            } catch (e) {
+                console.error("Error loading profile:", e);
+            }
+        };
+
+        // Load user orders from Firebase
+        window.loadUserOrdersFromFirebase = async function() {
+            if (!window.currentUser || !window.currentUser.uid) return;
+
+            try {
+                const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/orders`));
+                const snapshot = await window.getDocs(q);
+                const orders = [];
+                snapshot.forEach(doc => {
+                    orders.push({ id: doc.id, ...doc.data() });
+                });
+                window.userOrders = orders;
+                localStorage.setItem('lubritec_orders', JSON.stringify(orders));
+            } catch (e) {
+                console.error("Error loading orders:", e);
+            }
+        };
+
+        // Save user profile to Firebase
+        window.saveUserProfileToFirebase = async function() {
+            if (!window.currentUser || !window.currentUser.uid) return;
+
+            try {
+                await window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'), {
+                    bizName: window.userProfile.company,
+                    contactName: `${window.userProfile.firstName} ${window.userProfile.lastName}`,
+                    phone: window.userProfile.phone,
+                    email: window.userProfile.email,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+            } catch (e) {
+                console.error("Error saving profile:", e);
+            }
+        };
+
         window.handleContactSubmit = async function(e) {
             e.preventDefault();
             const btn = document.getElementById('contact-submit');
@@ -2004,6 +3428,12 @@
         window.loadClientLeads = function() {
             const list = document.getElementById('client-leads-list');
             if (!list) return;
+
+            const reviewSection = document.getElementById('client-review-section');
+            if (reviewSection) {
+                if (window.currentUser && window.currentUser.email) reviewSection.classList.remove('hidden');
+                else reviewSection.classList.add('hidden');
+            }
 
             if (window.currentUser && window.currentUser.email && window.firebaseDb) {
                 const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/inquiries`));
@@ -2083,15 +3513,17 @@
         /* 6. ADMIN DASHBOARD & ANALYTICS */
         /* ========================================== */
         window.switchAdminTab = function(tab) {
-            ['dashboard', 'catalog', 'pricing', 'orders'].forEach(t => {
+            ['dashboard', 'catalog', 'pricing', 'orders', 'leads', 'reviews'].forEach(t => {
                 document.getElementById(`admin-tab-${t}`).classList.add('hidden');
                 document.getElementById(`tab-${t}`).className = "font-black uppercase text-slate-400 pb-2 hover:text-brand-navy dark:hover:text-white text-[10px] md:text-xs tracking-widest transition";
             });
             document.getElementById(`admin-tab-${tab}`).classList.remove('hidden');
             document.getElementById(`tab-${tab}`).className = "font-black uppercase text-brand-blue border-b-2 border-brand-blue pb-2 text-[10px] md:text-xs tracking-widest transition";
 
-            if (tab === 'orders' || tab === 'dashboard') window.loadAdminOrders();
+            if (tab === 'orders' || tab === 'dashboard') { window.loadAdminOrders(); }
             if (tab === 'catalog') window.renderAdminProducts();
+            if (tab === 'leads') window.loadAdminLeads();
+            if (tab === 'reviews') window.loadAdminReviews();
         };
 
         window.loadAdminUsers = function() {
@@ -2313,6 +3745,173 @@
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
         };
 
+        window.loadAdminLeads = async function() {
+            const grid = document.getElementById('admin-leads-grid');
+            if(!window.firebaseDb || !grid) return;
+            grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest animate-pulse'>Fetching Inquiries...</p>";
+            
+            try {
+                const leadsSnap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`));
+                let allLeads = [];
+                leadsSnap.forEach(doc => { allLeads.push({ ...doc.data(), id: doc.id }); });
+                allLeads.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+                if(allLeads.length === 0) { grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest'>No contact inquiries found</p>"; return; }
+
+                grid.innerHTML = allLeads.map(data => `
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col md:flex-row gap-6 justify-between items-start hover:border-brand-blue transition">
+                        <div class="flex-1 w-full">
+                            <span class="text-[9px] font-black bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500 uppercase tracking-widest mb-3 inline-block">${new Date(data.date).toLocaleString()}</span>
+                            <h4 class="font-black text-lg dark:text-white text-brand-navy mb-1 tracking-tight">${data.name}</h4>
+                            <div class="flex flex-wrap gap-4 text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium">
+                                <span><strong class="dark:text-gray-300">Email:</strong> <a href="mailto:${data.email}" class="text-brand-blue hover:underline">${data.email}</a></span>
+                                ${data.phone ? `<span><strong class="dark:text-gray-300">Phone:</strong> <a href="tel:${data.phone}" class="text-brand-blue hover:underline">${data.phone}</a></span>` : ''}
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner text-sm dark:text-gray-300 whitespace-pre-wrap">${data.message}</div>
+                        </div>
+                        <div class="flex flex-col gap-2 shrink-0">
+                            <button onclick="window.deleteAdminLead('${data.id}')" class="text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-red-200 transition flex items-center gap-2">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+                grid.innerHTML = "<div class='p-10 text-center bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30'><p class='text-brand-red text-xs font-black uppercase tracking-widest'>Error loading inquiries.</p></div>";
+            }
+        };
+
+        window.deleteAdminLead = async function(leadId) {
+            if (!confirm("Are you sure you want to permanently delete this inquiry?")) return;
+            try {
+                await window.deleteDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`, leadId));
+                window.customAlert("Inquiry deleted successfully.");
+                window.loadAdminLeads();
+            } catch (e) { window.customAlert("Error deleting inquiry."); }
+        };
+
+        window.submitSiteReview = async function() {
+            if (!window.currentUser) return window.customAlert("Please log in first");
+            const role = document.getElementById('review-role').value.trim();
+            const text = document.getElementById('review-text').value.trim();
+            if (!text) return window.customAlert("Review text cannot be empty.");
+
+            let name = window.currentUser.email.split('@')[0];
+            try {
+                const profileSnap = await window.getDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'));
+                if(profileSnap.exists() && profileSnap.data().contactName) {
+                    name = profileSnap.data().contactName;
+                }
+            } catch (e) {}
+
+            const payload = {
+                uid: window.currentUser.uid,
+                name: name,
+                role: role,
+                text: text,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+
+            try {
+                await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`), payload);
+                window.customAlert("Review submitted and pending admin approval!");
+                document.getElementById('review-text').value = '';
+                document.getElementById('review-role').value = '';
+            } catch (e) {
+                console.error(e);
+                window.customAlert("Error submitting review.");
+            }
+        };
+
+        window.loadAdminReviews = async function() {
+            const grid = document.getElementById('admin-reviews-grid');
+            if(!window.firebaseDb || !grid) return;
+            grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest animate-pulse'>Fetching Reviews...</p>";
+            
+            try {
+                const snap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`));
+                let allReviews = [];
+                snap.forEach(doc => allReviews.push({ id: doc.id, ...doc.data() }));
+                allReviews.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+                if(allReviews.length === 0) {
+                    grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest'>No reviews found</p>"; 
+                    return;
+                }
+
+                grid.innerHTML = allReviews.map(r => `
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col md:flex-row gap-6 justify-between items-start hover:border-brand-blue transition">
+                        <div class="flex-1 w-full">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="text-[9px] font-black bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500 uppercase tracking-widest">${new Date(r.date).toLocaleDateString()}</span>
+                                <span class="text-[9px] font-black px-3 py-1 rounded-md uppercase tracking-widest ${r.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'}">${r.status}</span>
+                            </div>
+                            <h4 class="font-black text-base dark:text-white text-brand-navy mb-1 tracking-tight">${r.name} <span class="text-xs text-gray-500 font-normal">(${r.role || 'N/A'})</span></h4>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner text-sm dark:text-gray-300 italic">"${r.text}"</div>
+                        </div>
+                        <div class="flex flex-col gap-2 shrink-0 w-full md:w-auto mt-2 md:mt-0">
+                            ${r.status === 'pending' ? `<button onclick="window.approveReview('${r.id}')" class="text-[9px] bg-green-500 text-white px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-md">Approve</button>` : `<button onclick="window.unapproveReview('${r.id}')" class="text-[9px] bg-orange-500 text-white px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-orange-600 transition flex items-center justify-center gap-2 shadow-md">Unapprove</button>`}
+                            <button onclick="window.deleteReview('${r.id}')" class="text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-red-200 transition flex items-center justify-center gap-2">Trash</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+                grid.innerHTML = "<div class='p-10 text-center bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30'><p class='text-brand-red text-xs font-black uppercase tracking-widest'>Error loading reviews.</p></div>";
+            }
+        };
+
+        window.approveReview = async function(id) {
+            try { await window.updateDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`, id), { status: 'approved' }); window.customAlert("Review Approved"); window.loadAdminReviews(); window.loadHomepageReviews(); } catch(e) { window.customAlert("Error approving review"); }
+        };
+
+        window.unapproveReview = async function(id) {
+            try { await window.updateDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`, id), { status: 'pending' }); window.customAlert("Review Unapproved"); window.loadAdminReviews(); window.loadHomepageReviews(); } catch(e) { window.customAlert("Error updating review"); }
+        };
+
+        window.deleteReview = async function(id) {
+            if(!confirm("Delete this review?")) return;
+            try { await window.deleteDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`, id)); window.customAlert("Review Deleted"); window.loadAdminReviews(); window.loadHomepageReviews(); } catch(e) { window.customAlert("Error deleting review"); }
+        };
+
+        window.loadHomepageReviews = async function() {
+            if (!window.firebaseDb) return;
+            try {
+                const snap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`));
+                const reviews = [];
+                snap.forEach(doc => { const data = doc.data(); if(data.status === 'approved') reviews.push({ id: doc.id, ...data }); });
+                
+                const container = document.getElementById('homepage-reviews-grid');
+                const section = document.getElementById('homepage-reviews-section');
+                if(!container || !section) return;
+                
+                if(reviews.length === 0) { section.classList.add('hidden'); return; }
+                
+                section.classList.remove('hidden');
+                container.innerHTML = reviews.map(r => `
+                    <div class="pro-card p-8 md:p-10 shadow-xl relative overflow-hidden group">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-4">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 italic mb-6">"${r.text}"</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center text-white font-black text-lg">${r.name.charAt(0).toUpperCase()}</div>
+                            <div>
+                                <h4 class="font-black text-brand-navy dark:text-white text-sm">${r.name}</h4>
+                                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">${r.role || 'Verified Client'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) { console.error(e); }
+        };
+
         /* ========================================== */
         /* 7. UI & NAVIGATION HELPER FUNCTIONS */
         /* ========================================== */
@@ -2338,8 +3937,16 @@
                     target.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' });
                     void target.offsetWidth; target.classList.add('active');
                     if (viewId === 'catalog') window.renderCatalog();
+                    if (viewId === 'bulk-order') {
+                        console.log('Navigating to bulk-order view');
+                        window.renderBulkTable();
+                        window.updateBulkSummary();
+                    }
+                    if (viewId === 'orders') { window.renderOrders(); window.updateOrdersStats(); }
+                    if (viewId === 'dashboard') { window.switchDashboardTab('overview'); window.updateDashboardProfileDisplay(); }
                     if (viewId === 'customer') window.loadClientLeads();
                     if (viewId === 'admin' && window.isAdmin) window.switchAdminTab('dashboard');
+                    if (viewId === 'home') window.loadHomepageReviews();
                 }
             }
         }
@@ -2393,8 +4000,8 @@
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.getElementById('moon-icon').classList.toggle('hidden', isDark);
-            document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
+            if(document.getElementById('moon-icon')) document.getElementById('moon-icon').classList.toggle('hidden', isDark);
+            if(document.getElementById('sun-icon')) document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
         }
 
         window.customAlert = function(msg) {
@@ -2655,7 +4262,8 @@
             setTimeout(() => {
                 const loader = document.getElementById('page-loader');
                 if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 700); }
-                window.initCatalog();
+                try { if(typeof window.initCatalog === 'function') window.initCatalog(); } catch(e) { console.error('Error initializing catalog:', e); }
+                try { if(typeof window.loadHomepageReviews === 'function') window.loadHomepageReviews(); } catch(e) { console.error('Error loading reviews:', e); }
             }, 1000);
         });
     </script>

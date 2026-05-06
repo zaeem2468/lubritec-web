@@ -10,6 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="data.js"></script>
 
     <!-- Firebase Integration Logic -->
     <script type="module">
@@ -26,7 +27,7 @@
         mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navAnalyticsBtn) navAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none';
         if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none";
         if (profileSection) profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out';
-        if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid);
+        if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid); if(typeof window.loadUserOrdersFromFirebase === 'function') window.loadUserOrdersFromFirebase();
         if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navAnalyticsBtn)
         navAnalyticsBtn.style.display = 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection) profileSection.classList.add('hidden');
         if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText
@@ -390,13 +391,13 @@
         }
         /* Enhanced cart badge */
         
-        #cart-badge {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
+        #cart-count {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4) !important;
             border-color: rgba(255, 255, 255, 0.3) !important;
         }
         
-        #cart-badge:not(.scale-0) {
+        #cart-count:not(.scale-0) {
             animation: badgePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
@@ -424,8 +425,8 @@
         
         .pro-card:hover {
             transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 40px 80px -15px rgba(37, 99, 235, 0.3);
-            border-color: rgba(37, 99, 235, 0.5);
+            box-shadow: 0 40px 80px -15px rgba(251, 191, 36, 0.3);
+            border-color: rgba(251, 191, 36, 0.5);
         }
         /* Button gradient animations */
         
@@ -450,7 +451,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.3), transparent);
             pointer-events: none;
         }
         /* Enhanced hero section depth */
@@ -469,16 +470,38 @@
         }
         
          ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, rgba(37, 99, 235, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
+            background: linear-gradient(180deg, rgba(251, 191, 36, 0.6) 0%, rgba(217, 119, 6, 0.4) 100%);
             border-radius: 10px;
             border: 2px solid transparent;
             background-clip: padding-box;
             transition: background 0.3s ease;
         }
-        
+
          ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.6) 100%);
+            background: linear-gradient(180deg, rgba(251, 191, 36, 0.8) 0%, rgba(217, 119, 6, 0.6) 100%);
             background-clip: padding-box;
+        }
+
+        /* Order Status Styles */
+        .status-pending,
+        .status-processing,
+        .status-Pending Processing {
+            background: rgba(251, 191, 36, 0.1);
+            color: #d97706;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .status-delivered,
+        .status-completed {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-cancelled {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
     </style>
 </head>
@@ -612,6 +635,8 @@
         <div class="flex flex-col items-center gap-8 text-brand-navy dark:text-white font-black uppercase tracking-widest text-lg md:text-xl">
             <button onclick="window.navigate('home'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Home</button>
             <button onclick="window.navigate('catalog'); window.toggleMobileMenu()" id="mobile-order-btn" class="hover:text-brand-red transition text-brand-red" style="display:none;">Order Portal</button>
+            <button onclick="window.navigate('orders'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Orders</button>
+            <button onclick="window.navigate('dashboard'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Account</button>
             <button onclick="window.navigate('tracking'); window.toggleMobileMenu()" id="mobile-tracking-btn" class="hover:text-emerald-500 transition text-emerald-600" style="display:none;">Orders & Tracking</button>
             <button onclick="window.navigate('reorder'); window.toggleMobileMenu()" id="mobile-reorder-btn" class="hover:text-blue-500 transition text-blue-600" style="display:none;">Quick Reorder</button>
             <button onclick="window.navigate('calculator'); window.toggleMobileMenu()" id="mobile-calculator-btn" class="hover:text-purple-500 transition text-purple-600" style="display:none;">Bulk Calculator</button>
@@ -627,59 +652,65 @@
 
     <!-- TOP NAVIGATION -->
     <nav class="nav-sticky">
-        <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-24 flex justify-between items-center gap-8">
-            <div class="flex items-center gap-3 md:gap-4 cursor-pointer group" onclick="window.navigate('home')" style="transition: all 0.3s ease;">
-                <div class="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 transition-all duration-300 flex items-center justify-center transform group-hover:scale-110">
+        <div class="max-w-[1400px] mx-auto px-3 md:px-5 h-20 md:h-24 flex justify-between items-center gap-4 md:gap-6">
+            <div class="flex items-center gap-2 md:gap-3 cursor-pointer group flex-shrink-0" onclick="window.navigate('home')" style="transition: all 0.3s ease;">
+                <div class="h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 flex-shrink-0 transition-all duration-300 flex items-center justify-center transform group-hover:scale-110">
                     <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
-                <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block transform transition-all duration-300 group-hover:text-brand-blue">LUBRICANTS</span>
+                <span class="font-black text-lg md:text-2xl lg:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block transform transition-all duration-300 group-hover:text-brand-blue">LUBRICANTS</span>
             </div>
 
-            <div class="hidden xl:flex items-center gap-1 text-[11px] font-black uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300 h-full flex-1 justify-center">
-                <button onclick="window.navigate('home')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+            <div class="hidden lg:flex items-center gap-0.5 text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em] text-slate-600 dark:text-slate-300 h-full flex-1 justify-center overflow-x-auto">
+                <button onclick="window.navigate('home')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
                     Home
                 </button>
-                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group text-brand-red font-bold">
+                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group text-brand-red font-bold whitespace-nowrap">
                     Order Portal
                 </button>
-                <button onclick="window.navigate('process')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                <button onclick="window.navigate('orders')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    Orders
+                </button>
+                <button onclick="window.navigate('dashboard')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                    Account
+                </button>
+                <button onclick="window.navigate('process')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
                     How To Order
                 </button>
-                <button onclick="window.navigate('about')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                <button onclick="window.navigate('about')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
                     About
                 </button>
-                <button onclick="window.navigate('contact')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                <button onclick="window.navigate('contact')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
                     Contact
                 </button>
-                <button onclick="window.navigate('customer')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
+                <button onclick="window.navigate('customer')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
                     My Inquiries
                 </button>
-                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="px-4 md:px-6 py-2 text-brand-blue font-bold hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 relative group">
+                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="px-2 md:px-3 lg:px-4 py-2 text-brand-blue font-bold hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 relative group whitespace-nowrap">
                     Login
                 </button>
-                <button onclick="window.location.href='analytics.html'" id="nav-analytics-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
+                <button onclick="window.location.href='analytics.html'" id="nav-analytics-btn" style="display: none;" class="px-2 md:px-3 lg:px-4 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group whitespace-nowrap">
                     Analytics
                 </button>
-                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
+                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="px-2 md:px-3 lg:px-4 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group whitespace-nowrap">
                     Admin
                 </button>
             </div>
 
-            <div class="flex items-center gap-2 md:gap-4 ml-auto">
-                <button onclick="window.toggleTheme()" class="text-slate-600 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white transition-all p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transform hover:scale-110"
+            <div class="flex items-center gap-1.5 md:gap-3 flex-shrink-0">
+                <button onclick="window.toggleTheme()" class="text-slate-600 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white transition-all p-1.5 md:p-2 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transform hover:scale-110"
                     id="theme-toggle">
-                    <svg id="moon-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    <svg id="sun-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moon-icon" class="w-4 h-4 md:w-5 md:h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg id="sun-icon" class="w-4 h-4 md:w-5 md:h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
 
-                <button onclick="window.toggleCart()" class="relative p-2 md:p-4 rounded-lg md:rounded-xl transition-all duration-300 flex items-center gap-2 md:gap-3 group hover:scale-105 transform active:scale-95">
-                    <span class="text-[10px] md:text-xs uppercase font-black px-1 md:px-3 text-brand-blue hidden sm:block">Basket</span>
-                    <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-125 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all duration-300 border-2 border-white shadow-lg">0</span>
+                <button onclick="window.toggleCart()" class="relative p-1.5 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 flex items-center gap-1.5 md:gap-2 group hover:scale-105 transform active:scale-95">
+                    <span class="text-[9px] md:text-xs uppercase font-black px-1 md:px-2 text-brand-blue hidden sm:block">Basket</span>
+                    <svg class="w-4 h-4 md:w-5 md:h-5 text-brand-blue group-hover:scale-125 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute -top-1 -right-1 md:-top-1.5 md:-right-1.5 bg-brand-red text-white text-[8px] md:text-[10px] font-black h-4 w-4 md:h-6 md:w-6 flex items-center justify-center rounded-full scale-0 transition-all duration-300 border-2 border-white shadow-lg">0</span>
                 </button>
 
-                <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
-                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button onclick="window.toggleMobileMenu()" class="lg:hidden text-brand-navy dark:text-white p-1.5 md:p-2 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
@@ -1200,6 +1231,322 @@
                 <input type="text" id="review-role" placeholder="Your Role / Company" class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition shadow-inner">
                 <textarea id="review-text" rows="3" placeholder="Write your review here..." class="w-full p-4 rounded-xl border border-transparent bg-slate-100/50 dark:bg-slate-800/50 text-sm outline-none focus:ring-2 focus:ring-brand-blue/50 dark:text-white transition resize-none shadow-inner"></textarea>
                 <button onclick="window.submitSiteReview()" class="py-4 px-8 bg-brand-navy dark:bg-brand-blue text-white font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition shadow-xl text-[10px]">Submit Review</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: ORDERS HISTORY -->
+    <div id="view-orders" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
+        <div class="mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white mb-4">Order History</h1>
+            <p class="text-gray-500 dark:text-slate-400 text-lg">Track your orders and reorder with one click.</p>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-slate-800">
+                <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Total Orders</p>
+                <p id="orders-stat-total" class="text-2xl font-black text-brand-navy dark:text-white">0</p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-slate-800">
+                <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Pending</p>
+                <p id="orders-stat-pending" class="text-2xl font-black text-yellow-500">0</p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-slate-800">
+                <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Completed</p>
+                <p id="orders-stat-completed" class="text-2xl font-black text-green-500">0</p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-slate-800">
+                <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Total Spent</p>
+                <p id="orders-stat-spent" class="text-2xl font-black text-brand-blue">R0</p>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap gap-2 mb-6">
+            <button onclick="window.filterOrders('all')" class="orders-filter-btn active px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-brand-navy text-white transition-all" data-filter="all">All Orders</button>
+            <button onclick="window.filterOrders('pending')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="pending">Pending</button>
+            <button onclick="window.filterOrders('processing')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="processing">Processing</button>
+            <button onclick="window.filterOrders('shipped')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="shipped">Shipped</button>
+            <button onclick="window.filterOrders('delivered')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="delivered">Delivered</button>
+            <button onclick="window.filterOrders('cancelled')" class="orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+                data-filter="cancelled">Cancelled</button>
+        </div>
+
+        <!-- Orders List -->
+        <div id="orders-container" class="space-y-4">
+            <!-- Orders will be rendered here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="orders-empty-state" class="bg-white dark:bg-slate-900 rounded-2xl p-12 text-center shadow-xl border border-dashed border-gray-200 dark:border-slate-800 hidden">
+            <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            <h3 class="text-xl font-bold text-brand-navy dark:text-white mb-2">No Orders Yet</h3>
+            <p class="text-gray-500 dark:text-slate-400 mb-6">Start shopping to see your orders here.</p>
+            <button onclick="window.navigate('catalog')" class="inline-block bg-brand-blue text-white font-bold uppercase tracking-widest px-8 py-3 rounded-xl hover:bg-blue-600 transition-all">
+                Browse Catalog
+            </button>
+        </div>
+    </div>
+
+    <!-- VIEW: USER DASHBOARD -->
+    <div id="view-dashboard" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
+        <div class="mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white mb-4">My Account</h1>
+            <p class="text-gray-500 dark:text-slate-400 text-lg">Manage your profile, view orders, and access your account settings.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                    <!-- Profile Summary -->
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-brand-blue to-blue-600 flex items-center justify-center text-2xl font-bold text-white">
+                            <span id="dashboard-avatar-initials">JD</span>
+                        </div>
+                        <div>
+                            <h3 id="dashboard-profile-name" class="font-bold text-brand-navy dark:text-white text-lg">John Doe</h3>
+                            <p id="dashboard-profile-email" class="text-sm text-gray-500 dark:text-slate-400">john@example.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Tabs -->
+                    <div class="space-y-2">
+                        <button onclick="window.switchDashboardTab('overview')" class="dashboard-nav-tab active w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="overview">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                                Overview
+                            </span>
+                        </button>
+                        <button onclick="window.switchDashboardTab('profile')" class="dashboard-nav-tab w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="profile">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                Profile
+                            </span>
+                        </button>
+                        <button onclick="window.switchDashboardTab('addresses')" class="dashboard-nav-tab w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="addresses">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Addresses
+                            </span>
+                        </button>
+                        <button onclick="window.switchDashboardTab('settings')" class="dashboard-nav-tab w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="settings">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Settings
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                    <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-4">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <button onclick="window.navigate('catalog')" class="w-full p-3 rounded-lg text-sm text-brand-navy dark:text-white bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            Browse Catalog
+                        </button>
+                        <button onclick="window.navigate('orders')" class="w-full p-3 rounded-lg text-sm text-brand-navy dark:text-white bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            View Orders
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <!-- Overview Tab -->
+                <div id="dashboard-tab-overview" class="dashboard-tab-content">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/10 rounded-xl p-4 border border-blue-100 dark:border-blue-900/30">
+                            <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Total Orders</p>
+                            <p id="dashboard-stat-total-orders" class="text-2xl font-black text-brand-navy dark:text-white">0</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-900/10 rounded-xl p-4 border border-yellow-100 dark:border-yellow-900/30">
+                            <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Pending</p>
+                            <p id="dashboard-stat-pending-orders" class="text-2xl font-black text-yellow-600">0</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-900/10 rounded-xl p-4 border border-green-100 dark:border-green-900/30">
+                            <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Completed</p>
+                            <p id="dashboard-stat-completed-orders" class="text-2xl font-black text-green-600">0</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/10 rounded-xl p-4 border border-blue-100 dark:border-blue-900/30">
+                            <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Total Spent</p>
+                            <p id="dashboard-stat-total-spent" class="text-2xl font-black text-brand-blue">R0</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest">Recent Orders</h3>
+                            <button onclick="window.navigate('orders')" class="text-xs text-brand-blue hover:underline">View All</button>
+                        </div>
+                        <div id="dashboard-recent-orders" class="space-y-3">
+                            <!-- Recent orders will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Account Activity -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-4">Account Activity</h3>
+                        <div id="dashboard-activity-log" class="space-y-3">
+                            <div class="flex items-start gap-3 text-sm">
+                                <div class="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
+                                <div>
+                                    <p class="text-brand-navy dark:text-white">Account created</p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">Just now</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="dashboard-tab-profile" class="dashboard-tab-content hidden">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Profile Information</h3>
+                        <form id="dashboard-profile-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">First Name</label>
+                                    <input type="text" id="dashboard-first-name" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Last Name</label>
+                                    <input type="text" id="dashboard-last-name" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Doe">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Email Address</label>
+                                <input type="email" id="dashboard-email" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="john@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Phone Number</label>
+                                <input type="tel" id="dashboard-phone" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="+27 68 087 1269">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Company Name (Optional)</label>
+                                <input type="text" id="dashboard-company" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Your Company">
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
+                                Save Changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Addresses Tab -->
+                <div id="dashboard-tab-addresses" class="dashboard-tab-content hidden">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest">Saved Addresses</h3>
+                            <button onclick="window.showAddAddressForm()" class="text-xs text-brand-blue hover:underline">+ Add New</button>
+                        </div>
+                        <div id="dashboard-addresses-list" class="space-y-4">
+                            <!-- Addresses will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Add Address Form (hidden by default) -->
+                    <div id="dashboard-add-address-form" class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800 hidden">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Add New Address</h3>
+                        <form id="dashboard-address-form" class="space-y-4">
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Address Label</label>
+                                <input type="text" id="dashboard-address-label" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Home, Office, etc.">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Street Address</label>
+                                <input type="text" id="dashboard-street-address" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="123 Main Street">
+                            </div>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">City</label>
+                                    <input type="text" id="dashboard-city" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Johannesburg">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Province</label>
+                                    <input type="text" id="dashboard-province" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Gauteng">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Postal Code</label>
+                                    <input type="text" id="dashboard-postal-code" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="2000">
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="dashboard-default-address" class="w-4 h-4 accent-blue-500">
+                                <label for="dashboard-default-address" class="text-sm text-gray-500 dark:text-slate-400">Set as default address</label>
+                            </div>
+                            <div class="flex gap-3">
+                                <button type="submit" class="flex-1 bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-3 rounded-xl hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
+                                    Save Address
+                                </button>
+                                <button type="button" onclick="window.hideAddAddressForm()" class="flex-1 bg-gray-100 dark:bg-slate-800 text-brand-navy dark:text-white font-bold uppercase tracking-widest py-3 rounded-xl hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="dashboard-tab-settings" class="dashboard-tab-content hidden">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Account Settings</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                                <div>
+                                    <p class="text-brand-navy dark:text-white font-bold">Email Notifications</p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">Receive order updates and promotions</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="dashboard-email-notifications" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                                <div>
+                                    <p class="text-brand-navy dark:text-white font-bold">SMS Notifications</p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">Get SMS alerts for order status</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="dashboard-sms-notifications" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                                <div>
+                                    <p class="text-brand-navy dark:text-white font-bold">Two-Factor Authentication</p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">Add extra security to your account</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="dashboard-two-factor" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
+                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Danger Zone</h3>
+                        <div class="space-y-4">
+                            <button class="w-full p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 rounded-lg text-red-500 dark:text-red-400 font-bold text-sm hover:bg-red-100 dark:hover:bg-red-950/30 transition-colors">
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1740,6 +2087,7 @@
 
                     window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
                     window.renderCatalog();
+                    window.renderBulkTable();
                     if (window.isAdmin) window.renderAdminProducts();
                 }, (error) => {
                     console.error("API Data-fetching error:", error);
@@ -1749,7 +2097,7 @@
             }
         };
 
-        let activeCart = JSON.parse(localStorage.getItem('route64_basket')) || [];
+        let activeCart = JSON.parse(localStorage.getItem('lubritec_cart')) || [];
         let currentFilter = 'all';
 
         /* ========================================== */
@@ -1839,6 +2187,7 @@
                     if (window.currentView !== 'catalog') window.navigate('catalog');
 
                     window.renderCatalog();
+                    window.renderBulkTable();
                     window.updateCartUI();
                 } else {
                     window.customAlert("Error: " + err.message);
@@ -1897,6 +2246,7 @@
                 window.userPricing = {};
                 snapshot.forEach(doc => window.userPricing[doc.id] = doc.data().variants || {});
                 window.renderCatalog();
+                window.renderBulkTable();
                 window.updateCartUI();
             }, (err) => console.error("Pricing sync error:", err));
         }
@@ -2108,9 +2458,10 @@
         }
 
         window.updateCartUI = function() {
-                localStorage.setItem('route64_basket', JSON.stringify(activeCart));
+                console.log('updateCartUI called, activeCart:', activeCart);
+                localStorage.setItem('lubritec_cart', JSON.stringify(activeCart));
                 const container = document.getElementById('cart-items');
-                const badge = document.getElementById('cart-badge');
+                const badge = document.getElementById('cart-count');
                 const empty = document.getElementById('empty-cart-msg');
                 const totalDisplay = document.getElementById('cart-total');
                 if (!container) return;
@@ -2174,6 +2525,7 @@
                 }
                 window.cartTotal = grandTotal;
             }
+            console.log('updateCartUI complete, total:', total);
         }
 
         window.processQuote = async function(sendToWhatsApp = false) {
@@ -2193,6 +2545,23 @@
                     const inquiry = { date: new Date().toISOString(), customer: customerDetails, items: activeCart, total: window.cartTotal || 0, status: "Pending Processing", ref: newQuoteId };
                     await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/inquiries`), inquiry);
                     await window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'), customerDetails);
+
+                    // Also save to orders collection for dashboard
+                    const order = {
+                        date: new Date().toISOString(),
+                        customer: customerDetails,
+                        items: activeCart,
+                        subtotal: window.cartTotal || 0,
+                        vat: (window.cartTotal || 0) * 0.15,
+                        total: (window.cartTotal || 0) * 1.15,
+                        status: "pending",
+                        ref: newQuoteId,
+                        paymentMethod: 'Quote Request'
+                    };
+                    await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/orders`), order);
+
+                    // Reload orders for dashboard
+                    await window.loadUserOrdersFromFirebase();
                 } catch (error) { console.error("Cloud error:", error); }
             }
 
@@ -2243,6 +2612,838 @@
             if (window.currentUser && window.currentUser.email) window.navigate('customer');
             window.customAlert("Order Submitted Successfully");
         }
+
+        /* ========================================== */
+        /* BULK ORDER FUNCTIONS */
+        /* ========================================== */
+        window.bulkQuantities = {};
+        window.bulkCurrentFilter = 'all';
+
+        window.filterBulkCategory = function(category) {
+            window.bulkCurrentFilter = category;
+            document.querySelectorAll('.bulk-filter-btn').forEach(btn => {
+                const isActive = btn.dataset.category === category;
+                btn.className = isActive ?
+                    "bulk-filter-btn active px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-brand-navy text-white transition-all" :
+                    "bulk-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all";
+            });
+            window.renderBulkTable();
+        }
+
+        window.renderBulkTable = function() {
+            const tbody = document.getElementById('bulk-table-body');
+            console.log('renderBulkTable called, cloudProducts:', window.cloudProducts);
+            if (!tbody || window.cloudProducts.length === 0) return;
+
+            const filteredProducts = window.bulkCurrentFilter === 'all'
+                ? window.cloudProducts
+                : window.cloudProducts.filter(p => p.category === window.bulkCurrentFilter);
+
+            console.log('Filtered products:', filteredProducts);
+
+            tbody.innerHTML = filteredProducts.map(product => {
+                const defaultVariant = product.variants ? product.variants[0] : { size: 'N/A', price: 0 };
+                const quantity = window.bulkQuantities[`${product.id}-${defaultVariant.size}`] || 0;
+                // Get price - user pricing first, then default variant price
+                let price = 0;
+                if (window.currentUser && window.currentUser.email) {
+                    const pMap = window.userPricing[product.id] || {};
+                    price = pMap[defaultVariant.size] || 0;
+                }
+                if (price === 0 && defaultVariant.price) {
+                    price = defaultVariant.price;
+                }
+                const total = quantity * price;
+                const hasQuantity = quantity > 0;
+
+                const pMap = window.currentUser && window.currentUser.email ? (window.userPricing[product.id] || {}) : {};
+                const priceLabel = window.currentUser && window.currentUser.email && pMap[defaultVariant.size] > 0
+                    ? `R${pMap[defaultVariant.size].toFixed(2)}`
+                    : (defaultVariant.price > 0 ? `R${defaultVariant.price.toFixed(2)}` : "Quote Required");
+
+                console.log('Product:', product.id, 'Default variant:', defaultVariant, 'Quantity:', quantity, 'Price:', price, 'Total:', total);
+
+                return `
+                    <tr class="border-b border-gray-100 dark:border-slate-800 ${hasQuantity ? 'bg-blue-50 dark:bg-blue-900/10' : ''} transition-all" data-product-id="${product.id}">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                    ${product.imgUrl ? `<img src="${product.imgUrl}" alt="${product.name}" class="w-full h-full object-cover">` : ''}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-brand-navy dark:text-white text-sm">${product.name}</h4>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400">${priceLabel} / ${defaultVariant.size}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell">
+                            <span class="px-2 py-1 rounded text-xs font-bold text-brand-blue uppercase tracking-wider bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/30">${product.category}</span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <select class="w-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white text-xs font-bold rounded-lg px-2 py-2 outline-none focus:border-brand-blue" onchange="window.updateBulkSize('${product.id}', this.value)">
+                                ${product.variants ? product.variants.map(v => {
+                                    const userPrice = window.currentUser && window.currentUser.email ? (window.userPricing[product.id] || {})[v.size] : 0;
+                                    const variantPrice = userPrice > 0 ? userPrice : (v.price || 0);
+                                    return `<option value="${v.size}" data-price="${variantPrice}" ${v.size === defaultVariant.size ? 'selected' : ''}>${v.size}</option>`;
+                                }).join('') : `<option data-price="${defaultVariant.price || 0}">${defaultVariant.size}</option>`}
+                            </select>
+                        </td>
+                        <td class="p-4 text-center">
+                            <input type="number" min="0" max="999" value="${quantity}" class="w-20 text-center bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold rounded-lg px-3 py-2 outline-none text-sm focus:border-brand-blue ${hasQuantity ? 'border-brand-blue bg-blue-50 dark:bg-blue-900/20' : ''}" onchange="window.updateBulkQuantity('${product.id}', this.value)" onkeyup="window.updateBulkQuantity('${product.id}', this.value)">
+                        </td>
+                        <td class="p-4 text-right">
+                            <span class="font-black ${hasQuantity ? 'text-brand-blue' : 'text-gray-400'}">R${total.toFixed(2)}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        window.updateBulkQuantity = function(productId, value) {
+            console.log('updateBulkQuantity called:', productId, 'value:', value);
+            const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+            if (!row) return;
+
+            const sizeSelect = row.querySelector('select');
+            const size = sizeSelect.value;
+            const key = `${productId}-${size}`;
+            const quantity = parseInt(value) || 0;
+
+            console.log('Key:', key, 'Quantity:', quantity);
+
+            if (quantity > 0) {
+                window.bulkQuantities[key] = quantity;
+            } else {
+                delete window.bulkQuantities[key];
+            }
+
+            console.log('Updated bulkQuantities:', window.bulkQuantities);
+
+            // Update row styling
+            const input = row.querySelector('input');
+            const totalCell = row.querySelector('td:last-child span');
+            const price = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.price) || 0;
+            const total = quantity * price;
+
+            if (quantity > 0) {
+                row.classList.add('bg-blue-50', 'dark:bg-blue-900/10');
+                input.classList.add('border-brand-blue', 'bg-blue-50', 'dark:bg-blue-900/20');
+                totalCell.classList.remove('text-gray-400');
+                totalCell.classList.add('text-brand-blue');
+            } else {
+                row.classList.remove('bg-blue-50', 'dark:bg-blue-900/10');
+                input.classList.remove('border-brand-blue', 'bg-blue-50', 'dark:bg-blue-900/20');
+                totalCell.classList.add('text-gray-400');
+                totalCell.classList.remove('text-brand-blue');
+            }
+
+            totalCell.textContent = `R${total.toFixed(2)}`;
+            window.updateBulkSummary();
+        }
+
+        window.updateBulkSize = function(productId, size) {
+            console.log('updateBulkSize called:', productId, 'size:', size);
+            const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+            if (!row) return;
+
+            const input = row.querySelector('input');
+            const oldKey = `${productId}-${row.dataset.currentSize || ''}`;
+            const newKey = `${productId}-${size}`;
+
+            console.log('Old key:', oldKey, 'New key:', newKey);
+
+            // Transfer quantity if exists
+            if (window.bulkQuantities[oldKey]) {
+                window.bulkQuantities[newKey] = window.bulkQuantities[oldKey];
+                delete window.bulkQuantities[oldKey];
+                input.value = window.bulkQuantities[newKey];
+                console.log('Transferred quantity:', window.bulkQuantities[newKey]);
+            } else {
+                input.value = window.bulkQuantities[newKey] || 0;
+                console.log('No existing quantity, using:', window.bulkQuantities[newKey] || 0);
+            }
+
+            row.dataset.currentSize = size;
+
+            // Update price display
+            const sizeSelect = row.querySelector('select');
+            const price = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.price) || 0;
+            const quantity = parseInt(input.value) || 0;
+            const total = quantity * price;
+
+            console.log('Price:', price, 'Quantity:', quantity, 'Total:', total);
+
+            const priceDisplay = row.querySelector('.text-xs.text-gray-500');
+            if (priceDisplay) {
+                priceDisplay.textContent = price > 0 ? `R${price.toFixed(2)} / ${size}` : `Quote Required / ${size}`;
+            }
+
+            const totalCell = row.querySelector('td:last-child span');
+            totalCell.textContent = `R${total.toFixed(2)}`;
+
+            if (typeof window.updateBulkSummary === 'function') {
+                window.updateBulkSummary();
+            }
+        };
+
+        window.updateBulkSummary = function() {
+            console.log('updateBulkSummary called, bulkQuantities:', window.bulkQuantities);
+            let totalProducts = 0;
+            let totalItems = 0;
+            let subtotal = 0;
+
+            Object.entries(window.bulkQuantities).forEach(([key, qty]) => {
+                if (qty > 0) {
+                    const [productId, size] = key.split('-');
+                    const product = window.cloudProducts.find(p => p.id === productId);
+                    if (product) {
+                        // Try user pricing first, fall back to default product price
+                        let price = 0;
+                        if (window.currentUser && window.currentUser.email) {
+                            const pMap = window.userPricing[productId] || {};
+                            price = pMap[size] || 0;
+                        }
+                        // Fall back to default variant price if no user pricing
+                        if (price === 0 && product.variants) {
+                            const variant = product.variants.find(v => v.size === size);
+                            if (variant) {
+                                price = variant.price || 0;
+                            }
+                        }
+                        totalProducts++;
+                        totalItems += qty;
+                        subtotal += qty * price;
+                        console.log('Summary item:', productId, size, qty, price, 'subtotal:', subtotal);
+                    }
+                }
+            });
+
+            const vat = subtotal * 0.15;
+            const total = subtotal + vat;
+
+            console.log('Summary totals - Products:', totalProducts, 'Items:', totalItems, 'Subtotal:', subtotal, 'VAT:', vat, 'Total:', total);
+
+            // Update DOM elements with null checks
+            const productsEl = document.getElementById('bulk-summary-products');
+            const itemsEl = document.getElementById('bulk-summary-items');
+            const subtotalEl = document.getElementById('bulk-summary-subtotal');
+            const vatEl = document.getElementById('bulk-summary-vat');
+            const totalEl = document.getElementById('bulk-summary-total');
+
+            if (productsEl) productsEl.textContent = totalProducts;
+            if (itemsEl) itemsEl.textContent = totalItems;
+            if (subtotalEl) subtotalEl.textContent = `R${subtotal.toFixed(2)}`;
+            if (vatEl) vatEl.textContent = `R${vat.toFixed(2)}`;
+            if (totalEl) totalEl.textContent = `R${total.toFixed(2)}`;
+        }
+
+        window.addAllBulkToCart = function() {
+            console.log('addAllBulkToCart called', window.bulkQuantities);
+            let added = 0;
+
+            Object.entries(window.bulkQuantities).forEach(([key, qty]) => {
+                if (qty > 0) {
+                    const [productId, size] = key.split('-');
+                    const product = window.cloudProducts.find(p => p.id === productId);
+                    console.log('Adding product:', productId, 'size:', size, 'qty:', qty, 'product:', product);
+                    if (product) {
+                        // Try user pricing first, fall back to default product price
+                        let price = 0;
+                        if (window.currentUser && window.currentUser.email) {
+                            const pMap = window.userPricing[productId] || {};
+                            price = pMap[size] || 0;
+                        }
+                        // Fall back to default variant price if no user pricing
+                        if (price === 0 && product.variants) {
+                            const variant = product.variants.find(v => v.size === size);
+                            if (variant) {
+                                price = variant.price || 0;
+                            }
+                        }
+                        console.log('Price for', productId, size, ':', price);
+
+                        const cartId = `${productId}-${size}`;
+                        const existing = activeCart.find(i => i.cartId === cartId);
+                        if (existing) {
+                            existing.qty += qty;
+                            console.log('Updated existing item:', existing);
+                        } else {
+                            activeCart.push({
+                                cartId,
+                                id: productId,
+                                name: product.name,
+                                size: size,
+                                qty: qty,
+                                price: price
+                            });
+                            console.log('Added new item:', { cartId, id: productId, name: product.name, size: size, qty: qty, price: price });
+                        }
+                        added++;
+                    }
+                }
+            });
+
+            console.log('Total items added:', added, 'Active cart:', activeCart);
+
+            if (added > 0) {
+                // Clear bulk quantities
+                window.bulkQuantities = {};
+                window.renderBulkTable();
+                window.updateBulkSummary();
+
+                // Update cart UI
+                window.updateCartUI();
+
+                // Show cart
+                if (!document.getElementById('cart-sidebar').classList.contains('open')) window.toggleCart();
+
+                window.customAlert(`${added} product(s) added to your quote!`);
+            } else {
+                window.customAlert('Please enter quantities for at least one product.');
+            }
+        }
+
+        window.clearAllBulkQuantities = function() {
+            if (Object.keys(window.bulkQuantities).length === 0) {
+                window.customAlert('No quantities to clear.');
+                return;
+            }
+
+            if (confirm('Are you sure you want to clear all quantities?')) {
+                window.bulkQuantities = {};
+                window.renderBulkTable();
+                window.updateBulkSummary();
+            }
+        }
+
+        window.testBulkOrder = function() {
+            console.log('=== BULK ORDER TEST ===');
+            console.log('cloudProducts:', window.cloudProducts);
+            console.log('bulkQuantities:', window.bulkQuantities);
+            console.log('userPricing:', window.userPricing);
+            console.log('currentUser:', window.currentUser);
+            console.log('activeCart:', activeCart);
+
+            // Test: Add a sample quantity
+            if (window.cloudProducts.length > 0) {
+                const testProduct = window.cloudProducts[0];
+                const testSize = testProduct.variants ? testProduct.variants[0].size : 'N/A';
+                const testKey = `${testProduct.id}-${testSize}`;
+                window.bulkQuantities[testKey] = 1;
+                console.log('Test: Set quantity for', testProduct.id, testSize, 'to 1');
+                window.renderBulkTable();
+                window.updateBulkSummary();
+                window.customAlert(`Test: Added 1 of ${testProduct.name} (${testSize}) to bulk order. Click "Add All to Quote" to add to cart.`);
+            } else {
+                window.customAlert('No products available for testing.');
+            }
+        }
+
+        window.initializeSampleOrders = function() {
+            if (window.userOrders.length === 0) {
+                const statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+                const sampleOrders = [];
+
+                for (let i = 1; i <= 5; i++) {
+                    const status = statuses[Math.floor(Math.random() * statuses.length)];
+                    const date = new Date();
+                    date.setDate(date.getDate() - (i * 7));
+
+                    const orderItems = [];
+                    const numItems = Math.floor(Math.random() * 3) + 1;
+
+                    for (let j = 0; j < numItems; j++) {
+                        const product = window.cloudProducts[Math.floor(Math.random() * window.cloudProducts.length)];
+                        const variant = product.variants ? product.variants[Math.floor(Math.random() * product.variants.length)] : null;
+                        const qty = Math.floor(Math.random() * 3) + 1;
+
+                        if (variant) {
+                            orderItems.push({
+                                productId: product.id,
+                                name: product.name,
+                                size: variant.size,
+                                price: 0, // Will use pricing when logged in
+                                qty: qty,
+                                total: 0
+                            });
+                        }
+                    }
+
+                    const subtotal = 0;
+                    const vat = subtotal * 0.15;
+                    const shipping = status === 'delivered' ? 150 : 0;
+                    const total = subtotal + vat + shipping;
+
+                    sampleOrders.push({
+                        id: `ORD-${String(100000 + i).padStart(6, '0')}`,
+                        date: date.toISOString(),
+                        status: status,
+                        items: orderItems,
+                        subtotal: subtotal,
+                        vat: vat,
+                        shipping: shipping,
+                        total: total,
+                        paymentMethod: 'EFT',
+                        address: '123 Industrial Park, Johannesburg, 2000',
+                        contact: '+27 68 087 1269'
+                    });
+                }
+
+                window.userOrders = sampleOrders;
+                localStorage.setItem('lubritec_orders', JSON.stringify(window.userOrders));
+                console.log('Initialized sample orders:', window.userOrders);
+            }
+        }
+
+        /* ========================================== */
+        /* ORDERS HISTORY FUNCTIONS */
+        /* ========================================== */
+        window.userOrders = JSON.parse(localStorage.getItem('lubritec_orders')) || [];
+        window.ordersCurrentFilter = 'all';
+
+        window.filterOrders = function(filter) {
+            window.ordersCurrentFilter = filter;
+            document.querySelectorAll('.orders-filter-btn').forEach(btn => {
+                const isActive = btn.dataset.filter === filter;
+                btn.className = isActive ?
+                    "orders-filter-btn active px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-brand-navy text-white transition-all" :
+                    "orders-filter-btn px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all";
+            });
+            window.renderOrders();
+        }
+
+        window.renderOrders = function() {
+            const container = document.getElementById('orders-container');
+            const emptyState = document.getElementById('orders-empty-state');
+
+            const filteredOrders = window.ordersCurrentFilter === 'all'
+                ? window.userOrders
+                : window.userOrders.filter(o => o.status === window.ordersCurrentFilter);
+
+            if (filteredOrders.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            container.innerHTML = filteredOrders.map(order => {
+                const statusClass = `status-${order.status}`;
+                const statusText = order.status ? (order.status.charAt(0).toUpperCase() + order.status.slice(1)) : 'Pending';
+                const date = new Date(order.date).toLocaleDateString('en-ZA', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                const orderId = order.ref || order.id || 'N/A';
+
+                return `
+                    <div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-slate-800 transition-all hover:border-brand-blue">
+                        <div class="p-4 md:p-6">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest">Order ID</p>
+                                        <p class="font-bold text-brand-navy dark:text-white">${orderId}</p>
+                                    </div>
+                                    <div class="hidden md:block w-px h-8 bg-gray-100 dark:bg-slate-800"></div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest">Date</p>
+                                        <p class="text-brand-navy dark:text-white">${date}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${statusClass}">${statusText}</span>
+                                    <p class="font-black text-xl text-brand-blue">R${(order.total || 0).toFixed(2)}</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 mb-4">
+                                ${order.items.slice(0, 3).map(item => `
+                                    <div class="flex justify-between items-center py-2 border-b border-gray-50 dark:border-slate-800 last:border-0">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs text-gray-500 dark:text-slate-400">${item.qty}x</span>
+                                            <span class="text-brand-navy dark:text-white text-sm">${item.name}</span>
+                                            <span class="text-xs text-gray-400 dark:text-slate-600">(${item.size})</span>
+                                        </div>
+                                        <span class="text-brand-navy dark:text-white font-bold text-sm">R${(item.total || (item.price * item.qty) || 0).toFixed(2)}</span>
+                                    </div>
+                                `).join('')}
+                                ${order.items.length > 3 ? `<p class="text-xs text-gray-500 dark:text-slate-400">+${order.items.length - 3} more items</p>` : ''}
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button onclick="window.viewOrderDetails('${orderId}')" class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-all">
+                                    View Details
+                                </button>
+                                <button onclick="window.reorder('${orderId}')" class="flex-1 bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
+                                    Reorder
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.updateOrdersStats = function() {
+            const totalOrders = window.userOrders.length;
+            const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing' || o.status === 'Pending Processing').length;
+            const completedOrders = window.userOrders.filter(o => o.status === 'delivered' || o.status === 'completed').length;
+            const totalSpent = window.userOrders.filter(o => o.status === 'delivered' || o.status === 'completed').reduce((sum, o) => sum + (o.total || 0), 0);
+
+            document.getElementById('orders-stat-total').textContent = totalOrders;
+            document.getElementById('orders-stat-pending').textContent = pendingOrders;
+            document.getElementById('orders-stat-completed').textContent = completedOrders;
+            document.getElementById('orders-stat-spent').textContent = `R${totalSpent.toFixed(0)}`;
+        }
+
+        window.viewOrderDetails = function(orderId) {
+            const order = window.userOrders.find(o => (o.ref === orderId) || (o.id === orderId));
+            if (!order) return;
+
+            // For now, just show an alert. In a full implementation, this would open a modal
+            let details = `Order: ${order.ref || order.id}\nDate: ${new Date(order.date).toLocaleString()}\nStatus: ${order.status}\n\nItems:\n`;
+            order.items.forEach(item => {
+                details += `- ${item.qty}x ${item.name} (${item.size}) - R${(item.total || (item.price * item.qty) || 0).toFixed(2)}\n`;
+            });
+            details += `\nTotal: R${(order.total || 0).toFixed(2)}`;
+            alert(details);
+        }
+
+        window.reorder = function(orderId) {
+            const order = window.userOrders.find(o => (o.ref === orderId) || (o.id === orderId));
+            if (!order) return;
+
+            let added = 0;
+            order.items.forEach(item => {
+                for (let i = 0; i < item.qty; i++) {
+                    const cartId = `${item.productId || item.id}-${item.size}`;
+                    const existing = activeCart.find(i => i.cartId === cartId);
+                    if (existing) existing.qty += 1;
+                    else activeCart.push({
+                        cartId,
+                        id: item.productId || item.id,
+                        name: item.name,
+                        size: item.size,
+                        qty: 1,
+                        price: item.price || 0
+                    });
+                    added++;
+                }
+            });
+
+            if (added > 0) {
+                window.updateCartUI();
+                if (!document.getElementById('cart-sidebar').classList.contains('open')) window.toggleCart();
+                window.customAlert(`${added} item(s) added to your quote!`);
+            }
+        }
+
+        /* ========================================== */
+        /* USER DASHBOARD FUNCTIONS */
+        /* ========================================== */
+        window.userProfile = JSON.parse(localStorage.getItem('lubritec_profile')) || {
+            firstName: 'John',
+            lastName: 'Doe',
+            email: 'john@example.com',
+            phone: '+27 68 087 1269',
+            company: ''
+        };
+
+        window.userAddresses = JSON.parse(localStorage.getItem('lubritec_addresses')) || [
+            {
+                id: 1,
+                label: 'Office',
+                street: '123 Industrial Park',
+                city: 'Johannesburg',
+                province: 'Gauteng',
+                postalCode: '2000',
+                isDefault: true
+            }
+        ];
+
+        window.switchDashboardTab = function(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.dashboard-nav-tab').forEach(btn => {
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('active', 'bg-brand-navy', 'dark:bg-brand-blue', 'text-white');
+                    btn.classList.remove('text-gray-600', 'dark:text-gray-300');
+                } else {
+                    btn.classList.remove('active', 'bg-brand-navy', 'dark:bg-brand-blue', 'text-white');
+                    btn.classList.add('text-gray-600', 'dark:text-gray-300');
+                }
+            });
+
+            // Update tab content
+            document.querySelectorAll('.dashboard-tab-content').forEach(content => {
+                if (content.id === `dashboard-tab-${tabName}`) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+
+            if (tabName === 'overview') {
+                window.updateDashboardStats();
+                window.renderDashboardRecentOrders();
+            } else if (tabName === 'profile') {
+                window.updateDashboardProfileDisplay();
+            } else if (tabName === 'addresses') {
+                window.renderDashboardAddresses();
+            }
+        };
+
+        window.updateDashboardProfileDisplay = function() {
+            if (!window.currentUser) return;
+
+            const initials = (window.userProfile.firstName[0] + window.userProfile.lastName[0]).toUpperCase();
+            const avatarEl = document.getElementById('dashboard-avatar-initials');
+            if (avatarEl) avatarEl.textContent = initials;
+
+            const nameEl = document.getElementById('dashboard-profile-name');
+            if (nameEl) nameEl.textContent = `${window.userProfile.firstName} ${window.userProfile.lastName}`;
+
+            const emailEl = document.getElementById('dashboard-profile-email');
+            if (emailEl) emailEl.textContent = window.userProfile.email;
+
+            // Update form fields
+            const firstNameEl = document.getElementById('dashboard-first-name');
+            if (firstNameEl) firstNameEl.value = window.userProfile.firstName;
+
+            const lastNameEl = document.getElementById('dashboard-last-name');
+            if (lastNameEl) lastNameEl.value = window.userProfile.lastName;
+
+            const emailInputEl = document.getElementById('dashboard-email');
+            if (emailInputEl) emailInputEl.value = window.userProfile.email;
+
+            const phoneEl = document.getElementById('dashboard-phone');
+            if (phoneEl) phoneEl.value = window.userProfile.phone;
+
+            const companyEl = document.getElementById('dashboard-company');
+            if (companyEl) companyEl.value = window.userProfile.company;
+        };
+
+        window.updateDashboardStats = function() {
+            const totalOrders = window.userOrders.length;
+            const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing' || o.status === 'Pending Processing').length;
+            const completedOrders = window.userOrders.filter(o => o.status === 'delivered' || o.status === 'completed').length;
+            const totalSpent = window.userOrders.filter(o => o.status === 'delivered' || o.status === 'completed').reduce((sum, o) => sum + (o.total || 0), 0);
+
+            const totalOrdersEl = document.getElementById('dashboard-stat-total-orders');
+            const pendingOrdersEl = document.getElementById('dashboard-stat-pending-orders');
+            const completedOrdersEl = document.getElementById('dashboard-stat-completed-orders');
+            const totalSpentEl = document.getElementById('dashboard-stat-total-spent');
+
+            if (totalOrdersEl) totalOrdersEl.textContent = totalOrders;
+            if (pendingOrdersEl) pendingOrdersEl.textContent = pendingOrders;
+            if (completedOrdersEl) completedOrdersEl.textContent = completedOrders;
+            if (totalSpentEl) totalSpentEl.textContent = `R${totalSpent.toFixed(0)}`;
+        };
+
+        window.renderDashboardRecentOrders = function() {
+            const container = document.getElementById('dashboard-recent-orders');
+            const recentOrders = window.userOrders.slice(0, 5);
+
+            if (recentOrders.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 dark:text-slate-400 text-sm text-center py-4">No orders yet</p>';
+                return;
+            }
+
+            container.innerHTML = recentOrders.map(order => {
+                const statusClass = `status-${order.status}`;
+                const statusText = order.status ? (order.status.charAt(0).toUpperCase() + order.status.slice(1)) : 'Pending';
+                const date = new Date(order.date).toLocaleDateString('en-ZA', {
+                    month: 'short',
+                    day: 'numeric'
+                });
+                const orderId = order.ref || order.id || 'N/A';
+
+                return `
+                    <div class="flex items-center justify-between py-3 border-b border-gray-50 dark:border-slate-800 last:border-0">
+                        <div class="flex items-center gap-4">
+                            <div>
+                                <p class="text-brand-navy dark:text-white font-bold text-sm">${orderId}</p>
+                                <p class="text-xs text-gray-500 dark:text-slate-400">${date}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="px-2 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${statusClass}">${statusText}</span>
+                            <p class="font-black text-brand-blue text-sm">R${(order.total || 0).toFixed(2)}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
+
+        window.renderDashboardAddresses = function() {
+            const container = document.getElementById('dashboard-addresses-list');
+
+            if (window.userAddresses.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 dark:text-slate-400 text-sm text-center py-4">No saved addresses</p>';
+                return;
+            }
+
+            container.innerHTML = window.userAddresses.map(address => `
+                <div class="p-4 bg-gray-50 dark:bg-slate-800 rounded-lg border ${address.isDefault ? 'border-brand-blue' : 'border-gray-100 dark:border-slate-700'}">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <p class="text-brand-navy dark:text-white font-bold text-sm">${address.label}</p>
+                            ${address.isDefault ? '<span class="text-xs text-brand-blue uppercase tracking-wider">Default</span>' : ''}
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="window.editDashboardAddress(${address.id})" class="text-xs text-gray-400 hover:text-brand-navy dark:hover:text-white">Edit</button>
+                            <button onclick="window.deleteDashboardAddress(${address.id})" class="text-xs text-red-400 hover:text-red-300">Delete</button>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">${address.street}</p>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">${address.city}, ${address.province} ${address.postalCode}</p>
+                </div>
+            `).join('');
+        };
+
+        window.showAddAddressForm = function() {
+            document.getElementById('dashboard-add-address-form').classList.remove('hidden');
+        };
+
+        window.hideAddAddressForm = function() {
+            document.getElementById('dashboard-add-address-form').classList.add('hidden');
+            document.getElementById('dashboard-address-form').reset();
+        };
+
+        window.deleteDashboardAddress = function(id) {
+            if (confirm('Are you sure you want to delete this address?')) {
+                window.userAddresses = window.userAddresses.filter(a => a.id !== id);
+                localStorage.setItem('lubritec_addresses', JSON.stringify(window.userAddresses));
+                window.renderDashboardAddresses();
+            }
+        };
+
+        window.editDashboardAddress = function(id) {
+            const address = window.userAddresses.find(a => a.id === id);
+            if (address) {
+                document.getElementById('dashboard-address-label').value = address.label;
+                document.getElementById('dashboard-street-address').value = address.street;
+                document.getElementById('dashboard-city').value = address.city;
+                document.getElementById('dashboard-province').value = address.province;
+                document.getElementById('dashboard-postal-code').value = address.postalCode;
+                document.getElementById('dashboard-default-address').checked = address.isDefault;
+                window.showAddAddressForm();
+            }
+        };
+
+        // Dashboard profile form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const dashboardProfileForm = document.getElementById('dashboard-profile-form');
+            if (dashboardProfileForm) {
+                dashboardProfileForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    window.userProfile.firstName = document.getElementById('dashboard-first-name').value;
+                    window.userProfile.lastName = document.getElementById('dashboard-last-name').value;
+                    window.userProfile.email = document.getElementById('dashboard-email').value;
+                    window.userProfile.phone = document.getElementById('dashboard-phone').value;
+                    window.userProfile.company = document.getElementById('dashboard-company').value;
+
+                    localStorage.setItem('lubritec_profile', JSON.stringify(window.userProfile));
+                    window.updateDashboardProfileDisplay();
+
+                    // Save to Firebase
+                    await window.saveUserProfileToFirebase();
+
+                    window.customAlert('Profile updated successfully!');
+                });
+            }
+
+            // Dashboard address form submission
+            const dashboardAddressForm = document.getElementById('dashboard-address-form');
+            if (dashboardAddressForm) {
+                dashboardAddressForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const newAddress = {
+                        id: Date.now(),
+                        label: document.getElementById('dashboard-address-label').value,
+                        street: document.getElementById('dashboard-street-address').value,
+                        city: document.getElementById('dashboard-city').value,
+                        province: document.getElementById('dashboard-province').value,
+                        postalCode: document.getElementById('dashboard-postal-code').value,
+                        isDefault: document.getElementById('dashboard-default-address').checked
+                    };
+
+                    // If this is set as default, remove default from others
+                    if (newAddress.isDefault) {
+                        window.userAddresses.forEach(a => a.isDefault = false);
+                    }
+
+                    window.userAddresses.push(newAddress);
+                    localStorage.setItem('lubritec_addresses', JSON.stringify(window.userAddresses));
+
+                    window.hideAddAddressForm();
+                    window.renderDashboardAddresses();
+
+                    window.customAlert('Address saved successfully!');
+                });
+            }
+        });
+
+        // Load user profile from Firebase
+        window.loadUserProfileFromFirebase = async function() {
+            if (!window.currentUser || !window.currentUser.uid) return;
+
+            try {
+                const docSnap = await window.getDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'));
+                if (docSnap.exists()) {
+                    const d = docSnap.data();
+                    window.userProfile = {
+                        firstName: d.contactName?.split(' ')[0] || window.userProfile.firstName,
+                        lastName: d.contactName?.split(' ').slice(1).join(' ') || window.userProfile.lastName,
+                        email: window.currentUser.email || window.userProfile.email,
+                        phone: d.phone || window.userProfile.phone,
+                        company: d.bizName || window.userProfile.company
+                    };
+                    localStorage.setItem('lubritec_profile', JSON.stringify(window.userProfile));
+                }
+            } catch (e) {
+                console.error("Error loading profile:", e);
+            }
+        };
+
+        // Load user orders from Firebase
+        window.loadUserOrdersFromFirebase = async function() {
+            if (!window.currentUser || !window.currentUser.uid) return;
+
+            try {
+                const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/orders`));
+                const snapshot = await window.getDocs(q);
+                const orders = [];
+                snapshot.forEach(doc => {
+                    orders.push({ id: doc.id, ...doc.data() });
+                });
+                window.userOrders = orders;
+                localStorage.setItem('lubritec_orders', JSON.stringify(orders));
+            } catch (e) {
+                console.error("Error loading orders:", e);
+            }
+        };
+
+        // Save user profile to Firebase
+        window.saveUserProfileToFirebase = async function() {
+            if (!window.currentUser || !window.currentUser.uid) return;
+
+            try {
+                await window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'), {
+                    bizName: window.userProfile.company,
+                    contactName: `${window.userProfile.firstName} ${window.userProfile.lastName}`,
+                    phone: window.userProfile.phone,
+                    email: window.userProfile.email,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+            } catch (e) {
+                console.error("Error saving profile:", e);
+            }
+        };
 
         window.handleContactSubmit = async function(e) {
             e.preventDefault();
@@ -2777,7 +3978,14 @@
                     target.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' });
                     void target.offsetWidth; target.classList.add('active');
                     if (viewId === 'catalog') window.renderCatalog();
-                    if (viewId === 'customer') window.loadClientLeads();
+                    if (viewId === 'bulk-order') {
+                        console.log('Navigating to bulk-order view');
+                        window.renderBulkTable();
+                        window.updateBulkSummary();
+                    }
+                    if (viewId === 'orders') { window.loadUserOrdersFromFirebase(); window.renderOrders(); window.updateOrdersStats(); }
+                    if (viewId === 'dashboard') { window.loadUserOrdersFromFirebase(); window.switchDashboardTab('overview'); window.updateDashboardProfileDisplay(); }
+                    if (viewId === 'customer') { window.loadUserOrdersFromFirebase(); window.loadClientLeads(); }
                     if (viewId === 'admin' && window.isAdmin) window.switchAdminTab('dashboard');
                     if (viewId === 'home') window.loadHomepageReviews();
                 }
@@ -3095,8 +4303,8 @@
             setTimeout(() => {
                 const loader = document.getElementById('page-loader');
                 if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 700); }
-                window.initCatalog();
-                window.loadHomepageReviews();
+                try { if(typeof window.initCatalog === 'function') window.initCatalog(); } catch(e) { console.error('Error initializing catalog:', e); }
+                try { if(typeof window.loadHomepageReviews === 'function') window.loadHomepageReviews(); } catch(e) { console.error('Error loading reviews:', e); }
             }, 1000);
         });
     </script>

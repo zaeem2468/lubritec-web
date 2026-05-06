@@ -16,6 +16,15 @@ const products = [
 // Smart Cart Memory
 let activeCart = JSON.parse(localStorage.getItem('lubritec_cart')) || [];
 
+// Expose functions to window object for cross-page access
+window.activeCart = activeCart;
+window.addToQuote = addToQuote;
+window.toggleCart = toggleCart;
+window.updateCartUI = updateCartUI;
+window.updateQty = updateQty;
+window.saveCart = saveCart;
+window.products = products;
+
 function saveCart() {
     localStorage.setItem('lubritec_cart', JSON.stringify(activeCart));
     updateCartUI();
