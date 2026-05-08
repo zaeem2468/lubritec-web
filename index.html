@@ -27,7 +27,7 @@
         mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navAnalyticsBtn) navAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none';
         if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none";
         if (profileSection) profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out';
-        if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid); if(typeof window.loadUserOrdersFromFirebase === 'function') window.loadUserOrdersFromFirebase();
+        if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid);
         if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navAnalyticsBtn)
         navAnalyticsBtn.style.display = 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection) profileSection.classList.add('hidden');
         if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText
@@ -392,8 +392,8 @@
         /* Enhanced cart badge */
         
         #cart-count {
-            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
-            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4) !important;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
             border-color: rgba(255, 255, 255, 0.3) !important;
         }
         
@@ -425,8 +425,8 @@
         
         .pro-card:hover {
             transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 40px 80px -15px rgba(251, 191, 36, 0.3);
-            border-color: rgba(251, 191, 36, 0.5);
+            box-shadow: 0 40px 80px -15px rgba(37, 99, 235, 0.3);
+            border-color: rgba(37, 99, 235, 0.5);
         }
         /* Button gradient animations */
         
@@ -451,7 +451,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
             pointer-events: none;
         }
         /* Enhanced hero section depth */
@@ -470,38 +470,16 @@
         }
         
          ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, rgba(251, 191, 36, 0.6) 0%, rgba(217, 119, 6, 0.4) 100%);
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
             border-radius: 10px;
             border: 2px solid transparent;
             background-clip: padding-box;
             transition: background 0.3s ease;
         }
-
+        
          ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, rgba(251, 191, 36, 0.8) 0%, rgba(217, 119, 6, 0.6) 100%);
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.6) 100%);
             background-clip: padding-box;
-        }
-
-        /* Order Status Styles */
-        .status-pending,
-        .status-processing,
-        .status-Pending Processing {
-            background: rgba(251, 191, 36, 0.1);
-            color: #d97706;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-        }
-
-        .status-delivered,
-        .status-completed {
-            background: rgba(34, 197, 94, 0.1);
-            color: #16a34a;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .status-cancelled {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-            border: 1px solid rgba(239, 68, 68, 0.3);
         }
     </style>
 </head>
@@ -652,65 +630,65 @@
 
     <!-- TOP NAVIGATION -->
     <nav class="nav-sticky">
-        <div class="max-w-[1400px] mx-auto px-3 md:px-5 h-20 md:h-24 flex justify-between items-center gap-4 md:gap-6">
-            <div class="flex items-center gap-2 md:gap-3 cursor-pointer group flex-shrink-0" onclick="window.navigate('home')" style="transition: all 0.3s ease;">
-                <div class="h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 flex-shrink-0 transition-all duration-300 flex items-center justify-center transform group-hover:scale-110">
+        <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-24 flex justify-between items-center gap-8">
+            <div class="flex items-center gap-3 md:gap-4 cursor-pointer group" onclick="window.navigate('home')" style="transition: all 0.3s ease;">
+                <div class="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 transition-all duration-300 flex items-center justify-center transform group-hover:scale-110">
                     <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
-                <span class="font-black text-lg md:text-2xl lg:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block transform transition-all duration-300 group-hover:text-brand-blue">LUBRICANTS</span>
+                <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block transform transition-all duration-300 group-hover:text-brand-blue">LUBRICANTS</span>
             </div>
 
-            <div class="hidden lg:flex items-center gap-0.5 text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em] text-slate-600 dark:text-slate-300 h-full flex-1 justify-center overflow-x-auto">
-                <button onclick="window.navigate('home')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+            <div class="hidden xl:flex items-center gap-1 text-[11px] font-black uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300 h-full flex-1 justify-center">
+                <button onclick="window.navigate('home')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
                     Home
                 </button>
-                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group text-brand-red font-bold whitespace-nowrap">
+                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group text-brand-red font-bold">
                     Order Portal
                 </button>
-                <button onclick="window.navigate('orders')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.navigate('orders')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
                     Orders
                 </button>
-                <button onclick="window.navigate('dashboard')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.navigate('dashboard')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
                     Account
                 </button>
-                <button onclick="window.navigate('process')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.navigate('process')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
                     How To Order
                 </button>
-                <button onclick="window.navigate('about')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.navigate('about')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
                     About
                 </button>
-                <button onclick="window.navigate('contact')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.navigate('contact')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
                     Contact
                 </button>
-                <button onclick="window.navigate('customer')" class="px-2 md:px-3 lg:px-4 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.navigate('customer')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
                     My Inquiries
                 </button>
-                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="px-2 md:px-3 lg:px-4 py-2 text-brand-blue font-bold hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="px-4 md:px-6 py-2 text-brand-blue font-bold hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 relative group">
                     Login
                 </button>
-                <button onclick="window.location.href='analytics.html'" id="nav-analytics-btn" style="display: none;" class="px-2 md:px-3 lg:px-4 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.location.href='analytics.html'" id="nav-analytics-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
                     Analytics
                 </button>
-                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="px-2 md:px-3 lg:px-4 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group whitespace-nowrap">
+                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
                     Admin
                 </button>
             </div>
 
-            <div class="flex items-center gap-1.5 md:gap-3 flex-shrink-0">
-                <button onclick="window.toggleTheme()" class="text-slate-600 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white transition-all p-1.5 md:p-2 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transform hover:scale-110"
+            <div class="flex items-center gap-2 md:gap-4 ml-auto">
+                <button onclick="window.toggleTheme()" class="text-slate-600 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white transition-all p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transform hover:scale-110"
                     id="theme-toggle">
-                    <svg id="moon-icon" class="w-4 h-4 md:w-5 md:h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    <svg id="sun-icon" class="w-4 h-4 md:w-5 md:h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moon-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg id="sun-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
 
-                <button onclick="window.toggleCart()" class="relative p-1.5 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 flex items-center gap-1.5 md:gap-2 group hover:scale-105 transform active:scale-95">
-                    <span class="text-[9px] md:text-xs uppercase font-black px-1 md:px-2 text-brand-blue hidden sm:block">Basket</span>
-                    <svg class="w-4 h-4 md:w-5 md:h-5 text-brand-blue group-hover:scale-125 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span id="cart-count" class="absolute -top-1 -right-1 md:-top-1.5 md:-right-1.5 bg-brand-red text-white text-[8px] md:text-[10px] font-black h-4 w-4 md:h-6 md:w-6 flex items-center justify-center rounded-full scale-0 transition-all duration-300 border-2 border-white shadow-lg">0</span>
+                <button onclick="window.toggleCart()" class="relative p-2 md:p-4 rounded-lg md:rounded-xl transition-all duration-300 flex items-center gap-2 md:gap-3 group hover:scale-105 transform active:scale-95">
+                    <span class="text-[10px] md:text-xs uppercase font-black px-1 md:px-3 text-brand-blue hidden sm:block">Basket</span>
+                    <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-125 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all duration-300 border-2 border-white shadow-lg">0</span>
                 </button>
 
-                <button onclick="window.toggleMobileMenu()" class="lg:hidden text-brand-navy dark:text-white p-1.5 md:p-2 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
-                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
@@ -2545,23 +2523,6 @@
                     const inquiry = { date: new Date().toISOString(), customer: customerDetails, items: activeCart, total: window.cartTotal || 0, status: "Pending Processing", ref: newQuoteId };
                     await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/inquiries`), inquiry);
                     await window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/profile`, 'details'), customerDetails);
-
-                    // Also save to orders collection for dashboard
-                    const order = {
-                        date: new Date().toISOString(),
-                        customer: customerDetails,
-                        items: activeCart,
-                        subtotal: window.cartTotal || 0,
-                        vat: (window.cartTotal || 0) * 0.15,
-                        total: (window.cartTotal || 0) * 1.15,
-                        status: "pending",
-                        ref: newQuoteId,
-                        paymentMethod: 'Quote Request'
-                    };
-                    await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/orders`), order);
-
-                    // Reload orders for dashboard
-                    await window.loadUserOrdersFromFirebase();
                 } catch (error) { console.error("Cloud error:", error); }
             }
 
@@ -3030,13 +2991,12 @@
 
             container.innerHTML = filteredOrders.map(order => {
                 const statusClass = `status-${order.status}`;
-                const statusText = order.status ? (order.status.charAt(0).toUpperCase() + order.status.slice(1)) : 'Pending';
+                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
                 const date = new Date(order.date).toLocaleDateString('en-ZA', {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric'
                 });
-                const orderId = order.ref || order.id || 'N/A';
 
                 return `
                     <div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-slate-800 transition-all hover:border-brand-blue">
@@ -3045,7 +3005,7 @@
                                 <div class="flex items-center gap-4">
                                     <div>
                                         <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest">Order ID</p>
-                                        <p class="font-bold text-brand-navy dark:text-white">${orderId}</p>
+                                        <p class="font-bold text-brand-navy dark:text-white">${order.id}</p>
                                     </div>
                                     <div class="hidden md:block w-px h-8 bg-gray-100 dark:bg-slate-800"></div>
                                     <div>
@@ -3055,7 +3015,7 @@
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${statusClass}">${statusText}</span>
-                                    <p class="font-black text-xl text-brand-blue">R${(order.total || 0).toFixed(2)}</p>
+                                    <p class="font-black text-xl text-brand-blue">R${order.total.toFixed(2)}</p>
                                 </div>
                             </div>
 
@@ -3067,17 +3027,17 @@
                                             <span class="text-brand-navy dark:text-white text-sm">${item.name}</span>
                                             <span class="text-xs text-gray-400 dark:text-slate-600">(${item.size})</span>
                                         </div>
-                                        <span class="text-brand-navy dark:text-white font-bold text-sm">R${(item.total || (item.price * item.qty) || 0).toFixed(2)}</span>
+                                        <span class="text-brand-navy dark:text-white font-bold text-sm">R${item.total.toFixed(2)}</span>
                                     </div>
                                 `).join('')}
                                 ${order.items.length > 3 ? `<p class="text-xs text-gray-500 dark:text-slate-400">+${order.items.length - 3} more items</p>` : ''}
                             </div>
 
                             <div class="flex gap-3">
-                                <button onclick="window.viewOrderDetails('${orderId}')" class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-all">
+                                <button onclick="window.viewOrderDetails('${order.id}')" class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-all">
                                     View Details
                                 </button>
-                                <button onclick="window.reorder('${orderId}')" class="flex-1 bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
+                                <button onclick="window.reorder('${order.id}')" class="flex-1 bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
                                     Reorder
                                 </button>
                             </div>
@@ -3089,9 +3049,9 @@
 
         window.updateOrdersStats = function() {
             const totalOrders = window.userOrders.length;
-            const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing' || o.status === 'Pending Processing').length;
-            const completedOrders = window.userOrders.filter(o => o.status === 'delivered' || o.status === 'completed').length;
-            const totalSpent = window.userOrders.filter(o => o.status === 'delivered' || o.status === 'completed').reduce((sum, o) => sum + (o.total || 0), 0);
+            const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing').length;
+            const completedOrders = window.userOrders.filter(o => o.status === 'delivered').length;
+            const totalSpent = window.userOrders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + o.total, 0);
 
             document.getElementById('orders-stat-total').textContent = totalOrders;
             document.getElementById('orders-stat-pending').textContent = pendingOrders;
@@ -3100,20 +3060,20 @@
         }
 
         window.viewOrderDetails = function(orderId) {
-            const order = window.userOrders.find(o => (o.ref === orderId) || (o.id === orderId));
+            const order = window.userOrders.find(o => o.id === orderId);
             if (!order) return;
 
             // For now, just show an alert. In a full implementation, this would open a modal
-            let details = `Order: ${order.ref || order.id}\nDate: ${new Date(order.date).toLocaleString()}\nStatus: ${order.status}\n\nItems:\n`;
+            let details = `Order: ${order.id}\nDate: ${new Date(order.date).toLocaleString()}\nStatus: ${order.status}\n\nItems:\n`;
             order.items.forEach(item => {
-                details += `- ${item.qty}x ${item.name} (${item.size}) - R${(item.total || (item.price * item.qty) || 0).toFixed(2)}\n`;
+                details += `- ${item.qty}x ${item.name} (${item.size}) - R${item.total.toFixed(2)}\n`;
             });
-            details += `\nTotal: R${(order.total || 0).toFixed(2)}`;
+            details += `\nTotal: R${order.total.toFixed(2)}`;
             alert(details);
         }
 
         window.reorder = function(orderId) {
-            const order = window.userOrders.find(o => (o.ref === orderId) || (o.id === orderId));
+            const order = window.userOrders.find(o => o.id === orderId);
             if (!order) return;
 
             let added = 0;
@@ -3227,9 +3187,9 @@
 
         window.updateDashboardStats = function() {
             const totalOrders = window.userOrders.length;
-            const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing' || o.status === 'Pending Processing').length;
-            const completedOrders = window.userOrders.filter(o => o.status === 'delivered' || o.status === 'completed').length;
-            const totalSpent = window.userOrders.filter(o => o.status === 'delivered' || o.status === 'completed').reduce((sum, o) => sum + (o.total || 0), 0);
+            const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing').length;
+            const completedOrders = window.userOrders.filter(o => o.status === 'delivered').length;
+            const totalSpent = window.userOrders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + (o.total || 0), 0);
 
             const totalOrdersEl = document.getElementById('dashboard-stat-total-orders');
             const pendingOrdersEl = document.getElementById('dashboard-stat-pending-orders');
@@ -3253,24 +3213,23 @@
 
             container.innerHTML = recentOrders.map(order => {
                 const statusClass = `status-${order.status}`;
-                const statusText = order.status ? (order.status.charAt(0).toUpperCase() + order.status.slice(1)) : 'Pending';
+                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
                 const date = new Date(order.date).toLocaleDateString('en-ZA', {
                     month: 'short',
                     day: 'numeric'
                 });
-                const orderId = order.ref || order.id || 'N/A';
 
                 return `
                     <div class="flex items-center justify-between py-3 border-b border-gray-50 dark:border-slate-800 last:border-0">
                         <div class="flex items-center gap-4">
                             <div>
-                                <p class="text-brand-navy dark:text-white font-bold text-sm">${orderId}</p>
+                                <p class="text-brand-navy dark:text-white font-bold text-sm">${order.id}</p>
                                 <p class="text-xs text-gray-500 dark:text-slate-400">${date}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="px-2 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${statusClass}">${statusText}</span>
-                            <p class="font-black text-brand-blue text-sm">R${(order.total || 0).toFixed(2)}</p>
+                            <p class="font-black text-brand-blue text-sm">R${order.total.toFixed(2)}</p>
                         </div>
                     </div>
                 `;
@@ -3983,9 +3942,9 @@
                         window.renderBulkTable();
                         window.updateBulkSummary();
                     }
-                    if (viewId === 'orders') { window.loadUserOrdersFromFirebase(); window.renderOrders(); window.updateOrdersStats(); }
-                    if (viewId === 'dashboard') { window.loadUserOrdersFromFirebase(); window.switchDashboardTab('overview'); window.updateDashboardProfileDisplay(); }
-                    if (viewId === 'customer') { window.loadUserOrdersFromFirebase(); window.loadClientLeads(); }
+                    if (viewId === 'orders') { window.renderOrders(); window.updateOrdersStats(); }
+                    if (viewId === 'dashboard') { window.switchDashboardTab('overview'); window.updateDashboardProfileDisplay(); }
+                    if (viewId === 'customer') window.loadClientLeads();
                     if (viewId === 'admin' && window.isAdmin) window.switchAdminTab('dashboard');
                     if (viewId === 'home') window.loadHomepageReviews();
                 }
