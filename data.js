@@ -14,10 +14,10 @@ const products = [
 ];
 
 // Smart Cart Memory
-let activeCart = JSON.parse(localStorage.getItem('lubritec_cart')) || [];
+window.window.activeCart = JSON.parse(localStorage.getItem('lubritec_cart')) || [];
 
 // Expose functions to window object for cross-page access
-window.activeCart = activeCart;
+window.window.activeCart = window.activeCart;
 window.addToQuote = addToQuote;
 window.toggleCart = toggleCart;
 window.updateCartUI = updateCartUI;
@@ -26,7 +26,7 @@ window.saveCart = saveCart;
 window.products = products;
 
 function saveCart() {
-    localStorage.setItem('lubritec_cart', JSON.stringify(activeCart));
+    localStorage.setItem('lubritec_cart', JSON.stringify(window.activeCart));
     updateCartUI();
 }
 
@@ -47,8 +47,8 @@ function toggleCart() {
 
 function addToQuote(productId, name, size, price) {
     const cartItemId = `${productId}-${size}`;
-    const existing = activeCart.find(item => item.cartId === cartItemId);
-    if (existing) { existing.qty += 1; } else { activeCart.push({ cartId: cartItemId, name: name, size: size, price: parseFloat(price), qty: 1 }); }
+    const existing = window.activeCart.find(item => item.cartId === cartItemId);
+    if (existing) { existing.qty += 1; } else { window.activeCart.push({ cartId: cartItemId, name: name, size: size, price: parseFloat(price), qty: 1 }); }
 
     saveCart();
 
@@ -60,10 +60,10 @@ function addToQuote(productId, name, size, price) {
 }
 
 function updateQty(cartId, delta) {
-    const item = activeCart.find(i => i.cartId === cartId);
+    const item = window.activeCart.find(i => i.cartId === cartId);
     if (!item) return;
     item.qty += delta;
-    if (item.qty <= 0) activeCart = activeCart.filter(i => i.cartId !== cartId);
+    if (item.qty <= 0) window.activeCart = window.activeCart.filter(i => i.cartId !== cartId);
     saveCart();
 }
 
@@ -72,20 +72,20 @@ function updateCartUI() {
     const itemsDiv = document.getElementById('cart-items');
     if (!countSpan || !itemsDiv) return;
 
-    const totalQty = activeCart.reduce((sum, item) => sum + item.qty, 0);
+    const totalQty = window.activeCart.reduce((sum, item) => sum + item.qty, 0);
     countSpan.textContent = totalQty;
     if (totalQty > 0) countSpan.classList.remove('scale-0');
     else countSpan.classList.add('scale-0');
 
     const emptyMsg = document.getElementById('empty-cart-msg');
-    if (activeCart.length === 0) {
+    if (window.activeCart.length === 0) {
         emptyMsg.style.display = 'flex';
         itemsDiv.innerHTML = '';
         itemsDiv.appendChild(emptyMsg);
     } else {
         emptyMsg.style.display = 'none';
         itemsDiv.innerHTML = '';
-        activeCart.forEach(item => {
+        window.activeCart.forEach(item => {
             const row = document.createElement('div');
             row.className = 'bg-gray-900 border border-gray-800 p-4 rounded-xl flex flex-col gap-3 shadow-md';
             row.innerHTML = `
@@ -109,7 +109,7 @@ function updateCartUI() {
         });
     }
 
-    const subtotal = activeCart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const subtotal = window.activeCart.reduce((sum, item) => sum + (item.price * item.qty), 0);
     const vat = subtotal * 0.15;
     const total = subtotal + vat;
 
@@ -118,11 +118,13 @@ function updateCartUI() {
     document.getElementById('cart-total').textContent = `R${total.toFixed(2)}`;
 
     const waBtn = document.getElementById('wa-checkout-btn');
-    if (activeCart.length === 0) { waBtn.href = "#"; } else {
-        let msg = "*NEW QUOTE REQUEST - LUBRITEC*%0A%0A";
-        activeCart.forEach(i => { msg += `▪ *${i.qty}x* ${i.name} (${i.size}) - R${(i.price * i.qty).toFixed(2)}%0A`; });
-        msg += `%0A*Subtotal:* R${subtotal.toFixed(2)}%0A*VAT (15%):* R${vat.toFixed(2)}%0A*Total Estimate:* R${total.toFixed(2)}%0A%0A`;
-        waBtn.href = `https://wa.me/27680871269?text=${msg}`;
+    if (waBtn) {
+        if (window.activeCart.length === 0) { waBtn.href = "#"; } else {
+            let msg = "*NEW QUOTE REQUEST - LUBRITEC*%0A%0A";
+            window.activeCart.forEach(i => { msg += `▪ *${i.qty}x* ${i.name} (${i.size}) - R${(i.price * i.qty).toFixed(2)}%0A`; });
+            msg += `%0A*Subtotal:* R${subtotal.toFixed(2)}%0A*VAT (15%):* R${vat.toFixed(2)}%0A*Total Estimate:* R${total.toFixed(2)}%0A%0A`;
+            waBtn.href = `https://wa.me/27680871269?text=${msg}`;
+        }
     }
 }
 
@@ -136,7 +138,7 @@ window.loadProductReviews = async function(productId) {
     if (!window.firebaseDb) return [];
     try {
         const reviewsRef = window.collection(window.firebaseDb, 'reviews');
-        const q = window.query(reviewsRef, window.firebaseFirestore ? .where ? .('productId', '==', productId) || undefined);
+        const q = window.query(reviewsRef, window.firebaseFirestore?.where ? window.firebaseFirestore.where('productId', '==', productId) : undefined);
         const snapshot = await window.getDocs(q);
         const reviews = [];
         snapshot.forEach(doc => {

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Route 64 Lubricants | Professional ERP Platform</title>
     <!-- UI & Styling -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -19,18 +21,26 @@
                             navy: '#0f172a',
                             blue: '#2563eb',
                             red: '#ef4444',
-                            slate: '#334155'
+                            400: '#60a5fa'
                         }
                     },
                     animation: {
+                        blob: "blob 7s infinite",
+                        'float-slow': "float 6s ease-in-out infinite",
+                        'gradient-x': 'gradient-x 15s ease infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                        'marquee': 'marquee 20s linear infinite',
-                        'blob': 'blob 4s infinite',
-                        'gradient-x': 'gradient-x 3s ease infinite',
-                        'float-slow': 'float-slow 4s ease-in-out infinite'
                     },
                     keyframes: {
+                        blob: {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" }
+                        },
+                        float: {
+                            "0%, 100%": { transform: "translateY(0)" },
+                            "50%": { transform: "translateY(-10px)" }
+                        },
                         'gradient-x': {
                             '0%, 100%': {
                                 'background-size': '200% 200%',
@@ -40,37 +50,12 @@
                                 'background-size': '200% 200%',
                                 'background-position': 'right center'
                             }
-                        },
-                        'float-slow': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' }
-                        },
-                        blob: {
-                            '0%, 100%': { transform: 'scale(1)' },
-                            '50%': { transform: 'scale(1.1)' }
-                        },
-                        float: {
-                            '0%, 100%': {
-                                transform: 'translateY(0)'
-                            },
-                            '50%': {
-                                transform: 'translateY(-10px)'
-                            }
-                        },
-                        marquee: {
-                            '0%': {
-                                transform: 'translateX(0%)'
-                            },
-                            '100%': {
-                                transform: 'translateX(-50%)'
-                            }
                         }
                     }
                 }
             }
         }
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
 
 
     <style>/* ============================================
@@ -3674,7 +3659,7 @@ tbody tr:hover {
             }
         };
 
-        let activeCart = JSON.parse(localStorage.getItem('lubritec_cart')) || [];
+        window.activeCart = JSON.parse(localStorage.getItem('lubritec_cart')) || [];
         let currentFilter = 'all';
 
         /* ========================================== */
@@ -4003,9 +3988,9 @@ tbody tr:hover {
                 }
 
                 const cartId = `${p.id}-${select.value}`;
-                const existing = activeCart.find(i => i.cartId === cartId);
+                const existing = window.activeCart.find(i => i.cartId === cartId);
                 if (existing) existing.qty += qty;
-                else activeCart.push({
+                else window.activeCart.push({
                     cartId,
                     id: p.id,
                     name: p.name,
@@ -4022,10 +4007,10 @@ tbody tr:hover {
         }
 
         window.updateQty = function(id, delta) {
-            const item = activeCart.find(i => i.cartId === id);
+            const item = window.activeCart.find(i => i.cartId === id);
             if (!item) return;
             item.qty += delta;
-            if (item.qty <= 0) activeCart = activeCart.filter(i => i.cartId !== id);
+            if (item.qty <= 0) activeCart = window.activeCart.filter(i => i.cartId !== id);
             window.updateCartUI();
         }
 
@@ -4046,15 +4031,15 @@ tbody tr:hover {
                 container.innerHTML = '';
                 let total = 0;
 
-                if (activeCart.length === 0) {
+                if (window.activeCart.length === 0) {
                     empty.style.display = 'flex';
                     badge.classList.add('scale-0');
                 } else {
                     empty.style.display = 'none';
                     badge.classList.remove('scale-0');
-                    badge.innerText = activeCart.reduce((s, i) => s + i.qty, 0);
+                    badge.innerText = window.activeCart.reduce((s, i) => s + i.qty, 0);
 
-                    activeCart.forEach(item => {
+                    window.activeCart.forEach(item => {
                                 const itemTotal = item.qty * item.price;
                                 total += itemTotal;
 
@@ -4106,7 +4091,7 @@ tbody tr:hover {
         }
 
         window.processQuote = async function(sendToWhatsApp = false) {
-            if (activeCart.length === 0) return window.customAlert("Basket is empty.");
+            if (window.activeCart.length === 0) return window.customAlert("Basket is empty.");
             const bizName = document.getElementById('customer-business').value.trim();
             const contactName = document.getElementById('customer-name').value.trim();
             const phone = document.getElementById('customer-phone').value.trim();
@@ -4141,7 +4126,7 @@ tbody tr:hover {
             if (window.currentUser && window.currentUser.email) doc.text("TOTAL", 170, y);
             y += 5; doc.line(15, y, 195, y); y += 10; doc.setFont("helvetica", "normal");
             
-            activeCart.forEach(it => {
+            window.activeCart.forEach(it => {
                 doc.text(it.qty.toString() + " Cs", 15, y); doc.text(it.name.substring(0, 40), 35, y); doc.text(it.size, 120, y);
                 if (window.currentUser && window.currentUser.email) {
                     doc.text(it.price > 0 ? "R" + (it.qty * it.price).toFixed(2) : "TBD", 170, y);
@@ -4157,7 +4142,7 @@ tbody tr:hover {
 
             if (sendToWhatsApp) {
                 let msg = `*ROUTE 64 ORDER: ${newQuoteId}*\n🏢 ${bizName} | 📞 ${phone}\n\n*Items:*\n`;
-                activeCart.forEach(i => msg += `▪ *${i.qty} Cases* ${i.name} (${i.size})\n`);
+                window.activeCart.forEach(i => msg += `▪ *${i.qty} Cases* ${i.name} (${i.size})\n`);
                 if (window.currentUser && window.currentUser.email && window.cartTotal > 0) {
                     const sub = window.cartTotal / 1.15;
                     const v = window.cartTotal - sub;
@@ -4423,12 +4408,12 @@ tbody tr:hover {
                         console.log('Price for', productId, size, ':', price);
 
                         const cartId = `${productId}-${size}`;
-                        const existing = activeCart.find(i => i.cartId === cartId);
+                        const existing = window.activeCart.find(i => i.cartId === cartId);
                         if (existing) {
                             existing.qty += qty;
                             console.log('Updated existing item:', existing);
                         } else {
-                            activeCart.push({
+                            window.activeCart.push({
                                 cartId,
                                 id: productId,
                                 name: product.name,
@@ -4679,9 +4664,9 @@ tbody tr:hover {
             order.items.forEach(item => {
                 for (let i = 0; i < item.qty; i++) {
                     const cartId = `${item.productId || item.id}-${item.size}`;
-                    const existing = activeCart.find(i => i.cartId === cartId);
+                    const existing = window.activeCart.find(i => i.cartId === cartId);
                     if (existing) existing.qty += 1;
-                    else activeCart.push({
+                    else window.activeCart.push({
                         cartId,
                         id: item.productId || item.id,
                         name: item.name,
@@ -5093,14 +5078,14 @@ tbody tr:hover {
                 const items = JSON.parse(decodeURIComponent(safeItems));
                 items.forEach(item => {
                     const cartId = `${item.id}-${item.size}`;
-                    const existing = activeCart.find(i => i.cartId === cartId);
+                    const existing = window.activeCart.find(i => i.cartId === cartId);
                     let currentPrice = item.price;
                     if (window.currentUser && window.currentUser.email && window.userPricing[item.id]) {
                         currentPrice = window.userPricing[item.id][item.size] || 0;
                     }
 
                     if (existing) { existing.qty += item.qty; existing.price = currentPrice; } 
-                    else { activeCart.push({ cartId, id: item.id, name: item.name, size: item.size, qty: item.qty, price: currentPrice }); }
+                    else { window.activeCart.push({ cartId, id: item.id, name: item.name, size: item.size, qty: item.qty, price: currentPrice }); }
                 });
                 window.updateCartUI();
                 if (!document.getElementById('cart-sidebar').classList.contains('open')) window.toggleCart();
