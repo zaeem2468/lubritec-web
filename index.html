@@ -5,6 +5,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Route 64 Lubricants | Professional ERP Platform</title>
+    <!-- UI & Styling -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#0f172a',
+                            blue: '#2563eb',
+                            red: '#ef4444',
+                            slate: '#334155'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'marquee': 'marquee 20s linear infinite',
+                        'blob': 'blob 4s infinite',
+                        'gradient-x': 'gradient-x 3s ease infinite',
+                        'float-slow': 'float-slow 4s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        },
+                        'float-slow': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        blob: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.1)' }
+                        },
+                        float: {
+                            '0%, 100%': {
+                                transform: 'translateY(0)'
+                            },
+                            '50%': {
+                                transform: 'translateY(-10px)'
+                            }
+                        },
+                        marquee: {
+                            '0%': {
+                                transform: 'translateX(0%)'
+                            },
+                            '100%': {
+                                transform: 'translateX(-50%)'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 
     <style>/* ============================================
    LUBRITEC - MAIN STYLESHEET
@@ -1582,8 +1649,6 @@ tbody tr:hover {
 }</style>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- UI & Styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="data.js"></script>
@@ -1621,70 +1686,7 @@ tbody tr:hover {
         } } });
     </script>
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    },
-                    colors: {
-                        brand: {
-                            navy: '#0f172a',
-                            blue: '#2563eb',
-                            red: '#ef4444',
-                            slate: '#334155'
-                        }
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                        'marquee': 'marquee 20s linear infinite',
-                        'blob': 'blob 4s infinite',
-                        'gradient-x': 'gradient-x 3s ease infinite',
-                        'float-slow': 'float-slow 4s ease-in-out infinite'
-                    },
-                    keyframes: {
-                        'gradient-x': {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        },
-                        'float-slow': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' }
-                        },
-                        blob: {
-                            '0%, 100%': { transform: 'scale(1)' },
-                            '50%': { transform: 'scale(1.1)' }
-                        },
-                        float: {
-                            '0%, 100%': {
-                                transform: 'translateY(0)'
-                            },
-                            '50%': {
-                                transform: 'translateY(-10px)'
-                            }
-                        },
-                        marquee: {
-                            '0%': {
-                                transform: 'translateX(0%)'
-                            },
-                            '100%': {
-                                transform: 'translateX(-50%)'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+
 
     <style>
          ::-webkit-scrollbar {
