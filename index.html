@@ -3,47 +3,70 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="image_7d531d.png">
+    <script>
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('theme'); } catch (e) {}
+            if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
+        })();
+    </script>
     <title>Route 64 Lubricants | Professional ERP Platform</title>
 
     <!-- UI & Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <script src="data.js"></script>
 
     <!-- Firebase Integration Logic -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"; import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ",
-        authDomain: "route64-web.firebaseapp.com", projectId: "route64-web", storageBucket: "route64-web.firebasestorage.app", messagingSenderId: "967223634070", appId: "1:967223634070:web:d7265bb36bbca0d0573ab7", measurementId: "G-6ZTYNL2KMN" }; const
-        app = initializeApp(firebaseConfig); const auth = getAuth(app); const db = getFirestore(app); const appId = "route64-web"; const ADMIN_EMAILS = ['info@route64.co.za', 'riaaz@route64.co.za', 'ziemie786@gmail.com']; window.isAdmin = false; window.firebaseDb
-        = db; window.firebaseAuth = auth; window.appId = appId; window.addDoc = addDoc; window.doc = doc; window.setDoc = setDoc; window.getDoc = getDoc; window.getDocs = getDocs; window.updateDoc = updateDoc; window.deleteDoc = deleteDoc; window.collection
-        = collection; window.onSnapshot = onSnapshot; window.query = query; window.signInWithEmailAndPassword = signInWithEmailAndPassword; window.createUserWithEmailAndPassword = createUserWithEmailAndPassword; window.signOut = signOut; onAuthStateChanged(auth,
-        (user) => { window.currentUser = user; const cloudStatus = document.getElementById('cloud-status'); const navLoginBtn = document.getElementById('nav-login-btn'); const mobileLoginBtn = document.getElementById('mobile-login-btn'); const navAdminBtn
-        = document.getElementById('nav-admin-btn'); const mobileAdminBtn = document.getElementById('mobile-admin-btn'); const navAnalyticsBtn = document.getElementById('nav-analytics-btn'); const mobileAnalyticsBtn = document.getElementById('mobile-analytics-btn');
-        const navOrderBtn = document.getElementById('nav-order-btn'); const mobileOrderBtn = document.getElementById('mobile-order-btn'); const processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg');
-        const profileSection = document.getElementById('client-profile-section'); if (user) { window.isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase()); if (navAdminBtn) navAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAdminBtn)
-        mobileAdminBtn.style.display = window.isAdmin ? 'block' : 'none'; if (navAnalyticsBtn) navAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = window.isAdmin ? 'block' : 'none';
-        if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display = "none";
-        if (profileSection) profileSection.classList.remove('hidden'); if (cloudStatus) cloudStatus.innerText = 'Connected: ' + user.email; if (navLoginBtn) navLoginBtn.innerText = 'Sign Out'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Sign Out';
-        if(typeof window.loadUserPricing === 'function') window.loadUserPricing(user.uid); if(typeof window.loadClientLeads === 'function') window.loadClientLeads(); if(typeof window.loadClientProfile === 'function') window.loadClientProfile(user.uid);
-        if(window.isAdmin && typeof window.loadAdminUsers === 'function') window.loadAdminUsers(); } else { window.isAdmin = false; if (navAdminBtn) navAdminBtn.style.display = 'none'; if (mobileAdminBtn) mobileAdminBtn.style.display = 'none'; if (navAnalyticsBtn)
-        navAnalyticsBtn.style.display = 'none'; if (mobileAnalyticsBtn) mobileAnalyticsBtn.style.display = 'none'; if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (profileSection) profileSection.classList.add('hidden');
-        if (processActionBtn) processActionBtn.innerText = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (cloudStatus) cloudStatus.innerText = 'Not Connected (Login Required)'; if (navLoginBtn) navLoginBtn.innerText
-        = 'Client Login'; if (mobileLoginBtn) mobileLoginBtn.innerText = 'Client Login'; window.userPricing = {}; if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home'); } if(typeof window.renderCatalog ===
-        'function') window.renderCatalog(); if(typeof window.updateCartUI === 'function') window.updateCartUI(); } });
-    </script>
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <!-- Supplemental UI State Logic -->
-    <script type="module">
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"; const secondaryAuth = getAuth(); onAuthStateChanged(secondaryAuth, (user) => { const isRealUser = user && user.email; const navOrderBtn = document.getElementById('nav-order-btn');
-        const mobileOrderBtn = document.getElementById('mobile-order-btn'); const processActionBtn = document.getElementById('process-action-btn'); const processAuthMsg = document.getElementById('process-auth-msg'); const profileSection = document.getElementById('client-profile-section');
-        if (isRealUser) { if (navOrderBtn) navOrderBtn.style.display = 'block'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'block'; if (processActionBtn) processActionBtn.innerText = "Go To Order Portal"; if (processAuthMsg) processAuthMsg.style.display
-        = "none"; if (profileSection) profileSection.classList.remove('hidden'); } else { if (navOrderBtn) navOrderBtn.style.display = 'none'; if (mobileOrderBtn) mobileOrderBtn.style.display = 'none'; if (processActionBtn) processActionBtn.innerText
-        = "Login / Register Now"; if (processAuthMsg) processAuthMsg.style.display = "block"; if (profileSection) profileSection.classList.add('hidden'); if (window.currentView === 'customer' || window.currentView === 'catalog') { window.navigate('home');
-        } } });
+        const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ", authDomain: "route64-web.firebaseapp.com", projectId: "route64-web", storageBucket: "route64-web.firebasestorage.app", messagingSenderId: "967223634070", appId: "1:967223634070:web:d7265bb36bbca0d0573ab7", measurementId: "G-6ZTYNL2KMN" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const ADMIN_EMAILS = ['info@route64.co.za', 'riaaz@route64.co.za', 'ziemie786@gmail.com'];
+
+        Object.assign(window, { isAdmin: false, firebaseDb: db, firebaseAuth: auth, appId: "route64-web", addDoc, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, collection, onSnapshot, query, where, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut });
+
+        const setText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
+
+        onAuthStateChanged(auth, (user) => {
+            window.currentUser = user;
+            const signedIn = !!(user && user.email);
+            window.isAdmin = signedIn && ADMIN_EMAILS.includes(user.email.toLowerCase());
+            document.documentElement.classList.toggle('signed-in', signedIn);
+            document.documentElement.classList.toggle('is-admin', window.isAdmin);
+
+            setText('mobile-login-btn', signedIn ? 'Sign Out' : 'Login');
+            setText('cloud-status', signedIn ? 'Connected: ' + user.email : 'Not Connected (Login Required)');
+            setText('process-action-btn', signedIn ? 'Go To Order Portal' : 'Login / Register Now');
+            const authMsg = document.getElementById('process-auth-msg');
+            if (authMsg) authMsg.style.display = signedIn ? 'none' : 'block';
+            const profile = document.getElementById('client-profile-section');
+            if (profile) profile.classList.toggle('hidden', !signedIn);
+
+            if (signedIn) {
+                window.initCatalog();
+                window.loadUserPricing(user.uid);
+                window.loadClientLeads();
+                window.loadClientProfile(user.uid);
+                window.loadUserOrders();
+                window.loadUserProfileFromFirebase();
+                if (window.isAdmin) window.loadAdminUsers();
+            } else {
+                window.userPricing = {};
+                window.clearUserOrders();
+                if (['customer', 'catalog', 'orders', 'dashboard', 'admin'].includes(window.currentView)) window.navigate('home');
+                window.renderCatalog();
+                window.updateCartUI();
+            }
+            window.routeInitial();
+        });
     </script>
 
     <script>
@@ -306,132 +329,25 @@
             background-image: radial-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 0);
             background-size: 30px 30px;
         }
-        /* Premium Navigation Enhancements */
-        
-        .nav-sticky {
-            background: rgba(248, 250, 252, 0.95) !important;
-            backdrop-filter: blur(20px) !important;
-            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.15) !important;
-            border-bottom: 1px solid rgba(37, 99, 235, 0.1) !important;
-        }
-        
-        .dark .nav-sticky {
-            background: rgba(15, 23, 42, 0.95) !important;
-            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5) !important;
-            border-bottom: 1px solid rgba(37, 99, 235, 0.2) !important;
-        }
-        /* Enhanced nav button with animated underline */
-        
-        .nav-sticky button[onclick*="navigate"],
-        .nav-sticky button[onclick*="handleNavLogin"],
-        .nav-sticky button[onclick*="admin"] {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .nav-sticky button[onclick*="navigate"]::after,
-        .nav-sticky button[onclick*="handleNavLogin"]::after,
-        .nav-sticky button[onclick*="admin"]::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -100%;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, currentColor, transparent);
-            transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        .nav-sticky button[onclick*="navigate"]:hover::after,
-        .nav-sticky button[onclick*="handleNavLogin"]:hover::after,
-        .nav-sticky button[onclick*="admin"]:hover::after {
-            left: 100%;
-        }
-        /* Premium button styles */
-        
-        .nav-sticky button[onclick*="toggleCart"] {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.08) 100%) !important;
-            border: 1.5px solid rgba(37, 99, 235, 0.3) !important;
-            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15) !important;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-        }
-        
-        .nav-sticky button[onclick*="toggleCart"]:hover {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.15) 100%) !important;
-            border-color: rgba(37, 99, 235, 0.5) !important;
-            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.25) !important;
-            transform: translateY(-2px) !important;
-        }
-        /* Logo hover effect */
-        
-        .nav-sticky .group:hover {
-            transform: translateY(-2px);
-        }
-        
-        .nav-sticky .group img {
-            filter: drop-shadow(0 4px 16px rgba(37, 99, 235, 0.2));
-        }
-        /* Theme toggle button enhancement */
-        
-        .nav-sticky button[onclick*="toggleTheme"] {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02)) !important;
-            transition: all 0.3s ease !important;
-            border: 1px solid rgba(0, 0, 0, 0.08) !important;
-        }
-        
-        .dark .nav-sticky button[onclick*="toggleTheme"] {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)) !important;
-            border-color: rgba(255, 255, 255, 0.12) !important;
-        }
-        
-        .nav-sticky button[onclick*="toggleTheme"]:hover {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.04)) !important;
-            transform: scale(1.08) rotate(20deg);
-        }
-        
-        .dark .nav-sticky button[onclick*="toggleTheme"]:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08)) !important;
-        }
-        /* Mobile menu button */
-        
-        .nav-sticky button[onclick*="toggleMobileMenu"] {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02)) !important;
-            border: 1px solid rgba(0, 0, 0, 0.08) !important;
-            transition: all 0.3s ease !important;
-        }
-        
-        .dark .nav-sticky button[onclick*="toggleMobileMenu"] {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)) !important;
-            border-color: rgba(255, 255, 255, 0.12) !important;
-        }
-        
-        .nav-sticky button[onclick*="toggleMobileMenu"]:hover {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(37, 99, 235, 0.08)) !important;
-            transform: scale(1.05);
-        }
-        /* Enhanced cart badge */
-        
-        #cart-count {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
-            border-color: rgba(255, 255, 255, 0.3) !important;
-        }
-        
-        #cart-count:not(.scale-0) {
-            animation: badgePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        @keyframes badgePulse {
-            0% {
-                transform: scale(0);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
+        /* Navigation */
+        .nav-sticky { background: rgba(255, 255, 255, 0.92); }
+        .dark .nav-sticky { background: rgba(15, 23, 42, 0.92); }
+        .nav-link { font-size: 15px; font-weight: 500; color: #475569; white-space: nowrap; padding-block: 6px; transition: color .15s; }
+        .dark .nav-link { color: #cbd5e1; }
+        .nav-link:hover, .nav-link[aria-current="page"], .nav-link[aria-expanded="true"] { color: #0f172a; }
+        .dark .nav-link:hover, .dark .nav-link[aria-current="page"], .dark .nav-link[aria-expanded="true"] { color: #fff; }
+        .nav-link[aria-current="page"] { font-weight: 600; }
+        html:not(.signed-in) .auth-only, html:not(.is-admin) .admin-only { display: none !important; }
+        .signed-in .guest-only { display: none !important; }
+        #page-loader { animation: loaderOut .3s ease 6s forwards; }
+        @keyframes loaderOut { to { opacity: 0; visibility: hidden; } }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-processing { background: #dbeafe; color: #1e40af; }
+        .status-shipped { background: #ffedd5; color: #9a3412; }
+        .status-delivered { background: #dcfce7; color: #166534; }
+        .status-cancelled { background: #fee2e2; color: #991b1b; }
+        #cart-count:not(.scale-0) { animation: badgePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes badgePulse { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
         /* Refined pro-card animations */
         
         .pro-card {
@@ -591,7 +507,7 @@
     </style>
 </head>
 
-<body class="pt-24 md:pt-28 dark:bg-slate-950 selection:bg-brand-blue selection:text-white relative overflow-x-hidden">
+<body class="pt-[72px] dark:bg-slate-950 selection:bg-brand-blue selection:text-white relative overflow-x-hidden">
 
     <!-- Ambient glowing orbs -->
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-[-1]">
@@ -672,138 +588,83 @@
         </div>
     </div>
 
-    <!-- AI & WHATSAPP FLOATING BUTTONS -->
-    <div id="ai-widget-container" class="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[90] flex flex-col items-end gap-3">
-        <div id="ai-chat-window" style="display: none;" class="flex-col w-[90vw] sm:w-80 md:w-96 h-[60vh] md:h-[500px] max-h-[75vh] glass-panel rounded-[24px] md:rounded-[32px] shadow-2xl border border-gray-200 dark:border-white/10 mb-4 overflow-hidden origin-bottom-right transition-transform">
-            <div class="p-4 md:p-5 bg-brand-navy text-white flex justify-between items-center shrink-0 shadow-md z-20">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-tr from-brand-blue to-purple-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.5)] relative overflow-hidden">
-                        <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
-                        <svg class="w-4 h-4 md:w-5 md:h-5 relative z-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <div>
-                        <h4 class="text-xs md:text-sm font-black uppercase tracking-widest">Tech Advisor</h4>
-                        <p class="text-[9px] md:text-[10px] text-brand-blue font-bold">Route 64 AI Intelligence</p>
-                    </div>
-                </div>
-                <button onclick="window.toggleAI()" class="text-slate-400 hover:text-white transition p-2 rounded-full hover:bg-white/10"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+    <!-- PRODUCT FINDER AND WHATSAPP -->
+    <div id="float-actions" class="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[90] flex flex-col items-end gap-3">
+        <section id="finder-panel" aria-label="Product finder" style="display: none;" class="flex-col w-[90vw] sm:w-80 md:w-96 max-h-[75vh] bg-white dark:bg-slate-900 rounded-[24px] md:rounded-[32px] shadow-2xl border border-gray-200 dark:border-white/10 mb-1 overflow-hidden">
+            <div class="p-4 md:p-5 bg-brand-navy text-white flex justify-between items-center shrink-0">
+                <h4 class="text-xs md:text-sm font-black uppercase tracking-widest">Find The Right Product</h4>
+                <button onclick="window.closeFinder()" aria-label="Close product finder" class="text-slate-400 hover:text-white transition p-2 rounded-full hover:bg-white/10"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <div id="ai-messages" class="flex-1 min-h-0 overflow-y-auto chat-scroll p-4 md:p-6 text-xs md:text-sm flex flex-col gap-4 bg-slate-50 dark:bg-slate-950">
-                <div class="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl text-brand-navy dark:text-slate-200 rounded-tl-none font-medium w-fit max-w-[90%] mr-auto shrink-0">
-                    Hello! I'm your Route 64 AI technical assistant. I can recommend oils based on machinery, specifications, or viscosities. How can I help you today?
-                </div>
-            </div>
-            <div class="p-3 md:p-4 border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0 z-20 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
-                <div class="relative flex items-center">
-                    <input type="text" id="ai-input" onkeypress="if(event.key === 'Enter') window.askAI()" placeholder="E.g., What oil for a heavy duty tractor?" class="w-full pl-4 pr-12 py-3 md:py-4 rounded-xl md:rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 transition text-[10px] md:text-xs font-medium shadow-inner">
-                    <button onclick="window.askAI()" class="absolute right-2 p-2 md:p-3 bg-brand-blue text-white rounded-lg md:rounded-xl hover:bg-blue-700 shadow-md transition transform active:scale-95 flex items-center justify-center">
-                        <svg class="w-3 h-3 md:w-4 md:h-4 translate-x-[-1px] translate-y-[1px]" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
+            <div id="finder-body" class="flex-1 min-h-0 overflow-y-auto p-4 md:p-5 bg-slate-50 dark:bg-slate-950 text-sm"></div>
+        </section>
         <div class="flex items-center gap-3">
             <a href="https://wa.me/27680871269" target="_blank" class="w-12 h-12 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-[0_10px_20px_-5px_rgba(37,211,102,0.8)] flex items-center justify-center hover:scale-110 transition-all duration-300 relative group border-2 border-white/20">
                 <svg class="w-6 h-6 md:w-7 md:h-7 relative z-10 drop-shadow-md group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
             </a>
-
-            <!-- AI Bot Bubble -->
-            <button id="ai-bot-bubble" onclick="window.toggleAI()" class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-brand-navy via-brand-blue to-purple-700 text-white rounded-full shadow-[0_10px_30px_-5px_rgba(37,99,235,0.8)] flex items-center justify-center hover:scale-110 transition-all duration-300 relative group overflow-hidden border-2 border-white/20 cursor-pointer">
-                <div class="absolute inset-0 border-[2px] border-transparent border-t-white/40 rounded-full animate-[spin_3s_linear_infinite]"></div>
-                <div class="absolute inset-1 border-[2px] border-dashed border-white/30 rounded-full animate-[spin_5s_linear_infinite_reverse]"></div>
-                <div class="absolute inset-0 bg-brand-blue opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                <svg class="w-6 h-6 md:w-7 md:h-7 relative z-10 drop-shadow-md group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                </svg>
-                <div class="absolute top-0 right-0 w-3 h-3 md:w-3.5 md:h-3.5 bg-brand-red rounded-full border-2 border-brand-navy animate-pulse"></div>
+            <button id="finder-toggle" onclick="window.toggleFinder()" aria-label="Find the right product" aria-expanded="false" class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-brand-navy to-brand-blue text-white rounded-full shadow-[0_10px_30px_-5px_rgba(37,99,235,0.8)] flex items-center justify-center hover:scale-110 transition-all duration-300 border-2 border-white/20">
+                <svg class="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </button>
         </div>
     </div>
 
     <!-- MOBILE MENU OVERLAY -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white/95 dark:bg-brand-navy/95 backdrop-blur-2xl z-[120] hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0">
-        <button onclick="window.toggleMobileMenu()" class="absolute top-6 right-6 md:top-8 md:right-8 text-brand-navy dark:text-white p-3 bg-black/5 dark:bg-white/10 rounded-full hover:bg-brand-red dark:hover:bg-brand-red hover:text-white transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-        <div class="flex flex-col items-center gap-8 text-brand-navy dark:text-white font-black uppercase tracking-widest text-lg md:text-xl">
-            <button onclick="window.navigate('home'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Home</button>
-            <button onclick="window.navigate('catalog'); window.toggleMobileMenu()" id="mobile-order-btn" class="hover:text-brand-red transition text-brand-red" style="display:none;">Order Portal</button>
-            <button onclick="window.navigate('orders'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Orders</button>
-            <button onclick="window.navigate('dashboard'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Account</button>
-            <button onclick="window.navigate('tracking'); window.toggleMobileMenu()" id="mobile-tracking-btn" class="hover:text-emerald-500 transition text-emerald-600" style="display:none;">Orders & Tracking</button>
-            <button onclick="window.navigate('reorder'); window.toggleMobileMenu()" id="mobile-reorder-btn" class="hover:text-blue-500 transition text-blue-600" style="display:none;">Quick Reorder</button>
-            <button onclick="window.navigate('calculator'); window.toggleMobileMenu()" id="mobile-calculator-btn" class="hover:text-purple-500 transition text-purple-600" style="display:none;">Bulk Calculator</button>
-            <button onclick="window.navigate('process'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">How To Order</button>
-            <button onclick="window.navigate('about'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">About Us</button>
-            <button onclick="window.navigate('contact'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">Contact Details</button>
-            <button onclick="window.navigate('customer'); window.toggleMobileMenu()" class="hover:text-brand-blue transition">My Inquiries</button>
-            <button onclick="window.handleNavLogin(); window.toggleMobileMenu()" id="mobile-login-btn" class="hover:text-brand-blue transition text-brand-blue">Client Login</button>
-            <button onclick="window.location.href='analytics.html'; window.toggleMobileMenu()" id="mobile-analytics-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Analytics</button>
-            <button onclick="window.navigate('admin'); window.toggleMobileMenu()" id="mobile-admin-btn" style="display: none;" class="hover:text-yellow-400 transition text-yellow-500">Admin Dashboard</button>
+    <div id="mobile-menu" class="fixed inset-0 bg-white/95 dark:bg-brand-navy/95 backdrop-blur-2xl z-[120] hidden flex-col items-center overflow-y-auto py-20 transition-opacity duration-300 opacity-0">
+        <button onclick="window.toggleMobileMenu()" aria-label="Close menu" class="absolute top-4 right-4 text-brand-navy dark:text-white p-3 bg-black/5 dark:bg-white/10 rounded-full hover:bg-brand-red dark:hover:bg-brand-red hover:text-white transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        <div class="flex flex-col items-center gap-5 text-brand-navy dark:text-white font-semibold text-xl">
+            <button onclick="window.navigate('home')" class="hover:text-brand-blue transition">Home</button>
+            <button onclick="window.navigate('catalog')" class="hover:text-brand-blue transition">Catalog</button>
+            <button onclick="window.navigate('process')" class="hover:text-brand-blue transition">How to Order</button>
+            <button onclick="window.navigate('about')" class="hover:text-brand-blue transition">About</button>
+            <button onclick="window.navigate('contact')" class="hover:text-brand-blue transition">Contact</button>
+            <button onclick="window.navigate('orders')" class="auth-only hover:text-brand-blue transition">Orders</button>
+            <button onclick="window.navigate('customer')" class="auth-only hover:text-brand-blue transition">My Inquiries</button>
+            <button onclick="window.navigate('dashboard')" class="auth-only hover:text-brand-blue transition">Account</button>
+            <button onclick="window.navigate('admin')" id="mobile-admin-btn" class="admin-only hover:text-brand-blue transition">Admin</button>
+            <button onclick="window.location.href='analytics.html'" id="mobile-analytics-btn" class="admin-only hover:text-brand-blue transition">Analytics</button>
+            <button onclick="window.handleNavLogin(); window.toggleMobileMenu()" id="mobile-login-btn" class="text-brand-blue transition">Login</button>
         </div>
     </div>
 
     <!-- TOP NAVIGATION -->
-    <nav class="nav-sticky">
-        <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-24 flex justify-between items-center gap-8">
-            <div class="flex items-center gap-3 md:gap-4 cursor-pointer group" onclick="window.navigate('home')" style="transition: all 0.3s ease;">
-                <div class="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 transition-all duration-300 flex items-center justify-center transform group-hover:scale-110">
-                    <img src="image_7d531d.png" alt="Route 64 Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none'">
-                </div>
-                <span class="font-black text-xl md:text-3xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block transform transition-all duration-300 group-hover:text-brand-blue">LUBRICANTS</span>
-            </div>
+    <nav class="nav-sticky" aria-label="Main">
+        <div class="max-w-[1400px] mx-auto px-4 md:px-6 h-[72px] flex items-center gap-8 lg:gap-10">
+            <button class="flex items-center gap-2 flex-shrink-0" onclick="window.navigate('home')" aria-label="Route 64 Lubricants home">
+                <img src="image_7d531d.png" alt="" class="h-12 w-auto" onerror="this.style.display='none'">
+                <span class="font-black text-xl tracking-tighter italic uppercase text-brand-navy dark:text-white hidden sm:block">LUBRICANTS</span>
+            </button>
 
-            <div class="hidden xl:flex items-center gap-1 text-[11px] font-black uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300 h-full flex-1 justify-center">
-                <button onclick="window.navigate('home')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
-                    Home
-                </button>
-                <button onclick="window.navigate('catalog')" id="nav-order-btn" style="display:none;" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group text-brand-red font-bold">
-                    Order Portal
-                </button>
-                <button onclick="window.navigate('orders')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
-                    Orders
-                </button>
-                <button onclick="window.navigate('dashboard')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
-                    Account
-                </button>
-                <button onclick="window.navigate('process')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
-                    How To Order
-                </button>
-                <button onclick="window.navigate('about')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
-                    About
-                </button>
-                <button onclick="window.navigate('contact')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
-                    Contact
-                </button>
-                <button onclick="window.navigate('customer')" class="px-4 md:px-6 py-2 hover:text-brand-navy dark:hover:text-white transition-all duration-300 relative group">
-                    My Inquiries
-                </button>
-                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="px-4 md:px-6 py-2 text-brand-blue font-bold hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 relative group">
-                    Login
-                </button>
-                <button onclick="window.location.href='analytics.html'" id="nav-analytics-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
-                    Analytics
-                </button>
-                <button onclick="window.navigate('admin')" id="nav-admin-btn" style="display: none;" class="px-4 md:px-6 py-2 text-yellow-600 dark:text-yellow-500 font-bold hover:text-yellow-700 dark:hover:text-yellow-400 transition-all duration-300 relative group">
-                    Admin
-                </button>
+            <div class="hidden lg:flex items-center gap-7">
+                <button class="nav-link" data-nav="home" onclick="window.navigate('home')">Home</button>
+                <button class="nav-link" data-nav="catalog" onclick="window.navigate('catalog')">Catalog</button>
+                <button class="nav-link" data-nav="process" onclick="window.navigate('process')">How to Order</button>
+                <button class="nav-link" data-nav="about" onclick="window.navigate('about')">About</button>
+                <button class="nav-link" data-nav="contact" onclick="window.navigate('contact')">Contact</button>
             </div>
 
             <div class="flex items-center gap-2 md:gap-4 ml-auto">
-                <button onclick="window.toggleTheme()" class="text-slate-600 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white transition-all p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transform hover:scale-110"
-                    id="theme-toggle">
-                    <svg id="moon-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    <svg id="sun-icon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <button onclick="window.toggleTheme()" id="theme-toggle" aria-label="Switch light or dark theme" class="p-2 rounded-lg text-slate-500 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white transition">
+                    <svg id="moon-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg id="sun-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
-
-                <button onclick="window.toggleCart()" class="relative p-2 md:p-4 rounded-lg md:rounded-xl transition-all duration-300 flex items-center gap-2 md:gap-3 group hover:scale-105 transform active:scale-95">
-                    <span class="text-[10px] md:text-xs uppercase font-black px-1 md:px-3 text-brand-blue hidden sm:block">Basket</span>
-                    <svg class="w-5 h-5 md:w-6 md:h-6 text-brand-blue group-hover:scale-125 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span id="cart-count" class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-brand-red text-white text-[9px] md:text-xs font-black h-5 w-5 md:h-8 md:w-8 flex items-center justify-center rounded-full scale-0 transition-all duration-300 border-2 border-white shadow-lg">0</span>
+                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="nav-link guest-only hidden sm:block">Login</button>
+                <div class="nav-account auth-only relative hidden lg:block">
+                    <button class="nav-link" id="account-menu-btn" onclick="window.toggleAccountMenu()" aria-expanded="false" aria-controls="account-menu">Account</button>
+                    <div id="account-menu" class="hidden absolute right-0 top-[calc(100%+16px)] w-48 p-2 bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 shadow-xl text-sm text-brand-navy dark:text-white">
+                        <button class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" onclick="window.navigate('orders')">Orders</button>
+                        <button class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" onclick="window.navigate('customer')">My Inquiries</button>
+                        <button class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" onclick="window.navigate('dashboard')">Profile</button>
+                        <button class="admin-only block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" id="nav-admin-btn" onclick="window.navigate('admin')">Admin</button>
+                        <button class="admin-only block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" id="nav-analytics-btn" onclick="window.location.href='analytics.html'">Analytics</button>
+                        <div class="my-1 border-t border-gray-100 dark:border-slate-800"></div>
+                        <button class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" onclick="window.closeAccountMenu(); window.handleNavLogin()">Sign Out</button>
+                    </div>
+                </div>
+                <button onclick="window.toggleCart()" aria-label="Open basket" class="relative p-2 text-slate-700 dark:text-slate-200 hover:text-brand-blue transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-brand-red text-white text-[11px] font-bold h-5 min-w-[20px] px-1 flex items-center justify-center rounded-full scale-0 transition-all duration-300">0</span>
                 </button>
-
-                <button onclick="window.toggleMobileMenu()" class="xl:hidden text-brand-navy dark:text-white p-2 md:p-3 rounded-lg md:rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/8 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
-                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button onclick="window.toggleMobileMenu()" aria-label="Open menu" class="lg:hidden p-2 text-brand-navy dark:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7h16M4 12h16M4 17h16"></path></svg>
                 </button>
             </div>
         </div>
@@ -909,12 +770,7 @@
                                 <span class="text-xl md:text-3xl font-black uppercase tracking-[1em] [writing-mode:vertical-lr] text-brand-navy dark:text-white">LUBRICANTS</span>
                             </div>
                             <div class="relative z-10 w-[90%] md:w-[95%] flex justify-center">
-                                <model-viewer src="main-product-display.jpg" alt="Route 64 Product Range" class="w-full h-[300px]" camera-controls ar ar-modes="webxr scene-viewer quick-look" exposure="1" shadow-intensity="1" rotation="0 90 0" zoom="2.5" disable-zoom="" environment-image="neutral"
-                                    environment-blend="1" touch-action="pan-y">
-                                    <button class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 transition-all duration-300" slot="ar-button" style="color: white;">
-                                        <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 0h4a2 2 0 002-2V6a2 2 0 00-2-2h-4m0 0H8a2 2 0 01-2 2v2a2 2 0 002 2z"></path></svg>
-                                    </button>
-                                </model-viewer>
+                                <img src="main-product-display.jpg" alt="Route 64 Product Range" class="w-full h-[300px] object-cover rounded-[2rem] drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transform group-hover:scale-110 transition-all duration-1000 ease-out">
                             </div>
                             <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20">
                                 <div class="bg-white/90 dark:bg-brand-navy/90 backdrop-blur-xl border border-black/10 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 max-w-[160px] md:max-w-[200px]">
@@ -940,8 +796,8 @@
                         <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Dispatch Target</span>
                     </div>
                     <div class="p-4 md:p-6 flex flex-col items-center md:items-start text-center md:text-left">
-                        <span class="block text-2xl md:text-4xl font-black text-brand-blue mb-1 md:mb-2 drop-shadow-md">30+</span>
-                        <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Core Formulations</span>
+                        <span class="block text-2xl md:text-4xl font-black text-brand-blue mb-1 md:mb-2 drop-shadow-md">25</span>
+                        <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Core Products</span>
                     </div>
                 </div>
             </div>
@@ -976,7 +832,6 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 stagger-2">
                 <div onclick="window.navigate('catalog'); setTimeout(function(){ window.filterCatalog('Engine Oils'); }, 100)" class="pro-card p-8 md:p-10 cursor-pointer group flex flex-col items-center text-center hover:border-brand-blue relative overflow-hidden">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500" style="background-image: url('images/sae40.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-900/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all group-hover:scale-110 group-hover:bg-brand-blue group-hover:text-white text-brand-blue relative z-10 rotate-3 group-hover:rotate-0 shadow-sm">
                         <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
@@ -985,7 +840,6 @@
                     <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest relative z-10">Soot & Viscosity Control</p>
                 </div>
                 <div onclick="window.navigate('catalog'); setTimeout(function(){ window.filterCatalog('Gear & Auto'); }, 100)" class="pro-card p-8 md:p-10 cursor-pointer group flex flex-col items-center text-center hover:border-brand-red relative overflow-hidden">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500" style="background-image: url('images/ep90.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-b from-red-50 to-transparent dark:from-red-900/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-red-50 dark:bg-red-900/20 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all group-hover:scale-110 group-hover:bg-brand-red group-hover:text-white text-brand-red relative z-10 -rotate-3 group-hover:rotate-0 shadow-sm">
                         <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
@@ -994,7 +848,6 @@
                     <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest relative z-10">Extreme Pressure Load</p>
                 </div>
                 <div onclick="window.navigate('catalog'); setTimeout(function(){ window.filterCatalog('Industrial'); }, 100)" class="pro-card p-8 md:p-10 cursor-pointer group flex flex-col items-center text-center hover:border-brand-navy dark:hover:border-slate-500 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500" style="background-image: url('images/iso68.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-b from-slate-100 to-transparent dark:from-slate-800/50 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all group-hover:scale-110 group-hover:bg-brand-navy group-hover:text-white text-slate-500 relative z-10 rotate-3 group-hover:rotate-0 shadow-sm">
                         <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
@@ -1003,7 +856,6 @@
                     <p class="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest relative z-10">ISO Anti-Wear Fluid</p>
                 </div>
                 <div onclick="window.navigate('catalog'); setTimeout(function(){ window.filterCatalog('Chemicals & Grease'); }, 100)" class="pro-card p-8 md:p-10 cursor-pointer group flex flex-col items-center text-center hover:border-green-500 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500" style="background-image: url('images/water_cleaner.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-b from-green-50 to-transparent dark:from-green-900/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-green-50 dark:bg-green-900/20 rounded-2xl flex items-center justify-center mb-6 md:mb-8 transition-all group-hover:scale-110 group-hover:bg-green-500 group-hover:text-white text-green-600 relative z-10 -rotate-3 group-hover:rotate-0 shadow-sm">
                         <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
@@ -1237,26 +1089,12 @@
                         <input type="text" id="search-input" oninput="window.renderCatalog()" class="w-full pl-10 pr-14 py-3 md:py-4 bg-white dark:bg-slate-900 dark:text-white rounded-xl md:rounded-2xl border border-gray-100 dark:border-slate-800 outline-none font-bold shadow-sm focus:border-brand-blue transition text-xs md:text-sm"
                             placeholder="Search spec...">
                         <div class="absolute left-3 top-3.5 md:top-4 text-gray-400"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
-                        <!-- New AI Recommend Button -->
-                        <button onclick="window.aiAutoRecommend()" class="absolute right-2 top-2 bottom-2 bg-gradient-to-tr from-brand-blue to-purple-600 text-white px-3 rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition transform active:scale-95 flex items-center justify-center group"
-                            title="AI Product Recommender">
-                        <svg class="w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </button>
+                        <button onclick="window.toggleFinder()" class="absolute right-2 top-2 bottom-2 bg-brand-blue text-white px-3 rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition transform active:scale-95 flex items-center justify-center" title="Help me choose" aria-label="Help me choose">
+                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01"></path></svg>
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- AI Recommendation Prompt Area (Hidden by default) -->
-        <div id="ai-recommender-box" class="hidden mb-6 bg-blue-50/50 dark:bg-slate-900 border border-blue-100 dark:border-slate-800 p-4 md:p-6 rounded-2xl relative shadow-inner">
-            <button onclick="document.getElementById('ai-recommender-box').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-brand-red"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-            <h4 class="font-black text-brand-navy dark:text-white uppercase tracking-widest text-xs md:text-sm mb-2 flex items-center gap-2"><svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Route 64 Smart Match</h4>
-            <p class="text-xs text-slate-500 mb-4">Describe the machinery, vehicle, or problem, and our AI will filter the catalog for the best formulation.</p>
-            <div class="flex gap-2">
-                <input type="text" id="ai-recommender-input" onkeypress="if(event.key === 'Enter') window.processAiRecommendation()" placeholder="E.g., 'What oil should I use for an older diesel tractor?'" class="flex-1 p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none focus:border-brand-blue dark:text-white">
-                <button onclick="window.processAiRecommendation()" id="ai-recommender-submit" class="bg-brand-navy dark:bg-brand-blue text-white px-6 rounded-xl text-xs font-black uppercase tracking-widest hover:opacity-90">Find</button>
-            </div>
-            <p id="ai-recommender-status" class="text-[10px] font-bold mt-2 text-brand-blue hidden animate-pulse">Analyzing catalog...</p>
         </div>
 
         <div class="flex gap-2 md:gap-4 overflow-x-auto w-full pb-4 md:pb-8 mb-6 md:mb-8 hide-scroll stagger-2" id="filter-buttons">
@@ -1404,7 +1242,7 @@
     <div id="view-dashboard" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
         <div class="mb-8 md:mb-12">
             <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white mb-4">My Account</h1>
-            <p class="text-gray-500 dark:text-slate-400 text-lg">Manage your profile, view orders, and access your account settings.</p>
+            <p class="text-gray-500 dark:text-slate-400 text-lg">Manage your profile, orders and delivery addresses.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -1414,11 +1252,11 @@
                     <!-- Profile Summary -->
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-16 h-16 rounded-full bg-gradient-to-br from-brand-blue to-blue-600 flex items-center justify-center text-2xl font-bold text-white">
-                            <span id="dashboard-avatar-initials">JD</span>
+                            <span id="dashboard-avatar-initials"></span>
                         </div>
                         <div>
                             <h3 id="dashboard-profile-name" class="font-bold text-brand-navy dark:text-white text-lg"></h3>
-                            <p id="dashboard-profile-email" class="text-sm text-gray-500 dark:text-slate-400">john@example.com</p>
+                            <p id="dashboard-profile-email" class="text-sm text-gray-500 dark:text-slate-400"></p>
                         </div>
                     </div>
 
@@ -1442,13 +1280,7 @@
                                 Addresses
                             </span>
                         </button>
-                        <button onclick="window.switchDashboardTab('settings')" class="dashboard-nav-tab w-full text-left p-3 rounded-lg text-sm font-bold transition-all" data-tab="settings">
-                            <span class="flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                Settings
-                            </span>
-                        </button>
-                    </div>
+                        </div>
                 </div>
 
                 <!-- Quick Actions -->
@@ -1502,20 +1334,7 @@
                         </div>
                     </div>
 
-                    <!-- Account Activity -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
-                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-4">Account Activity</h3>
-                        <div id="dashboard-activity-log" class="space-y-3">
-                            <div class="flex items-start gap-3 text-sm">
-                                <div class="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
-                                <div>
-                                    <p class="text-brand-navy dark:text-white">Account created</p>
-                                    <p class="text-xs text-gray-500 dark:text-slate-400">Just now</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>
 
                 <!-- Profile Tab -->
                 <div id="dashboard-tab-profile" class="dashboard-tab-content hidden">
@@ -1525,16 +1344,16 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">First Name</label>
-                                    <input type="text" id="dashboard-first-name" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="John">
+                                    <input type="text" id="dashboard-first-name" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition">
                                 </div>
                                 <div>
                                     <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Last Name</label>
-                                    <input type="text" id="dashboard-last-name" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="Doe">
+                                    <input type="text" id="dashboard-last-name" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition">
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Email Address</label>
-                                <input type="email" id="dashboard-email" class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition" placeholder="john@example.com">
+                                <input type="email" id="dashboard-email" readonly class="w-full p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-brand-navy dark:text-white outline-none focus:border-brand-blue transition">
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-2">Phone Number</label>
@@ -1605,54 +1424,7 @@
                     </div>
                 </div>
 
-                <!-- Settings Tab -->
-                <div id="dashboard-tab-settings" class="dashboard-tab-content hidden">
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 mb-6 shadow-xl border border-gray-100 dark:border-slate-800">
-                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Account Settings</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
-                                <div>
-                                    <p class="text-brand-navy dark:text-white font-bold">Email Notifications</p>
-                                    <p class="text-xs text-gray-500 dark:text-slate-400">Receive order updates and promotions</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="dashboard-email-notifications" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
-                                <div>
-                                    <p class="text-brand-navy dark:text-white font-bold">SMS Notifications</p>
-                                    <p class="text-xs text-gray-500 dark:text-slate-400">Get SMS alerts for order status</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="dashboard-sms-notifications" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
-                                <div>
-                                    <p class="text-brand-navy dark:text-white font-bold">Two-Factor Authentication</p>
-                                    <p class="text-xs text-gray-500 dark:text-slate-400">Add extra security to your account</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="dashboard-two-factor" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-300 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
-                        <h3 class="font-bold text-brand-navy dark:text-white text-sm uppercase tracking-widest mb-6">Danger Zone</h3>
-                        <div class="space-y-4">
-                            <button class="w-full p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 rounded-lg text-red-500 dark:text-red-400 font-bold text-sm hover:bg-red-100 dark:hover:bg-red-950/30 transition-colors">
-                                Delete Account
-                            </button>
-                        </div>
-                    </div>
                 </div>
-            </div>
         </div>
     </div>
 
@@ -1818,6 +1590,10 @@
         /* ========================================== */
         /* 1. SYSTEM INITIALIZATION & DATA ENGINE */
         /* ========================================== */
+        const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const js = (v) => esc(JSON.stringify(String(v ?? '')));
+        const csvCell = (v) => { let s = String(v ?? ''); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+
         window.cloudProducts = JSON.parse(localStorage.getItem('route64_products')) || [];
         window.userPricing = {};
         window.isRegisterMode = false;
@@ -1828,7 +1604,8 @@
         window.initCatalog = function() {
             try {
                 const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`));
-                window.onSnapshot(q, (snapshot) => {
+                if (window._catalogUnsub) window._catalogUnsub();
+                window._catalogUnsub = window.onSnapshot(q, (snapshot) => {
                     window.cloudProducts = [];
                     snapshot.forEach(doc => window.cloudProducts.push({
                         docId: doc.id,
@@ -2203,7 +1980,7 @@
         };
 
         let activeCart = JSON.parse(localStorage.getItem('lubritec_cart')) || [];
-        let currentFilter = 'all';
+        window.currentFilter = 'all';
 
         /* ========================================== */
         /* 2. AUTHENTICATION & PRICING ENGINE */
@@ -2261,42 +2038,7 @@
                 window.toggleAuthModal();
                 if (window.currentView !== 'catalog') window.navigate('catalog');
             } catch (err) {
-                // Force error object properties to strings to safely catch it regardless of how Firebase formats it
-                const errMsg = String(err.message || "").toLowerCase();
-                const errCode = String(err.code || "").toLowerCase();
-
-                if (errCode === 'auth/operation-not-allowed' || errMsg.includes('operation-not-allowed')) {
-                    window.customAlert("Demo Mode: Firebase Email/Pass not configured. Proceeding as Admin!");
-                    window.currentUser = {
-                        uid: 'demo-user-123',
-                        email: email
-                    };
-                    window.isAdmin = true;
-
-                    const cloudStatus = document.getElementById('cloud-status');
-                    if (cloudStatus) cloudStatus.innerText = 'Connected (Demo): ' + email;
-
-                    const navLoginBtn = document.getElementById('nav-login-btn');
-                    if (navLoginBtn) navLoginBtn.innerText = 'Sign Out';
-
-                    const navAdminBtn = document.getElementById('nav-admin-btn');
-                    if (navAdminBtn) navAdminBtn.style.display = 'block';
-
-                    const navOrderBtn = document.getElementById('nav-order-btn');
-                    if (navOrderBtn) navOrderBtn.style.display = 'block';
-
-                    const profileSection = document.getElementById('client-profile-section');
-                    if (profileSection) profileSection.classList.remove('hidden');
-
-                    window.toggleAuthModal();
-                    if (window.currentView !== 'catalog') window.navigate('catalog');
-
-                    window.renderCatalog();
-                    window.renderBulkTable();
-                    window.updateCartUI();
-                } else {
-                    window.customAlert("Error: " + err.message);
-                }
+                window.customAlert(window.authErrorMessage(String(err.code || '').toLowerCase()));
             }
             btn.innerText = window.isRegisterMode ? 'Create Account' : 'Sign In';
         }
@@ -2391,7 +2133,8 @@
 
         window.renderCatalog = function() {
             const grid = document.getElementById('catalog-grid');
-            if (!grid || window.cloudProducts.length === 0) return;
+            if (!grid) return;
+            if (window.cloudProducts.length === 0) { grid.className = 'grid grid-cols-1'; grid.innerHTML = '<p class="text-center text-gray-500 py-16">Loading products. If this takes more than a few seconds, refresh the page or contact us.</p>'; return; }
             const term = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase() : '';
             const sortVal = document.getElementById('sort-select') ? document.getElementById('sort-select').value : 'name-asc';
 
@@ -2407,8 +2150,10 @@
             else if (sortVal === 'name-desc') filtered.sort((a, b) => b.name.localeCompare(a.name));
             else if (sortVal === 'cat-asc') filtered.sort((a, b) => a.category.localeCompare(b.category));
 
+            if (filtered.length === 0) { grid.className = 'grid grid-cols-1'; grid.innerHTML = '<p class="text-center text-gray-500 py-16">No products match. Try another grade or choose All Products.</p>'; return; }
+
             filtered.forEach(p => {
-                let vHtml = `<select id='${window.viewMode}-sel-${p.id}' class='w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-lg md:rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-3 md:mb-4 mt-2 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition' onclick='event.stopPropagation()'>`;
+                let vHtml = `<select id='${window.viewMode}-sel-${esc(p.id)}' class='w-full p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-none rounded-lg md:rounded-xl text-xs md:text-sm font-black outline-none dark:text-white shadow-inner mb-3 md:mb-4 mt-2 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition' onclick='event.stopPropagation()'>`;
 
                 const pMap = window.currentUser && window.currentUser.email ? (window.userPricing[p.id] || {}) : {};
 
@@ -2419,7 +2164,7 @@
                             const vPrice = pMap[v.size] || 0;
                             priceLabel = vPrice > 0 ? ` - R${vPrice.toFixed(2)}` : " (Quote Required)";
                         }
-                        vHtml += `<option value='${v.size}'>${v.size}${priceLabel}</option>`;
+                        vHtml += `<option value='${esc(v.size)}'>${esc(v.size)}${priceLabel}</option>`;
                     });
                 }
                 vHtml += "</select>";
@@ -2436,24 +2181,24 @@
                         if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'INPUT') window.openQuickView(p.id);
                     };
 
-                    let imageHtml = p.imgUrl ? `<img src="${p.imgUrl}" class="w-32 h-32 object-contain mx-auto mb-4 group-hover:scale-110 transition duration-300" alt="${p.name}">` : '';
+                    let imageHtml = p.imgUrl ? `<img src="${esc(p.imgUrl)}" class="w-32 h-32 object-contain mx-auto mb-4 group-hover:scale-110 transition duration-300" alt="${esc(p.name)}">` : '';
 
                     card.innerHTML = `
                         <div class='flex-1 flex flex-col text-center'>
                             <div class="flex justify-between items-center mb-2 md:mb-3">
-                                <span class='text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-brand-blue block font-bold'>${p.category}</span>
-                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">${p.id}</span>
+                                <span class='text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-brand-blue block font-bold'>${esc(p.category)}</span>
+                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">${esc(p.id)}</span>
                             </div>
                             ${imageHtml}
-                            <h3 class='text-lg md:text-2xl font-black text-brand-navy dark:text-white leading-tight mb-2 md:mb-4 group-hover:text-brand-blue transition'>${p.name}</h3>
-                            <p class='text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-4 md:mb-6 line-clamp-2'>${p.desc || 'Premium Formulation'}</p>
+                            <h3 class='text-lg md:text-2xl font-black text-brand-navy dark:text-white leading-tight mb-2 md:mb-4 group-hover:text-brand-blue transition'>${esc(p.name)}</h3>
+                            <p class='text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-4 md:mb-6 line-clamp-2'>${esc(p.desc || 'Premium Formulation')}</p>
                             ${priceDisplay}
                             ${vHtml}
                             <div class='mt-auto pt-4 md:pt-6 border-t border-gray-50 dark:border-slate-800 flex flex-col sm:flex-row items-center gap-3'>
                                 <div class='flex items-center bg-slate-50 dark:bg-slate-900 rounded-lg overflow-hidden border border-gray-100 dark:border-slate-700 shadow-inner w-full sm:w-auto'>
-                                    <input type='number' id='grid-qty-${p.id}' value='1' min='1' class='w-full sm:w-16 bg-transparent text-center font-black text-sm dark:text-white py-3 outline-none' onclick='event.stopPropagation()'>
+                                    <input type='number' id='grid-qty-${esc(p.id)}' value='1' min='1' class='w-full sm:w-16 bg-transparent text-center font-black text-sm dark:text-white py-3 outline-none' onclick='event.stopPropagation()'>
                                 </div>
-                                <button class='w-full py-3 rounded-lg bg-brand-navy dark:bg-brand-blue text-white font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition shadow-md' onclick='event.stopPropagation(); window.addFromCatalog("${p.id}", "grid")'>Add To Cart</button>
+                                <button class='w-full py-3 rounded-lg bg-brand-navy dark:bg-brand-blue text-white font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition shadow-md' onclick='event.stopPropagation(); window.addFromCatalog(${js(p.id)}, "grid")'>Add To Cart</button>
                             </div>
                         </div>`;
                     grid.appendChild(card);
@@ -2469,11 +2214,11 @@
                     row.innerHTML = `
                         <div class='flex-1 min-w-[200px]'>
                             <div class="flex items-center gap-3 mb-1">
-                                <span class='text-[9px] md:text-[10px] font-black text-brand-blue uppercase tracking-[0.2em] block font-bold'>${p.category}</span>
-                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">${p.id}</span>
+                                <span class='text-[9px] md:text-[10px] font-black text-brand-blue uppercase tracking-[0.2em] block font-bold'>${esc(p.category)}</span>
+                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">${esc(p.id)}</span>
                             </div>
-                            <h4 class='font-black text-brand-navy dark:text-white text-base md:text-xl tracking-tighter'>${p.name}</h4>
-                            <p class='text-[10px] md:text-xs text-gray-500 dark:text-gray-400 mt-1 md:mt-2 hidden sm:block'>${p.desc || 'Premium Formulation'}</p>
+                            <h4 class='font-black text-brand-navy dark:text-white text-base md:text-xl tracking-tighter'>${esc(p.name)}</h4>
+                            <p class='text-[10px] md:text-xs text-gray-500 dark:text-gray-400 mt-1 md:mt-2 hidden sm:block'>${esc(p.desc || 'Premium Formulation')}</p>
                         </div>
                         <div class="flex flex-col sm:items-end justify-center w-full md:w-auto px-4">
                             ${listPriceDisplay}
@@ -2482,9 +2227,9 @@
                             ${vHtml}
                             <div class='flex items-center justify-between sm:justify-start gap-3 md:gap-4 w-full sm:w-auto'>
                                 <div class='flex items-center bg-slate-50 dark:bg-slate-800 rounded-lg md:rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 shadow-inner flex-1 sm:flex-none'>
-                                    <input type='number' id='list-qty-${p.id}' value='1' min='1' class='w-full sm:w-16 md:w-20 bg-transparent text-center font-black text-sm md:text-base dark:text-white py-2 md:py-3 outline-none' onclick='event.stopPropagation()'>
+                                    <input type='number' id='list-qty-${esc(p.id)}' value='1' min='1' class='w-full sm:w-16 md:w-20 bg-transparent text-center font-black text-sm md:text-base dark:text-white py-2 md:py-3 outline-none' onclick='event.stopPropagation()'>
                                 </div>
-                                <button onclick='event.stopPropagation(); window.addFromCatalog("${p.id}", "list")' class='bg-brand-navy dark:bg-brand-blue text-white font-black text-[10px] md:text-xs uppercase tracking-widest px-6 py-3 md:px-8 md:py-3.5 rounded-lg md:rounded-xl shadow-md md:shadow-xl transition active:scale-95 whitespace-nowrap flex-1 sm:flex-none text-center hover:bg-blue-700'>Add</button>
+                                <button onclick='event.stopPropagation(); window.addFromCatalog(${js(p.id)}, "list")' class='bg-brand-navy dark:bg-brand-blue text-white font-black text-[10px] md:text-xs uppercase tracking-widest px-6 py-3 md:px-8 md:py-3.5 rounded-lg md:rounded-xl shadow-md md:shadow-xl transition active:scale-95 whitespace-nowrap flex-1 sm:flex-none text-center hover:bg-blue-700'>Add</button>
                             </div>
                         </div>`;
                     grid.appendChild(row);
@@ -2498,7 +2243,7 @@
             document.getElementById('qv-title').innerText = p.name;
             document.getElementById('qv-cat').innerText = p.category;
             document.getElementById('qv-desc').innerText = p.desc || "High performance formulation designed to meet severe industrial and commercial specifications.";
-            document.getElementById('qv-specs').innerHTML = `<div><span class="block text-[8px] uppercase text-gray-400 font-bold tracking-widest mb-1">Product ID</span><span class="text-xs font-black dark:text-white uppercase">${p.id}</span></div>`;
+            document.getElementById('qv-specs').innerHTML = `<div><span class="block text-[8px] uppercase text-gray-400 font-bold tracking-widest mb-1">Product ID</span><span class="text-xs font-black dark:text-white uppercase">${esc(p.id)}</span></div>`;
 
             const imgEl = document.getElementById('qv-product-img');
             const iconEl = document.getElementById('qv-default-icon');
@@ -2563,7 +2308,6 @@
         }
 
         window.updateCartUI = function() {
-                console.log('updateCartUI called, activeCart:', activeCart);
                 localStorage.setItem('lubritec_cart', JSON.stringify(activeCart));
                 const container = document.getElementById('cart-items');
                 const badge = document.getElementById('cart-count');
@@ -2597,19 +2341,19 @@
                                 el.innerHTML = `
                         <div class='flex justify-between items-start gap-2'>
                             <div class="flex-1 pr-2">
-                                <h4 class='font-black text-xs text-brand-navy dark:text-white uppercase tracking-tighter'>${item.name}</h4>
-                                <span class='text-[9px] font-black uppercase text-brand-blue bg-blue-50 dark:bg-slate-950 px-2 py-1 rounded-md mt-1 inline-block'>${item.size}</span>
+                                <h4 class='font-black text-xs text-brand-navy dark:text-white uppercase tracking-tighter'>${esc(item.name)}</h4>
+                                <span class='text-[9px] font-black uppercase text-brand-blue bg-blue-50 dark:bg-slate-950 px-2 py-1 rounded-md mt-1 inline-block'>${esc(item.size)}</span>
                                 ${window.currentUser && window.currentUser.email && item.price > 0 ? `<span class="text-[9px] text-gray-500 font-bold tracking-widest block mt-1">R${item.price.toFixed(2)} / CASE</span>` : ''}
                             </div>
                             <div class="text-right shrink-0">${priceText}</div>
                         </div>
                         <div class='flex items-center justify-between border-t border-gray-50 dark:border-slate-700 pt-3 mt-1'>
                             <div class='flex items-center bg-slate-50 dark:bg-slate-950 rounded-lg border dark:border-slate-700 p-0.5 shadow-inner'>
-                                <button onclick='window.updateQty("${item.cartId}", -1)' class='w-8 h-8 font-black dark:text-white hover:bg-white dark:hover:bg-slate-800 rounded-md transition shadow-sm'>-</button>
+                                <button onclick='window.updateQty(${js(item.cartId)}, -1)' class='w-8 h-8 font-black dark:text-white hover:bg-white dark:hover:bg-slate-800 rounded-md transition shadow-sm'>-</button>
                                 <span class='w-16 text-center text-xs font-black dark:text-white'>${item.qty} Cases</span>
-                                <button onclick='window.updateQty("${item.cartId}", 1)' class='w-8 h-8 font-black dark:text-white hover:bg-white dark:hover:bg-slate-800 rounded-md transition shadow-sm'>+</button>
+                                <button onclick='window.updateQty(${js(item.cartId)}, 1)' class='w-8 h-8 font-black dark:text-white hover:bg-white dark:hover:bg-slate-800 rounded-md transition shadow-sm'>+</button>
                             </div>
-                            <button onclick='window.updateQty("${item.cartId}", -999)' class='text-[9px] font-black text-brand-red uppercase tracking-widest hover:underline px-2'>Remove</button>
+                            <button onclick='window.updateQty(${js(item.cartId)}, -999)' class='text-[9px] font-black text-brand-red uppercase tracking-widest hover:underline px-2'>Remove</button>
                         </div>`;
                     container.appendChild(el);
                 });
@@ -2630,7 +2374,6 @@
                 }
                 window.cartTotal = grandTotal;
             }
-            console.log('updateCartUI complete, total:', total);
         }
 
         window.processQuote = async function(sendToWhatsApp = false) {
@@ -2720,15 +2463,11 @@
 
         window.renderBulkTable = function() {
             const tbody = document.getElementById('bulk-table-body');
-            console.log('renderBulkTable called, cloudProducts:', window.cloudProducts);
             if (!tbody || window.cloudProducts.length === 0) return;
 
             const filteredProducts = window.bulkCurrentFilter === 'all'
                 ? window.cloudProducts
                 : window.cloudProducts.filter(p => p.category === window.bulkCurrentFilter);
-
-            console.log('Filtered products:', filteredProducts);
-
             tbody.innerHTML = filteredProducts.map(product => {
                 const defaultVariant = product.variants ? product.variants[0] : { size: 'N/A', price: 0 };
                 const quantity = window.bulkQuantities[`${product.id}-${defaultVariant.size}`] || 0;
@@ -2748,9 +2487,6 @@
                 const priceLabel = window.currentUser && window.currentUser.email && pMap[defaultVariant.size] > 0
                     ? `R${pMap[defaultVariant.size].toFixed(2)}`
                     : (defaultVariant.price > 0 ? `R${defaultVariant.price.toFixed(2)}` : "Quote Required");
-
-                console.log('Product:', product.id, 'Default variant:', defaultVariant, 'Quantity:', quantity, 'Price:', price, 'Total:', total);
-
                 return `
                     <tr class="border-b border-gray-100 dark:border-slate-800 ${hasQuantity ? 'bg-blue-50 dark:bg-blue-900/10' : ''} transition-all" data-product-id="${product.id}">
                         <td class="p-4">
@@ -2772,7 +2508,7 @@
                                 ${product.variants ? product.variants.map(v => {
                                     const userPrice = window.currentUser && window.currentUser.email ? (window.userPricing[product.id] || {})[v.size] : 0;
                                     const variantPrice = userPrice > 0 ? userPrice : (v.price || 0);
-                                    return `<option value="${v.size}" data-price="${variantPrice}" ${v.size === defaultVariant.size ? 'selected' : ''}>${v.size}</option>`;
+                                    return `<option value="${esc(v.size)}" data-price="${variantPrice}" ${v.size === defaultVariant.size ? 'selected' : ''}>${esc(v.size)}</option>`;
                                 }).join('') : `<option data-price="${defaultVariant.price || 0}">${defaultVariant.size}</option>`}
                             </select>
                         </td>
@@ -2788,7 +2524,6 @@
         }
 
         window.updateBulkQuantity = function(productId, value) {
-            console.log('updateBulkQuantity called:', productId, 'value:', value);
             const row = document.querySelector(`tr[data-product-id="${productId}"]`);
             if (!row) return;
 
@@ -2796,17 +2531,11 @@
             const size = sizeSelect.value;
             const key = `${productId}-${size}`;
             const quantity = parseInt(value) || 0;
-
-            console.log('Key:', key, 'Quantity:', quantity);
-
             if (quantity > 0) {
                 window.bulkQuantities[key] = quantity;
             } else {
                 delete window.bulkQuantities[key];
             }
-
-            console.log('Updated bulkQuantities:', window.bulkQuantities);
-
             // Update row styling
             const input = row.querySelector('input');
             const totalCell = row.querySelector('td:last-child span');
@@ -2830,25 +2559,19 @@
         }
 
         window.updateBulkSize = function(productId, size) {
-            console.log('updateBulkSize called:', productId, 'size:', size);
             const row = document.querySelector(`tr[data-product-id="${productId}"]`);
             if (!row) return;
 
             const input = row.querySelector('input');
             const oldKey = `${productId}-${row.dataset.currentSize || ''}`;
             const newKey = `${productId}-${size}`;
-
-            console.log('Old key:', oldKey, 'New key:', newKey);
-
             // Transfer quantity if exists
             if (window.bulkQuantities[oldKey]) {
                 window.bulkQuantities[newKey] = window.bulkQuantities[oldKey];
                 delete window.bulkQuantities[oldKey];
                 input.value = window.bulkQuantities[newKey];
-                console.log('Transferred quantity:', window.bulkQuantities[newKey]);
             } else {
                 input.value = window.bulkQuantities[newKey] || 0;
-                console.log('No existing quantity, using:', window.bulkQuantities[newKey] || 0);
             }
 
             row.dataset.currentSize = size;
@@ -2858,9 +2581,6 @@
             const price = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.price) || 0;
             const quantity = parseInt(input.value) || 0;
             const total = quantity * price;
-
-            console.log('Price:', price, 'Quantity:', quantity, 'Total:', total);
-
             const priceDisplay = row.querySelector('.text-xs.text-gray-500');
             if (priceDisplay) {
                 priceDisplay.textContent = price > 0 ? `R${price.toFixed(2)} / ${size}` : `Quote Required / ${size}`;
@@ -2875,7 +2595,6 @@
         };
 
         window.updateBulkSummary = function() {
-            console.log('updateBulkSummary called, bulkQuantities:', window.bulkQuantities);
             let totalProducts = 0;
             let totalItems = 0;
             let subtotal = 0;
@@ -2901,16 +2620,12 @@
                         totalProducts++;
                         totalItems += qty;
                         subtotal += qty * price;
-                        console.log('Summary item:', productId, size, qty, price, 'subtotal:', subtotal);
                     }
                 }
             });
 
             const vat = subtotal * 0.15;
             const total = subtotal + vat;
-
-            console.log('Summary totals - Products:', totalProducts, 'Items:', totalItems, 'Subtotal:', subtotal, 'VAT:', vat, 'Total:', total);
-
             // Update DOM elements with null checks
             const productsEl = document.getElementById('bulk-summary-products');
             const itemsEl = document.getElementById('bulk-summary-items');
@@ -2926,14 +2641,12 @@
         }
 
         window.addAllBulkToCart = function() {
-            console.log('addAllBulkToCart called', window.bulkQuantities);
             let added = 0;
 
             Object.entries(window.bulkQuantities).forEach(([key, qty]) => {
                 if (qty > 0) {
                     const [productId, size] = key.split('-');
                     const product = window.cloudProducts.find(p => p.id === productId);
-                    console.log('Adding product:', productId, 'size:', size, 'qty:', qty, 'product:', product);
                     if (product) {
                         // Try user pricing first, fall back to default product price
                         let price = 0;
@@ -2948,13 +2661,10 @@
                                 price = variant.price || 0;
                             }
                         }
-                        console.log('Price for', productId, size, ':', price);
-
                         const cartId = `${productId}-${size}`;
                         const existing = activeCart.find(i => i.cartId === cartId);
                         if (existing) {
                             existing.qty += qty;
-                            console.log('Updated existing item:', existing);
                         } else {
                             activeCart.push({
                                 cartId,
@@ -2964,15 +2674,11 @@
                                 qty: qty,
                                 price: price
                             });
-                            console.log('Added new item:', { cartId, id: productId, name: product.name, size: size, qty: qty, price: price });
                         }
                         added++;
                     }
                 }
             });
-
-            console.log('Total items added:', added, 'Active cart:', activeCart);
-
             if (added > 0) {
                 // Clear bulk quantities
                 window.bulkQuantities = {};
@@ -3005,20 +2711,12 @@
         }
 
         window.testBulkOrder = function() {
-            console.log('=== BULK ORDER TEST ===');
-            console.log('cloudProducts:', window.cloudProducts);
-            console.log('bulkQuantities:', window.bulkQuantities);
-            console.log('userPricing:', window.userPricing);
-            console.log('currentUser:', window.currentUser);
-            console.log('activeCart:', activeCart);
-
             // Test: Add a sample quantity
             if (window.cloudProducts.length > 0) {
                 const testProduct = window.cloudProducts[0];
                 const testSize = testProduct.variants ? testProduct.variants[0].size : 'N/A';
                 const testKey = `${testProduct.id}-${testSize}`;
                 window.bulkQuantities[testKey] = 1;
-                console.log('Test: Set quantity for', testProduct.id, testSize, 'to 1');
                 window.renderBulkTable();
                 window.updateBulkSummary();
                 window.customAlert(`Test: Added 1 of ${testProduct.name} (${testSize}) to bulk order. Click "Add All to Quote" to add to cart.`);
@@ -3079,14 +2777,45 @@
 
                 window.userOrders = sampleOrders;
                 localStorage.setItem('lubritec_orders', JSON.stringify(window.userOrders));
-                console.log('Initialized sample orders:', window.userOrders);
             }
         }
 
         /* ========================================== */
         /* ORDERS HISTORY FUNCTIONS */
         /* ========================================== */
-        window.userOrders = JSON.parse(localStorage.getItem('lubritec_orders')) || [];
+        window.userOrders = [];
+        const orderStatusKey = (s) => {
+            const v = String(s || '').toLowerCase();
+            if (v.includes('cancel') || v.includes('reject')) return 'cancelled';
+            if (v.includes('deliver') || v.includes('complete')) return 'delivered';
+            if (v.includes('ship') || v.includes('dispatch')) return 'shipped';
+            if (v.includes('approv') || v === 'processing') return 'processing';
+            return 'pending';
+        };
+        const refreshOrderViews = () => {
+            if (window.currentView === 'orders') { window.renderOrders(); window.updateOrdersStats(); }
+            if (window.currentView === 'dashboard') { window.updateDashboardStats(); window.renderDashboardRecentOrders(); }
+        };
+        // Orders are the quotes a customer has submitted, stored under "inquiries".
+        window.loadUserOrders = function() {
+            if (!window.currentUser || !window.currentUser.uid) return;
+            if (window._ordersUnsub) window._ordersUnsub();
+            const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/inquiries`));
+            window._ordersUnsub = window.onSnapshot(q, (snapshot) => {
+                const orders = [];
+                snapshot.forEach(d => {
+                    const x = d.data();
+                    orders.push({ id: x.ref || d.id, date: x.date, status: orderStatusKey(x.status), total: Number(x.total) || 0, items: (x.items || []).map(i => ({ ...i, productId: i.id, total: (i.qty || 0) * (i.price || 0) })) });
+                });
+                orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+                window.userOrders = orders;
+                refreshOrderViews();
+            }, (err) => console.error('Orders sync error:', err));
+        };
+        window.clearUserOrders = function() {
+            if (window._ordersUnsub) { window._ordersUnsub(); window._ordersUnsub = null; }
+            window.userOrders = [];
+        };
         window.ordersCurrentFilter = 'all';
 
         window.filterOrders = function(filter) {
@@ -3132,7 +2861,7 @@
                                 <div class="flex items-center gap-4">
                                     <div>
                                         <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-widest">Order ID</p>
-                                        <p class="font-bold text-brand-navy dark:text-white">${order.id}</p>
+                                        <p class="font-bold text-brand-navy dark:text-white">${esc(order.id)}</p>
                                     </div>
                                     <div class="hidden md:block w-px h-8 bg-gray-100 dark:bg-slate-800"></div>
                                     <div>
@@ -3151,8 +2880,8 @@
                                     <div class="flex justify-between items-center py-2 border-b border-gray-50 dark:border-slate-800 last:border-0">
                                         <div class="flex items-center gap-3">
                                             <span class="text-xs text-gray-500 dark:text-slate-400">${item.qty}x</span>
-                                            <span class="text-brand-navy dark:text-white text-sm">${item.name}</span>
-                                            <span class="text-xs text-gray-400 dark:text-slate-600">(${item.size})</span>
+                                            <span class="text-brand-navy dark:text-white text-sm">${esc(item.name)}</span>
+                                            <span class="text-xs text-gray-400 dark:text-slate-600">(${esc(item.size)})</span>
                                         </div>
                                         <span class="text-brand-navy dark:text-white font-bold text-sm">R${item.total.toFixed(2)}</span>
                                     </div>
@@ -3161,10 +2890,10 @@
                             </div>
 
                             <div class="flex gap-3">
-                                <button onclick="window.viewOrderDetails('${order.id}')" class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-all">
+                                <button onclick="window.viewOrderDetails(${js(order.id)})" class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-all">
                                     View Details
                                 </button>
-                                <button onclick="window.reorder('${order.id}')" class="flex-1 bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
+                                <button onclick="window.reorder(${js(order.id)})" class="flex-1 bg-gradient-to-r from-brand-blue to-blue-600 text-white font-bold uppercase tracking-widest py-3 rounded-xl text-sm hover:from-blue-600 hover:to-brand-blue transition-all shadow-lg">
                                     Reorder
                                 </button>
                             </div>
@@ -3177,8 +2906,8 @@
         window.updateOrdersStats = function() {
             const totalOrders = window.userOrders.length;
             const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing').length;
-            const completedOrders = window.userOrders.filter(o => o.status === 'delivered').length;
-            const totalSpent = window.userOrders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + o.total, 0);
+            const completedOrders = window.userOrders.filter(o => (o.status === 'shipped' || o.status === 'delivered')).length;
+            const totalSpent = window.userOrders.filter(o => (o.status === 'shipped' || o.status === 'delivered')).reduce((sum, o) => sum + o.total, 0);
 
             document.getElementById('orders-stat-total').textContent = totalOrders;
             document.getElementById('orders-stat-pending').textContent = pendingOrders;
@@ -3231,25 +2960,9 @@
         /* ========================================== */
         /* USER DASHBOARD FUNCTIONS */
         /* ========================================== */
-        window.userProfile = JSON.parse(localStorage.getItem('lubritec_profile')) || {
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'john@example.com',
-            phone: '+27 68 087 1269',
-            company: ''
-        };
-
-        window.userAddresses = JSON.parse(localStorage.getItem('lubritec_addresses')) || [
-            {
-                id: 1,
-                label: 'Office',
-                street: '123 Industrial Park',
-                city: 'Johannesburg',
-                province: 'Gauteng',
-                postalCode: '2000',
-                isDefault: true
-            }
-        ];
+        window.userProfile = { firstName: '', lastName: '', email: '', phone: '', company: '' };
+        window.userAddresses = JSON.parse(localStorage.getItem('lubritec_addresses')) || [];
+        window.editingAddressId = null;
 
         window.switchDashboardTab = function(tabName) {
             // Update tab buttons
@@ -3285,15 +2998,17 @@
         window.updateDashboardProfileDisplay = function() {
             if (!window.currentUser) return;
 
-            const initials = (window.userProfile.firstName[0] + window.userProfile.lastName[0]).toUpperCase();
+            const profileName = `${window.userProfile.firstName} ${window.userProfile.lastName}`.trim();
+            const profileEmail = window.userProfile.email || window.currentUser.email || '';
+            const initials = (((window.userProfile.firstName || '')[0] || '') + ((window.userProfile.lastName || '')[0] || '')).toUpperCase() || (profileEmail[0] || '?').toUpperCase();
             const avatarEl = document.getElementById('dashboard-avatar-initials');
             if (avatarEl) avatarEl.textContent = initials;
 
             const nameEl = document.getElementById('dashboard-profile-name');
-            if (nameEl) nameEl.textContent = `${window.userProfile.firstName} ${window.userProfile.lastName}`;
+            if (nameEl) nameEl.textContent = profileName || window.userProfile.company || 'Your account';
 
             const emailEl = document.getElementById('dashboard-profile-email');
-            if (emailEl) emailEl.textContent = window.userProfile.email;
+            if (emailEl) emailEl.textContent = profileEmail;
 
             // Update form fields
             const firstNameEl = document.getElementById('dashboard-first-name');
@@ -3303,7 +3018,7 @@
             if (lastNameEl) lastNameEl.value = window.userProfile.lastName;
 
             const emailInputEl = document.getElementById('dashboard-email');
-            if (emailInputEl) emailInputEl.value = window.userProfile.email;
+            if (emailInputEl) emailInputEl.value = profileEmail;
 
             const phoneEl = document.getElementById('dashboard-phone');
             if (phoneEl) phoneEl.value = window.userProfile.phone;
@@ -3315,8 +3030,8 @@
         window.updateDashboardStats = function() {
             const totalOrders = window.userOrders.length;
             const pendingOrders = window.userOrders.filter(o => o.status === 'pending' || o.status === 'processing').length;
-            const completedOrders = window.userOrders.filter(o => o.status === 'delivered').length;
-            const totalSpent = window.userOrders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + (o.total || 0), 0);
+            const completedOrders = window.userOrders.filter(o => (o.status === 'shipped' || o.status === 'delivered')).length;
+            const totalSpent = window.userOrders.filter(o => (o.status === 'shipped' || o.status === 'delivered')).reduce((sum, o) => sum + (o.total || 0), 0);
 
             const totalOrdersEl = document.getElementById('dashboard-stat-total-orders');
             const pendingOrdersEl = document.getElementById('dashboard-stat-pending-orders');
@@ -3350,7 +3065,7 @@
                     <div class="flex items-center justify-between py-3 border-b border-gray-50 dark:border-slate-800 last:border-0">
                         <div class="flex items-center gap-4">
                             <div>
-                                <p class="text-brand-navy dark:text-white font-bold text-sm">${order.id}</p>
+                                <p class="text-brand-navy dark:text-white font-bold text-sm">${esc(order.id)}</p>
                                 <p class="text-xs text-gray-500 dark:text-slate-400">${date}</p>
                             </div>
                         </div>
@@ -3375,7 +3090,7 @@
                 <div class="p-4 bg-gray-50 dark:bg-slate-800 rounded-lg border ${address.isDefault ? 'border-brand-blue' : 'border-gray-100 dark:border-slate-700'}">
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <p class="text-brand-navy dark:text-white font-bold text-sm">${address.label}</p>
+                            <p class="text-brand-navy dark:text-white font-bold text-sm">${esc(address.label)}</p>
                             ${address.isDefault ? '<span class="text-xs text-brand-blue uppercase tracking-wider">Default</span>' : ''}
                         </div>
                         <div class="flex gap-2">
@@ -3383,8 +3098,8 @@
                             <button onclick="window.deleteDashboardAddress(${address.id})" class="text-xs text-red-400 hover:text-red-300">Delete</button>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 dark:text-slate-400">${address.street}</p>
-                    <p class="text-sm text-gray-500 dark:text-slate-400">${address.city}, ${address.province} ${address.postalCode}</p>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">${esc(address.street)}</p>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">${esc(address.city)}, ${esc(address.province)} ${esc(address.postalCode)}</p>
                 </div>
             `).join('');
         };
@@ -3396,6 +3111,7 @@
         window.hideAddAddressForm = function() {
             document.getElementById('dashboard-add-address-form').classList.add('hidden');
             document.getElementById('dashboard-address-form').reset();
+            window.editingAddressId = null;
         };
 
         window.deleteDashboardAddress = function(id) {
@@ -3409,6 +3125,7 @@
         window.editDashboardAddress = function(id) {
             const address = window.userAddresses.find(a => a.id === id);
             if (address) {
+                window.editingAddressId = id;
                 document.getElementById('dashboard-address-label').value = address.label;
                 document.getElementById('dashboard-street-address').value = address.street;
                 document.getElementById('dashboard-city').value = address.city;
@@ -3449,7 +3166,7 @@
                     e.preventDefault();
 
                     const newAddress = {
-                        id: Date.now(),
+                        id: window.editingAddressId || Date.now(),
                         label: document.getElementById('dashboard-address-label').value,
                         street: document.getElementById('dashboard-street-address').value,
                         city: document.getElementById('dashboard-city').value,
@@ -3463,7 +3180,9 @@
                         window.userAddresses.forEach(a => a.isDefault = false);
                     }
 
-                    window.userAddresses.push(newAddress);
+                    const existingIndex = window.userAddresses.findIndex(a => a.id === newAddress.id);
+                    if (existingIndex >= 0) window.userAddresses[existingIndex] = newAddress;
+                    else window.userAddresses.push(newAddress);
                     localStorage.setItem('lubritec_addresses', JSON.stringify(window.userAddresses));
 
                     window.hideAddAddressForm();
@@ -3489,7 +3208,7 @@
                         phone: d.phone || window.userProfile.phone,
                         company: d.bizName || window.userProfile.company
                     };
-                    localStorage.setItem('lubritec_profile', JSON.stringify(window.userProfile));
+                    window.updateDashboardProfileDisplay();
                 }
             } catch (e) {
                 console.error("Error loading profile:", e);
@@ -3531,24 +3250,6 @@
             }
         };
 
-        window.handleContactSubmit = async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('contact-submit');
-            btn.innerText = "Sending..."; btn.disabled = true;
-            const payload = { name: document.getElementById('contact-name').value, email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value, message: document.getElementById('contact-msg').value, date: new Date().toISOString() };
-            try {
-                if (window.firebaseDb) await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`), payload);
-                window.customAlert("Message sent successfully! Our team will contact you soon.");
-                document.getElementById('contact-form').reset();
-            } catch (err) { console.error(err); window.customAlert("Error sending message."); }
-            btn.innerText = "Send Message"; btn.disabled = false;
-        };
-
-        window.addEventListener('hashchange', () => {
-            const viewId = window.location.hash.replace('#', '') || 'home';
-            window.navigate(viewId, false);
-        });
-        
         /* Cursor & Spotlight Effects */
         document.addEventListener('mousemove', (e) => {
             const glow = document.getElementById('cursor-glow');
@@ -3598,7 +3299,8 @@
 
             if (window.currentUser && window.currentUser.email && window.firebaseDb) {
                 const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/users/${window.currentUser.uid}/inquiries`));
-                window.onSnapshot(q, (snapshot) => {
+                if (window._leadsUnsub) window._leadsUnsub();
+                window._leadsUnsub = window.onSnapshot(q, (snapshot) => {
                     list.innerHTML = "";
                     if (snapshot.empty) {
                         list.innerHTML = "<div class='p-12 md:p-20 text-center text-gray-400 bg-white dark:bg-slate-900 rounded-[2rem] border border-dashed dark:border-slate-800'><p class='text-xs md:text-sm font-black uppercase tracking-widest'>No orders yet</p></div>";
@@ -3613,7 +3315,7 @@
                         const el = document.createElement('div');
                         el.className = "pro-card p-6 md:p-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8 shadow-sm text-left mb-6";
                         const displayTotal = data.total > 0 ? `R${data.total.toFixed(2)}` : "Pending Quote";
-                        let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium py-1">▪ ${i.qty} Cases x ${i.name} (${i.size})</div>`).join('');
+                        let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium py-1">▪ ${esc(i.qty)} Cases x ${esc(i.name)} (${esc(i.size)})</div>`).join('');
                         const safeItems = encodeURIComponent(JSON.stringify(data.items));
 
                         let statusColor = "text-brand-blue";
@@ -3626,7 +3328,7 @@
                                     <span class='bg-blue-50 text-brand-blue dark:bg-blue-900/30 text-[9px] font-black px-3 py-1 rounded-md uppercase tracking-widest'>Cloud Synced</span>
                                     <span class='text-[10px] font-bold text-gray-400'>${new Date(data.date).toLocaleString()}</span>
                                 </div>
-                                <h4 class='text-xl md:text-2xl font-black dark:text-white uppercase tracking-tighter mb-2 text-brand-navy'>Ref: #${data.ref}</h4>
+                                <h4 class='text-xl md:text-2xl font-black dark:text-white uppercase tracking-tighter mb-2 text-brand-navy'>Ref: #${esc(data.ref)}</h4>
                                 <div class="mb-4 mt-2 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border dark:border-slate-800">
                                     <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Requested Items</p>
                                     ${itemsHtml}
@@ -3636,9 +3338,9 @@
                             <div class='text-left md:text-right w-full md:w-auto border-t md:border-t-0 border-gray-100 dark:border-slate-800 pt-4 md:pt-0 mt-2 md:mt-0 flex flex-col items-start md:items-end'>
                                 <div class="mb-4">
                                     <span class='block text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1'>Status Update</span>
-                                    <h5 class='text-2xl md:text-3xl font-black ${statusColor} tracking-tighter uppercase'>${data.status}</h5>
+                                    <h5 class='text-2xl md:text-3xl font-black ${statusColor} tracking-tighter uppercase'>${esc(data.status)}</h5>
                                 </div>
-                                <button onclick="window.reorderOrder('${safeItems}')" class="bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white text-brand-navy dark:text-white px-4 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition flex items-center gap-2">
+                                <button onclick="window.reorderOrder(${js(safeItems)})" class="bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white text-brand-navy dark:text-white px-4 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition flex items-center gap-2">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Reorder
                                 </button>
                             </div>`;
@@ -3709,11 +3411,11 @@
             grid.innerHTML = window.cloudProducts.map(p => `
                 <div class="bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-gray-100 dark:border-slate-700 flex justify-between items-center shadow-sm">
                     <div>
-                        <span class="text-[9px] font-black text-brand-blue uppercase tracking-widest block mb-1">${p.category} | ${p.id}</span>
-                        <h4 class="font-black text-sm dark:text-white uppercase">${p.name}</h4>
-                        <p class="text-[10px] text-gray-400 mt-1">${p.variants? p.variants.map(v=>v.size).join(', ') : 'No sizes'}</p>
+                        <span class="text-[9px] font-black text-brand-blue uppercase tracking-widest block mb-1">${esc(p.category)} | ${esc(p.id)}</span>
+                        <h4 class="font-black text-sm dark:text-white uppercase">${esc(p.name)}</h4>
+                        <p class="text-[10px] text-gray-400 mt-1">${esc(p.variants ? p.variants.map(v => v.size).join(', ') : 'No sizes')}</p>
                     </div>
-                    <button onclick="window.deleteAdminProduct('${p.docId}')" class="text-gray-400 hover:text-brand-red transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                    <button onclick="window.deleteAdminProduct(${js(p.docId)})" class="text-gray-400 hover:text-brand-red transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                 </div>
             `).join('');
         };
@@ -3772,16 +3474,16 @@
                 grid.innerHTML = window.cloudProducts.map(p => `
                     <div class="bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm">
                         <div class="mb-3 border-b border-gray-200 dark:border-slate-700 pb-2">
-                            <p class="text-[8px] text-brand-blue font-black uppercase tracking-widest">${p.category}</p>
-                            <p class="text-sm md:text-base font-bold dark:text-white">${p.name}</p>
+                            <p class="text-[8px] text-brand-blue font-black uppercase tracking-widest">${esc(p.category)}</p>
+                            <p class="text-sm md:text-base font-bold dark:text-white">${esc(p.name)}</p>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             ${p.variants? p.variants.map((v, idx) => `
                                 <div class="bg-white dark:bg-slate-900 p-3 rounded-lg flex items-center justify-between border border-gray-200 dark:border-slate-700 shadow-inner">
-                                    <span class="text-[9px] font-bold text-gray-500 uppercase">${v.size}</span>
+                                    <span class="text-[9px] font-bold text-gray-500 uppercase">${esc(v.size)}</span>
                                     <div class="flex items-center w-24">
                                         <span class="text-slate-400 font-bold text-xs mr-1">R</span>
-                                        <input type="number" data-pid="${p.id}" data-size="${v.size}" value="${(clientPricing[p.id]||{})[v.size]||0}" step="0.01" class="admin-price-input w-full bg-transparent text-right outline-none dark:text-white font-mono text-sm border-b border-gray-200 dark:border-slate-600 focus:border-brand-blue">
+                                        <input type="number" data-pid="${esc(p.id)}" data-size="${esc(v.size)}" value="${esc((clientPricing[p.id]||{})[v.size]||0)}" step="0.01" class="admin-price-input w-full bg-transparent text-right outline-none dark:text-white font-mono text-sm border-b border-gray-200 dark:border-slate-600 focus:border-brand-blue">
                                     </div>
                                 </div>
                             `).join('') : ''}
@@ -3830,7 +3532,7 @@
                 allOrders.sort((a,b) => new Date(b.date) - new Date(a.date));
                 window.allAdminOrders = allOrders;
 
-                const totalRev = allOrders.reduce((sum, o) => sum + (o.total || 0), 0);
+                const totalRev = allOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
                 if(document.getElementById('admin-stat-rev')) document.getElementById('admin-stat-rev').innerText = `R${totalRev.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 if(document.getElementById('admin-stat-orders')) document.getElementById('admin-stat-orders').innerText = allOrders.length;
                 if(document.getElementById('admin-stat-clients')) document.getElementById('admin-stat-clients').innerText = uniqueClients.size;
@@ -3838,7 +3540,8 @@
                 if(allOrders.length === 0) { grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold uppercase tracking-widest'>No orders in system</p>"; return; }
 
                 grid.innerHTML = allOrders.map(data => {
-                    let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium flex justify-between border-b dark:border-slate-700 py-2"><span>${i.qty} Cases x ${i.name} (${i.size})</span><span class="font-bold text-brand-navy dark:text-white">R${(i.price * i.qty).toFixed(2)}</span></div>`).join('');
+                    data.customer = data.customer || {}; data.items = Array.isArray(data.items) ? data.items : [];
+                    let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium flex justify-between border-b dark:border-slate-700 py-2"><span>${esc(i.qty)} Cases x ${esc(i.name)} (${esc(i.size)})</span><span class="font-bold text-brand-navy dark:text-white">R${(i.price * i.qty).toFixed(2)}</span></div>`).join('');
                     let statusColor = "bg-gray-200 text-gray-700";
                     if (data.status === "Approved") statusColor = "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400";
                     if (data.status === "Shipped") statusColor = "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400";
@@ -3849,25 +3552,25 @@
                         <div class="flex-1 w-full">
                             <div class="flex flex-wrap items-center gap-3 mb-2">
                                 <span class="text-[9px] font-black bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500 uppercase tracking-widest">${new Date(data.date).toLocaleString()}</span>
-                                <span class="text-[9px] font-black ${statusColor} px-3 py-1 rounded-md uppercase tracking-widest">${data.status}</span>
+                                <span class="text-[9px] font-black ${statusColor} px-3 py-1 rounded-md uppercase tracking-widest">${esc(data.status)}</span>
                             </div>
-                            <h4 class="font-black text-lg md:text-xl dark:text-white text-brand-navy mb-1 uppercase tracking-tight">Ref: #${data.ref}</h4>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium"><span class="font-bold dark:text-gray-300">${data.customer.bizName}</span> | ${data.customer.contactName || 'No Contact'} | ${data.customer.phone}</p>
+                            <h4 class="font-black text-lg md:text-xl dark:text-white text-brand-navy mb-1 uppercase tracking-tight">Ref: #${esc(data.ref)}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium"><span class="font-bold dark:text-gray-300">${esc(data.customer.bizName)}</span> | ${esc(data.customer.contactName || 'No Contact')} | ${esc(data.customer.phone)}</p>
                             <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 mb-4 shadow-inner">
                                 <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Order Items</p>
                                 ${itemsHtml}
                             </div>
-                            <p class="text-sm font-black text-brand-blue uppercase bg-blue-50 dark:bg-slate-900 inline-block px-4 py-2 rounded-lg border dark:border-slate-800">Total: R${data.total.toFixed(2)}</p>
+                            <p class="text-sm font-black text-brand-blue uppercase bg-blue-50 dark:bg-slate-900 inline-block px-4 py-2 rounded-lg border dark:border-slate-800">Total: R${(Number(data.total) || 0).toFixed(2)}</p>
                         </div>
                         <div class="flex flex-col gap-2 w-full md:w-auto shrink-0 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border dark:border-slate-800">
                             <label class="text-[9px] font-black uppercase text-gray-400 tracking-widest">Update Workflow Status</label>
-                            <select onchange="window.updateOrderStatus('${data.uid}', '${data.orderId}', this.value)" class="p-3 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none cursor-pointer dark:text-white shadow-sm mt-1">
+                            <select onchange="window.updateOrderStatus(${js(data.uid)}, ${js(data.orderId)}, this.value)" class="p-3 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none cursor-pointer dark:text-white shadow-sm mt-1">
                                 <option value="Pending Processing" ${data.status === 'Pending Processing' ? 'selected' : ''}>Pending Processing</option>
                                 <option value="Approved" ${data.status === 'Approved' ? 'selected' : ''}>Approved / Pricing Set</option>
                                 <option value="Shipped" ${data.status === 'Shipped' ? 'selected' : ''}>Shipped / Completed</option>
                             </select>
                             <div class="flex items-center gap-2 mt-2">
-                                <button onclick="window.deleteAdminOrder('${data.uid}', '${data.orderId}')" class="w-full text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 py-2.5 rounded-lg font-black uppercase tracking-widest flex justify-center items-center gap-1 hover:bg-red-200 transition"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash</button>
+                                <button onclick="window.deleteAdminOrder(${js(data.uid)}, ${js(data.orderId)})" class="w-full text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 py-2.5 rounded-lg font-black uppercase tracking-widest flex justify-center items-center gap-1 hover:bg-red-200 transition"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash</button>
                             </div>
                         </div>
                     </div>`;
@@ -3897,7 +3600,8 @@
             if (!window.allAdminOrders || window.allAdminOrders.length === 0) return window.customAlert("No order data to export.");
             let csv = "Date,Reference,Status,Business Name,Contact,Phone,Email,Total Value\n";
             window.allAdminOrders.forEach(o => {
-                csv += `"${new Date(o.date).toLocaleDateString()}","${o.ref}","${o.status}","${o.customer.bizName}","${o.customer.contactName || ''}","${o.customer.phone}","${o.email}",${o.total || 0}\n`;
+                const c = o.customer || {};
+                csv += [new Date(o.date).toLocaleDateString(), o.ref, o.status, c.bizName, c.contactName, c.phone, o.email, Number(o.total) || 0].map(csvCell).join(',') + '\n';
             });
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
@@ -3923,15 +3627,15 @@
                     <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col md:flex-row gap-6 justify-between items-start hover:border-brand-blue transition">
                         <div class="flex-1 w-full">
                             <span class="text-[9px] font-black bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500 uppercase tracking-widest mb-3 inline-block">${new Date(data.date).toLocaleString()}</span>
-                            <h4 class="font-black text-lg dark:text-white text-brand-navy mb-1 tracking-tight">${data.name}</h4>
+                            <h4 class="font-black text-lg dark:text-white text-brand-navy mb-1 tracking-tight">${esc(data.name)}</h4>
                             <div class="flex flex-wrap gap-4 text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium">
-                                <span><strong class="dark:text-gray-300">Email:</strong> <a href="mailto:${data.email}" class="text-brand-blue hover:underline">${data.email}</a></span>
-                                ${data.phone ? `<span><strong class="dark:text-gray-300">Phone:</strong> <a href="tel:${data.phone}" class="text-brand-blue hover:underline">${data.phone}</a></span>` : ''}
+                                <span><strong class="dark:text-gray-300">Email:</strong> <a href="mailto:${esc(data.email)}" class="text-brand-blue hover:underline">${esc(data.email)}</a></span>
+                                ${data.phone ? `<span><strong class="dark:text-gray-300">Phone:</strong> <a href="tel:${esc(data.phone)}" class="text-brand-blue hover:underline">${esc(data.phone)}</a></span>` : ''}
                             </div>
-                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner text-sm dark:text-gray-300 whitespace-pre-wrap">${data.message}</div>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner text-sm dark:text-gray-300 whitespace-pre-wrap">${esc(data.message)}</div>
                         </div>
                         <div class="flex flex-col gap-2 shrink-0">
-                            <button onclick="window.deleteAdminLead('${data.id}')" class="text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-red-200 transition flex items-center gap-2">
+                            <button onclick="window.deleteAdminLead(${js(data.id)})" class="text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-red-200 transition flex items-center gap-2">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash
                             </button>
                         </div>
@@ -4007,14 +3711,14 @@
                         <div class="flex-1 w-full">
                             <div class="flex items-center gap-3 mb-2">
                                 <span class="text-[9px] font-black bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500 uppercase tracking-widest">${new Date(r.date).toLocaleDateString()}</span>
-                                <span class="text-[9px] font-black px-3 py-1 rounded-md uppercase tracking-widest ${r.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'}">${r.status}</span>
+                                <span class="text-[9px] font-black px-3 py-1 rounded-md uppercase tracking-widest ${r.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'}">${esc(r.status)}</span>
                             </div>
-                            <h4 class="font-black text-base dark:text-white text-brand-navy mb-1 tracking-tight">${r.name} <span class="text-xs text-gray-500 font-normal">(${r.role || 'N/A'})</span></h4>
-                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner text-sm dark:text-gray-300 italic">"${r.text}"</div>
+                            <h4 class="font-black text-base dark:text-white text-brand-navy mb-1 tracking-tight">${esc(r.name)} <span class="text-xs text-gray-500 font-normal">(${esc(r.role || 'N/A')})</span></h4>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner text-sm dark:text-gray-300 italic">"${esc(r.text)}"</div>
                         </div>
                         <div class="flex flex-col gap-2 shrink-0 w-full md:w-auto mt-2 md:mt-0">
-                            ${r.status === 'pending' ? `<button onclick="window.approveReview('${r.id}')" class="text-[9px] bg-green-500 text-white px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-md">Approve</button>` : `<button onclick="window.unapproveReview('${r.id}')" class="text-[9px] bg-orange-500 text-white px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-orange-600 transition flex items-center justify-center gap-2 shadow-md">Unapprove</button>`}
-                            <button onclick="window.deleteReview('${r.id}')" class="text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-red-200 transition flex items-center justify-center gap-2">Trash</button>
+                            ${r.status === 'pending' ? `<button onclick="window.approveReview(${js(r.id)})" class="text-[9px] bg-green-500 text-white px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-md">Approve</button>` : `<button onclick="window.unapproveReview(${js(r.id)})" class="text-[9px] bg-orange-500 text-white px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-orange-600 transition flex items-center justify-center gap-2 shadow-md">Unapprove</button>`}
+                            <button onclick="window.deleteReview(${js(r.id)})" class="text-[9px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-black uppercase tracking-widest hover:bg-red-200 transition flex items-center justify-center gap-2">Trash</button>
                         </div>
                     </div>
                 `).join('');
@@ -4040,7 +3744,7 @@
         window.loadHomepageReviews = async function() {
             if (!window.firebaseDb) return;
             try {
-                const snap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`));
+                const snap = await window.getDocs(window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`), window.where('status', '==', 'approved')));
                 const reviews = [];
                 snap.forEach(doc => { const data = doc.data(); if(data.status === 'approved') reviews.push({ id: doc.id, ...data }); });
                 
@@ -4060,12 +3764,12 @@
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                         </div>
-                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 italic mb-6">"${r.text}"</p>
+                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 italic mb-6">"${esc(r.text)}"</p>
                         <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center text-white font-black text-lg">${r.name.charAt(0).toUpperCase()}</div>
+                            <div class="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center text-white font-black text-lg">${esc(String(r.name || '?').charAt(0).toUpperCase())}</div>
                             <div>
-                                <h4 class="font-black text-brand-navy dark:text-white text-sm">${r.name}</h4>
-                                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">${r.role || 'Verified Client'}</p>
+                                <h4 class="font-black text-brand-navy dark:text-white text-sm">${esc(r.name)}</h4>
+                                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">${esc(r.role || 'Verified Client')}</p>
                             </div>
                         </div>
                     </div>
@@ -4077,39 +3781,59 @@
         /* 7. UI & NAVIGATION HELPER FUNCTIONS */
         /* ========================================== */
         window.navigate = function(viewId, updateHash = true) {
-            if (viewId === 'catalog' && !window.currentUser) { window.customAlert("Please log in or register to view the catalog."); window.toggleAuthModal(); return; }
-            if (viewId === 'customer' && !window.currentUser) { window.customAlert("Please log in to view your inquiries."); window.toggleAuthModal(); return; }
-            if (viewId === 'admin' && !window.isAdmin) { window.customAlert("Unauthorized access."); return; }
+            window.closeAccountMenu();
+            if (document.getElementById('mobile-menu').classList.contains('flex')) window.toggleMobileMenu();
 
-            const currentActive = document.querySelector('.view-section.active');
-            const target = document.getElementById(`view-${viewId}`);
-            if (currentActive && currentActive.id === `view-${viewId}`) return;
-            window.currentView = viewId;
-            if (updateHash) window.location.hash = viewId;
-            if(document.getElementById('mobile-menu').classList.contains('flex')) window.toggleMobileMenu();
-
-            if (currentActive) {
-                currentActive.classList.remove('active'); currentActive.classList.add('fade-out');
-                setTimeout(() => { currentActive.style.display = 'none'; currentActive.classList.remove('fade-out'); fadeInTarget(); }, 300);
-            } else { fadeInTarget(); }
-
-            function fadeInTarget() {
-                if (target) {
-                    target.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' });
-                    void target.offsetWidth; target.classList.add('active');
-                    if (viewId === 'catalog') window.renderCatalog();
-                    if (viewId === 'bulk-order') {
-                        console.log('Navigating to bulk-order view');
-                        window.renderBulkTable();
-                        window.updateBulkSummary();
-                    }
-                    if (viewId === 'orders') { window.renderOrders(); window.updateOrdersStats(); }
-                    if (viewId === 'dashboard') { window.switchDashboardTab('overview'); window.updateDashboardProfileDisplay(); }
-                    if (viewId === 'customer') window.loadClientLeads();
-                    if (viewId === 'admin' && window.isAdmin) window.switchAdminTab('dashboard');
-                    if (viewId === 'home') window.loadHomepageReviews();
-                }
+            const needsLogin = { catalog: 'Please log in or register to view the catalog.', customer: 'Please log in to view your inquiries.', orders: 'Please log in to view your orders.', dashboard: 'Please log in to manage your account.' };
+            const signedIn = !!(window.currentUser && window.currentUser.email);
+            if (needsLogin[viewId] && !signedIn) {
+                window.customAlert(needsLogin[viewId]);
+                if (!document.getElementById('auth-modal').classList.contains('open')) window.toggleAuthModal();
+                return;
             }
+            if (viewId === 'admin' && !window.isAdmin) { window.customAlert('Unauthorized access.'); return; }
+
+            let target = document.getElementById(`view-${viewId}`);
+            if (!target) { viewId = 'home'; target = document.getElementById('view-home'); }
+            const current = document.querySelector('.view-section.active');
+            if (current === target) return;
+
+            window.currentView = viewId;
+            if (updateHash) window.location.hash = viewId === 'home' ? '' : viewId;
+            if (current) current.classList.remove('active');
+            target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            document.querySelectorAll('[data-nav]').forEach(b => b.dataset.nav === viewId ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+
+            if (viewId === 'catalog') window.renderCatalog();
+            if (viewId === 'orders') { window.renderOrders(); window.updateOrdersStats(); }
+            if (viewId === 'dashboard') { window.switchDashboardTab('overview'); window.updateDashboardProfileDisplay(); }
+            if (viewId === 'customer') window.loadClientLeads();
+            if (viewId === 'admin') window.switchAdminTab('dashboard');
+            if (viewId === 'home') window.loadHomepageReviews();
+        }
+
+        window.authErrorMessage = function(code) {
+            const messages = {
+                'auth/invalid-credential': 'That email and password do not match. Check them and try again.',
+                'auth/wrong-password': 'That email and password do not match. Check them and try again.',
+                'auth/user-not-found': 'No account uses that email. Create one to continue.',
+                'auth/email-already-in-use': 'That email already has an account. Sign in instead.',
+                'auth/weak-password': 'Use a password with at least 6 characters.',
+                'auth/invalid-email': 'Enter a valid email address.',
+                'auth/too-many-requests': 'Too many attempts. Wait a few minutes and try again.',
+                'auth/network-request-failed': 'No connection. Check your internet and try again.'
+            };
+            return messages[code] || 'Sign-in failed. Try again or contact us.';
+        }
+
+        // Runs once, after Firebase reports who is signed in, so refreshing a private page works.
+        let initialRouteDone = false;
+        window.routeInitial = function() {
+            if (initialRouteDone) return;
+            initialRouteDone = true;
+            const viewId = window.location.hash.replace('#', '') || 'home';
+            if (viewId !== 'home') window.navigate(viewId, false);
         }
 
         window.toggleCart = function() {
@@ -4168,7 +3892,7 @@
         window.customAlert = function(msg) {
             const el = document.createElement('div');
             el.className = "fixed top-10 left-1/2 transform -translate-x-1/2 bg-brand-navy dark:bg-white text-white dark:text-brand-navy px-6 py-4 rounded-2xl shadow-2xl z-[9999] font-black uppercase tracking-widest text-[10px] md:text-xs animate-viewIn border border-white/10 dark:border-slate-200 flex items-center gap-3";
-            el.innerHTML = `<svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span class="truncate">${msg}</span>`;
+            el.innerHTML = `<svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>${esc(msg)}</span>`;
             document.body.appendChild(el);
             setTimeout(() => {
                 el.style.opacity = '0'; el.style.transform = 'translate(-50%, -20px)'; el.style.transition = 'all 0.3s ease';
@@ -4185,8 +3909,8 @@
                 </div>
                 <div>
                     <p class="text-[8px] md:text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] mb-0.5">Basket Updated</p>
-                    <p class="text-xs md:text-sm font-black truncate text-brand-navy dark:text-white">${title}</p>
-                    <p class="text-[9px] md:text-[10px] text-brand-blue font-bold tracking-widest uppercase mt-0.5">${size}</p>
+                    <p class="text-xs md:text-sm font-black truncate text-brand-navy dark:text-white">${esc(title)}</p>
+                    <p class="text-[9px] md:text-[10px] text-brand-blue font-bold tracking-widest uppercase mt-0.5">${esc(size)}</p>
                 </div>`;
             document.body.appendChild(toast);
             setTimeout(() => {
@@ -4196,164 +3920,78 @@
         }
 
         /* ========================================== */
-        /* 8. AI ASSISTANT & SMART MATCH LOGIC */
+        /* 8. PRODUCT FINDER AND ACCOUNT MENU */
         /* ========================================== */
-        
-        // Setup Official Gemini API Fetch Logic
-        const fetchGeminiAI = async (promptText) => {
-            // Using the provided Gemini API key for local usage
-            const apiKey = "REMOVED-USE-SERVER-FUNCTION"; 
-            
-            // Clean URL without query params (we pass the key in the headers now)
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            
-            const catalogContext = window.cloudProducts.map(p => `${p.name} (${p.category}) - ${p.desc}`).join(" | ");
-            const systemPrompt = `You are a technical advisor for Route 64 Lubricants. Here is our catalog: ${catalogContext}. Be very brief. Do not mention pricing. Help the user find the right oil or grease. Keep answers to 2 short sentences.`;
+        // Suggestions come from the product descriptions in catalogue.pdf.
+        const FINDER_GUIDE = [
+            { label: 'Car or light vehicle', category: 'Engine Oils', picks: [['Multigrade (20W50)', 'Turbo-tested motor oil for everyday driving']] },
+            { label: 'Diesel truck, bus or farm vehicle', category: 'Engine Oils', picks: [['Turbo Diesel (15W40)', 'Soot dispersancy and wear control'], ['Diesel Oil (HD40)', 'Heavy duty, for commercial and farm diesels']] },
+            { label: 'Small engine', category: 'Engine Oils', picks: [['Engine Oil (SAE 30)', 'Non-detergent oil for small engines']] },
+            { label: 'Lawnmower, chainsaw or two-stroke bike', category: 'Engine Oils', picks: [['2 Stroke Oil', 'Low ash, for air-cooled two-stroke petrol engines']] },
+            { label: 'Manual gearbox or axle', category: 'Gear & Auto', picks: [['Gear Oil (80W90)', 'Multi-purpose, for gearboxes and axles'], ['Gear Oil (EP90)', 'Extreme pressure protection']] },
+            { label: 'Automatic gearbox or power steering', category: 'Gear & Auto', picks: [['Transmission (ATF DII)', 'For cars, forklifts and buses']] },
+            { label: 'Brakes', category: 'Gear & Auto', picks: [['Brake Fluid DOT4', 'High wet boiling point for disc and drum brakes']] },
+            { label: 'Hydraulic system', category: 'Industrial', picks: [['Hydraulic Oil (ISO 46)', 'Anti-wear hydraulic oil'], ['Hydraulic Oil (ISO 68)', 'Anti-wear hydraulic oil, higher viscosity']] },
+            { label: 'Cooling system', category: 'Anti-Freeze', picks: [['Anti-freeze', 'Summer coolant, 30%, 50% or 96% strength']] },
+            { label: 'Bearings and joints', category: 'Grease', picks: [['Grease - Wheel Bearing', 'For wheel bearings'], ['Grease - CV Joint', 'For CV joints'], ['Grease - Multipurpose', 'General lubrication']] },
+            { label: 'Cleaning engines, machinery or hands', category: 'Chemicals & Grease', picks: [['Engine cleaners', 'Water base or solvent base'], ['Degreaser Concentrate', 'For workshops and metalwork'], ['Hand Cleaner with Grit', 'Solvent-free, heavy duty']] }
+        ];
 
-            const payload = {
-                contents: [{ parts: [{ text: promptText }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
-            };
-
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'x-goog-api-key': apiKey
-                        },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    if (!res.ok) {
-                        const errorText = await res.text();
-                        throw new Error(`API Error ${res.status}: ${errorText}`);
-                    }
-                    
-                    const data = await res.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I am currently offline.";
-                } catch (e) {
-                    console.warn(`AI attempt ${i + 1} failed:`, e);
-                    if (i < 4) await new Promise(r => setTimeout(r, delays[i]));
-                    else throw e;
-                }
-            }
+        window.showFinderList = function() {
+            document.getElementById('finder-body').innerHTML = '<p class="font-bold text-brand-navy dark:text-white mb-3">What are you servicing?</p><div class="space-y-2">' +
+                FINDER_GUIDE.map((g, i) => `<button onclick="window.showFinderResult(${i})" class="finder-option block w-full text-left px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white hover:border-brand-blue transition">${esc(g.label)}</button>`).join('') + '</div>';
         };
 
-        window.toggleAI = function() {
-            const win = document.getElementById('ai-chat-window');
-            const bubble = document.getElementById('ai-bot-bubble');
-            if (win.style.display === 'none') {
-                win.style.display = 'flex'; bubble.style.transform = 'scale(0.8)'; bubble.style.opacity = '0.5';
-            } else {
-                win.style.display = 'none'; bubble.style.transform = 'scale(1)'; bubble.style.opacity = '1';
-            }
-        }
+        window.showFinderResult = function(i) {
+            const g = FINDER_GUIDE[i];
+            const text = encodeURIComponent('Hi Route 64, I need a product for: ' + g.label);
+            const body = document.getElementById('finder-body');
+            body.innerHTML = `
+                <button class="text-brand-blue font-bold text-xs mb-3" onclick="window.showFinderList()">Back</button>
+                <h5 class="font-black text-lg text-brand-navy dark:text-white mb-3">${esc(g.label)}</h5>
+                <div class="space-y-2">${g.picks.map(p => `<div class="finder-pick bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-xl p-3"><strong class="block text-brand-navy dark:text-white">${esc(p[0])}</strong><span class="text-gray-500 dark:text-gray-400 text-xs">${esc(p[1])}</span></div>`).join('')}</div>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-3">Check your equipment manual for the grade it requires.</p>
+                <div class="grid gap-2 mt-4">
+                    <button class="w-full py-3 rounded-xl bg-brand-blue text-white font-bold" onclick="window.finderOpenCatalogue(${i})">See in the catalog</button>
+                    <a class="finder-wa w-full py-3 rounded-xl bg-[#25D366] text-white font-bold text-center" href="https://wa.me/27680871269?text=${text}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+                </div>`;
+            body.scrollTop = 0;
+        };
 
-        window.askAI = async function() {
-            const input = document.getElementById('ai-input');
-            const val = input.value.trim();
-            if (!val) return;
-            
-            const msgs = document.getElementById('ai-messages');
-            
-            // Add User Message Node
-            const userDiv = document.createElement('div');
-            userDiv.className = "bg-brand-blue text-white p-3 md:p-4 rounded-xl md:rounded-2xl rounded-tr-none font-medium w-fit max-w-[90%] ml-auto shrink-0 shadow-md";
-            userDiv.innerText = val;
-            msgs.appendChild(userDiv);
-            input.value = '';
-            msgs.scrollTop = msgs.scrollHeight;
+        window.finderOpenCatalogue = function(i) {
+            window.closeFinder();
+            const search = document.getElementById('search-input');
+            if (search) search.value = '';
+            window.filterCatalog(FINDER_GUIDE[i].category);
+            window.navigate('catalog');
+        };
 
-            // Typing Indicator
-            const typeDiv = document.createElement('div');
-            typeDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl rounded-tl-none font-medium w-fit flex items-center gap-2 mr-auto shrink-0";
-            typeDiv.innerHTML = `<span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.2s"></span>`;
-            msgs.appendChild(typeDiv);
-            const initialView = window.location.hash.replace('#', '') || 'home';
-            if (initialView !== 'home') window.navigate(initialView, false);
+        window.toggleFinder = function() {
+            const panel = document.getElementById('finder-panel');
+            const open = panel.style.display === 'none';
+            if (open) window.showFinderList();
+            panel.style.display = open ? 'flex' : 'none';
+            document.getElementById('finder-toggle').setAttribute('aria-expanded', open);
+        };
 
+        window.closeFinder = function() {
+            document.getElementById('finder-panel').style.display = 'none';
+            document.getElementById('finder-toggle').setAttribute('aria-expanded', 'false');
+        };
 
-        window.addEventListener('hashchange', () => {
-            const viewId = window.location.hash.replace('#', '') || 'home';
-            window.navigate(viewId, false);
+        window.toggleAccountMenu = function() {
+            const hidden = document.getElementById('account-menu').classList.toggle('hidden');
+            document.getElementById('account-menu-btn').setAttribute('aria-expanded', !hidden);
+        };
+
+        window.closeAccountMenu = function() {
+            document.getElementById('account-menu').classList.add('hidden');
+            document.getElementById('account-menu-btn').setAttribute('aria-expanded', 'false');
+        };
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-account')) window.closeAccountMenu();
         });
-
-        window.handleContactSubmit = async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('contact-submit');
-            btn.innerText = "Sending..."; btn.disabled = true;
-            const payload = { name: document.getElementById('contact-name').value, email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value, message: document.getElementById('contact-msg').value, date: new Date().toISOString() };
-            try {
-                if (window.firebaseDb) await window.addDoc(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/leads`), payload);
-                window.customAlert("Message sent successfully! Our team will contact you soon.");
-                document.getElementById('contact-form').reset();
-            } catch (err) { console.error(err); window.customAlert("Error sending message."); }
-            btn.innerText = "Send Message"; btn.disabled = false;
-        };
-
-            msgs.scrollTop = msgs.scrollHeight;
-
-            // Fetch Real AI
-            let responseText = "I'm having trouble connecting to the Route 64 database right now.";
-            try {
-                responseText = await fetchGeminiAI(val);
-            } catch (e) {
-                console.error("AI Error:", e);
-                // Reveal actual error to user for debugging
-                responseText = `Connection failed. Error details: ${e.message}`;
-            }
-
-            typeDiv.remove();
-            const botDiv = document.createElement('div');
-            botDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-xl md:rounded-2xl text-brand-navy dark:text-slate-200 rounded-tl-none font-medium w-fit max-w-[90%] mr-auto shrink-0";
-            botDiv.innerHTML = responseText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-            msgs.appendChild(botDiv);
-            msgs.scrollTop = msgs.scrollHeight;
-        }
-
-        // New AI Smart Matcher Feature in Catalog
-        window.aiAutoRecommend = function() {
-            const box = document.getElementById('ai-recommender-box');
-            box.classList.toggle('hidden');
-        }
-
-        window.processAiRecommendation = async function() {
-            const input = document.getElementById('ai-recommender-input').value.trim();
-            const status = document.getElementById('ai-recommender-status');
-            if(!input) return;
-
-            status.classList.remove('hidden');
-            status.innerText = "Analyzing requirements...";
-            
-            try {
-                // Ask AI for a single keyword that matches our categories using standard string concatenation
-                const promptText = 'Given this request: "' + input + '", return EXACTLY ONE of these categories: "Engine Oils", "Gear & Auto", "Industrial", "Anti-Freeze", "Grease", "Chemicals & Grease", or "all". No other text.';
-                let category = await fetchGeminiAI(promptText);
-                category = category.trim().replace(/['"]/g, ''); // cleanup
-
-                const validCategories = ["Engine Oils", "Gear & Auto", "Industrial", "Anti-Freeze", "Grease", "Chemicals & Grease"];
-                if(validCategories.includes(category)) {
-                    window.filterCatalog(category);
-                    status.innerText = `Matched with: ${category}. Catalog filtered!`;
-                } else {
-                    document.getElementById('search-input').value = input.split(' ')[0]; // fallback search
-                    window.renderCatalog();
-                    status.innerText = "Filtered by keyword matching.";
-                }
-                
-                setTimeout(() => {
-                    status.classList.add('hidden');
-                    document.getElementById('ai-recommender-box').classList.add('hidden');
-                }, 3000);
-
-            } catch(e) {
-                console.error(e);
-                status.innerText = "Connection error. Please try standard search.";
-            }
-        }
 
         window.handleContactSubmit = async function(e) {
             e.preventDefault();
@@ -4407,65 +4045,29 @@
         /* ========================================== */
         /* 9. ON LOAD INITIALIZATION */
         /* ========================================== */
+        window.currentView = 'home';
         window.addEventListener('DOMContentLoaded', () => {
-            const initialView = window.location.hash.replace('#', '') || 'home';
-            if (initialView !== 'home') window.navigate(initialView, false);
-
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-                document.documentElement.classList.add('dark');
-                document.getElementById('moon-icon').classList.add('hidden'); document.getElementById('sun-icon').classList.remove('hidden');
-            } else {
-                document.getElementById('sun-icon').classList.add('hidden'); document.getElementById('moon-icon').classList.remove('hidden');
-            }
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('moon-icon').classList.toggle('hidden', isDark);
+            document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
+            window.updateCartUI();
+            window.renderCatalog();
 
             setTimeout(() => {
                 const loader = document.getElementById('page-loader');
-                if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 700); }
-                try { if(typeof window.initCatalog === 'function') window.initCatalog(); } catch(e) { console.error('Error initializing catalog:', e); }
-                try { if(typeof window.loadHomepageReviews === 'function') window.loadHomepageReviews(); } catch(e) { console.error('Error loading reviews:', e); }
-            }, 1000);
+                if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 700); }
+                try { window.loadHomepageReviews(); } catch (e) { console.error('Error loading reviews:', e); }
+            }, 300);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            window.closeAllModals();
+            window.closeFinder();
+            window.closeAccountMenu();
+            if (document.getElementById('mobile-menu').classList.contains('flex')) window.toggleMobileMenu();
         });
     </script>
 </body>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
-
-</html>
 
 </html>
