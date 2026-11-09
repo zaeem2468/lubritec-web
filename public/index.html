@@ -91,7 +91,7 @@
 
     <style>
         :root {
-            --nav-h: 68px;
+            --nav-h: 64px;
             --paper: #E9EBEC; --surface: #F7F8F8; --ink: #1D2023; --ink-2: #555B61; --rule: #C6CACE;
             --oil: #E8A317; --accent: 154 91 0; --accent-c: #9A5B00; --asphalt: #26292C; --on-oil: #1D2023;
             --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif;
@@ -114,7 +114,6 @@
         .animate-viewIn { animation: viewIn .18s ease-out; }
         .hide-scroll { scrollbar-width: none; }
         .hide-scroll::-webkit-scrollbar { display: none; }
-        .chat-scroll { scrollbar-width: thin; }
         html:not(.signed-in) .auth-only, html:not(.is-admin) .admin-only { display: none !important; }
 
         /* Loader removes itself even if a script ever fails. */
@@ -143,22 +142,30 @@
 
         /* Navigation */
         .site-nav { position: fixed; inset: 0 0 auto 0; height: var(--nav-h); z-index: 100; background: var(--surface); border-bottom: 1px solid var(--rule); }
-        .site-nav .wrap { height: 100%; display: flex; align-items: center; gap: 20px; max-width: 1480px; }
+        .site-nav .wrap { height: 100%; display: flex; align-items: center; gap: 40px; }
         .brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .brand img { height: 50px; width: auto; }
-        .brand span { font-family: var(--cond); font-weight: 600; font-size: 23px; white-space: nowrap; }
-        .nav-links { display: none; flex: 1; justify-content: center; gap: 2px; }
-        .nav-links button { padding: 8px 11px; font-size: 16px; font-weight: 500; color: var(--ink-2); white-space: nowrap; border-bottom: 2px solid transparent; }
-        .nav-links button:hover, .nav-links button[aria-current="page"] { color: var(--ink); border-bottom-color: var(--oil); }
-        .nav-tools { margin-left: auto; display: flex; align-items: center; gap: 4px; }
-        .tool { position: relative; min-width: 44px; height: 44px; padding-inline: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; color: var(--ink); border-radius: 4px; font-weight: 500; font-size: 16px; }
-        .tool:hover { background: var(--paper); }
-        .tool svg { width: 21px; height: 21px; }
-        #cart-count { position: absolute; top: 2px; right: 2px; min-width: 19px; height: 19px; padding-inline: 4px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: var(--oil); color: var(--on-oil); font-size: 12px; font-weight: 700; transition: transform .15s; }
-        .nav-signin { display: none; }
-        .nav-basket-label { display: none; }
-        @media (min-width: 640px) { .nav-signin, .nav-basket-label { display: inline-flex; } }
-        @media (min-width: 1240px) { .nav-links { display: flex; } .nav-menu-btn { display: none; } }
+        .brand img { height: 40px; width: auto; }
+        .brand span { font-family: var(--cond); font-weight: 600; font-size: 22px; white-space: nowrap; }
+        .nav-links { display: none; gap: 28px; }
+        .nav-link { font-size: 16px; color: var(--ink-2); white-space: nowrap; padding-block: 6px; transition: color .12s; }
+        .nav-link:hover, .nav-link[aria-current="page"], .nav-link[aria-expanded="true"] { color: var(--ink); }
+        .nav-link[aria-current="page"] { font-weight: 500; }
+        .nav-tools { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+        .tool { position: relative; min-width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; color: var(--ink); border-radius: 4px; }
+        .tool svg { width: 22px; height: 22px; }
+        #cart-count { position: absolute; top: 3px; right: 1px; min-width: 18px; height: 18px; padding-inline: 4px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: var(--oil); color: var(--on-oil); font-size: 12px; font-weight: 700; transition: transform .15s; }
+        .signed-in .guest-only { display: none !important; }
+        .nav-signin, .nav-account { display: none; }
+        .nav-account { position: relative; }
+        .nav-account-menu { display: none; position: absolute; right: 0; top: calc(100% + 14px); min-width: 190px; padding: 6px; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 8px 24px rgba(0, 0, 0, .14); }
+        .nav-account-menu.open { display: block; }
+        .nav-account-menu button { display: block; width: 100%; text-align: left; padding: 9px 12px; border-radius: 3px; font-size: 16px; }
+        .nav-account-menu button:hover { background: var(--paper); }
+        .nav-account-menu hr { border: 0; border-top: 1px solid var(--rule); margin: 6px 0; }
+        @media (max-width: 639px) { .site-nav .wrap { gap: 12px; } .nav-tools { gap: 4px; } }
+        @media (max-width: 359px) { .site-nav .brand span { display: none; } }
+        @media (min-width: 640px) { .nav-signin { display: inline-block; } }
+        @media (min-width: 920px) { .nav-links { display: flex; } .nav-account { display: block; } .nav-menu-btn { display: none; } }
         #mobile-menu { position: fixed; inset: 0; z-index: 120; background: var(--surface); overflow-y: auto; transition: opacity .15s; padding: 18px clamp(16px, 4vw, 48px) 40px; }
         .menu-list { display: flex; flex-direction: column; margin-top: 8px; }
         .menu-list button { text-align: left; font-family: var(--cond); font-size: 28px; font-weight: 600; padding: 9px 0; border-bottom: 1px solid var(--rule); }
@@ -248,7 +255,6 @@
         .filter-btn { flex-shrink: 0; min-height: 44px; padding: 8px 16px; border: 1px solid var(--rule); border-radius: 4px; font-weight: 500; font-size: 16px; color: var(--ink-2); background: transparent; white-space: nowrap; }
         .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
         .filter-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-        .smart { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--oil); border-radius: 3px; padding: 18px; margin-top: 20px; position: relative; }
         .product-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); padding-bottom: 80px; }
         .product-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 18px; display: flex; flex-direction: column; cursor: pointer; transition: border-color .12s; }
         .product-card:hover { border-color: var(--ink); }
@@ -287,10 +293,23 @@
         .modal-x svg { width: 22px; height: 22px; }
 
         /* Advisor */
-        #ai-widget-container { position: fixed; right: 16px; bottom: 16px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-        #ai-chat-window { flex-direction: column; width: min(92vw, 380px); height: min(70vh, 520px); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; box-shadow: 0 16px 40px rgba(0, 0, 0, .28); }
-        .ai-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 10px 10px 16px; background: var(--asphalt); color: #fff; }
-        .ai-head h4 { font-size: 1.45rem; font-weight: 600; }
+        #float-actions { position: fixed; right: 16px; bottom: 16px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+        .finder { display: none; flex-direction: column; width: min(92vw, 380px); max-height: min(72vh, 560px); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; box-shadow: 0 16px 40px rgba(0, 0, 0, .28); }
+        .finder.open { display: flex; }
+        .finder-head { display: flex; justify-content: space-between; align-items: center; padding: 6px 6px 6px 16px; border-bottom: 1px solid var(--rule); }
+        .finder-head h4 { font-size: 1.5rem; font-weight: 600; }
+        .finder-body { overflow-y: auto; padding: 14px 16px 16px; }
+        .finder-body > p { color: var(--ink-2); }
+        .finder-options { margin-top: 8px; }
+        .finder-options button { display: block; width: 100%; text-align: left; padding: 10px 2px; border-bottom: 1px solid var(--rule); }
+        .finder-options button:hover { color: var(--accent-c); }
+        .finder-title { font-size: 1.6rem; font-weight: 600; margin-top: 8px; }
+        .finder-picks { margin-top: 10px; }
+        .finder-picks li { padding-block: 8px; border-top: 1px solid var(--rule); }
+        .finder-picks strong { display: block; font-weight: 600; }
+        .finder-picks span { color: var(--ink-2); font-size: 16px; }
+        .finder-note { color: var(--ink-2); font-size: 15px; margin-top: 10px; }
+        .finder-actions { display: grid; gap: 8px; margin-top: 14px; }
         .float-btn { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 6px 16px rgba(0, 0, 0, .3); }
         .float-btn svg { width: 26px; height: 26px; }
 
@@ -300,6 +319,8 @@
         .site-foot { background: var(--asphalt); color: #C5CACE; padding-block: 44px 28px; font-size: 16px; }
         .foot-grid { display: grid; gap: 28px; }
         @media (min-width: 760px) { .foot-grid { grid-template-columns: 2fr 1fr 1fr; } }
+        .theme-link { display: inline-flex; align-items: center; gap: 6px; }
+        .theme-link svg { width: 16px; height: 16px; }
         .site-foot h4 { color: #fff; font-size: 1.4rem; font-weight: 600; margin-bottom: 6px; }
         .site-foot a:hover, .site-foot button:hover { color: #fff; text-decoration: underline; }
         .site-foot li + li { margin-top: 3px; }
@@ -359,27 +380,21 @@
         </div>
     </div>
 
-    <!-- ADVISOR AND WHATSAPP -->
-    <div id="ai-widget-container">
-        <div id="ai-chat-window" style="display: none;">
-            <div class="ai-head">
-                <h4>Product advisor</h4>
-                <button onclick="window.toggleAI()" class="tool" style="color:#fff;background:none" aria-label="Close product advisor"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+    <!-- PRODUCT FINDER AND WHATSAPP -->
+    <div id="float-actions">
+        <section id="finder-panel" class="finder" aria-label="Product finder">
+            <div class="finder-head">
+                <h4>Find the right product</h4>
+                <button onclick="window.closeFinder()" class="tool" aria-label="Close product finder"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <div id="ai-messages" class="flex-1 min-h-0 overflow-y-auto chat-scroll p-4 flex flex-col gap-3" style="background:var(--paper)">
-                <div class="p-3 rounded bg-white dark:bg-slate-800 w-fit max-w-[90%] mr-auto shrink-0">Tell me the machine, vehicle or specification and I'll suggest a product from the range.</div>
-            </div>
-            <div class="p-3 flex gap-2" style="border-top:1px solid var(--rule)">
-                <input type="text" id="ai-input" aria-label="Your question" onkeypress="if(event.key === 'Enter') window.askAI()" placeholder="What oil for an older diesel tractor?" class="input">
-                <button onclick="window.askAI()" class="btn btn-oil" style="padding-inline:14px">Ask</button>
-            </div>
-        </div>
+            <div class="finder-body" id="finder-body"></div>
+        </section>
         <div class="flex flex-col items-center gap-3">
             <a href="https://wa.me/27680871269" target="_blank" rel="noopener" class="float-btn bg-[#128C4B] text-white" aria-label="Chat on WhatsApp">
                 <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
             </a>
-            <button id="ai-bot-bubble" onclick="window.toggleAI()" class="float-btn" style="background:var(--oil);color:var(--on-oil)" aria-label="Open product advisor">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m-9 7l3.5-3H19a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v15z"></path></svg>
+            <button id="finder-toggle" onclick="window.toggleFinder()" class="float-btn" style="background:var(--oil);color:var(--on-oil)" aria-label="Find the right product" aria-expanded="false" aria-controls="finder-panel">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </button>
         </div>
     </div>
@@ -412,28 +427,30 @@
                 <img src="image_7d531d.png" alt=""><span>Route 64 Lubricants</span>
             </button>
             <div class="nav-links">
-                <button data-nav="catalog" onclick="window.navigate('catalog')">Catalogue</button>
-                <button data-nav="orders" class="auth-only" onclick="window.navigate('orders')">Orders</button>
-                <button data-nav="customer" class="auth-only" onclick="window.navigate('customer')">My inquiries</button>
-                <button data-nav="dashboard" class="auth-only" onclick="window.navigate('dashboard')">Account</button>
-                <button data-nav="process" onclick="window.navigate('process')">How to order</button>
-                <button data-nav="about" onclick="window.navigate('about')">About</button>
-                <button data-nav="contact" onclick="window.navigate('contact')">Contact</button>
-                <button class="admin-only" onclick="window.location.href='analytics.html'" id="nav-analytics-btn">Analytics</button>
-                <button data-nav="admin" class="admin-only" onclick="window.navigate('admin')" id="nav-admin-btn">Admin</button>
+                <button class="nav-link" data-nav="catalog" onclick="window.navigate('catalog')">Catalogue</button>
+                <button class="nav-link" data-nav="process" onclick="window.navigate('process')">How to order</button>
+                <button class="nav-link" data-nav="about" onclick="window.navigate('about')">About</button>
+                <button class="nav-link" data-nav="contact" onclick="window.navigate('contact')">Contact</button>
             </div>
             <div class="nav-tools">
-                <button onclick="window.toggleTheme()" class="tool" id="theme-toggle" aria-label="Switch light or dark theme">
-                    <svg id="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    <svg id="sun-icon" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                </button>
-                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="tool nav-signin">Sign in</button>
+                <button onclick="window.handleNavLogin()" id="nav-login-btn" class="nav-link nav-signin guest-only">Sign in</button>
+                <div class="nav-account auth-only">
+                    <button class="nav-link" id="account-menu-btn" onclick="window.toggleAccountMenu()" aria-expanded="false" aria-controls="account-menu">Account</button>
+                    <div class="nav-account-menu" id="account-menu">
+                        <button onclick="window.navigate('orders')">Orders</button>
+                        <button onclick="window.navigate('customer')">My inquiries</button>
+                        <button onclick="window.navigate('dashboard')">Profile</button>
+                        <button class="admin-only" onclick="window.navigate('admin')" id="nav-admin-btn">Admin</button>
+                        <button class="admin-only" onclick="window.location.href='analytics.html'" id="nav-analytics-btn">Analytics</button>
+                        <hr>
+                        <button onclick="window.closeAccountMenu(); window.handleNavLogin()">Sign out</button>
+                    </div>
+                </div>
                 <button onclick="window.toggleCart()" class="tool" aria-label="Open basket">
-                    <span class="nav-basket-label">Basket</span>
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     <span id="cart-count" class="scale-0">0</span>
                 </button>
-                <button onclick="window.toggleMobileMenu()" class="tool nav-menu-btn" aria-label="Open menu"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+                <button onclick="window.toggleMobileMenu()" class="tool nav-menu-btn" aria-label="Open menu"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
             </div>
         </div>
     </nav>
@@ -622,19 +639,8 @@
                     <button onclick="window.toggleViewMode('grid')" id="btn-grid-view" aria-label="Grid view" aria-pressed="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v6H4zM14 15h6v6h-6z"></path></svg></button>
                     <button onclick="window.toggleViewMode('list')" id="btn-list-view" aria-label="List view" aria-pressed="false"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
                 </div>
-                <button onclick="window.aiAutoRecommend()" class="btn btn-line">Help me choose</button>
+                <button onclick="window.toggleFinder()" class="btn btn-line">Help me choose</button>
             </div>
-        </div>
-
-        <div id="ai-recommender-box" class="smart hidden">
-            <button onclick="document.getElementById('ai-recommender-box').classList.add('hidden')" class="modal-x" aria-label="Close"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-            <h4 class="text-2xl font-semibold">Help me choose</h4>
-            <p class="mb-3" style="color:var(--ink-2)">Describe the machine, vehicle or problem and we'll filter the catalogue.</p>
-            <div class="flex gap-2">
-                <input type="text" id="ai-recommender-input" class="input" aria-label="Describe your machine" onkeypress="if(event.key === 'Enter') window.processAiRecommendation()" placeholder="An older diesel tractor">
-                <button onclick="window.processAiRecommendation()" id="ai-recommender-submit" class="btn btn-ink">Find</button>
-            </div>
-            <p id="ai-recommender-status" role="status" class="mt-2 hidden" style="color:var(--accent-c)"></p>
         </div>
 
         <div class="chips hide-scroll" id="filter-buttons">
@@ -1129,7 +1135,14 @@
             </div>
             <div class="foot-base">
                 <span>&copy; 2026 Route 64 Lubricants. Authorised distribution.</span>
-                <button onclick="window.toggleDevModal()">Developed by Zaeem Wajah</button>
+                <span class="flex flex-wrap gap-6">
+                    <button onclick="window.toggleTheme()" class="theme-link" id="theme-toggle">
+                        <svg id="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        <svg id="sun-icon" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        Switch theme
+                    </button>
+                    <button onclick="window.toggleDevModal()">Developed by Zaeem Wajah</button>
+                </span>
             </div>
         </div>
     </footer>
@@ -3281,6 +3294,7 @@
 
             const target = document.getElementById(`view-${viewId}`) || document.getElementById('view-home');
             if (!document.getElementById(`view-${viewId}`)) viewId = 'home';
+            window.closeAccountMenu();
             if (document.getElementById('mobile-menu').classList.contains('flex')) window.toggleMobileMenu();
             const current = document.querySelector('.view-section.active');
             if (current === target) return;
@@ -3412,107 +3426,77 @@
         }
 
         /* ========================================== */
-        /* 8. AI ASSISTANT & SMART MATCH LOGIC */
+        /* 8. PRODUCT FINDER AND ACCOUNT MENU */
         /* ========================================== */
-        
-        // The Gemini key stays on the server: see functions/index.js.
-        const askAdvisor = async (message, mode = 'advisor') => {
-            const res = await fetch('/api/advisor', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message, mode })
-            });
-            if (!res.ok) throw new Error('Advisor returned ' + res.status);
-            return (await res.json()).reply;
+        // Suggestions come from the product descriptions in catalogue.pdf.
+        const FINDER_GUIDE = [
+            { label: 'Car or light vehicle', category: 'Engine Oils', picks: [['Multigrade (20W50)', 'Turbo-tested motor oil for everyday driving']] },
+            { label: 'Diesel truck, bus or farm vehicle', category: 'Engine Oils', picks: [['Turbo Diesel (15W40)', 'Soot dispersancy and wear control'], ['Diesel Oil (HD40)', 'Heavy duty, for commercial and farm diesels']] },
+            { label: 'Small engine', category: 'Engine Oils', picks: [['Engine Oil (SAE 30)', 'Non-detergent oil for small engines']] },
+            { label: 'Lawnmower, chainsaw or two-stroke bike', category: 'Engine Oils', picks: [['2 Stroke Oil', 'Low ash, for air-cooled two-stroke petrol engines']] },
+            { label: 'Manual gearbox or axle', category: 'Gear & Auto', picks: [['Gear Oil (80W90)', 'Multi-purpose, for gearboxes and axles'], ['Gear Oil (EP90)', 'Extreme pressure protection']] },
+            { label: 'Automatic gearbox or power steering', category: 'Gear & Auto', picks: [['Transmission (ATF DII)', 'For cars, forklifts and buses']] },
+            { label: 'Brakes', category: 'Gear & Auto', picks: [['Brake Fluid DOT4', 'High wet boiling point for disc and drum brakes']] },
+            { label: 'Hydraulic system', category: 'Industrial', picks: [['Hydraulic Oil (ISO 46)', 'Anti-wear hydraulic oil'], ['Hydraulic Oil (ISO 68)', 'Anti-wear hydraulic oil, higher viscosity']] },
+            { label: 'Cooling system', category: 'Anti-Freeze', picks: [['Anti-freeze', 'Summer coolant, 30%, 50% or 96% strength']] },
+            { label: 'Bearings and joints', category: 'Grease', picks: [['Grease - Wheel Bearing', 'For wheel bearings'], ['Grease - CV Joint', 'For CV joints'], ['Grease - Multipurpose', 'General lubrication']] },
+            { label: 'Cleaning engines, machinery or hands', category: 'Chemicals & Grease', picks: [['Engine cleaners', 'Water base or solvent base'], ['Degreaser Concentrate', 'For workshops and metalwork'], ['Hand Cleaner with Grit', 'Solvent-free, heavy duty']] }
+        ];
+
+        window.showFinderList = function() {
+            document.getElementById('finder-body').innerHTML = '<p>What are you servicing?</p><div class="finder-options">' +
+                FINDER_GUIDE.map((g, i) => `<button onclick="window.showFinderResult(${i})">${esc(g.label)}</button>`).join('') + '</div>';
         };
 
-        window.toggleAI = function() {
-            const win = document.getElementById('ai-chat-window');
-            const bubble = document.getElementById('ai-bot-bubble');
-            if (win.style.display === 'none') {
-                win.style.display = 'flex'; bubble.style.transform = 'scale(0.8)'; bubble.style.opacity = '0.5';
-            } else {
-                win.style.display = 'none'; bubble.style.transform = 'scale(1)'; bubble.style.opacity = '1';
-            }
-        }
+        window.showFinderResult = function(i) {
+            const g = FINDER_GUIDE[i];
+            const text = encodeURIComponent('Hi Route 64, I need a product for: ' + g.label);
+            const body = document.getElementById('finder-body');
+            body.innerHTML = `
+                <button class="text-link" onclick="window.showFinderList()">Back</button>
+                <h5 class="finder-title">${esc(g.label)}</h5>
+                <ul class="finder-picks">${g.picks.map(p => `<li><strong>${esc(p[0])}</strong><span>${esc(p[1])}</span></li>`).join('')}</ul>
+                <p class="finder-note">Check your equipment manual for the grade it requires.</p>
+                <div class="finder-actions">
+                    <button class="btn btn-oil" onclick="window.finderOpenCatalogue(${i})">See in the catalogue</button>
+                    <a class="btn btn-wa" href="https://wa.me/27680871269?text=${text}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+                </div>`;
+            body.scrollTop = 0;
+        };
 
-        window.askAI = async function() {
-            const input = document.getElementById('ai-input');
-            const val = input.value.trim();
-            if (!val) return;
-            
-            const msgs = document.getElementById('ai-messages');
-            
-            // Add User Message Node
-            const userDiv = document.createElement('div');
-            userDiv.className = "bg-brand-blue text-white p-3 md:p-4 rounded-md md:rounded-md rounded-tr-none font-medium w-fit max-w-[90%] ml-auto shrink-0 shadow-md";
-            userDiv.innerText = val;
-            msgs.appendChild(userDiv);
-            input.value = '';
-            msgs.scrollTop = msgs.scrollHeight;
+        window.finderOpenCatalogue = function(i) {
+            window.closeFinder();
+            const search = document.getElementById('search-input');
+            if (search) search.value = '';
+            window.openRange(FINDER_GUIDE[i].category);
+        };
 
-            // Typing Indicator
-            const typeDiv = document.createElement('div');
-            typeDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-md md:rounded-md rounded-tl-none font-medium w-fit flex items-center gap-2 mr-auto shrink-0";
-            typeDiv.innerHTML = `<span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-bounce" style="animation-delay: 0.2s"></span>`;
-            msgs.appendChild(typeDiv);
-            msgs.scrollTop = msgs.scrollHeight;
+        window.toggleFinder = function() {
+            const panel = document.getElementById('finder-panel');
+            const open = !panel.classList.contains('open');
+            if (open) window.showFinderList();
+            panel.classList.toggle('open', open);
+            document.getElementById('finder-toggle').setAttribute('aria-expanded', open);
+        };
 
-            // Fetch Real AI
-            let responseText = "The advisor can't connect right now. Search the catalogue or message us on WhatsApp.";
-            try {
-                responseText = await askAdvisor(val);
-            } catch (e) {
-                console.error("AI Error:", e);
-            }
+        window.closeFinder = function() {
+            document.getElementById('finder-panel').classList.remove('open');
+            document.getElementById('finder-toggle').setAttribute('aria-expanded', 'false');
+        };
 
-            typeDiv.remove();
-            const botDiv = document.createElement('div');
-            botDiv.className = "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm p-3 md:p-4 rounded-md md:rounded-md text-brand-navy dark:text-slate-200 rounded-tl-none font-medium w-fit max-w-[90%] mr-auto shrink-0";
-            const safeText = responseText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            botDiv.innerHTML = safeText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-            msgs.appendChild(botDiv);
-            msgs.scrollTop = msgs.scrollHeight;
-        }
+        window.toggleAccountMenu = function() {
+            const open = document.getElementById('account-menu').classList.toggle('open');
+            document.getElementById('account-menu-btn').setAttribute('aria-expanded', open);
+        };
 
-        // New AI Smart Matcher Feature in Catalog
-        window.aiAutoRecommend = function() {
-            const box = document.getElementById('ai-recommender-box');
-            box.classList.toggle('hidden');
-        }
+        window.closeAccountMenu = function() {
+            document.getElementById('account-menu').classList.remove('open');
+            document.getElementById('account-menu-btn').setAttribute('aria-expanded', 'false');
+        };
 
-        window.processAiRecommendation = async function() {
-            const input = document.getElementById('ai-recommender-input').value.trim();
-            const status = document.getElementById('ai-recommender-status');
-            if(!input) return;
-
-            status.classList.remove('hidden');
-            status.innerText = "Analyzing requirements...";
-            
-            try {
-                let category = await askAdvisor(input, 'match');
-                category = category.trim().replace(/['"]/g, ''); // cleanup
-
-                const validCategories = ["Engine Oils", "Gear & Auto", "Industrial", "Anti-Freeze", "Grease", "Chemicals & Grease"];
-                if(validCategories.includes(category)) {
-                    window.filterCatalog(category);
-                    status.innerText = `Matched with: ${category}. Catalog filtered!`;
-                } else {
-                    document.getElementById('search-input').value = input.split(' ')[0]; // fallback search
-                    window.renderCatalog();
-                    status.innerText = "Filtered by keyword matching.";
-                }
-                
-                setTimeout(() => {
-                    status.classList.add('hidden');
-                    document.getElementById('ai-recommender-box').classList.add('hidden');
-                }, 3000);
-
-            } catch(e) {
-                console.error(e);
-                status.innerText = "Connection error. Please try standard search.";
-            }
-        }
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-account')) window.closeAccountMenu();
+        });
 
         window.handleContactSubmit = async function(e) {
             e.preventDefault();
@@ -3584,6 +3568,8 @@
         document.addEventListener('keydown', (e) => {
             if (e.key !== 'Escape') return;
             window.closeAllModals();
+            window.closeFinder();
+            window.closeAccountMenu();
             if (document.getElementById('mobile-menu').classList.contains('flex')) window.toggleMobileMenu();
         });
     </script>
