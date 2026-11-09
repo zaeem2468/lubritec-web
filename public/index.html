@@ -24,7 +24,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, getDoc, getDocs, updateDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyDOYTDHe-Iq8lSjqRwpUUxzYLuXp3UEazQ", authDomain: "route64-web.firebaseapp.com", projectId: "route64-web", storageBucket: "route64-web.firebasestorage.app", messagingSenderId: "967223634070", appId: "1:967223634070:web:d7265bb36bbca0d0573ab7", measurementId: "G-6ZTYNL2KMN" };
         const app = initializeApp(firebaseConfig);
@@ -32,7 +32,7 @@
         const db = getFirestore(app);
         const ADMIN_EMAILS = ['info@route64.co.za', 'riaaz@route64.co.za', 'ziemie786@gmail.com'];
 
-        Object.assign(window, { isAdmin: false, firebaseDb: db, firebaseAuth: auth, appId: "route64-web", addDoc, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, collection, onSnapshot, query, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut });
+        Object.assign(window, { isAdmin: false, firebaseDb: db, firebaseAuth: auth, appId: "route64-web", addDoc, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, collection, onSnapshot, query, where, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut });
 
         const setText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
 
@@ -502,7 +502,7 @@
             <div class="wrap hero-facts">
                 <span><b>48-hour</b> dispatch target</span>
                 <span><b>99.8%</b> service reliability</span>
-                <span><b>30+</b> core formulations</span>
+                <span><b>25</b> products in the range</span>
             </div>
         </section>
 
@@ -1138,6 +1138,10 @@
         /* ========================================== */
         /* 1. SYSTEM INITIALIZATION & DATA ENGINE */
         /* ========================================== */
+        const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const js = (v) => esc(JSON.stringify(String(v ?? '')));
+        const csvCell = (v) => { let s = String(v ?? ''); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+
         window.cloudProducts = JSON.parse(localStorage.getItem('route64_products')) || [];
         window.userPricing = {};
         window.isRegisterMode = false;
@@ -1690,7 +1694,7 @@
             if (filtered.length === 0) { grid.className = 'product-grid'; grid.innerHTML = '<p class="state-msg">No products match. Try another grade or choose All products.</p>'; return; }
 
             filtered.forEach(p => {
-                let vHtml = `<select id='${window.viewMode}-sel-${p.id}' class='input pc-select' aria-label='Pack size for ${p.name}' onclick='event.stopPropagation()'>`;
+                let vHtml = `<select id='${window.viewMode}-sel-${esc(p.id)}' class='input pc-select' aria-label='Pack size for ${esc(p.name)}' onclick='event.stopPropagation()'>`;
 
                 const pMap = window.currentUser && window.currentUser.email ? (window.userPricing[p.id] || {}) : {};
 
@@ -1701,7 +1705,7 @@
                             const vPrice = pMap[v.size] || 0;
                             priceLabel = vPrice > 0 ? ` - R${vPrice.toFixed(2)}` : " (quote)";
                         }
-                        vHtml += `<option value='${v.size}'>${v.size}${priceLabel}</option>`;
+                        vHtml += `<option value='${esc(v.size)}'>${esc(v.size)}${priceLabel}</option>`;
                     });
                 }
                 vHtml += "</select>";
@@ -1714,16 +1718,16 @@
                         if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'INPUT') window.openQuickView(p.id);
                     };
 
-                    const imageHtml = p.imgUrl ? `<img src="${p.imgUrl}" alt="${p.name}" loading="lazy">` : '';
+                    const imageHtml = p.imgUrl ? `<img src="${esc(p.imgUrl)}" alt="${esc(p.name)}" loading="lazy">` : '';
                     card.innerHTML = `
-                        <div class='pc-top'><span>${p.category}</span><span>${p.id}</span></div>
+                        <div class='pc-top'><span>${esc(p.category)}</span><span>${esc(p.id)}</span></div>
                         ${imageHtml}
-                        <h3>${p.name}</h3>
-                        <p>${p.desc || 'Premium formulation'}</p>
+                        <h3>${esc(p.name)}</h3>
+                        <p>${esc(p.desc || 'Premium formulation')}</p>
                         <label class='pc-field'>Pack size${vHtml}</label>
                         <div class='pc-buy'>
-                            <input type='number' id='grid-qty-${p.id}' value='1' min='1' class='input' aria-label='Number of cases of ${p.name}' onclick='event.stopPropagation()'>
-                            <button class='btn btn-ink' onclick='event.stopPropagation(); window.addFromCatalog("${p.id}", "grid")'>Add to basket</button>
+                            <input type='number' id='grid-qty-${esc(p.id)}' value='1' min='1' class='input' aria-label='Number of cases of ${esc(p.name)}' onclick='event.stopPropagation()'>
+                            <button class='btn btn-ink' onclick='event.stopPropagation(); window.addFromCatalog(${js(p.id)}, "grid")'>Add to basket</button>
                         </div>`;
                     grid.appendChild(card);
                 } else {
@@ -1737,11 +1741,11 @@
                     row.innerHTML = `
                         <div class='flex-1 min-w-[200px]'>
                             <div class="flex items-center gap-3 mb-1">
-                                <span class='text-sm md:text-sm font-bold text-brand-blue block font-bold'>${p.category}</span>
-                                <span class="text-sm font-bold text-slate-400">${p.id}</span>
+                                <span class='text-sm md:text-sm font-bold text-brand-blue block font-bold'>${esc(p.category)}</span>
+                                <span class="text-sm font-bold text-slate-400">${esc(p.id)}</span>
                             </div>
-                            <h4 class='font-bold text-brand-navy dark:text-white text-base md:text-xl'>${p.name}</h4>
-                            <p class='text-sm md:text-xs text-gray-500 dark:text-gray-400 mt-1 md:mt-2 hidden sm:block'>${p.desc || 'Premium Formulation'}</p>
+                            <h4 class='font-bold text-brand-navy dark:text-white text-base md:text-xl'>${esc(p.name)}</h4>
+                            <p class='text-sm md:text-xs text-gray-500 dark:text-gray-400 mt-1 md:mt-2 hidden sm:block'>${esc(p.desc || 'Premium Formulation')}</p>
                         </div>
                         <div class="flex flex-col sm:items-end justify-center w-full md:w-auto px-4">
                             ${listPriceDisplay}
@@ -1750,9 +1754,9 @@
                             ${vHtml}
                             <div class='flex items-center justify-between sm:justify-start gap-3 md:gap-4 w-full sm:w-auto'>
                                 <div class='flex items-center bg-slate-50 dark:bg-slate-800 rounded-lg md:rounded-md overflow-hidden border border-gray-100 dark:border-slate-700 flex-1 sm:flex-none'>
-                                    <input type='number' id='list-qty-${p.id}' value='1' min='1' class='w-full sm:w-16 md:w-20 bg-transparent text-center font-bold text-sm md:text-base dark:text-white py-2 md:py-3 outline-none' onclick='event.stopPropagation()'>
+                                    <input type='number' id='list-qty-${esc(p.id)}' value='1' min='1' class='w-full sm:w-16 md:w-20 bg-transparent text-center font-bold text-sm md:text-base dark:text-white py-2 md:py-3 outline-none' onclick='event.stopPropagation()'>
                                 </div>
-                                <button onclick='event.stopPropagation(); window.addFromCatalog("${p.id}", "list")' class='bg-brand-navy dark:bg-brand-blue text-white font-bold text-sm md:text-xs px-6 py-3 md:px-8 md:py-3.5 rounded-lg md:rounded-md shadow-md md:shadow-sm transition active:scale-95 whitespace-nowrap flex-1 sm:flex-none text-center hover:bg-blue-700'>Add</button>
+                                <button onclick='event.stopPropagation(); window.addFromCatalog(${js(p.id)}, "list")' class='bg-brand-navy dark:bg-brand-blue text-white font-bold text-sm md:text-xs px-6 py-3 md:px-8 md:py-3.5 rounded-lg md:rounded-md shadow-md md:shadow-sm transition active:scale-95 whitespace-nowrap flex-1 sm:flex-none text-center hover:bg-blue-700'>Add</button>
                             </div>
                         </div>`;
                     grid.appendChild(row);
@@ -1766,7 +1770,7 @@
             document.getElementById('qv-title').innerText = p.name;
             document.getElementById('qv-cat').innerText = p.category;
             document.getElementById('qv-desc').innerText = p.desc || "High performance formulation designed to meet severe industrial and commercial specifications.";
-            document.getElementById('qv-specs').innerHTML = `<div><span class="block text-sm text-gray-400 font-bold mb-1">Product ID</span><span class="text-xs font-bold dark:text-white">${p.id}</span></div>`;
+            document.getElementById('qv-specs').innerHTML = `<div><span class="block text-sm text-gray-400 font-bold mb-1">Product ID</span><span class="text-xs font-bold dark:text-white">${esc(p.id)}</span></div>`;
 
             const imgEl = document.getElementById('qv-product-img');
             const iconEl = document.getElementById('qv-default-icon');
@@ -1863,19 +1867,19 @@
                                 el.innerHTML = `
                         <div class='flex justify-between items-start gap-2'>
                             <div class="flex-1 pr-2">
-                                <h4 class='font-bold text-xs text-brand-navy dark:text-white'>${item.name}</h4>
-                                <span class='text-sm font-bold text-brand-blue bg-blue-50 dark:bg-slate-950 px-2 py-1 rounded-md mt-1 inline-block'>${item.size}</span>
+                                <h4 class='font-bold text-xs text-brand-navy dark:text-white'>${esc(item.name)}</h4>
+                                <span class='text-sm font-bold text-brand-blue bg-blue-50 dark:bg-slate-950 px-2 py-1 rounded-md mt-1 inline-block'>${esc(item.size)}</span>
                                 ${window.currentUser && window.currentUser.email && item.price > 0 ? `<span class="text-sm text-gray-500 font-bold block mt-1">R${item.price.toFixed(2)} / CASE</span>` : ''}
                             </div>
                             <div class="text-right shrink-0">${priceText}</div>
                         </div>
                         <div class='flex items-center justify-between border-t border-gray-50 dark:border-slate-700 pt-3 mt-1'>
                             <div class='flex items-center bg-slate-50 dark:bg-slate-950 rounded-lg border dark:border-slate-700 p-0.5'>
-                                <button onclick='window.updateQty("${item.cartId}", -1)' class='w-8 h-8 font-bold dark:text-white hover:bg-white dark:hover:bg-slate-800 rounded-md transition shadow-sm'>-</button>
+                                <button onclick='window.updateQty(${js(item.cartId)}, -1)' class='w-8 h-8 font-bold dark:text-white hover:bg-white dark:hover:bg-slate-800 rounded-md transition shadow-sm'>-</button>
                                 <span class='w-16 text-center text-xs font-bold dark:text-white'>${item.qty} Cases</span>
-                                <button onclick='window.updateQty("${item.cartId}", 1)' class='w-8 h-8 font-bold dark:text-white hover:bg-white dark:hover:bg-slate-800 rounded-md transition shadow-sm'>+</button>
+                                <button onclick='window.updateQty(${js(item.cartId)}, 1)' class='w-8 h-8 font-bold dark:text-white hover:bg-white dark:hover:bg-slate-800 rounded-md transition shadow-sm'>+</button>
                             </div>
-                            <button onclick='window.updateQty("${item.cartId}", -999)' class='text-sm font-bold text-brand-red hover:underline px-2'>Remove</button>
+                            <button onclick='window.updateQty(${js(item.cartId)}, -999)' class='text-sm font-bold text-brand-red hover:underline px-2'>Remove</button>
                         </div>`;
                     container.appendChild(el);
                 });
@@ -2030,7 +2034,7 @@
                                 ${product.variants ? product.variants.map(v => {
                                     const userPrice = window.currentUser && window.currentUser.email ? (window.userPricing[product.id] || {})[v.size] : 0;
                                     const variantPrice = userPrice > 0 ? userPrice : (v.price || 0);
-                                    return `<option value="${v.size}" data-price="${variantPrice}" ${v.size === defaultVariant.size ? 'selected' : ''}>${v.size}</option>`;
+                                    return `<option value="${esc(v.size)}" data-price="${variantPrice}" ${v.size === defaultVariant.size ? 'selected' : ''}>${esc(v.size)}</option>`;
                                 }).join('') : `<option data-price="${defaultVariant.price || 0}">${defaultVariant.size}</option>`}
                             </select>
                         </td>
@@ -2383,7 +2387,7 @@
                                 <div class="flex items-center gap-4">
                                     <div>
                                         <p class="text-xs text-gray-500 dark:text-slate-400">Order ID</p>
-                                        <p class="font-bold text-brand-navy dark:text-white">${order.id}</p>
+                                        <p class="font-bold text-brand-navy dark:text-white">${esc(order.id)}</p>
                                     </div>
                                     <div class="hidden md:block w-px h-8 bg-gray-100 dark:bg-slate-800"></div>
                                     <div>
@@ -2402,8 +2406,8 @@
                                     <div class="flex justify-between items-center py-2 border-b border-gray-50 dark:border-slate-800 last:border-0">
                                         <div class="flex items-center gap-3">
                                             <span class="text-xs text-gray-500 dark:text-slate-400">${item.qty}x</span>
-                                            <span class="text-brand-navy dark:text-white text-sm">${item.name}</span>
-                                            <span class="text-xs text-gray-400 dark:text-slate-600">(${item.size})</span>
+                                            <span class="text-brand-navy dark:text-white text-sm">${esc(item.name)}</span>
+                                            <span class="text-xs text-gray-400 dark:text-slate-600">(${esc(item.size)})</span>
                                         </div>
                                         <span class="text-brand-navy dark:text-white font-bold text-sm">R${item.total.toFixed(2)}</span>
                                     </div>
@@ -2412,10 +2416,10 @@
                             </div>
 
                             <div class="flex gap-3">
-                                <button onclick="window.viewOrderDetails('${order.id}')" class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold py-3 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-all">
+                                <button onclick="window.viewOrderDetails(${js(order.id)})" class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-brand-navy dark:text-white font-bold py-3 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-all">
                                     View Details
                                 </button>
-                                <button onclick="window.reorder('${order.id}')" class="flex-1 bg-brand-blue text-white font-bold py-3 rounded-md text-sm hover:bg-blue-600 transition-all shadow-sm">
+                                <button onclick="window.reorder(${js(order.id)})" class="flex-1 bg-brand-blue text-white font-bold py-3 rounded-md text-sm hover:bg-blue-600 transition-all shadow-sm">
                                     Reorder
                                 </button>
                             </div>
@@ -2587,7 +2591,7 @@
                     <div class="flex items-center justify-between py-3 border-b border-gray-50 dark:border-slate-800 last:border-0">
                         <div class="flex items-center gap-4">
                             <div>
-                                <p class="text-brand-navy dark:text-white font-bold text-sm">${order.id}</p>
+                                <p class="text-brand-navy dark:text-white font-bold text-sm">${esc(order.id)}</p>
                                 <p class="text-xs text-gray-500 dark:text-slate-400">${date}</p>
                             </div>
                         </div>
@@ -2612,7 +2616,7 @@
                 <div class="p-4 bg-gray-50 dark:bg-slate-800 rounded-lg border ${address.isDefault ? 'border-brand-blue' : 'border-gray-100 dark:border-slate-700'}">
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <p class="text-brand-navy dark:text-white font-bold text-sm">${address.label}</p>
+                            <p class="text-brand-navy dark:text-white font-bold text-sm">${esc(address.label)}</p>
                             ${address.isDefault ? '<span class="text-xs text-brand-blue">Default</span>' : ''}
                         </div>
                         <div class="flex gap-2">
@@ -2620,8 +2624,8 @@
                             <button onclick="window.deleteDashboardAddress(${address.id})" class="text-xs text-red-400 hover:text-red-300">Delete</button>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 dark:text-slate-400">${address.street}</p>
-                    <p class="text-sm text-gray-500 dark:text-slate-400">${address.city}, ${address.province} ${address.postalCode}</p>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">${esc(address.street)}</p>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">${esc(address.city)}, ${esc(address.province)} ${esc(address.postalCode)}</p>
                 </div>
             `).join('');
         };
@@ -2804,7 +2808,7 @@
                         const el = document.createElement('div');
                         el.className = "pro-card p-6 md:p-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8 shadow-sm text-left mb-6";
                         const displayTotal = data.total > 0 ? `R${data.total.toFixed(2)}` : "Pending Quote";
-                        let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium py-1">▪ ${i.qty} Cases x ${i.name} (${i.size})</div>`).join('');
+                        let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium py-1">▪ ${esc(i.qty)} Cases x ${esc(i.name)} (${esc(i.size)})</div>`).join('');
                         const safeItems = encodeURIComponent(JSON.stringify(data.items));
 
                         let statusColor = "text-brand-blue";
@@ -2817,7 +2821,7 @@
                                     <span class='bg-blue-50 text-brand-blue dark:bg-blue-900/30 text-sm font-bold px-3 py-1 rounded-md'>Cloud Synced</span>
                                     <span class='text-sm font-bold text-gray-400'>${new Date(data.date).toLocaleString()}</span>
                                 </div>
-                                <h4 class='text-xl md:text-2xl font-bold dark:text-white mb-2 text-brand-navy'>Ref: #${data.ref}</h4>
+                                <h4 class='text-xl md:text-2xl font-bold dark:text-white mb-2 text-brand-navy'>Ref: #${esc(data.ref)}</h4>
                                 <div class="mb-4 mt-2 bg-slate-50 dark:bg-slate-900 p-4 rounded-md border dark:border-slate-800">
                                     <p class="text-sm font-bold text-slate-400 mb-2">Requested Items</p>
                                     ${itemsHtml}
@@ -2827,9 +2831,9 @@
                             <div class='text-left md:text-right w-full md:w-auto border-t md:border-t-0 border-gray-100 dark:border-slate-800 pt-4 md:pt-0 mt-2 md:mt-0 flex flex-col items-start md:items-end'>
                                 <div class="mb-4">
                                     <span class='block text-sm md:text-sm font-bold text-gray-400 mb-1'>Status Update</span>
-                                    <h5 class='text-2xl md:text-3xl font-bold ${statusColor}'>${data.status}</h5>
+                                    <h5 class='text-2xl md:text-3xl font-bold ${statusColor}'>${esc(data.status)}</h5>
                                 </div>
-                                <button onclick="window.reorderOrder('${safeItems}')" class="bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white text-brand-navy dark:text-white px-4 py-2 rounded-lg font-bold text-sm transition flex items-center gap-2">
+                                <button onclick="window.reorderOrder(${js(safeItems)})" class="bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white text-brand-navy dark:text-white px-4 py-2 rounded-lg font-bold text-sm transition flex items-center gap-2">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Reorder
                                 </button>
                             </div>`;
@@ -2900,11 +2904,11 @@
             grid.innerHTML = window.cloudProducts.map(p => `
                 <div class="bg-slate-50 dark:bg-slate-800 p-5 rounded-md border border-gray-100 dark:border-slate-700 flex justify-between items-center shadow-sm">
                     <div>
-                        <span class="text-sm font-bold text-brand-blue block mb-1">${p.category} | ${p.id}</span>
-                        <h4 class="font-bold text-sm dark:text-white">${p.name}</h4>
-                        <p class="text-sm text-gray-400 mt-1">${p.variants? p.variants.map(v=>v.size).join(', ') : 'No sizes'}</p>
+                        <span class="text-sm font-bold text-brand-blue block mb-1">${esc(p.category)} | ${esc(p.id)}</span>
+                        <h4 class="font-bold text-sm dark:text-white">${esc(p.name)}</h4>
+                        <p class="text-sm text-gray-400 mt-1">${esc(p.variants ? p.variants.map(v => v.size).join(', ') : 'No sizes')}</p>
                     </div>
-                    <button onclick="window.deleteAdminProduct('${p.docId}')" class="text-gray-400 hover:text-brand-red transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                    <button onclick="window.deleteAdminProduct(${js(p.docId)})" class="text-gray-400 hover:text-brand-red transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                 </div>
             `).join('');
         };
@@ -2963,16 +2967,16 @@
                 grid.innerHTML = window.cloudProducts.map(p => `
                     <div class="bg-slate-50 dark:bg-slate-800 p-5 rounded-md border border-gray-100 dark:border-slate-700 shadow-sm">
                         <div class="mb-3 border-b border-gray-200 dark:border-slate-700 pb-2">
-                            <p class="text-sm text-brand-blue font-bold">${p.category}</p>
-                            <p class="text-sm md:text-base font-bold dark:text-white">${p.name}</p>
+                            <p class="text-sm text-brand-blue font-bold">${esc(p.category)}</p>
+                            <p class="text-sm md:text-base font-bold dark:text-white">${esc(p.name)}</p>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             ${p.variants? p.variants.map((v, idx) => `
                                 <div class="bg-white dark:bg-slate-900 p-3 rounded-lg flex items-center justify-between border border-gray-200 dark:border-slate-700">
-                                    <span class="text-sm font-bold text-gray-500">${v.size}</span>
+                                    <span class="text-sm font-bold text-gray-500">${esc(v.size)}</span>
                                     <div class="flex items-center w-24">
                                         <span class="text-slate-400 font-bold text-xs mr-1">R</span>
-                                        <input type="number" data-pid="${p.id}" data-size="${v.size}" value="${(clientPricing[p.id]||{})[v.size]||0}" step="0.01" class="admin-price-input w-full bg-transparent text-right outline-none dark:text-white font-mono text-sm border-b border-gray-200 dark:border-slate-600 focus:border-brand-blue">
+                                        <input type="number" data-pid="${esc(p.id)}" data-size="${esc(v.size)}" value="${esc((clientPricing[p.id]||{})[v.size]||0)}" step="0.01" class="admin-price-input w-full bg-transparent text-right outline-none dark:text-white font-mono text-sm border-b border-gray-200 dark:border-slate-600 focus:border-brand-blue">
                                     </div>
                                 </div>
                             `).join('') : ''}
@@ -3021,7 +3025,7 @@
                 allOrders.sort((a,b) => new Date(b.date) - new Date(a.date));
                 window.allAdminOrders = allOrders;
 
-                const totalRev = allOrders.reduce((sum, o) => sum + (o.total || 0), 0);
+                const totalRev = allOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
                 if(document.getElementById('admin-stat-rev')) document.getElementById('admin-stat-rev').innerText = `R${totalRev.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 if(document.getElementById('admin-stat-orders')) document.getElementById('admin-stat-orders').innerText = allOrders.length;
                 if(document.getElementById('admin-stat-clients')) document.getElementById('admin-stat-clients').innerText = uniqueClients.size;
@@ -3029,7 +3033,8 @@
                 if(allOrders.length === 0) { grid.innerHTML = "<p class='text-slate-400 text-center py-10 text-xs font-bold'>No orders in system</p>"; return; }
 
                 grid.innerHTML = allOrders.map(data => {
-                    let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium flex justify-between border-b dark:border-slate-700 py-2"><span>${i.qty} Cases x ${i.name} (${i.size})</span><span class="font-bold text-brand-navy dark:text-white">R${(i.price * i.qty).toFixed(2)}</span></div>`).join('');
+                    data.customer = data.customer || {}; data.items = Array.isArray(data.items) ? data.items : [];
+                    let itemsHtml = data.items.map(i => `<div class="text-xs text-slate-500 font-medium flex justify-between border-b dark:border-slate-700 py-2"><span>${esc(i.qty)} Cases x ${esc(i.name)} (${esc(i.size)})</span><span class="font-bold text-brand-navy dark:text-white">R${(i.price * i.qty).toFixed(2)}</span></div>`).join('');
                     let statusColor = "bg-gray-200 text-gray-700";
                     if (data.status === "Approved") statusColor = "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400";
                     if (data.status === "Shipped") statusColor = "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400";
@@ -3040,25 +3045,25 @@
                         <div class="flex-1 w-full">
                             <div class="flex flex-wrap items-center gap-3 mb-2">
                                 <span class="text-sm font-bold bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500">${new Date(data.date).toLocaleString()}</span>
-                                <span class="text-sm font-bold ${statusColor} px-3 py-1 rounded-md">${data.status}</span>
+                                <span class="text-sm font-bold ${statusColor} px-3 py-1 rounded-md">${esc(data.status)}</span>
                             </div>
-                            <h4 class="font-bold text-lg md:text-xl dark:text-white text-brand-navy mb-1">Ref: #${data.ref}</h4>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium"><span class="font-bold dark:text-gray-300">${data.customer.bizName}</span> | ${data.customer.contactName || 'No Contact'} | ${data.customer.phone}</p>
+                            <h4 class="font-bold text-lg md:text-xl dark:text-white text-brand-navy mb-1">Ref: #${esc(data.ref)}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium"><span class="font-bold dark:text-gray-300">${esc(data.customer.bizName)}</span> | ${esc(data.customer.contactName || 'No Contact')} | ${esc(data.customer.phone)}</p>
                             <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-md border border-gray-100 dark:border-slate-700 mb-4">
                                 <p class="text-sm font-bold text-slate-400 mb-2">Order Items</p>
                                 ${itemsHtml}
                             </div>
-                            <p class="text-sm font-bold text-brand-blue bg-blue-50 dark:bg-slate-900 inline-block px-4 py-2 rounded-lg border dark:border-slate-800">Total: R${data.total.toFixed(2)}</p>
+                            <p class="text-sm font-bold text-brand-blue bg-blue-50 dark:bg-slate-900 inline-block px-4 py-2 rounded-lg border dark:border-slate-800">Total: R${(Number(data.total) || 0).toFixed(2)}</p>
                         </div>
                         <div class="flex flex-col gap-2 w-full md:w-auto shrink-0 bg-slate-50 dark:bg-slate-900 p-4 rounded-md border dark:border-slate-800">
                             <label class="text-sm font-bold text-gray-400">Update Workflow Status</label>
-                            <select onchange="window.updateOrderStatus('${data.uid}', '${data.orderId}', this.value)" class="p-3 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none cursor-pointer dark:text-white shadow-sm mt-1">
+                            <select onchange="window.updateOrderStatus(${js(data.uid)}, ${js(data.orderId)}, this.value)" class="p-3 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none cursor-pointer dark:text-white shadow-sm mt-1">
                                 <option value="Pending Processing" ${data.status === 'Pending Processing' ? 'selected' : ''}>Pending Processing</option>
                                 <option value="Approved" ${data.status === 'Approved' ? 'selected' : ''}>Approved / Pricing Set</option>
                                 <option value="Shipped" ${data.status === 'Shipped' ? 'selected' : ''}>Shipped / Completed</option>
                             </select>
                             <div class="flex items-center gap-2 mt-2">
-                                <button onclick="window.deleteAdminOrder('${data.uid}', '${data.orderId}')" class="w-full text-sm bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 py-2.5 rounded-lg font-bold flex justify-center items-center gap-1 hover:bg-red-200 transition"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash</button>
+                                <button onclick="window.deleteAdminOrder(${js(data.uid)}, ${js(data.orderId)})" class="w-full text-sm bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 py-2.5 rounded-lg font-bold flex justify-center items-center gap-1 hover:bg-red-200 transition"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash</button>
                             </div>
                         </div>
                     </div>`;
@@ -3088,7 +3093,8 @@
             if (!window.allAdminOrders || window.allAdminOrders.length === 0) return window.customAlert("No order data to export.");
             let csv = "Date,Reference,Status,Business Name,Contact,Phone,Email,Total Value\n";
             window.allAdminOrders.forEach(o => {
-                csv += `"${new Date(o.date).toLocaleDateString()}","${o.ref}","${o.status}","${o.customer.bizName}","${o.customer.contactName || ''}","${o.customer.phone}","${o.email}",${o.total || 0}\n`;
+                const c = o.customer || {};
+                csv += [new Date(o.date).toLocaleDateString(), o.ref, o.status, c.bizName, c.contactName, c.phone, o.email, Number(o.total) || 0].map(csvCell).join(',') + '\n';
             });
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
@@ -3114,15 +3120,15 @@
                     <div class="bg-white dark:bg-slate-800 p-6 rounded-md border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col md:flex-row gap-6 justify-between items-start hover:border-brand-blue transition">
                         <div class="flex-1 w-full">
                             <span class="text-sm font-bold bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500 mb-3 inline-block">${new Date(data.date).toLocaleString()}</span>
-                            <h4 class="font-bold text-lg dark:text-white text-brand-navy mb-1">${data.name}</h4>
+                            <h4 class="font-bold text-lg dark:text-white text-brand-navy mb-1">${esc(data.name)}</h4>
                             <div class="flex flex-wrap gap-4 text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium">
-                                <span><strong class="dark:text-gray-300">Email:</strong> <a href="mailto:${data.email}" class="text-brand-blue hover:underline">${data.email}</a></span>
-                                ${data.phone ? `<span><strong class="dark:text-gray-300">Phone:</strong> <a href="tel:${data.phone}" class="text-brand-blue hover:underline">${data.phone}</a></span>` : ''}
+                                <span><strong class="dark:text-gray-300">Email:</strong> <a href="mailto:${esc(data.email)}" class="text-brand-blue hover:underline">${esc(data.email)}</a></span>
+                                ${data.phone ? `<span><strong class="dark:text-gray-300">Phone:</strong> <a href="tel:${esc(data.phone)}" class="text-brand-blue hover:underline">${esc(data.phone)}</a></span>` : ''}
                             </div>
-                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-md border border-gray-100 dark:border-slate-700 text-sm dark:text-gray-300 whitespace-pre-wrap">${data.message}</div>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-md border border-gray-100 dark:border-slate-700 text-sm dark:text-gray-300 whitespace-pre-wrap">${esc(data.message)}</div>
                         </div>
                         <div class="flex flex-col gap-2 shrink-0">
-                            <button onclick="window.deleteAdminLead('${data.id}')" class="text-sm bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-bold hover:bg-red-200 transition flex items-center gap-2">
+                            <button onclick="window.deleteAdminLead(${js(data.id)})" class="text-sm bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-bold hover:bg-red-200 transition flex items-center gap-2">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Trash
                             </button>
                         </div>
@@ -3198,14 +3204,14 @@
                         <div class="flex-1 w-full">
                             <div class="flex items-center gap-3 mb-2">
                                 <span class="text-sm font-bold bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-md text-slate-500">${new Date(r.date).toLocaleDateString()}</span>
-                                <span class="text-sm font-bold px-3 py-1 rounded-md ${r.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'}">${r.status}</span>
+                                <span class="text-sm font-bold px-3 py-1 rounded-md ${r.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'}">${esc(r.status)}</span>
                             </div>
-                            <h4 class="font-bold text-base dark:text-white text-brand-navy mb-1">${r.name} <span class="text-xs text-gray-500 font-normal">(${r.role || 'N/A'})</span></h4>
-                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-md border border-gray-100 dark:border-slate-700 text-sm dark:text-gray-300">"${r.text}"</div>
+                            <h4 class="font-bold text-base dark:text-white text-brand-navy mb-1">${esc(r.name)} <span class="text-xs text-gray-500 font-normal">(${esc(r.role || 'N/A')})</span></h4>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-md border border-gray-100 dark:border-slate-700 text-sm dark:text-gray-300">"${esc(r.text)}"</div>
                         </div>
                         <div class="flex flex-col gap-2 shrink-0 w-full md:w-auto mt-2 md:mt-0">
-                            ${r.status === 'pending' ? `<button onclick="window.approveReview('${r.id}')" class="text-sm bg-green-500 text-white px-4 py-2.5 rounded-lg font-bold hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-md">Approve</button>` : `<button onclick="window.unapproveReview('${r.id}')" class="text-sm bg-orange-500 text-white px-4 py-2.5 rounded-lg font-bold hover:bg-orange-600 transition flex items-center justify-center gap-2 shadow-md">Unapprove</button>`}
-                            <button onclick="window.deleteReview('${r.id}')" class="text-sm bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-bold hover:bg-red-200 transition flex items-center justify-center gap-2">Trash</button>
+                            ${r.status === 'pending' ? `<button onclick="window.approveReview(${js(r.id)})" class="text-sm bg-green-500 text-white px-4 py-2.5 rounded-lg font-bold hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-md">Approve</button>` : `<button onclick="window.unapproveReview(${js(r.id)})" class="text-sm bg-orange-500 text-white px-4 py-2.5 rounded-lg font-bold hover:bg-orange-600 transition flex items-center justify-center gap-2 shadow-md">Unapprove</button>`}
+                            <button onclick="window.deleteReview(${js(r.id)})" class="text-sm bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-4 py-2.5 rounded-lg font-bold hover:bg-red-200 transition flex items-center justify-center gap-2">Trash</button>
                         </div>
                     </div>
                 `).join('');
@@ -3231,7 +3237,7 @@
         window.loadHomepageReviews = async function() {
             if (!window.firebaseDb) return;
             try {
-                const snap = await window.getDocs(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`));
+                const snap = await window.getDocs(window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/site_reviews`), window.where('status', '==', 'approved')));
                 const reviews = [];
                 snap.forEach(doc => { const data = doc.data(); if(data.status === 'approved') reviews.push({ id: doc.id, ...data }); });
                 
@@ -3251,12 +3257,12 @@
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                         </div>
-                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">"${r.text}"</p>
+                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">"${esc(r.text)}"</p>
                         <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center text-white font-bold text-lg">${r.name.charAt(0).toUpperCase()}</div>
+                            <div class="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center text-white font-bold text-lg">${esc(String(r.name || '?').charAt(0).toUpperCase())}</div>
                             <div>
-                                <h4 class="font-bold text-brand-navy dark:text-white text-sm">${r.name}</h4>
-                                <p class="text-sm text-gray-500 font-bold">${r.role || 'Verified Client'}</p>
+                                <h4 class="font-bold text-brand-navy dark:text-white text-sm">${esc(r.name)}</h4>
+                                <p class="text-sm text-gray-500 font-bold">${esc(r.role || 'Verified Client')}</p>
                             </div>
                         </div>
                     </div>
@@ -3378,7 +3384,7 @@
         window.customAlert = function(msg) {
             const el = document.createElement('div');
             el.className = "fixed top-10 left-1/2 transform -translate-x-1/2 bg-brand-navy dark:bg-white text-white dark:text-brand-navy px-6 py-4 rounded-md shadow-sm z-[9999] font-bold text-sm md:text-xs animate-viewIn border border-white/10 dark:border-slate-200 flex items-center gap-3";
-            el.innerHTML = `<svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>${msg}</span>`;
+            el.innerHTML = `<svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>${esc(msg)}</span>`;
             document.body.appendChild(el);
             setTimeout(() => {
                 el.style.opacity = '0'; el.style.transform = 'translate(-50%, -20px)'; el.style.transition = 'all 0.3s ease';
@@ -3395,8 +3401,8 @@
                 </div>
                 <div>
                     <p class="text-sm md:text-sm font-bold text-gray-400 mb-0.5">Basket Updated</p>
-                    <p class="text-xs md:text-sm font-bold truncate text-brand-navy dark:text-white">${title}</p>
-                    <p class="text-sm md:text-sm text-brand-blue font-bold mt-0.5">${size}</p>
+                    <p class="text-xs md:text-sm font-bold truncate text-brand-navy dark:text-white">${esc(title)}</p>
+                    <p class="text-sm md:text-sm text-brand-blue font-bold mt-0.5">${esc(size)}</p>
                 </div>`;
             document.body.appendChild(toast);
             setTimeout(() => {
@@ -3409,47 +3415,15 @@
         /* 8. AI ASSISTANT & SMART MATCH LOGIC */
         /* ========================================== */
         
-        // Setup Official Gemini API Fetch Logic
-        const fetchGeminiAI = async (promptText) => {
-            // Using the provided Gemini API key for local usage
-            const apiKey = "AIzaSyBIa_wUZV7LV4rEQZb7QrM6QOuSKKXJ9Ww"; 
-            
-            // Clean URL without query params (we pass the key in the headers now)
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            
-            const catalogContext = window.cloudProducts.map(p => `${p.name} (${p.category}) - ${p.desc}`).join(" | ");
-            const systemPrompt = `You are a technical advisor for Route 64 Lubricants. Here is our catalog: ${catalogContext}. Be very brief. Do not mention pricing. Help the user find the right oil or grease. Keep answers to 2 short sentences.`;
-
-            const payload = {
-                contents: [{ parts: [{ text: promptText }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
-            };
-
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'x-goog-api-key': apiKey
-                        },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    if (!res.ok) {
-                        const errorText = await res.text();
-                        throw new Error(`API Error ${res.status}: ${errorText}`);
-                    }
-                    
-                    const data = await res.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I am currently offline.";
-                } catch (e) {
-                    console.warn(`AI attempt ${i + 1} failed:`, e);
-                    if (i < 4) await new Promise(r => setTimeout(r, delays[i]));
-                    else throw e;
-                }
-            }
+        // The Gemini key stays on the server: see functions/index.js.
+        const askAdvisor = async (message, mode = 'advisor') => {
+            const res = await fetch('/api/advisor', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message, mode })
+            });
+            if (!res.ok) throw new Error('Advisor returned ' + res.status);
+            return (await res.json()).reply;
         };
 
         window.toggleAI = function() {
@@ -3487,7 +3461,7 @@
             // Fetch Real AI
             let responseText = "The advisor can't connect right now. Search the catalogue or message us on WhatsApp.";
             try {
-                responseText = await fetchGeminiAI(val);
+                responseText = await askAdvisor(val);
             } catch (e) {
                 console.error("AI Error:", e);
             }
@@ -3516,9 +3490,7 @@
             status.innerText = "Analyzing requirements...";
             
             try {
-                // Ask AI for a single keyword that matches our categories using standard string concatenation
-                const promptText = 'Given this request: "' + input + '", return EXACTLY ONE of these categories: "Engine Oils", "Gear & Auto", "Industrial", "Anti-Freeze", "Grease", "Chemicals & Grease", or "all". No other text.';
-                let category = await fetchGeminiAI(promptText);
+                let category = await askAdvisor(input, 'match');
                 category = category.trim().replace(/['"]/g, ''); // cleanup
 
                 const validCategories = ["Engine Oils", "Gear & Auto", "Industrial", "Anti-Freeze", "Grease", "Chemicals & Grease"];
