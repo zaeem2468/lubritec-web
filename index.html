@@ -1597,388 +1597,397 @@
         const LOCAL_PRODUCT_PHOTOS = new Set(["P-C001","P-C002","P-C003","P-C005","P-C006","P-C007","P-C008","P-C009","P-C010","P-C011","P-C012","P-E001","P-E002","P-E003","P-E004","P-E005","P-E006","P-G001","P-G002","P-G003","P-G004","P-I001","P-I002"]);
         window.productPhoto = (p) => p.imgUrl || (LOCAL_PRODUCT_PHOTOS.has(p.id) ? `img/products/${p.id}.webp` : '');
 
-        window.cloudProducts = JSON.parse(localStorage.getItem('route64_products')) || [];
+        // The full range, used until Firestore answers and whenever it has no products or refuses the request.
+        const DEFAULT_PRODUCTS = [{
+            id: "P-E001",
+            name: "Engine Oil (SAE 40)",
+            category: "Engine Oils",
+            desc: "Standard SAE 40 Engine Oil.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-E002",
+            name: "Multigrade (20W50)",
+            category: "Engine Oils",
+            desc: "Multigrade 20W50 Engine Oil.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-E003",
+            name: "Engine Oil (SAE 30)",
+            category: "Engine Oils",
+            desc: "Standard SAE 30 Engine Oil.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-E004",
+            name: "Diesel Oil (HD40)",
+            category: "Engine Oils",
+            desc: "Heavy Duty 40 Diesel Oil.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-E005",
+            name: "Turbo Diesel (15W40)",
+            category: "Engine Oils",
+            desc: "15W40 Turbo Diesel Oil.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-E006",
+            name: "2 Stroke Oil",
+            category: "Engine Oils",
+            desc: "Premium 2 Stroke Engine Oil.",
+            variants: [{
+                size: "200ml (Case of 40)"
+            }, {
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-G001",
+            name: "Gear Oil (EP90)",
+            category: "Gear & Auto",
+            desc: "EP90 Gear Oil.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-G002",
+            name: "Gear Oil (80W90)",
+            category: "Gear & Auto",
+            desc: "80W90 Gear Oil.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-G003",
+            name: "Transmission (ATF DII)",
+            category: "Gear & Auto",
+            desc: "Automatic Transmission Fluid DII.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-G004",
+            name: "Brake Fluid DOT4",
+            category: "Gear & Auto",
+            desc: "DOT4 Brake Fluid.",
+            variants: [{
+                size: "200ml (Case of 40)"
+            }, {
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-I001",
+            name: "Hydraulic Oil (ISO 68)",
+            category: "Industrial",
+            desc: "Premium ISO 68 Hydraulic Oil.",
+            variants: [{
+                size: "1L (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-I002",
+            name: "Hydraulic Oil (ISO 46)",
+            category: "Industrial",
+            desc: "Premium ISO 46 Hydraulic Oil.",
+            variants: [{
+                size: "1L (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-C001",
+            name: "Engine Cleaner Water Base",
+            category: "Chemicals & Grease",
+            desc: "Water-based engine cleaner.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-C002",
+            name: "Engine Cleaner Solvent Base",
+            category: "Chemicals & Grease",
+            desc: "Solvent-based engine cleaner.",
+            variants: [{
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-C003",
+            name: "Degreaser Concentrate",
+            category: "Chemicals & Grease",
+            desc: "Concentrated Degreaser.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-C004",
+            name: "Degreaser (Spray)",
+            category: "Chemicals & Grease",
+            desc: "Degreaser Concentrate spray.",
+            variants: [{
+                size: "500ml (Case of 20)"
+            }]
+        }, {
+            id: "P-C005",
+            name: "Anti-Freeze Summer Coolant",
+            category: "Anti-Freeze",
+            desc: "Summer coolant anti-freeze.",
+            variants: [{
+                size: "1L (Case of 20)"
+            }, {
+                size: "5L (Case of 4)"
+            }]
+        }, {
+            id: "P-C006",
+            name: "Anti-Freeze 30%",
+            category: "Anti-Freeze",
+            desc: "30% Anti-freeze mix.",
+            variants: [{
+                size: "1L (Case of 14)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-C007",
+            name: "Anti-Freeze 50%",
+            category: "Anti-Freeze",
+            desc: "50% Anti-freeze mix.",
+            variants: [{
+                size: "1L (Case of 14)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-C008",
+            name: "Anti-Freeze 96%",
+            category: "Anti-Freeze",
+            desc: "96% Anti-freeze mix.",
+            variants: [{
+                size: "1L (Case of 14)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "20L"
+            }, {
+                size: "210L"
+            }]
+        }, {
+            id: "P-C009",
+            name: "Grease - Wheel Bearing",
+            category: "Grease",
+            desc: "Wheel bearing grease.",
+            variants: [{
+                size: "500g (Case of 20)"
+            }, {
+                size: "5kg (Case of 4)"
+            }, {
+                size: "15kg"
+            }, {
+                size: "180kg"
+            }]
+        }, {
+            id: "P-C010",
+            name: "Grease - Multipurpose",
+            category: "Grease",
+            desc: "Multipurpose grease.",
+            variants: [{
+                size: "500g (Case of 20)"
+            }, {
+                size: "5kg (Case of 4)"
+            }, {
+                size: "15kg"
+            }, {
+                size: "180kg"
+            }]
+        }, {
+            id: "P-C011",
+            name: "Grease - CV Joint",
+            category: "Grease",
+            desc: "CV Joint grease.",
+            variants: [{
+                size: "500g (Case of 20)"
+            }, {
+                size: "5kg (Case of 4)"
+            }, {
+                size: "15kg"
+            }, {
+                size: "180kg"
+            }]
+        }, {
+            id: "P-C012",
+            name: "Hand Cleaner with Grit",
+            category: "Chemicals & Grease",
+            desc: "Citrus hand cleaner with grit.",
+            variants: [{
+                size: "800g (Case of 20)"
+            }, {
+                size: "5kg (Case of 4)"
+            }, {
+                size: "15kg"
+            }]
+        }, {
+            id: "P-C013",
+            name: "Hand Sanitizer",
+            category: "Chemicals & Grease",
+            desc: "70% Alcohol Hand Sanitizer.",
+            variants: [{
+                size: "1L (Case of 14)"
+            }, {
+                size: "5L (Case of 4)"
+            }, {
+                size: "25L"
+            }, {
+                size: "200L"
+            }]
+        }];
+        const defaultProducts = () => DEFAULT_PRODUCTS.map(p => ({ ...p, variants: p.variants.map(v => ({ ...v })) }));
+        const cachedProducts = (() => {
+            try { const c = JSON.parse(localStorage.getItem('route64_products')); return Array.isArray(c) && c.length ? c : null; } catch (e) { return null; }
+        })();
+
+        window.cloudProducts = cachedProducts || defaultProducts();
         window.userPricing = {};
         window.isRegisterMode = false;
         window.cartTotal = 0;
         window.viewMode = 'grid';
         window.allAdminOrders = [];
 
+        const showProducts = () => {
+            window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
+            window.renderCatalog();
+            window.renderBulkTable();
+            if (window.isAdmin) window.renderAdminProducts();
+        };
+
         window.initCatalog = function() {
             try {
                 const q = window.query(window.collection(window.firebaseDb, `artifacts/${window.appId}/public/data/products`));
                 if (window._catalogUnsub) window._catalogUnsub();
                 window._catalogUnsub = window.onSnapshot(q, (snapshot) => {
-                    window.cloudProducts = [];
-                    snapshot.forEach(doc => window.cloudProducts.push({
-                        docId: doc.id,
-                        ...doc.data()
-                    }));
-                    localStorage.setItem('route64_products', JSON.stringify(window.cloudProducts));
+                    const live = [];
+                    snapshot.forEach(doc => live.push({ docId: doc.id, ...doc.data() }));
 
-                    const all25Products = [{
-                        id: "P-E001",
-                        name: "Engine Oil (SAE 40)",
-                        category: "Engine Oils",
-                        desc: "Standard SAE 40 Engine Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E002",
-                        name: "Multigrade (20W50)",
-                        category: "Engine Oils",
-                        desc: "Multigrade 20W50 Engine Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E003",
-                        name: "Engine Oil (SAE 30)",
-                        category: "Engine Oils",
-                        desc: "Standard SAE 30 Engine Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E004",
-                        name: "Diesel Oil (HD40)",
-                        category: "Engine Oils",
-                        desc: "Heavy Duty 40 Diesel Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E005",
-                        name: "Turbo Diesel (15W40)",
-                        category: "Engine Oils",
-                        desc: "15W40 Turbo Diesel Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-E006",
-                        name: "2 Stroke Oil",
-                        category: "Engine Oils",
-                        desc: "Premium 2 Stroke Engine Oil.",
-                        variants: [{
-                            size: "200ml (Case of 40)"
-                        }, {
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-G001",
-                        name: "Gear Oil (EP90)",
-                        category: "Gear & Auto",
-                        desc: "EP90 Gear Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-G002",
-                        name: "Gear Oil (80W90)",
-                        category: "Gear & Auto",
-                        desc: "80W90 Gear Oil.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-G003",
-                        name: "Transmission (ATF DII)",
-                        category: "Gear & Auto",
-                        desc: "Automatic Transmission Fluid DII.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-G004",
-                        name: "Brake Fluid DOT4",
-                        category: "Gear & Auto",
-                        desc: "DOT4 Brake Fluid.",
-                        variants: [{
-                            size: "200ml (Case of 40)"
-                        }, {
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-I001",
-                        name: "Hydraulic Oil (ISO 68)",
-                        category: "Industrial",
-                        desc: "Premium ISO 68 Hydraulic Oil.",
-                        variants: [{
-                            size: "1L (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-I002",
-                        name: "Hydraulic Oil (ISO 46)",
-                        category: "Industrial",
-                        desc: "Premium ISO 46 Hydraulic Oil.",
-                        variants: [{
-                            size: "1L (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C001",
-                        name: "Engine Cleaner Water Base",
-                        category: "Chemicals & Grease",
-                        desc: "Water-based engine cleaner.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C002",
-                        name: "Engine Cleaner Solvent Base",
-                        category: "Chemicals & Grease",
-                        desc: "Solvent-based engine cleaner.",
-                        variants: [{
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C003",
-                        name: "Degreaser Concentrate",
-                        category: "Chemicals & Grease",
-                        desc: "Concentrated Degreaser.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C004",
-                        name: "Degreaser (Spray)",
-                        category: "Chemicals & Grease",
-                        desc: "Degreaser Concentrate spray.",
-                        variants: [{
-                            size: "500ml (Case of 20)"
-                        }]
-                    }, {
-                        id: "P-C005",
-                        name: "Anti-Freeze Summer Coolant",
-                        category: "Anti-Freeze",
-                        desc: "Summer coolant anti-freeze.",
-                        variants: [{
-                            size: "1L (Case of 20)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }]
-                    }, {
-                        id: "P-C006",
-                        name: "Anti-Freeze 30%",
-                        category: "Anti-Freeze",
-                        desc: "30% Anti-freeze mix.",
-                        variants: [{
-                            size: "1L (Case of 14)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C007",
-                        name: "Anti-Freeze 50%",
-                        category: "Anti-Freeze",
-                        desc: "50% Anti-freeze mix.",
-                        variants: [{
-                            size: "1L (Case of 14)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C008",
-                        name: "Anti-Freeze 96%",
-                        category: "Anti-Freeze",
-                        desc: "96% Anti-freeze mix.",
-                        variants: [{
-                            size: "1L (Case of 14)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "20L"
-                        }, {
-                            size: "210L"
-                        }]
-                    }, {
-                        id: "P-C009",
-                        name: "Grease - Wheel Bearing",
-                        category: "Grease",
-                        desc: "Wheel bearing grease.",
-                        variants: [{
-                            size: "500g (Case of 20)"
-                        }, {
-                            size: "5kg (Case of 4)"
-                        }, {
-                            size: "15kg"
-                        }, {
-                            size: "180kg"
-                        }]
-                    }, {
-                        id: "P-C010",
-                        name: "Grease - Multipurpose",
-                        category: "Grease",
-                        desc: "Multipurpose grease.",
-                        variants: [{
-                            size: "500g (Case of 20)"
-                        }, {
-                            size: "5kg (Case of 4)"
-                        }, {
-                            size: "15kg"
-                        }, {
-                            size: "180kg"
-                        }]
-                    }, {
-                        id: "P-C011",
-                        name: "Grease - CV Joint",
-                        category: "Grease",
-                        desc: "CV Joint grease.",
-                        variants: [{
-                            size: "500g (Case of 20)"
-                        }, {
-                            size: "5kg (Case of 4)"
-                        }, {
-                            size: "15kg"
-                        }, {
-                            size: "180kg"
-                        }]
-                    }, {
-                        id: "P-C012",
-                        name: "Hand Cleaner with Grit",
-                        category: "Chemicals & Grease",
-                        desc: "Citrus hand cleaner with grit.",
-                        variants: [{
-                            size: "800g (Case of 20)"
-                        }, {
-                            size: "5kg (Case of 4)"
-                        }, {
-                            size: "15kg"
-                        }]
-                    }, {
-                        id: "P-C013",
-                        name: "Hand Sanitizer",
-                        category: "Chemicals & Grease",
-                        desc: "70% Alcohol Hand Sanitizer.",
-                        variants: [{
-                            size: "1L (Case of 14)"
-                        }, {
-                            size: "5L (Case of 4)"
-                        }, {
-                            size: "25L"
-                        }, {
-                            size: "200L"
-                        }]
-                    }];
-
-                    // Auto-sync missing products to your Firebase database
-                    if (window.isAdmin && window.cloudProducts.length < all25Products.length) {
-                        all25Products.forEach(p => {
-                            if (!window.cloudProducts.find(cp => cp.id === p.id)) {
-                                window.cloudProducts.push(p); // Display immediately
-                                try {
-                                    window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/products`, p.id), p);
-                                } catch (e) {}
-                            }
+                    // An admin's visit uploads any built-in products missing from Firestore.
+                    if (window.isAdmin) {
+                        DEFAULT_PRODUCTS.filter(p => !live.find(cp => cp.id === p.id)).forEach(p => {
+                            window.setDoc(window.doc(window.firebaseDb, `artifacts/${window.appId}/public/data/products`, p.id), p).catch(e => console.error('Product sync failed:', p.id, e));
                         });
                     }
 
-                    window.cloudProducts.sort((a, b) => a.id.localeCompare(b.id));
-                    window.renderCatalog();
-                    window.renderBulkTable();
-                    if (window.isAdmin) window.renderAdminProducts();
+                    if (live.length) {
+                        window.cloudProducts = live;
+                        try { localStorage.setItem('route64_products', JSON.stringify(live)); } catch (e) {}
+                    } else {
+                        window.cloudProducts = defaultProducts();
+                    }
+                    showProducts();
                 }, (error) => {
-                    console.error("API Data-fetching error:", error);
+                    console.error("Product list unavailable, showing the built-in range:", error);
+                    if (!window.cloudProducts.length) window.cloudProducts = defaultProducts();
+                    showProducts();
                 });
             } catch (err) {
-                console.error("Critical API initialization error:", err);
+                console.error("Product list unavailable, showing the built-in range:", err);
+                showProducts();
             }
         };
 
