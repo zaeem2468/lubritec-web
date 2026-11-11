@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7f1d1d"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#sky)"/>
+  <!-- factory -->
+  <g fill="#1e293b">
+    <rect x="520" y="70" width="34" height="200"/>
+    <rect x="590" y="110" width="30" height="160"/>
+    <path d="M60 380V230l120 60v-60l120 60v-60l120 60v-60l120 60V380z"/>
+    <rect x="460" y="250" width="300" height="130"/>
+  </g>
+  <g fill="#fbbf24" opacity="0.85">
+    <rect x="100" y="310" width="40" height="26"/><rect x="220" y="310" width="40" height="26"/><rect x="340" y="310" width="40" height="26"/>
+    <rect x="500" y="290" width="56" height="30"/><rect x="590" y="290" width="56" height="30"/><rect x="680" y="290" width="56" height="30"/>
+  </g>
+  <!-- pipes -->
+  <g fill="none" stroke="#94a3b8" stroke-width="16" stroke-linecap="round">
+    <path d="M0 430h300c30 0 30-40 60-40h440"/>
+  </g>
+  <g fill="none" stroke="#2563eb" stroke-width="10" stroke-linecap="round">
+    <path d="M0 462h800"/>
+  </g>
+  <!-- gear -->
+  <g transform="translate(680 150)" fill="#0f172a" opacity="0.8">
+    <circle r="54"/>
+    <g fill="#0f172a">
+      <rect x="-12" y="-74" width="24" height="30" rx="4"/>
+      <rect x="-12" y="44" width="24" height="30" rx="4"/>
+      <rect x="-74" y="-12" width="30" height="24" rx="4"/>
+      <rect x="44" y="-12" width="30" height="24" rx="4"/>
+    </g>
+    <circle r="22" fill="#ef4444"/>
+  </g>
+</svg>

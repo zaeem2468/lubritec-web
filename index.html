@@ -72,6 +72,7 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
+            future: { hoverOnlyWhenSupported: true },
             theme: {
                 extend: {
                     fontFamily: {
@@ -243,12 +244,10 @@
             0% {
                 opacity: 0;
                 transform: translateY(20px) scale(0.98);
-                filter: blur(4px);
             }
             100% {
                 opacity: 1;
                 transform: translateY(0) scale(1);
-                filter: blur(0);
             }
         }
         
@@ -256,12 +255,10 @@
             0% {
                 opacity: 1;
                 transform: translateY(0) scale(1);
-                filter: blur(0);
             }
             100% {
                 opacity: 0;
                 transform: translateY(-20px) scale(0.98);
-                filter: blur(4px);
             }
         }
         
@@ -346,6 +343,10 @@
         .status-shipped { background: #ffedd5; color: #9a3412; }
         .status-delivered { background: #dcfce7; color: #166534; }
         .status-cancelled { background: #fee2e2; color: #991b1b; }
+        @media (hover: none), (pointer: coarse) {
+            .pro-card, .pro-card:hover { transform: none !important; box-shadow: none; }
+            .pro-card::after { display: none; }
+        }
         #cart-count:not(.scale-0) { animation: badgePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
         @keyframes badgePulse { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
         /* Refined pro-card animations */
@@ -353,8 +354,7 @@
         .pro-card {
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-            transform-style: preserve-3d;
+            transform: none;
         }
         
         .dark .pro-card {
@@ -727,7 +727,7 @@
                 <div class="animated-grid"></div>
             </div>
             <div class="absolute inset-0 bg-gradient-to-br from-white/90 via-slate-50/95 to-slate-100/90 dark:from-brand-navy dark:via-brand-navy/95 dark:to-brand-navy/80"></div>
-            <div class="absolute inset-0 opacity-15 dark:opacity-40 bg-cover bg-center bg-fixed mix-blend-multiply dark:mix-blend-screen pointer-events-none" style="background-image: url('hero-bg.jpg');"></div>
+            <div class="absolute inset-0 opacity-15 dark:opacity-40 bg-cover bg-center mix-blend-multiply dark:mix-blend-screen pointer-events-none" style="background-image: url('art/hero-lines.svg');"></div>
             <div class="absolute top-[10%] right-[10%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-brand-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse-slow"></div>
 
             <div class="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10 py-16 md:py-32 w-full mt-10 md:mt-0">
@@ -770,7 +770,7 @@
                                 <span class="text-xl md:text-3xl font-black uppercase tracking-[1em] [writing-mode:vertical-lr] text-brand-navy dark:text-white">LUBRICANTS</span>
                             </div>
                             <div class="relative z-10 w-[90%] md:w-[95%] flex justify-center">
-                                <img src="main-product-display.jpg" alt="Route 64 Product Range" class="w-full h-[300px] object-cover rounded-[2rem] drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transform group-hover:scale-110 transition-all duration-1000 ease-out">
+                                <img src="art/hero-range.svg" alt="Route 64 Product Range" class="w-full h-[300px] object-cover rounded-[2rem] drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transform group-hover:scale-110 transition-all duration-1000 ease-out">
                             </div>
                             <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20">
                                 <div class="bg-white/90 dark:bg-brand-navy/90 backdrop-blur-xl border border-black/10 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 max-w-[160px] md:max-w-[200px]">
@@ -805,13 +805,13 @@
             <div class="absolute bottom-0 left-0 w-full border-t border-black/5 dark:border-white/5 bg-white/80 dark:bg-brand-navy/80 backdrop-blur-md overflow-hidden py-2 md:py-3 z-20">
                 <div class="flex items-center space-x-8 md:space-x-12 animate-marquee whitespace-nowrap opacity-80 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[8px] md:text-[10px] text-slate-600 dark:text-slate-300">
                     <span>// Premium Additives</span>
-                    <img src="marquee-1.jpg" class="h-6 md:h-8 w-12 md:w-16 object-cover rounded shadow-sm inline-block">
+                    <svg class="h-5 w-5 md:h-6 md:w-6 inline-block text-brand-blue" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c3 4.5 6 7.7 6 11a6 6 0 01-12 0c0-3.3 3-6.5 6-11z"/></svg>
                     <span>// 100% Virgin Base Oils</span>
-                    <img src="marquee-2.jpg" class="h-6 md:h-8 w-12 md:w-16 object-cover rounded shadow-sm inline-block">
+                    <svg class="h-5 w-5 md:h-6 md:w-6 inline-block text-brand-blue" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.4-3 7.8-7 9-4-1.2-7-4.6-7-9V6l7-3zm-3 9l2 2 4-4"/></svg>
                     <span>// OEM Specifications</span>
-                    <img src="marquee-3.jpg" class="h-6 md:h-8 w-12 md:w-16 object-cover rounded shadow-sm inline-block">
+                    <svg class="h-5 w-5 md:h-6 md:w-6 inline-block text-brand-blue" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8a4 4 0 100 8 4 4 0 000-8zm0-5v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6l2.1-2.1"/></svg>
                     <span>// High Thermal Stability</span>
-                    <img src="marquee-4.jpg" class="h-6 md:h-8 w-12 md:w-16 object-cover rounded shadow-sm inline-block">
+                    <svg class="h-5 w-5 md:h-6 md:w-6 inline-block text-brand-blue" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c4 0 7-2.7 7-6.5 0-3.6-2.6-5.8-4-8.5-.7 2-2 3-3 3 0-2.5-1-4.5-3-6 0 4-4 6.5-4 11.5C5 18.3 8 21 12 21z"/></svg>
                     <span>// Extreme Pressure Resistance</span>
                 </div>
             </div>
@@ -876,7 +876,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('sector-1.jpg');"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('art/sector-fleet.svg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-blue/20 backdrop-blur-md border border-brand-blue/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -887,7 +887,7 @@
                     </div>
                 </div>
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('sector-2.jpg');"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('art/sector-plant.svg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-red/20 backdrop-blur-md border border-brand-red/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -898,7 +898,7 @@
                     </div>
                 </div>
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('sector-3.jpg');"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('art/sector-farm.svg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-green-500/20 backdrop-blur-md border border-green-500/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -924,7 +924,7 @@
     </div>
 
     <!-- VIEW: HOW TO ORDER PROCESS -->
-    <div id="view-process" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
+    <div id="view-process" class="view-section pt-10 md:pt-20 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
         <div class="text-center mb-10 md:mb-16 stagger-1">
             <h2 class="text-3xl md:text-6xl font-black italic uppercase tracking-tighter text-brand-navy dark:text-white">How To Order</h2>
             <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2">Requesting quotes is easy</p>
@@ -964,13 +964,13 @@
     </div>
 
     <!-- VIEW: ABOUT -->
-    <div id="view-about" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-5xl mx-auto min-h-screen text-center">
+    <div id="view-about" class="view-section pt-10 md:pt-20 px-4 md:px-6 max-w-5xl mx-auto min-h-screen text-center">
         <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-4 md:mb-6 stagger-1">About Route 64</h1>
         <div class="w-16 md:w-24 h-1.5 md:h-2 bg-brand-red mx-auto mb-8 md:mb-10 rounded-full stagger-1"></div>
         <h2 class="text-lg md:text-3xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-12 italic px-4 stagger-2">Protect What Matters, Lubricate What Moves</h2>
 
         <div class="mb-12 rounded-[2rem] overflow-hidden shadow-2xl relative h-64 md:h-96 stagger-2">
-            <img src="images (1).jpg" alt="Route 64 Facilities" class="w-full h-full object-cover">
+            <img src="art/about-depot.svg" alt="Route 64 depot shelves stocked with drums, pails and cases" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent"></div>
         </div>
 
@@ -1000,7 +1000,7 @@
     </div>
 
     <!-- VIEW: CONTACT -->
-    <div id="view-contact" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-7xl mx-auto min-h-screen pb-24">
+    <div id="view-contact" class="view-section pt-10 md:pt-20 px-4 md:px-6 max-w-7xl mx-auto min-h-screen pb-24">
         <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white uppercase tracking-tighter mb-2 md:mb-4 text-center stagger-1">Contact Us</h1>
         <p class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] text-center mb-10 md:mb-16 stagger-1">Sales, Support & Distribution</p>
 
@@ -1058,10 +1058,10 @@
     </div>
 
     <!-- VIEW: MASTER CATALOG (NOW SECURED) -->
-    <div id="view-catalog" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
+    <div id="view-catalog" class="view-section pt-10 md:pt-20 px-4 md:px-6 max-w-[1400px] mx-auto min-h-screen">
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 md:mb-12 gap-6 md:gap-8 border-b border-gray-100 dark:border-slate-800 pb-8 md:pb-12 stagger-1">
             <div class="flex-1 w-full">
-                <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white tracking-tighter uppercase leading-[0.9]">Order<br class="hidden sm:block" />Portal</h1>
+                <h1 class="text-4xl md:text-7xl font-black text-brand-navy dark:text-white tracking-tighter uppercase leading-[0.9]">Order <br class="hidden sm:block" />Portal</h1>
                 <div class="flex flex-wrap items-center gap-3 md:gap-4 mt-4 md:mt-6">
                     <p class="text-gray-500 dark:text-slate-400 text-xs md:text-sm font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] flex items-center gap-2 md:gap-3">
                         <span class="w-6 h-1 md:w-8 bg-brand-red rounded-full"></span> Wholesale Ordering
@@ -1074,7 +1074,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-6 w-full lg:w-auto">
-                <div class="flex bg-slate-100 dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-xl md:rounded-2xl p-1 md:p-1.5 shadow-inner w-full sm:w-auto justify-center">
+                <div class="hidden sm:flex bg-slate-100 dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-xl md:rounded-2xl p-1 md:p-1.5 shadow-inner w-full sm:w-auto justify-center">
                     <button onclick="window.toggleViewMode('grid')" id="btn-grid-view" class="p-2 md:p-3 bg-white dark:bg-slate-800 text-brand-navy dark:text-white rounded-lg md:rounded-xl shadow-md transition transform active:scale-95 flex-1 sm:flex-none flex justify-center"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg></button>
                     <button onclick="window.toggleViewMode('list')" id="btn-list-view" class="p-2 md:p-3 text-gray-400 hover:text-brand-navy dark:hover:text-white transition transform active:scale-95 flex-1 sm:flex-none flex justify-center"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
                 </div>
@@ -1117,7 +1117,7 @@
     </div>
 
     <!-- VIEW: CUSTOMER ORDERS -->
-    <div id="view-customer" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-5xl mx-auto min-h-screen">
+    <div id="view-customer" class="view-section pt-10 md:pt-20 px-4 md:px-6 max-w-5xl mx-auto min-h-screen">
         <div class="mb-10 md:mb-16 text-center stagger-1">
             <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">My Portal</h1>
             <p id="cloud-status" class="text-brand-blue font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Not Connected (Login Required)</p>
@@ -1179,7 +1179,7 @@
     </div>
 
     <!-- VIEW: ORDERS HISTORY -->
-    <div id="view-orders" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
+    <div id="view-orders" class="view-section pt-10 md:pt-20 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
         <div class="mb-8 md:mb-12">
             <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white mb-4">Order History</h1>
             <p class="text-gray-500 dark:text-slate-400 text-lg">Track your orders and reorder with one click.</p>
@@ -1239,7 +1239,7 @@
     </div>
 
     <!-- VIEW: USER DASHBOARD -->
-    <div id="view-dashboard" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
+    <div id="view-dashboard" class="view-section pt-10 md:pt-20 px-4 md:px-6 max-w-[1600px] mx-auto min-h-screen">
         <div class="mb-8 md:mb-12">
             <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white mb-4">My Account</h1>
             <p class="text-gray-500 dark:text-slate-400 text-lg">Manage your profile, orders and delivery addresses.</p>
@@ -1429,7 +1429,7 @@
     </div>
 
     <!-- VIEW: ADMIN DASHBOARD (ULTIMATE) -->
-    <div id="view-admin" class="view-section pt-24 md:pt-32 px-4 md:px-6 max-w-[1200px] mx-auto min-h-screen">
+    <div id="view-admin" class="view-section pt-10 md:pt-20 px-4 md:px-6 max-w-[1200px] mx-auto min-h-screen">
         <div class="mb-10 md:mb-16 text-center stagger-1">
             <h1 class="text-3xl md:text-5xl font-black text-brand-navy dark:text-white uppercase tracking-tighter">Admin Dashboard</h1>
             <p class="text-yellow-500 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] mt-2 md:mt-4">Manage Operations</p>
@@ -2171,7 +2171,7 @@
 
                 let priceDisplay = `<div class="bg-red-50 dark:bg-red-900/20 text-brand-red p-2 rounded-lg mb-4 text-[9px] font-black uppercase tracking-widest text-center border border-red-100 dark:border-red-900/30">Login to view pricing</div>`;
                 if (window.currentUser && window.currentUser.email) {
-                    priceDisplay = `<div class="mb-4 text-center"><span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest block mb-1">Status</span><span class="text-sm font-black text-brand-blue">Account Active</span></div>`;
+                    priceDisplay = '';
                 }
 
                 if (window.viewMode === 'grid') {

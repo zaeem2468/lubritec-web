@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e3a8a"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#sky)"/>
+  <path d="M0 300c120-50 220-30 330-60s240-20 470 20v240H0z" fill="#1e40af" opacity="0.7"/>
+  <rect y="330" width="800" height="170" fill="#0f172a"/>
+  <g fill="#fbbf24">
+    <rect x="20" y="410" width="70" height="8" rx="4"/><rect x="170" y="410" width="70" height="8" rx="4"/>
+    <rect x="320" y="410" width="70" height="8" rx="4"/><rect x="470" y="410" width="70" height="8" rx="4"/>
+    <rect x="620" y="410" width="70" height="8" rx="4"/>
+  </g>
+  <!-- truck -->
+  <g transform="translate(150 190)">
+    <rect x="0" y="0" width="330" height="150" rx="8" fill="#e2e8f0"/>
+    <rect x="0" y="0" width="330" height="22" rx="8" fill="#cbd5e1"/>
+    <rect x="22" y="48" width="200" height="54" rx="6" fill="#2563eb"/>
+    <text x="122" y="84" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900" font-style="italic" text-anchor="middle">ROUTE 64</text>
+    <path d="M338 40h86l52 58v52H338z" fill="#ef4444"/>
+    <path d="M352 54h62l38 42h-100z" fill="#bfdbfe"/>
+    <rect x="330" y="140" width="150" height="16" fill="#334155"/>
+    <rect x="0" y="146" width="330" height="10" fill="#334155"/>
+    <g fill="#0f172a" stroke="#94a3b8" stroke-width="8">
+      <circle cx="58" cy="168" r="28"/><circle cx="124" cy="168" r="28"/><circle cx="270" cy="168" r="28"/><circle cx="420" cy="168" r="28"/>
+    </g>
+  </g>
+</svg>
