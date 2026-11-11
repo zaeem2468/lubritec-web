@@ -571,9 +571,9 @@
             <div class="flex flex-col md:flex-row">
                 <div class="w-full md:w-2/5 bg-slate-100 dark:bg-slate-950 p-8 flex items-center justify-center relative">
                     <div class="absolute top-4 left-4"><span id="qv-cat" class="text-[9px] font-black text-brand-blue uppercase tracking-widest"></span></div>
-                    <div class="w-32 h-32 md:w-40 md:h-40 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-lg overflow-hidden" id="qv-img-wrapper">
+                    <div class="w-40 h-48 md:w-48 md:h-56 bg-white rounded-3xl flex items-center justify-center shadow-lg overflow-hidden" id="qv-img-wrapper">
                         <svg id="qv-default-icon" class="w-16 h-16 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                        <img id="qv-product-img" src="" class="w-full h-full object-cover hidden" alt="Product Image">
+                        <img id="qv-product-img" src="data:," class="w-full h-full object-contain p-3 hidden" alt="Product photo">
                     </div>
                 </div>
                 <div class="w-full md:w-3/5 p-8 flex flex-col justify-center">
@@ -727,7 +727,7 @@
                 <div class="animated-grid"></div>
             </div>
             <div class="absolute inset-0 bg-gradient-to-br from-white/90 via-slate-50/95 to-slate-100/90 dark:from-brand-navy dark:via-brand-navy/95 dark:to-brand-navy/80"></div>
-            <div class="absolute inset-0 opacity-15 dark:opacity-40 bg-cover bg-center mix-blend-multiply dark:mix-blend-screen pointer-events-none" style="background-image: url('art/hero-lines.svg');"></div>
+            <div class="absolute inset-0 opacity-15 dark:opacity-40 bg-cover bg-center mix-blend-multiply dark:mix-blend-screen pointer-events-none" style="background-image: url('img/hero-bg.jpg');"></div>
             <div class="absolute top-[10%] right-[10%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-brand-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse-slow"></div>
 
             <div class="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10 py-16 md:py-32 w-full mt-10 md:mt-0">
@@ -770,7 +770,7 @@
                                 <span class="text-xl md:text-3xl font-black uppercase tracking-[1em] [writing-mode:vertical-lr] text-brand-navy dark:text-white">LUBRICANTS</span>
                             </div>
                             <div class="relative z-10 w-[90%] md:w-[95%] flex justify-center">
-                                <img src="art/hero-range.svg" alt="Route 64 Product Range" class="w-full h-[300px] object-cover rounded-[2rem] drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transform group-hover:scale-110 transition-all duration-1000 ease-out">
+                                <img src="img/hero-range.webp" alt="Route 64 Product Range" class="w-full h-[300px] object-cover rounded-[2rem] drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transform group-hover:scale-110 transition-all duration-1000 ease-out">
                             </div>
                             <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20">
                                 <div class="bg-white/90 dark:bg-brand-navy/90 backdrop-blur-xl border border-black/10 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 max-w-[160px] md:max-w-[200px]">
@@ -876,7 +876,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('art/sector-fleet.svg');"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110" style="background-image: url('img/sector-fleet.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-blue/20 backdrop-blur-md border border-brand-blue/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -887,7 +887,7 @@
                     </div>
                 </div>
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('art/sector-plant.svg');"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110" style="background-image: url('img/sector-plant.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-red/20 backdrop-blur-md border border-brand-red/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -898,7 +898,7 @@
                     </div>
                 </div>
                 <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group min-h-[250px] sm:min-h-[300px] md:min-h-[350px] flex items-end p-6 md:p-8 bg-gray-900 shadow-xl">
-                    <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-110" style="background-image: url('art/sector-farm.svg');"></div>
+                    <div class="absolute inset-0 bg-cover bg-center opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110" style="background-image: url('img/sector-farm.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent"></div>
                     <div class="relative z-10 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 bg-green-500/20 backdrop-blur-md border border-green-500/50 text-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-xl">
@@ -970,8 +970,8 @@
         <h2 class="text-lg md:text-3xl font-black text-brand-blue uppercase tracking-widest mb-8 md:mb-12 italic px-4 stagger-2">Protect What Matters, Lubricate What Moves</h2>
 
         <div class="mb-12 rounded-[2rem] overflow-hidden shadow-2xl relative h-64 md:h-96 stagger-2">
-            <img src="art/about-depot.svg" alt="Route 64 depot shelves stocked with drums, pails and cases" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent"></div>
+            <img src="img/about-range.webp" alt="The Route 64 range: engine oil, gear oil, transmission fluid, degreaser and grease" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/25 to-transparent"></div>
         </div>
 
         <div class="pro-card p-6 md:p-20 text-left shadow-2xl relative overflow-hidden stagger-3">
@@ -1594,6 +1594,9 @@
         const js = (v) => esc(JSON.stringify(String(v ?? '')));
         const csvCell = (v) => { let s = String(v ?? ''); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
 
+        const LOCAL_PRODUCT_PHOTOS = new Set(["P-C001","P-C002","P-C003","P-C005","P-C006","P-C007","P-C008","P-C009","P-C010","P-C011","P-C012","P-E001","P-E002","P-E003","P-E004","P-E005","P-E006","P-G001","P-G002","P-G003","P-G004","P-I001","P-I002"]);
+        window.productPhoto = (p) => p.imgUrl || (LOCAL_PRODUCT_PHOTOS.has(p.id) ? `img/products/${p.id}.webp` : '');
+
         window.cloudProducts = JSON.parse(localStorage.getItem('route64_products')) || [];
         window.userPricing = {};
         window.isRegisterMode = false;
@@ -2181,7 +2184,8 @@
                         if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'INPUT') window.openQuickView(p.id);
                     };
 
-                    let imageHtml = p.imgUrl ? `<img src="${esc(p.imgUrl)}" class="w-32 h-32 object-contain mx-auto mb-4 group-hover:scale-110 transition duration-300" alt="${esc(p.name)}">` : '';
+                    const photo = window.productPhoto(p);
+                    let imageHtml = photo ? `<div class="bg-white rounded-2xl p-3 mb-4"><img src="${esc(photo)}" class="h-40 w-full object-contain group-hover:scale-105 transition duration-300" alt="${esc(p.name)}" loading="lazy"></div>` : '';
 
                     card.innerHTML = `
                         <div class='flex-1 flex flex-col text-center'>
@@ -2247,8 +2251,9 @@
 
             const imgEl = document.getElementById('qv-product-img');
             const iconEl = document.getElementById('qv-default-icon');
-            if (p.imgUrl) {
-                imgEl.src = p.imgUrl;
+            const photo = window.productPhoto(p);
+            if (photo) {
+                imgEl.src = photo;
                 imgEl.classList.remove('hidden');
                 iconEl.classList.add('hidden');
             } else {
